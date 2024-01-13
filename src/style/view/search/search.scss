@@ -1,0 +1,15 @@
+.search {
+  .search-wrap {
+    .wrap-body {
+      @include respond(lgTablet) {
+        padding: 0;
+      }
+    }
+    @include respond(lgTablet) {
+      border: unset;
+    }
+  }
+  .list-pagination {
+    margin-top: $m-2;
+  }
+}

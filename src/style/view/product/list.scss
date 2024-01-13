@@ -1,0 +1,25 @@
+.product-list {
+  .list-filter {
+    border: 1px solid $bg-gray;
+    padding: $p-1 - 0.5 $p-1;
+    border-radius: $rounded;
+    transition: opacity $transition-time-sm $transition-fn;
+    &:hover {
+      opacity: 0.6;
+    }
+  }
+  .list-wrap {
+    .wrap-body {
+      @include respond(lgTablet) {
+        padding: 0;
+        border: unset;
+      }
+    }
+    @include respond(lgTablet) {
+      border: unset;
+    }
+  }
+  .list-pagination {
+    margin-top: $m-2;
+  }
+}

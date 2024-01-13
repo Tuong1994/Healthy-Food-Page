@@ -1,0 +1,59 @@
+.comment {
+  .comment-control {
+    margin-bottom: $m-2;
+    .control-input {
+      margin: $m-1 0;
+    }
+  }
+  .comment-list {
+    height: $h-10 * 4;
+    padding-right: $p-1;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  .comment-item {
+    margin-bottom: $m-1 + 0.5;
+    .item-content {
+      margin-bottom: $m-1 + 0.5;
+      .content-text {
+        margin: $m-1 0;
+        padding: $p-1 - 0.5;
+        background: $bg-slate;
+        border-radius: $rounded;
+      }
+      .content-btn {
+        width: $w-2 + 0.5;
+        height: $h-2 + 0.5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+        border: 1px solid transparent;
+        border-radius: $rounded;
+        transition: all $transition-time-sm $transition-fn;
+        path {
+          transition: all $transition-time-sm $transition-fn;
+        }
+        &:hover {
+          border-color: $text-green;
+          path {
+            color: $text-green;
+          }
+        }
+      }
+    }
+    .item-child {
+      padding-left: $p-1;
+      position: relative;
+      .child-expand {
+        width: 1px;
+        height: $h-full;
+        margin-right: $m-1;
+        background: $bg-gray;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+      }
+    }
+  }
+}

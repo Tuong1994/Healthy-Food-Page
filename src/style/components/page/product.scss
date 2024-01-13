@@ -1,0 +1,115 @@
+.product-card {
+  position: relative;
+  &:hover .product-card-image .image-group {
+    transform: scale(1.2);
+  }
+  .product-card-price {
+    margin: $m-1 0;
+  }
+}
+
+.product-card-image {
+  margin-bottom: $m-1;
+  border-radius: $rounded;
+  overflow: hidden;
+  position: relative;
+  &:hover .image-group {
+    transform: scale(1.2);
+  }
+  .image-group {
+    height: $h-full !important;
+    transition: transform $transition-time-sm $transition-fn;
+  }
+  .image-badge {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 1;
+  }
+}
+
+.product-card-like {
+  border: unset;
+  background: transparent;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1;
+  .like-icon {
+    path {
+      color: $text-gray;
+    }
+  }
+}
+
+.product-card-action {
+  position: relative;
+  z-index: 1;
+  .action-btn {
+    width: $w-3;
+    height: $h-3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: $bg-green;
+    border: 1px solid $bg-green;
+    border-radius: $rounded;
+    transition: all $transition-time-sm $transition-fn;
+    &:hover {
+      opacity: 0.6;
+    }
+    * {
+      color: $text-white;
+    }
+  }
+  .action-btn-minus {
+    background: transparent;
+    border-color: transparent;
+    &:hover {
+      opacity: 1;
+      border-color: $bg-green;
+    }
+    * {
+      color: $text-black;
+    }
+  }
+  .action-btn-disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    &:hover {
+      border-color: transparent;
+    }
+  }
+  .action-input {
+    width: $w-3;
+    height: $h-3;
+    border: unset;
+    border-bottom: 1px solid $bg-slate;
+    text-align: center;
+  }
+}
+
+.product-card-responsive {
+  .responsive-body {
+    @include respond(mdPhone) {
+      display: flex;
+      justify-content: space-between;
+    }
+    .body-image {
+      @include respond(mdPhone) {
+        width: $w-9 !important;
+        height: $h-9 !important;
+        margin-right: $m-1;
+        img {
+          width: $w-full;
+          height: $h-full !important;
+        }
+      }
+    }
+    .body-content {
+      @include respond(mdPhone) {
+        flex-grow: 1;
+      }
+    }
+  }
+}

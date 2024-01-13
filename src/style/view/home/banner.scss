@@ -1,0 +1,49 @@
+.home-banner {
+  width: $w-full;
+  .banner-carousel {
+    height: $h-10 * 3.5;
+    padding: $p-1 + 0.5;
+    padding-right: 0;
+    position: relative;
+    &::after {
+      content: unset;
+      width: $w-full;
+      height: $h-5;
+      background: $bg-green;
+      border-bottom-left-radius: $rounded-full;
+      border-bottom-right-radius: $rounded-full;
+      position: absolute;
+      top: 0;
+      left: 0;
+      @include respond(mdTablet) {
+        content: "";
+      }
+    }
+    .carousel-slide {
+      width: $w-full;
+      height: $h-full;
+      border-radius: $rounded-lg;
+      overflow: hidden;
+      position: relative;
+      z-index: 1;
+    }
+    @include respond(mdTablet) {
+      padding: 0 $p-1;
+      height: $h-10 * 2;
+    }
+    @include respond(lgPhone) {
+      padding: 0 $p-1;
+      height: $h-10 * 1.5;
+    }
+    @include respond(smPhone) {
+      padding: 0 $p-1;
+      height: $h-10 + 1.5;
+    }
+  }
+  @include respond(lgTablet) {
+    padding: 0 $p-1;
+  }
+  @include respond(mdTablet) {
+    padding: 0;
+  }
+}

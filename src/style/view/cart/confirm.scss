@@ -1,0 +1,21 @@
+.cart-confirm {
+  .confirm-delete-btn {
+    width: $w-3;
+    height: $h-3;
+    border: unset;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all $transition-time-sm $transition-fn;
+    &:hover {
+      opacity: 0.6;
+    }
+    path {
+      color: $text-red;
+    }
+  }
+  .confirm-pagination {
+    margin-top: $m-2;
+  }
+}

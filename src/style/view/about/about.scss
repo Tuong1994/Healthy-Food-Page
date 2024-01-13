@@ -1,0 +1,9 @@
+@import "./banner.scss";
+@import "./guarantee.scss";
+@import "./blog.scss";
+@import "./story.scss";
+@import "./category.scss";
+
+.about {
+  background: linear-gradient(to bottom, $bg-green-rgba-sm 0%, $bg-white 50%, $bg-white 100%);
+}

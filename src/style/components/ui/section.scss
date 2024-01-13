@@ -1,0 +1,9 @@
+.section {
+  padding: $p-5 $p-1 * 8;
+  @include respond(lgTablet) {
+    padding: $p-5 $p-1;
+  }
+  @include respond(mdPhone) {
+    padding: $p-2 $p-1;
+  }
+}

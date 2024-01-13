@@ -1,0 +1,31 @@
+.footer-mobile {
+  display: none;
+  width: $w-full;
+  height: $h-1 * 6;
+  background: $bg-white;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 15;
+  .mobile-item {
+    padding: $p-1 - 0.5;
+    border-top: 2px solid $bg-gray;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    span {
+      margin-top: $m-1 - 0.5;
+      font-size: $text-xs;
+    }
+  }
+  .mobile-item-active {
+    border-color: $bg-green;
+    * {
+      color: $text-green;
+    }
+  }
+  @include respond(mdTablet) {
+    display: flex;
+  }
+}

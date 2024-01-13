@@ -1,0 +1,37 @@
+.footer {
+  padding: $p-1 * 5 $p-1 * 8;
+  .footer-top {
+    margin-bottom: $m-5;
+  }
+  .footer-bottom {
+    .bottom-list {
+      margin-bottom: $m-5;
+      .list-link {
+        * {
+          transition: all $transition-time-sm $transition-fn;
+        }
+        &:hover * {
+          color: $text-green;
+        }
+      }
+      .list-icon {
+        width: $w-4;
+        height: $h-4;
+        background: $bg-green;
+        border-radius: $rounded-full;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        * {
+          color: $text-white;
+        }
+      }
+    }
+  }
+  @include respond(lgTablet) {
+    padding: $p-1 * 5 $p-1;
+  }
+  @include respond(mdTablet) {
+    display: none;
+  }
+}

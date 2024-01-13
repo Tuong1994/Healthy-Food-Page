@@ -1,0 +1,16 @@
+.exchange {
+  padding-top: $p-1 * 5;
+  .exchange-content {
+    margin-bottom: $m-2;
+    .content-title {
+      margin-bottom: $m-2;
+    }
+    .content-group {
+      margin-left: $m-1;
+      margin-bottom: $m-2;
+      .group-title {
+        margin-bottom: $m-1;
+      }
+    }
+  }
+}

@@ -1,0 +1,34 @@
+.product-detail {
+  .detail-info {
+    margin-bottom: $m-5;
+    .info-image {
+      margin-bottom: $m-1;
+      border-radius: $rounded;
+      box-shadow: 0 0 1rem $bg-gray;
+      overflow: hidden;
+      position: relative;
+      &:hover .image-group {
+        transform: scale(1.2);
+      }
+      .image-group {
+        height: $h-full !important;
+        transition: transform $transition-time-sm $transition-fn;
+      }
+      .image-badge {
+        position: absolute;
+        bottom: 1rem;
+        right: 1rem;
+        z-index: 1;
+      }
+    }
+    .info-name {
+      margin-bottom: $m-1;
+    }
+    .info-price {
+      color: $text-green;
+    }
+  }
+  .detail-tabs {
+    margin-bottom: $m-5;
+  }
+}

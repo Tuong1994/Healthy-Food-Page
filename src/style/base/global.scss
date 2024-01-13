@@ -1,0 +1,17 @@
+.main {
+  padding-top: $p-1 * 9;
+  @include respond(mdTablet) {
+    padding: $p-1 * 10 0;
+  }
+}
+
+.main-full {
+  padding: 0;
+}
+
+.page {
+  padding: 0 $p-1 * 8;
+  @include respond(lgTablet) {
+    padding: 0 $p-1;
+  }
+}

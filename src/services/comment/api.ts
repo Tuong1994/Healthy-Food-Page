@@ -1,0 +1,35 @@
+import { getApiQuery } from "../helper";
+import { ApiQuery, Paging } from "../type";
+import { Comment, CommentFormData } from "./type";
+import commentApiPaths from "./path";
+import Fetch from "..";
+
+export const getComments = async (query: ApiQuery) => {
+  const response = await Fetch.Get<Paging<Comment>>(commentApiPaths.getList + getApiQuery(query));
+  return response;
+};
+
+export const getCommentsByCustomer = async (query: ApiQuery) => {
+  const response = await Fetch.Get<Paging<Comment>>(commentApiPaths.getListByCustomer + getApiQuery(query));
+  return response;
+};
+
+export const getComment = async (query: ApiQuery) => {
+  const response = await Fetch.Get<Comment>(commentApiPaths.getDetail + getApiQuery(query));
+  return response;
+};
+
+export const createComment = async (data: CommentFormData) => {
+  const response = await Fetch.Post<Comment>(commentApiPaths.create, data);
+  return response;
+};
+
+export const updateComment = async (query: ApiQuery, data: CommentFormData) => {
+  const response = await Fetch.Put<any>(commentApiPaths.update + getApiQuery(query), data);
+  return response;
+};
+
+export const removeComments = async (query: ApiQuery) => {
+  const response = await Fetch.Delete<any>(commentApiPaths.remove + getApiQuery(query));
+  return response;
+};

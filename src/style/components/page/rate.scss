@@ -1,0 +1,35 @@
+.rate {
+  margin: $m-1 0;
+}
+
+.rate-star {
+  path {
+    color: $text-slate;
+  }
+}
+.rate-star-yellow {
+  path {
+    color: $text-yellow;
+  }
+}
+
+.rate-range {
+  .range-item {
+    display: block;
+    cursor: pointer;
+    .item-input {
+      display: none;
+    }
+    .item-star {
+      path {
+        color: $text-slate;
+        transition: all $transition-time-xs linear;
+      }
+    }
+    .item-star-selected {
+      path {
+        color: $text-yellow;
+      }
+    }
+  }
+}

@@ -1,0 +1,48 @@
+.sign-up {
+  padding: $p-5 + 5 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url("/background/food-bg.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: top;
+  background-attachment: fixed;
+  .sign-up-wrap {
+    width: $w-10 * 7;
+    .wrap-title {
+      margin: 0;
+    }
+    .wrap-form {
+      padding: $p-5 $p-5 + 2;
+      .form-actions {
+        margin: $m-3 0;
+        .actions-btn {
+          width: $w-full;
+          margin-bottom: $m-1;
+          &:last-child {
+            margin: 0;
+          }
+        }
+      }
+      .form-note {
+        .note-link {
+          color: $text-blue;
+        }
+      }
+      @include respond(mdPhone) {
+        padding: $p-2;
+      }
+    }
+    @include respond(smTablet) {
+      width: $w-10 * 6;
+    }
+    @include respond(mdPhone) {
+      width: $w-10 * 3.6;
+    }
+    @include respond(smPhone) {
+      width: $w-10 * 3;
+    }
+  }
+}

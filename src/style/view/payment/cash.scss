@@ -1,0 +1,14 @@
+.payment-cash {
+  margin-bottom: $m-5 + 5;
+  .cash-content {
+    margin-bottom: $m-3;
+  }
+  .cash-address {
+    margin-bottom: $m-1;
+  }
+  .cash-map {
+    width: $w-full;
+    border: unset;
+    border-radius: $rounded;
+  }
+}

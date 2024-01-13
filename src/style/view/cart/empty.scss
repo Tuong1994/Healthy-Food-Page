@@ -1,0 +1,14 @@
+.cart-empty {
+  width: $w-full;
+  height: $h-10 * 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  row-gap: 10px;
+  .empty-icon {
+    path {
+      color: $text-gray;
+    }
+  }
+}

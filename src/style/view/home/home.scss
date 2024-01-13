@@ -1,0 +1,9 @@
+@import "./banner.scss";
+@import "./category.scss";
+
+.home {
+  padding: 0 $p-1 * 8;
+  @include respond(lgTablet) {
+    padding: 0;
+  }
+}

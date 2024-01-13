@@ -1,0 +1,102 @@
+.categories-backdrop {
+  width: $w-full;
+  height: $h-screen;
+  background: $bg-black-rgba-sm;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -2;
+}
+
+.categories {
+  width: $w-10 * 2;
+  height: $h-10 * 3.5;
+  background: $bg-white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  position: relative;
+  &:hover::after {
+    opacity: 1;
+    visibility: visible;
+  }
+  &::after {
+    content: "";
+    width: $w-10 * 2;
+    height: $h-full;
+    background: $bg-white;
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    top: 0;
+    left: 100%;
+    z-index: 10;
+    transition: all $transition-time-xs $transition-fn;
+  }
+  .categories-item {
+    width: $w-full;
+    padding: $p-1 - 0.2 $p-1;
+    cursor: pointer;
+    border-bottom: 1px solid $bg-slate;
+    &:hover .item-wrap .wrap-content span {
+      color: $text-green;
+    }
+    &:hover .item-child {
+      opacity: 1;
+      visibility: visible;
+      transform: scale(1);
+    }
+    .item-wrap {
+      width: $w-full;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      .wrap-content {
+        display: flex;
+        align-items: center;
+        span {
+          margin-left: $m-1;
+          transition: all $transition-time-sm $transition-fn;
+        }
+      }
+    }
+    .item-child {
+      width: $w-10 * 2;
+      height: $h-full;
+      padding: $p-1 0;
+      position: absolute;
+      top: 0;
+      left: 100%;
+      z-index: 15;
+      opacity: 0;
+      visibility: hidden;
+      transform: scale(0);
+      transform-origin: top left;
+      transition: transform $transition-time-sm $transition-fn;
+      .child-inner {
+        padding: $p-1 $p-1;
+        cursor: pointer;
+        transition: all $transition-time-sm $transition-fn;
+        &:hover {
+          color: $text-green;
+        }
+      }
+    }
+  }
+}
+
+.categories-highlight {
+  box-shadow: 0 0 5px $bg-black-rgba-md;
+  border-radius: $rounded;
+  position: fixed;
+  top: 9.2rem;
+  left: 8rem;
+  z-index: -1;
+  &::after {
+    border-radius: $rounded;
+  }
+  @include respond(lgTablet) {
+    left: 1rem;
+  }
+}

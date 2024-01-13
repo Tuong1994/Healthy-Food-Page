@@ -1,0 +1,36 @@
+.auth-header {
+  width: $w-8;
+  position: absolute;
+  top: 5rem;
+  right: 5rem;
+  z-index: 20;
+  @include respond(smTablet) {
+    right: 3rem;
+  }
+  @include respond(mdPhone) {
+    right: 1rem;
+  }
+}
+
+.auth-back {
+  margin: $m-2 0;
+  &:hover .back-text {
+    color: $text-green;
+  }
+  .back-icon {
+    path {
+      color: $text-green;
+    }
+  }
+  .back-text {
+    color: $text-white;
+    transition: all $transition-time-sm $transition-fn;
+  }
+}
+
+.auth-note {
+  margin-top: $m-2;
+  .note-text {
+    color: $text-white;
+  }
+}

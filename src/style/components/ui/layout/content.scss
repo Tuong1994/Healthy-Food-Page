@@ -1,0 +1,30 @@
+.content {
+  width: $w-full;
+  background: $bg-white;
+  transition: all $transition-time-sm $transition-fn;
+}
+
+.content-layout {
+  margin-top: $m-5 + 1;
+  @include respond(mdTablet) {
+    margin-top: $m-2;
+  }
+}
+
+.content-resize {
+ padding-left: 25rem;
+  @include respond(mdTablet) {
+   padding-left: 0;
+  }
+}
+
+.content-shrinked {
+ padding-left: 6rem;
+}
+
+.content-dark {
+  background: $bg-deep-blue;
+  * {
+    color: $text-white;
+  }
+}

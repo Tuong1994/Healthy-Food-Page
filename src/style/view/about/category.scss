@@ -1,0 +1,30 @@
+.about-category {
+  .category-title {
+    font-size: $text-2xxl;
+  }
+  .category-content {
+    margin: $m-5 0;
+  }
+  .category-carousel {
+    height: auto;
+    .carousel-item {
+      width: $w-full;
+      .item-inner {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        transition: opacity $transition-time-sm $transition-fn;
+        &:hover {
+          opacity: 0.6;
+        }
+        .inner-name {
+          margin-top: $m-2;
+        }
+      }
+    }
+    .carousel-dots {
+      bottom: -20px;
+    }
+  }
+}

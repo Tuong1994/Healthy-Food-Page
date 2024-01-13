@@ -1,0 +1,23 @@
+.home-category {
+  padding: $p-1 * 2 0;
+  .category-name {
+    margin: 0;
+  }
+  .category-link {
+    color: $text-green;
+  }
+  .category-products {
+    width: $w-full;
+    padding: $p-1;
+    margin-top: $m-2;
+    border: 1px solid $bg-slate;
+    border-radius: $rounded;
+    display: flex;
+    column-gap: 1rem;
+    overflow-y: hidden;
+    overflow-x: auto;
+  }
+  @include respond(lgTablet) {
+    padding: $p-1 * 2 $p-1;
+  }
+}

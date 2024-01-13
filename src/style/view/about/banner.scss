@@ -1,0 +1,19 @@
+.about-banner {
+  .banner-title {
+    font-size: $text-2xxl;
+    @include respond(mdPhone) {
+      text-align: center;
+    }
+  }
+  .banner-btn {
+    margin: $m-2 0;
+    @include respond(mdPhone) {
+      margin: $m-2 auto;
+    }
+  }
+  .banner-list-text {
+    @include respond(mdPhone) {
+      font-size: $text-md;
+    }
+  }
+}

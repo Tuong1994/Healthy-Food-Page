@@ -1,0 +1,9 @@
+.about-blog {
+  margin-bottom: $m-5 + 5;
+  .blog-group {
+    margin-bottom: $m-5 + 5;
+    &:last-child {
+      margin: 0;
+    }
+  }
+}

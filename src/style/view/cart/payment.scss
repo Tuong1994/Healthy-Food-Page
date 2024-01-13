@@ -1,0 +1,32 @@
+.cart-payment {
+  .payment-pagination {
+    margin-top: $m-2;
+  }
+  .payment-received {
+    .received-select {
+      width: $w-10 * 2.5;
+    }
+  }
+  .payment-method {
+    margin-bottom: $m-2;
+    .method-item {
+      margin-bottom: $m-1;
+      &:last-child {
+        margin: 0;
+      }
+    }
+    .method-item-selected {
+      border-color: $bg-green;
+    }
+  }
+  .payment-actions {
+    margin-top: $m-2;
+    .actions-btn {
+      width: $w-full;
+    }
+  }
+}
+
+.shipment-info {
+  padding: $p-2 0;
+}
