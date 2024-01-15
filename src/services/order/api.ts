@@ -20,12 +20,12 @@ export const getOrder = async (query: ApiQuery) => {
 };
 
 export const createOrder = async (data: OrderFormData) => {
-  const response = await Fetch.Post<Order>(orderApiPaths.create, data);
+  const response = await Fetch.Post<OrderFormData, Order>(orderApiPaths.create, data);
   return response;
 };
 
 export const updateOrder = async (query: ApiQuery, data: OrderFormData) => {
-  const response = await Fetch.Put<any>(orderApiPaths.update + getApiQuery(query), data);
+  const response = await Fetch.Put<OrderFormData, any>(orderApiPaths.update + getApiQuery(query), data);
   return response;
 };
 

@@ -84,7 +84,9 @@ const common_en = {
   },
   message: {
     success: {},
-    error: {},
+    error: {
+      noData: "There is a problem when getting data",
+    },
   },
 };
 

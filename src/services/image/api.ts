@@ -5,12 +5,18 @@ import Fetch from "..";
 import imageApiPaths from "./path";
 
 export const customerUpload = async (query: ApiQuery, data: FormData) => {
-  const response = await Fetch.Post<ImageUpload>(imageApiPaths.customerUpload + getApiQuery(query), data);
+  const response = await Fetch.Post<FormData, ImageUpload>(
+    imageApiPaths.customerUpload + getApiQuery(query),
+    data
+  );
   return response;
 };
 
 export const productUpload = async (query: ApiQuery, data: FormData) => {
-  const response = await Fetch.Post<ImageUpload>(imageApiPaths.productUpload + getApiQuery(query), data);
+  const response = await Fetch.Post<FormData, ImageUpload>(
+    imageApiPaths.productUpload + getApiQuery(query),
+    data
+  );
   return response;
 };
 

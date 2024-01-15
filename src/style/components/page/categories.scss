@@ -34,6 +34,14 @@
     z-index: 10;
     transition: all $transition-time-xs $transition-fn;
   }
+  .categories-loading {
+    width: $w-full;
+    height: $h-full;
+    background: $bg-white;
+    .loading-line {
+      padding: $p-1 - 0.6 $p-1;
+    }
+  }
   .categories-item {
     width: $w-full;
     padding: $p-1 - 0.2 $p-1;
@@ -94,6 +102,9 @@
   left: 8rem;
   z-index: -1;
   &::after {
+    border-radius: $rounded;
+  }
+  .categories-loading {
     border-radius: $rounded;
   }
   @include respond(lgTablet) {

@@ -2,10 +2,11 @@ import React from "react";
 import { UI } from "@/components";
 import { FaBars } from "react-icons/fa";
 import { ELang } from "@/common/enum";
+import { useLang } from "@/hooks";
 import Link from "next/link";
 import Logo from "@/components/Page/Logo";
-import useLangStore from "@/store/LangStore";
 import url from "@/common/constant/url";
+import utils from "@/utils";
 
 const { HOME, ABOUT, PAYMENT, DELIVERY, EXCHANGE, AUTH_SIGN_UP } = url;
 
@@ -16,11 +17,7 @@ const { Row, Col } = Grid;
 interface HeaderMobileProps {}
 
 const HeaderMobile: React.FC<HeaderMobileProps> = () => {
-  const [type, lang, switchLang] = useLangStore((state) => [
-    state.type,
-    state.lang,
-    state.switchLang,
-  ]);
+  const { type, lang, handleSwitchLang } = useLang();
 
   const [open, setOpen] = React.useState<boolean>(false);
 
@@ -43,8 +40,7 @@ const HeaderMobile: React.FC<HeaderMobileProps> = () => {
     ));
   };
 
-  const activeClassName = (currentType: ELang) =>
-    type === currentType ? "side-lang-active" : "";
+  const activeClassName = (currentType: ELang) => (type === currentType ? "side-lang-active" : "");
 
   const handleOpen = () => setOpen(true);
 
@@ -63,12 +59,7 @@ const HeaderMobile: React.FC<HeaderMobileProps> = () => {
         </button>
       </Space>
 
-      <Drawer
-        open={open}
-        head={<Logo />}
-        onClose={handleClose}
-        bodyClassName="header-mobile-side"
-      >
+      <Drawer open={open} head={<Logo />} onClose={handleClose} bodyClassName="header-mobile-side">
         {renderMenu()}
 
         <Divider />
@@ -80,14 +71,14 @@ const HeaderMobile: React.FC<HeaderMobileProps> = () => {
           <Col>
             <Space>
               <span
-                className={`side-lang ${activeClassName(ELang.EN)}`}
-                onClick={() => switchLang(ELang.EN)}
+                className={utils.formatClassName("side-lang", activeClassName(ELang.EN))}
+                onClick={() => handleSwitchLang(ELang.EN)}
               >
                 EN
               </span>
               <span
-                className={`side-lang ${activeClassName(ELang.VN)}`}
-                onClick={() => switchLang(ELang.VN)}
+                className={utils.formatClassName("side-lang", activeClassName(ELang.VN))}
+                onClick={() => handleSwitchLang(ELang.VN)}
               >
                 VN
               </span>

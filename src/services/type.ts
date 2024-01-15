@@ -2,6 +2,7 @@ import { ELang, ESort } from "@/common/enum";
 import { EGender, ERole } from "./customer/enum";
 import { EInventoryStatus, EProductOrigin, EProductStatus } from "./product/enum";
 import { EOrderStatus, EPaymentMethod, EPaymentStatus } from "./order/enum";
+import { AxiosRequestConfig } from "axios";
 
 export type Paging<T> = {
   totalItems: number;
@@ -47,6 +48,13 @@ export type ApiQuery = {
   orderStatus?: EOrderStatus;
   paymentMethod?: EPaymentMethod;
   paymentStatus?: EPaymentStatus;
+};
+
+export type ApiConfig<T> = {
+  method: string;
+  apiPath: string;
+  body?: T;
+  config?: AxiosRequestConfig<T>;
 };
 
 export type ResponseError = {

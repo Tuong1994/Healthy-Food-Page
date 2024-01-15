@@ -15,8 +15,9 @@ export interface DropdownProps {
   titleStyle?: React.CSSProperties;
   dropdownStyle?: React.CSSProperties;
   children?: React.ReactNode | React.ReactNode[];
-  items: DropdownItems;
   placement?: Exclude<ComponentPlacement, "top" | "bottom">;
+  defaultSelectedId?: string;
+  items: DropdownItems;
   trigger?: TriggerType;
 }
 
@@ -32,6 +33,7 @@ const Dropdown: React.ForwardRefRenderFunction<HTMLDivElement, DropdownProps> = 
     items = [],
     placement = "left",
     trigger = "click",
+    defaultSelectedId = "",
   },
   ref
 ) => {
@@ -40,6 +42,8 @@ const Dropdown: React.ForwardRefRenderFunction<HTMLDivElement, DropdownProps> = 
   const { layoutTheme: theme } = layoutValue;
 
   const [open, setOpen] = React.useState<boolean>(false);
+
+  const [selectedId, setSelectedId] = React.useState<string>(defaultSelectedId);
 
   const render = useRender(open);
 
@@ -70,11 +74,15 @@ const Dropdown: React.ForwardRefRenderFunction<HTMLDivElement, DropdownProps> = 
   React.useImperativeHandle(ref, () => dropdownRef.current as HTMLDivElement);
 
   const renderItems = () => {
-    return items.map((item) => (
-      <div key={item.id} className="wrap-item">
-        {item.label}
-      </div>
-    ));
+    return items.map((item) => {
+      const selectedClassName = selectedId === item.id ? "wrap-item-selected" : "";
+      const itemClassName = utils.formatClassName("wrap-item", selectedClassName);
+      return (
+        <div key={item.id} className={itemClassName} onClick={() => setSelectedId(item.id)}>
+          {item.label}
+        </div>
+      );
+    });
   };
 
   const handleOpen = () => setOpen(!open);

@@ -1,7 +1,8 @@
-.category-mobile {
+.categories-mobile {
   display: none;
   padding: $p-1;
-  .mobile-wrap {
+  .mobile-wrap,
+  .mobile-loading {
     overflow-y: hidden;
     overflow-x: auto;
     &::-webkit-scrollbar {
@@ -10,9 +11,10 @@
     }
     .wrap-inner {
       display: flex;
+      align-items: baseline;
       justify-content: space-between;
       .inner-item {
-        min-width: max-content;
+        min-width: $w-10 + 2.5;
         padding: $p-1;
         display: flex;
         align-items: center;
@@ -21,6 +23,9 @@
         .item-image {
           margin-bottom: $m-1;
         }
+      }
+      .item-text {
+        font-size: $text-xs;
       }
     }
   }

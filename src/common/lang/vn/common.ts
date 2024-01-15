@@ -84,7 +84,9 @@ const common_vn = {
   },
   message: {
     success: {},
-    error: {},
+    error: {
+      noData: "Đã xây ra lỗi khi lấy dữ liệu",
+    },
   },
 };
 

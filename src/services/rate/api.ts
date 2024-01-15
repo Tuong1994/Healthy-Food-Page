@@ -20,12 +20,12 @@ export const getRate = async (query: ApiQuery) => {
 };
 
 export const createRate = async (data: RateFormData) => {
-  const response = await Fetch.Post<Rate>(rateApiPaths.create, data);
+  const response = await Fetch.Post<RateFormData, Rate>(rateApiPaths.create, data);
   return response;
 };
 
 export const updateRate = async (query: ApiQuery, data: RateFormData) => {
-  const response = await Fetch.Post<any>(rateApiPaths.update + getApiQuery(query), data);
+  const response = await Fetch.Put<RateFormData, any>(rateApiPaths.update + getApiQuery(query), data);
   return response;
 };
 

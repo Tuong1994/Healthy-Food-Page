@@ -4,7 +4,7 @@ import { useLang } from "@/hooks";
 import Link from "next/link";
 import ProductCard from "@/components/Page/ProductCard";
 
-const { Typography, Grid } = UI;
+const { Empty, Typography, Grid } = UI;
 
 const { Title } = Typography;
 
@@ -14,6 +14,11 @@ interface HomeCategoryProps {}
 
 const HomeCategory: React.FC<HomeCategoryProps> = () => {
   const { lang } = useLang();
+
+  const renderProducts = () => {
+    // return <Empty text="No Data" />;
+    return [...Array(10)].map((_, idx) => <ProductCard key={idx} cardWidth={200} />);
+  };
 
   return (
     <div className="home-category">
@@ -30,11 +35,7 @@ const HomeCategory: React.FC<HomeCategoryProps> = () => {
         </Col>
       </Row>
 
-      <div className="category-products">
-        {[...Array(10)].map((_, idx) => (
-          <ProductCard key={idx} cardWidth={200} />
-        ))}
-      </div>
+      <div className="category-products">{renderProducts()}</div>
     </div>
   );
 };

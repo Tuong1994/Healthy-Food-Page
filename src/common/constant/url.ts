@@ -1,5 +1,3 @@
-import { ELang } from "../enum";
-
 const url = {
   HOME: `/`,
   ABOUT: "/about",

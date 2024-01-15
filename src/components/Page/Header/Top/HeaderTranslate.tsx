@@ -1,22 +1,22 @@
 import React from "react";
 import { UI } from "@/components";
 import { DropdownItems } from "@/components/UI/Dropdown/type";
+import { useLang } from "@/hooks";
 import { ELang } from "@/common/enum";
 import Image from "next/image";
-import useLangStore from "@/store/LangStore";
 
 const { Dropdown, Space } = UI;
 
 interface HeaderTranslateProps {}
 
 const HeaderTranslate: React.FC<HeaderTranslateProps> = () => {
-  const [type, lang, switchLang] = useLangStore((state) => [state.type, state.lang, state.switchLang]);
+  const {type, lang, handleSwitchLang} = useLang()
 
   const items: DropdownItems = [
     {
       id: "1",
       label: (
-        <Space onClick={() => switchLang(ELang.EN)}>
+        <Space onClick={() => handleSwitchLang(ELang.EN)}>
           <Image width={20} height={20} src="/flag/en_flag.svg" alt="flag" priority />
           <span>{lang.pageComponent.header.translate.en}</span>
         </Space>
@@ -25,7 +25,7 @@ const HeaderTranslate: React.FC<HeaderTranslateProps> = () => {
     {
       id: "2",
       label: (
-        <Space onClick={() => switchLang(ELang.VN)}>
+        <Space onClick={() => handleSwitchLang(ELang.VN)}>
           <Image width={20} height={20} src="/flag/vn_flag.svg" alt="flag" priority />
           <span>{lang.pageComponent.header.translate.vn}</span>
         </Space>
@@ -39,7 +39,7 @@ const HeaderTranslate: React.FC<HeaderTranslateProps> = () => {
   };
 
   return (
-    <Dropdown items={items} placement="right" rootClassName="top-translate">
+    <Dropdown items={items} defaultSelectedId="1" placement="right" rootClassName="top-translate">
       <Image width={20} height={20} src={renderLabel()} alt="flag" priority />
     </Dropdown>
   );

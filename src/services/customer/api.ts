@@ -15,12 +15,12 @@ export const getCustomer = async (query: ApiQuery) => {
 };
 
 export const createCustomer = async (data: CustomerFormData) => {
-  const response = await Fetch.Post<Customer>(customerApiPaths.create, data);
+  const response = await Fetch.Post<CustomerFormData, Customer>(customerApiPaths.create, data);
   return response;
 };
 
 export const updateCustomer = async (query: ApiQuery, data: CustomerFormData) => {
-  const response = await Fetch.Put<any>(customerApiPaths.update + getApiQuery(query), data);
+  const response = await Fetch.Put<CustomerFormData, any>(customerApiPaths.update + getApiQuery(query), data);
   return response;
 };
 

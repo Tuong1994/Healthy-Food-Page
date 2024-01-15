@@ -1,5 +1,6 @@
-import { RequestInit } from "next/dist/server/web/spec-extension/request";
-import { ApiResponse, ResponseError } from "./type";
+import { ApiConfig, ApiResponse, ResponseError } from "./type";
+import { AxiosRequestConfig, AxiosResponse } from "axios";
+import Axios, { HttpStatus } from "./axios";
 
 const Method = {
   GET: "GET",
@@ -8,73 +9,52 @@ const Method = {
   DELETE: "DELETE",
 };
 
-const HttpStatus = {
-  BAD_REQUEST: 400,
-  UNAUTHORIZED: 401,
-  FORBIDDEN: 403,
-  NOT_FOUND: 404,
-  INTERNAL_SERVER: 500,
-};
+const defaultApiResponse = <T>(): ApiResponse<T> => ({ data: {} as T, success: false });
 
-const BASE_URL = "http://localhost:5000/";
-
-const defaultApiResponse = <T>(): ApiResponse<T> => ({ data: {} as T });
-
-const ApiResponseError = (error?: any, response?: Response) => {
-  let responseError: ResponseError | null = null;
-  if (error) {
-    responseError = { status: 500, message: "Api network error" };
-  } else {
-    responseError = { status: response?.status ?? 0, message: response?.statusText ?? "" };
-  }
+const ApiResponseError = (error: any) => {
+  let responseError: ResponseError = { status: 0, message: "" };
+  responseError = {
+    status: error.response?.status ?? 0,
+    message: error.response?.statusText ?? "",
+  };
   return responseError;
 };
 
-const call = async <T>(method: string, apiPath: string, body?: object | null, init?: RequestInit) => {
-  const requestInit: RequestInit = {
+const call = async <T = unknown, D = any>(apiConfig: ApiConfig<T>) => {
+  const { method, apiPath, body, config } = apiConfig;
+  const initConfig: AxiosRequestConfig<T> = {
     method,
-    credentials: "include",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Authorization: "Bearer token",
-    },
-    body: null,
-    ...init,
+    url: apiPath,
+    ...config,
   };
-
-  let apiResponse: ApiResponse<T> = defaultApiResponse<T>();
-
-  if (method !== Method.GET) requestInit.body = JSON.stringify(body);
-
-  return fetch(BASE_URL + apiPath, requestInit)
-    .then(async (response) => {
-      if (response.status === HttpStatus.FORBIDDEN || response.status === HttpStatus.UNAUTHORIZED) {
-        return apiResponse;
-      } else {
-        if (response.status === HttpStatus.BAD_REQUEST || response.status === HttpStatus.NOT_FOUND) {
-          apiResponse = { ...apiResponse, success: false, error: ApiResponseError(null, response) };
-          return apiResponse;
-        }
-        const data = await response.json();
-        apiResponse = { ...apiResponse, data, success: true };
-        return apiResponse;
-      }
-    })
-    .catch((error) => (apiResponse = { ...apiResponse, success: false, error: ApiResponseError(error) }));
+  if (method !== Method.GET && body !== undefined) initConfig.data = body;
+  let apiResponse: ApiResponse<D> = defaultApiResponse<D>();
+  try {
+    const response = (await Axios<T, D>(initConfig)) as AxiosResponse<any, D>;
+    if (response.status === HttpStatus.NOT_FOUND)
+      throw new Error(`status ${response.status} - ${response.statusText}`);
+    else apiResponse = { ...apiResponse, success: true, data: response.data };
+  } catch (err: any) {
+    if (!err.response) {
+      throw new Error("status 500 - Api network failed");
+    } else {
+      apiResponse = { ...apiResponse, success: false, error: ApiResponseError(err) };
+    }
+  }
+  return apiResponse;
 };
 
-const Get = <T>(apiPath: string, init?: RequestInit) => {
-  return call<T>(Method.GET, apiPath, null, init);
+const Get = <D>(apiPath: string, config?: AxiosRequestConfig) => {
+  return call<any, D>({ method: Method.GET, apiPath, config });
 };
-const Post = <T>(apiPath: string, body: object = {}, init?: RequestInit) => {
-  return call<T>(Method.POST, apiPath, body, init);
+const Post = <T, D = any>(apiPath: string, body: T, config?: AxiosRequestConfig<T>) => {
+  return call<T, D>({ method: Method.POST, apiPath, body, config });
 };
-const Put = <T>(apiPath: string, body: object = {}, init?: RequestInit) => {
-  return call<T>(Method.POST, apiPath, body, init);
+const Put = <T, D = any>(apiPath: string, body: T, config?: AxiosRequestConfig<T>) => {
+  return call<T, D>({ method: Method.PUT, apiPath, body, config });
 };
-const Delete = <T>(apiPath: string, init?: RequestInit) => {
-  return call<T>(Method.POST, apiPath, null, init);
+const Delete = <D>(apiPath: string, config?: AxiosRequestConfig) => {
+  return call<any, D>({ method: Method.POST, apiPath, config });
 };
 
 const Fetch = { Get, Post, Put, Delete };

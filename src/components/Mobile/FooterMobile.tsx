@@ -1,11 +1,10 @@
-"use client";
-
 import React from "react";
 import { HiShoppingBag, HiShoppingCart, HiHeart, HiUser } from "react-icons/hi";
 import { usePathname } from "next/navigation";
 import { useLang, useNotDisplay } from "@/hooks";
 import Link from "next/link";
 import url from "@/common/constant/url";
+import utils from "@/utils";
 
 const { HOME, CART, FAVORITE, CUSTOMER, AUTH_SIGN_IN } = url;
 
@@ -41,13 +40,9 @@ const FooterMobile: React.FC<FooterMobileProps> = () => {
     const itemWidth = `calc(100% / ${items.length})`;
     return items.map((item) => {
       const activeClassName = item.path === pathname ? "mobile-item-active" : "";
+      const itemClassName = utils.formatClassName("mobile-item", activeClassName);
       return (
-        <Link
-          href={item.path}
-          key={item.id}
-          style={{ width: itemWidth }}
-          className={`mobile-item ${activeClassName}`}
-        >
+        <Link href={item.path} key={item.id} style={{ width: itemWidth }} className={itemClassName}>
           {item.icon}
           <span>{item.label}</span>
         </Link>

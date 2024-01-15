@@ -1,8 +1,6 @@
-"use client";
-
 import React from "react";
 import { useViewpoint } from "@/hooks";
-import { GridAppContext } from "./Context";
+import { GridAppContext, GridRowContext } from "./Context";
 
 const GridProvider = ({ children }: { children: React.ReactNode }) => {
   const { isPhone, isTablet, isLaptop, isDesktop, screenWidth } = useViewpoint();
@@ -14,3 +12,7 @@ const GridProvider = ({ children }: { children: React.ReactNode }) => {
 };
 
 export default GridProvider;
+
+export const useAppGrid = () => React.useContext(GridAppContext)
+
+export const useAppGridRow = () => React.useContext(GridRowContext)

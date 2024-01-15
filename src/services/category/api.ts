@@ -1,5 +1,3 @@
-"use server";
-
 import { getApiQuery } from "../helper";
 import { ApiQuery, List, Paging } from "../type";
 import { Category, CategoryFormData } from "./type";
@@ -22,12 +20,12 @@ export const getCategory = async (query: ApiQuery) => {
 };
 
 export const createCategory = async (data: CategoryFormData) => {
-  const response = await Fetch.Post<Category>(categoryApiPaths.create, data);
+  const response = await Fetch.Post<CategoryFormData, Category>(categoryApiPaths.create, data);
   return response;
 };
 
 export const updateCategory = async (query: ApiQuery, data: CategoryFormData) => {
-  const response = await Fetch.Post<any>(categoryApiPaths.update + getApiQuery(query), data);
+  const response = await Fetch.Put<CategoryFormData, any>(categoryApiPaths.update + getApiQuery(query), data);
   return response;
 };
 

@@ -15,12 +15,12 @@ export const getCart = async (query: ApiQuery) => {
 };
 
 export const createCart = async (data: CartFormData) => {
-  const response = await Fetch.Post<Cart>(cartApiPaths.create, data);
+  const response = await Fetch.Post<CartFormData, Cart>(cartApiPaths.create, data);
   return response;
 };
 
 export const updateCart = async (query: ApiQuery, data: CartFormData) => {
-  const response = await Fetch.Put<any>(cartApiPaths.update + getApiQuery(query), data);
+  const response = await Fetch.Put<CartFormData, any>(cartApiPaths.update + getApiQuery(query), data);
   return response;
 };
 

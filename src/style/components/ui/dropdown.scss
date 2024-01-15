@@ -19,12 +19,17 @@
     z-index: 5;
     transition: all $transition-time-xs $transition-fn;
     .wrap-item {
-      padding: $p-1 - 0.4 $p-2;
       cursor: pointer;
+      opacity: 0.6;
+      padding: $p-1 - 0.4 $p-2;
       transition: all $transition-time-md $transition-fn;
       &:hover {
-        background: $bg-blue-rgba-xs;
+        opacity: 1;
+        background: $bg-slate;
       }
+    }
+    .wrap-item-selected {
+      opacity: 1;
     }
   }
   .dropdown-wrap-active {

@@ -1,7 +1,9 @@
 import React from "react";
 import { UI } from "@/components";
 import { BreadcrumbItems } from "@/components/UI/Breadcrumb/type";
-import useCategoryStore from "@/store/CategoryStore";
+import { useCategoriesData } from "../AppWrapper/AppData/Provider";
+import FooterLoading from "./FooterLoading";
+import NoDataError from "../Error/NoDataError";
 
 const { Breadcrumb, Typography, Grid } = UI;
 
@@ -12,12 +14,12 @@ const { Paragraph } = Typography;
 interface FooterTopProps {}
 
 const FooterTop: React.FC<FooterTopProps> = () => {
-  const categoriesWithSub = useCategoryStore((state) => state.categoriesWithSub);
+  const { data: categoriesWithSubs, loading, error } = useCategoriesData();
 
-  const renderCategory = () => {
+  const renderCategories = () => {
     return (
       <Row justify="between">
-        {categoriesWithSub.map((category) => {
+        {categoriesWithSubs.map((category) => {
           const items: BreadcrumbItems = [...category.subCategories].map((subcategory) => ({
             id: subcategory.id as string,
             label: subcategory.name,
@@ -33,7 +35,13 @@ const FooterTop: React.FC<FooterTopProps> = () => {
     );
   };
 
-  return <div className="footer-top">{renderCategory()}</div>;
+  const renderContent = () => {
+    if (loading) return <FooterLoading />;
+    if (error) return <NoDataError />;
+    return renderCategories();
+  };
+
+  return <div className="footer-top">{renderContent()}</div>;
 };
 
 export default FooterTop;

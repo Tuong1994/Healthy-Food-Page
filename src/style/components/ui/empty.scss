@@ -1,0 +1,14 @@
+.empty {
+  width: $w-full;
+  height: $h-full;
+  padding: $p-5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  .empty-icon {
+    path {
+      color: $text-gray;
+    }
+  }
+}

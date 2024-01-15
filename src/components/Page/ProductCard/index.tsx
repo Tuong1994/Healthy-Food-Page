@@ -1,10 +1,10 @@
 import React from "react";
 import { UI } from "@/components";
-import { GridAppContext } from "@/components/UI/Grid/Context";
-import Link from "next/link";
 import ProductCardImage from "./ProductCardImage";
 import ProductCardControl from "./ProductCardControl";
 import ProductCardLike from "./ProductCardLike";
+import ProductCardLoading from "./ProductCardLoading";
+import Link from "next/link";
 import url from "@/common/constant/url";
 
 const { PRODUCT_DETAIL } = url;
@@ -18,16 +18,16 @@ interface ProductCardProps {
   imgHeight?: number | string;
   cardWidth?: number | string;
   responsive?: boolean;
+  loading?: boolean;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({
   imgWidth = "100%",
   imgHeight = "150px",
   cardWidth,
-  responsive,
+  loading,
+  responsive = false,
 }) => {
-  const { isPhone } = React.useContext(GridAppContext);
-
   const responsiveClassName = responsive ? "product-card-responsive" : "";
 
   const imageResponsiveClassName = responsive ? "body-image" : "";
@@ -37,6 +37,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
     if (typeof cardWidth === "string") return cardWidth;
     return `${cardWidth}px`;
   };
+
+  if (loading) return <ProductCardLoading responsive={responsive} cardSize={cardSize} />;
 
   return (
     <Card

@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import { ComponentAligns, ComponentJustify } from "@/common/type";
 import { GridRowContext } from "./Context";

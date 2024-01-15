@@ -1,5 +1,6 @@
+import React from "react";
 import { NextPage } from "next";
-import CategoryMobile from "@/components/Mobile/CategoryMobile";
+import CategoriesMobile from "@/components/Mobile/CategoriesMobile";
 import HomeBanner from "@/features/home/HomeBanner";
 import HomeCategory from "@/features/home/HomeCategory";
 
@@ -7,7 +8,7 @@ const Home: NextPage = () => {
   return (
     <div className="home">
       <HomeBanner />
-      <CategoryMobile />
+      <CategoriesMobile />
       <HomeCategory />
       <HomeCategory />
       <HomeCategory />

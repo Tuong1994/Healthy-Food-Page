@@ -1,8 +1,6 @@
-"use client";
-
 import React from "react";
 import { ColSpan } from "./type";
-import { GridAppContext, GridRowContext } from "./Context";
+import { useAppGrid, useAppGridRow } from "./Provider";
 import utils from "@/utils";
 
 export interface GridColProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -19,9 +17,9 @@ const GridCol: React.ForwardRefRenderFunction<HTMLDivElement, GridColProps> = (
   { rootClassName = "", style, children, span, xs, md, lg, isFill, ...restProps },
   ref
 ) => {
-  const { isPhone, isTablet, isLaptop, isDesktop } = React.useContext(GridAppContext);
+  const { isPhone, isTablet, isLaptop, isDesktop } = useAppGrid();
 
-  const { gutters } = React.useContext(GridRowContext);
+  const { gutters } = useAppGridRow();
 
   const [hide, setHide] = React.useState<boolean>(false);
 

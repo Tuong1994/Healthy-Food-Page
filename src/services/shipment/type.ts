@@ -11,3 +11,5 @@ export type Shipment = {
   createdAt?: Date | string;
   updatedAt?: Date | string;
 };
+
+export type ShipmentFormData = Omit<Shipment, "id" | "createdAt" | "updatedAt">;

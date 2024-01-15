@@ -20,12 +20,12 @@ export const getComment = async (query: ApiQuery) => {
 };
 
 export const createComment = async (data: CommentFormData) => {
-  const response = await Fetch.Post<Comment>(commentApiPaths.create, data);
+  const response = await Fetch.Post<CommentFormData, Comment>(commentApiPaths.create, data);
   return response;
 };
 
 export const updateComment = async (query: ApiQuery, data: CommentFormData) => {
-  const response = await Fetch.Put<any>(commentApiPaths.update + getApiQuery(query), data);
+  const response = await Fetch.Put<CommentFormData, any>(commentApiPaths.update + getApiQuery(query), data);
   return response;
 };
 
