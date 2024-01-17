@@ -37,7 +37,7 @@ export const getApiQuery = (query: ApiQuery) => {
   let rs = "?";
 
   page && page < 1 && (page = 1);
-  limit && limit < 12 && (limit = 12);
+  limit && limit < 10 && (limit = 12);
   limit && limit > 100 && (limit = 12);
 
   langCode && (rs += `langCode=${langCode}`);

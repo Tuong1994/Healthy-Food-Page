@@ -20,11 +20,11 @@ interface Data {
 }
 
 interface PurchasedModalProps extends ModalProps {
-  type: ELang;
+  locale: ELang;
   lang: Lang;
 }
 
-const PurchasedModal: React.FC<PurchasedModalProps> = ({ type, lang, ...restProps }) => {
+const PurchasedModal: React.FC<PurchasedModalProps> = ({ locale, lang, ...restProps }) => {
   const dataSource: Data[] = [
     { id: "1", name: "Product 1", quantity: 1, price: 100000 },
     { id: "2", name: "Product 2", quantity: 5, price: 200000 },
@@ -52,7 +52,7 @@ const PurchasedModal: React.FC<PurchasedModalProps> = ({ type, lang, ...restProp
       id: "price",
       title: lang.common.table.head.price,
       dataIndex: "price",
-      render: (data) => <>{utils.formatPrice(type, data)}</>,
+      render: (data) => <>{utils.formatPrice(locale, data)}</>,
     },
   ];
 

@@ -1,7 +1,9 @@
+import { Category } from "../category/type";
 import { Comment } from "../comment/type";
 import { ImageUpload } from "../image/type";
 import { Rate } from "../rate/type";
-import { EInventoryStatus, EProductStatus, EProductUnit } from "./enum";
+import { SubCategory } from "../subcategory/type";
+import { EInventoryStatus, EProductOrigin, EProductStatus, EProductUnit } from "./enum";
 
 export type Product = {
   id?: string;
@@ -14,11 +16,15 @@ export type Product = {
   unit: EProductUnit;
   status: EProductStatus;
   inventoryStatus: EInventoryStatus;
+  origin: EProductOrigin;
   supplier: string;
-  origin: string;
   categoryId: string;
   subCategoryId: string;
+  isNew?: boolean;
+  point?: number;
 
+  category?: Category;
+  subCategory?: SubCategory;
   image?: ImageUpload[];
   comments?: Comment[];
   rates?: Rate[];
@@ -30,4 +36,4 @@ export type Product = {
 export type ProductFormData = {
   nameEn: string;
   nameVn: string;
-} & Omit<Product, "id" | "name" | "comments" | "rates" | "createdAt" | "updatedAt">;
+} & Omit<Product, "id" | "isNew" | "point" | "name" | "comments" | "rates" | "createdAt" | "updatedAt">;

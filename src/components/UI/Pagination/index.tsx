@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import React from "react";
 import {
@@ -57,8 +57,8 @@ const Pagination: React.ForwardRefRenderFunction<HTMLDivElement, PaginationProps
   const { layoutValue } = useLayout();
 
   const { layoutTheme: theme } = layoutValue;
-  
-  const isMounted = useMounted()
+
+  const isMounted = useMounted();
 
   const [currentPage, setCurrentPage] = React.useState<number>(1);
 
@@ -166,7 +166,9 @@ const Pagination: React.ForwardRefRenderFunction<HTMLDivElement, PaginationProps
     }
   };
 
-  if(!isMounted) return null
+  if (!isMounted) return null;
+
+  if (totalPages === 1) return null;
 
   return (
     <div ref={ref} style={style} className={mainClassName}>

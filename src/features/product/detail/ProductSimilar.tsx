@@ -1,6 +1,7 @@
 import React from "react";
 import { UI } from "@/components";
 import { Lang } from "@/common/type";
+import { Product } from "@/services/product/type";
 import ProductCard from "@/components/Page/ProductCard";
 
 const { Divider, Typography, Grid } = UI;
@@ -11,9 +12,10 @@ const { Row, Col } = Grid;
 
 interface ProductSimilarProps {
   lang: Lang;
+  products: Product[];
 }
 
-const ProductSimilar: React.FC<ProductSimilarProps> = ({ lang }) => {
+const ProductSimilar: React.FC<ProductSimilarProps> = ({ lang, products }) => {
   return (
     <React.Fragment>
       <Paragraph strong size={16}>
@@ -21,9 +23,9 @@ const ProductSimilar: React.FC<ProductSimilarProps> = ({ lang }) => {
       </Paragraph>
       <Divider />
       <Row>
-        {[...Array(20)].map((_, idx) => (
+        {products.map((product, idx) => (
           <Col key={idx} xs={24} md={12} lg={8} span={6}>
-            <ProductCard imgHeight={200} responsive />
+            <ProductCard product={product} imgHeight={200} responsive />
           </Col>
         ))}
       </Row>

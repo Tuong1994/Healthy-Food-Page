@@ -6,17 +6,17 @@ import vn from "@/common/lang/vn";
 
 interface LangState {
   lang: Lang;
-  type: ELang;
-  switchLang: (type: ELang) => void;
+  locale: ELang;
+  switchLang: (locale: ELang) => void;
 }
 
 const store: StateCreator<LangState> = (set) => ({
   lang: en,
-  type: ELang.EN,
+  locale: ELang.EN,
 
-  switchLang: (type: ELang) => {
-    if (type === ELang.EN) return set((state) => ({ ...state, type, lang: en }));
-    set((state) => ({ ...state, type, lang: vn }));
+  switchLang: (locale: ELang) => {
+    if (locale === ELang.EN) return set((state) => ({ ...state, locale, lang: en }));
+    set((state) => ({ ...state, locale, lang: vn }));
   },
 });
 

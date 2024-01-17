@@ -9,7 +9,7 @@ const Method = {
   DELETE: "DELETE",
 };
 
-const defaultApiResponse = <T>(): ApiResponse<T> => ({ data: {} as T, success: false });
+export const defaultApiResponse = <T>(): ApiResponse<T> => ({ data: {} as T, success: false });
 
 const ApiResponseError = (error: any) => {
   let responseError: ResponseError = { status: 0, message: "" };
@@ -32,11 +32,19 @@ const call = async <T = unknown, D = any>(apiConfig: ApiConfig<T>) => {
   try {
     const response = (await Axios<T, D>(initConfig)) as AxiosResponse<any, D>;
     if (response.status === HttpStatus.NOT_FOUND)
-      throw new Error(`status ${response.status} - ${response.statusText}`);
+      apiResponse = {
+        ...apiResponse,
+        success: false,
+        error: { status: response.status, message: response.statusText },
+      };
     else apiResponse = { ...apiResponse, success: true, data: response.data };
   } catch (err: any) {
     if (!err.response) {
-      throw new Error("status 500 - Api network failed");
+      apiResponse = {
+        ...apiResponse,
+        success: false,
+        error: { status: 500, message: "Api network failed" },
+      };
     } else {
       apiResponse = { ...apiResponse, success: false, error: ApiResponseError(err) };
     }

@@ -1,26 +1,32 @@
 import React from "react";
 import { UI } from "@/components";
+import { Product } from "@/services/product/type";
 import Link from "next/link";
 import url from "@/common/constant/url";
+import { Url } from "next/dist/shared/lib/router/router";
 
 const { PRODUCT_DETAIL } = url;
 
 const { Image, Badge } = UI;
 
 interface ProductCardImageProps {
+  link: Url;
+  isNew: boolean;
   imgWidth: number | string;
   imgHeight: number | string;
   imageResponsiveClassName?: string;
 }
 
 const ProductCardImage: React.FC<ProductCardImageProps> = ({
+  link,
+  isNew,
   imgWidth,
   imgHeight,
   imageResponsiveClassName = "",
 }) => {
   return (
     <div className="product-card-image">
-      <Link href={`${PRODUCT_DETAIL}/1`}>
+      <Link href={link}>
         <Image
           imgWidth={imgWidth}
           imgHeight={imgHeight}
@@ -28,9 +34,11 @@ const ProductCardImage: React.FC<ProductCardImageProps> = ({
           alt="product"
         />
       </Link>
-      <Badge shape="square" color="blue" rootClassName="image-badge">
-        New
-      </Badge>
+      {isNew && (
+        <Badge shape="square" color="blue" rootClassName="image-badge">
+          New
+        </Badge>
+      )}
     </div>
   );
 };

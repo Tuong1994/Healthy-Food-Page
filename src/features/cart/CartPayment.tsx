@@ -27,7 +27,7 @@ interface CartPaymentProps {
 }
 
 const CartPayment: React.FC<CartPaymentProps> = ({ handleUnConfirm }) => {
-  const { type, lang } = useLang();
+  const { locale, lang } = useLang();
 
   const [open, setOpen] = React.useState<boolean>(false);
 
@@ -58,7 +58,7 @@ const CartPayment: React.FC<CartPaymentProps> = ({ handleUnConfirm }) => {
       id: "price",
       title: lang.common.table.head.price,
       dataIndex: "price",
-      render: (data) => <>{utils.formatPrice(type, data)}</>,
+      render: (data) => <>{utils.formatPrice(locale, data)}</>,
     },
   ];
 
@@ -87,7 +87,7 @@ const CartPayment: React.FC<CartPaymentProps> = ({ handleUnConfirm }) => {
         </Col>
       </Row>
 
-      <PurchasedModal lang={lang} type={type} open={open} onCancel={handleCloseModal} />
+      <PurchasedModal lang={lang} locale={locale} open={open} onCancel={handleCloseModal} />
     </div>
   );
 };

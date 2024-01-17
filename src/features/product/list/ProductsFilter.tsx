@@ -1,8 +1,10 @@
 import React from "react";
 import { UI } from "@/components";
-import type { DropdownItems } from "@/components/UI/Dropdown/type";
+import { DropdownItems } from "@/components/UI/Dropdown/type";
+import { ESort } from "@/common/enum";
 import { Lang } from "@/common/type";
 import { HiChevronDown } from "react-icons/hi2";
+import { useRouter } from "next/router";
 import Link from "next/link";
 import url from "@/common/constant/url";
 
@@ -15,11 +17,33 @@ interface ProductsFilterProps {
 }
 
 const ProductsFilter: React.FC<ProductsFilterProps> = ({ lang }) => {
+  const { query } = useRouter();
+
   const [title, setTitle] = React.useState<string>(lang.options.sort.priceGoUp);
 
   const items: DropdownItems = [
-    { id: "1", label: <Link href={PRODUCT_LIST}>{lang.options.sort.priceGoUp}</Link> },
-    { id: "2", label: <Link href={PRODUCT_LIST}>{lang.options.sort.priceGoDown}</Link> },
+    {
+      id: "1",
+      label: (
+        <Link
+          href={{ pathname: PRODUCT_LIST, query: { ...query, sortBy: ESort.PRICE_GO_UP } }}
+          onClick={() => setTitle(lang.options.sort.priceGoUp)}
+        >
+          {lang.options.sort.priceGoUp}
+        </Link>
+      ),
+    },
+    {
+      id: "2",
+      label: (
+        <Link
+          href={{ pathname: PRODUCT_LIST, query: { ...query, sortBy: ESort.PRICE_GO_DOWN } }}
+          onClick={() => setTitle(lang.options.sort.priceGoDown)}
+        >
+          {lang.options.sort.priceGoDown}
+        </Link>
+      ),
+    },
   ];
 
   return (

@@ -3,16 +3,16 @@ import { useRouter } from "next/router";
 import useLangStore from "@/store/LangStore";
 
 const useLang = () => {
-  const [lang, type, switchLang] = useLangStore((state) => [state.lang, state.type, state.switchLang]);
+  const [lang, locale, switchLang] = useLangStore((state) => [state.lang, state.locale, state.switchLang]);
 
   const router = useRouter();
 
-  const handleSwitchLang = (type: ELang) => {
-    switchLang(type);
-    router.push({ pathname: router.pathname, query: { ...router.query, locale: type } });
+  const handleSwitchLang = (locale: ELang) => {
+    switchLang(locale);
+    router.push({ pathname: router.pathname, query: { ...router.query, locale: locale } });
   };
 
-  return { lang, type, handleSwitchLang };
+  return { lang, locale, handleSwitchLang };
 };
 
 export default useLang;

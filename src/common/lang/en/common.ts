@@ -82,11 +82,14 @@ const common_en = {
       updatedAt: "Updated date",
     },
   },
+  description: {
+    noData:
+      "Something went wrong. Look like there are trouble for getting data. Please try again or contact to our support team",
+    empty: "No data",
+  },
   message: {
     success: {},
-    error: {
-      noData: "There is a problem when getting data",
-    },
+    error: {},
   },
 };
 

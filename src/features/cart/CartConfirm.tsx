@@ -22,7 +22,7 @@ interface CartConfirmProps {
 }
 
 const CartConfirm: React.FC<CartConfirmProps> = ({ handleConfirm }) => {
-  const { type, lang } = useLang();
+  const { locale, lang } = useLang();
 
   const dataSource: Data[] = [
     { id: "1", name: "Product 1", quantity: 1, price: 100000 },
@@ -52,7 +52,7 @@ const CartConfirm: React.FC<CartConfirmProps> = ({ handleConfirm }) => {
       id: "price",
       title: lang.common.table.head.price,
       dataIndex: "price",
-      render: (data: number) => <>{utils.formatPrice(type, data)}</>,
+      render: (data: number) => <>{utils.formatPrice(locale, data)}</>,
     },
     {
       id: "action",

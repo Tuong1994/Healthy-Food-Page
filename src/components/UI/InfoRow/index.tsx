@@ -1,14 +1,9 @@
 import React from "react";
-import type { ParagraphProps } from "@/components/UI/Typography/Paragraph";
-import type { GridColProps } from "../Grid/Col";
-import type { GridRowProps } from "../Grid/Row";
-import { Grid, Typography } from "..";
+import Paragraph, { ParagraphProps } from "@/components/UI/Typography/Paragraph";
+import Row, { GridRowProps } from "../Grid/Row";
+import Col, { GridColProps } from "../Grid/Col";
 import useLayout from "../Layout/useLayout";
 import utils from "@/utils";
-
-const { Row, Col } = Grid;
-
-const { Paragraph } = Typography;
 
 export interface InfoRowProps extends GridRowProps {
   label?: string;
@@ -24,10 +19,10 @@ export interface InfoRowProps extends GridRowProps {
 
 const InfoRow: React.ForwardRefRenderFunction<HTMLDivElement, InfoRowProps> = (
   {
-    label,
-    labelElement,
-    text,
-    textElement,
+    label = "",
+    text = "",
+    labelElement = "",
+    textElement = "",
     labelProps,
     textProps,
     labelSpanProps,
@@ -52,19 +47,20 @@ const InfoRow: React.ForwardRefRenderFunction<HTMLDivElement, InfoRowProps> = (
   const textDefaultProps: ParagraphProps = { strong: true, ...textProps };
 
   const mainClassName = utils.formatClassName("info-row", themeClassName);
+
   return (
     <Row ref={ref} rootClassName={mainClassName} {...restProps}>
       <Col {...labelSpanDefaultProps}>
-        {!labelElement && (
+        {!labelElement ? (
           <Paragraph {...labelDefaultProps}>
             {label} {hasColon ? ":" : ""}
           </Paragraph>
+        ) : (
+          labelElement
         )}
-        {labelElement}
       </Col>
       <Col {...textSpanDefaultProps}>
-        {!textElement && <Paragraph {...textDefaultProps}>{text}</Paragraph>}
-        {textElement}
+        {!textElement ? <Paragraph {...textDefaultProps}>{text}</Paragraph> : textElement}
       </Col>
     </Row>
   );

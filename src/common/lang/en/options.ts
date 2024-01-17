@@ -9,6 +9,31 @@ const options_en = {
     male: "Male",
     female: "Female",
   },
+  role: {
+    superAdmin: "Super admin",
+    admin: "Admin",
+    customer: "Customer",
+  },
+  productStatus: {
+    draft: "Draft",
+    active: "Active",
+  },
+  inventoryStatus: {
+    inStock: "In stock",
+    outOfStock: "Out of stock",
+  },
+  productOrigin: {
+    vn: "Vietnam",
+  },
+  productUnit: {
+    kg: "Kg",
+    pack: "Pack",
+    box: "Box",
+    bin: "Bin",
+    piece: "Piece",
+    bottle: "Bottle",
+    can: "Can",
+  },
   orderStatus: {
     delivering: "Delivering",
     delivered: "Delivered",

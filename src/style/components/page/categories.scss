@@ -83,6 +83,7 @@
       transform-origin: top left;
       transition: transform $transition-time-sm $transition-fn;
       .child-inner {
+        display: block;
         padding: $p-1 $p-1;
         cursor: pointer;
         transition: all $transition-time-sm $transition-fn;

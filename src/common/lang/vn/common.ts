@@ -82,11 +82,14 @@ const common_vn = {
       updatedAt: "Ngày cập nhật",
     },
   },
+  description: {
+    noData:
+      "Đã xảy ra lỗi. Có vẻ như đang gặp khó khăn khi lấy dữ liệu. Vui lòng thử lại hoặc liên hệ với nhóm hỗ trợ của chúng tôi",
+    empty: "Không có dữ liệu",
+  },
   message: {
     success: {},
-    error: {
-      noData: "Đã xây ra lỗi khi lấy dữ liệu",
-    },
+    error: {},
   },
 };
 

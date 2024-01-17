@@ -7,16 +7,16 @@ interface AppLangProps {
 }
 
 const AppLang: React.FC<AppLangProps> = ({ children }) => {
-  const { type } = useLang();
+  const { locale } = useLang();
 
   const router = useRouter();
 
   React.useEffect(() => {
     router.replace({
       pathname: router.pathname,
-      query: { ...router.query, locale: type },
+      query: { ...router.query, langCode: locale },
     });
-  }, [type, router.pathname]);
+  }, [locale, router.pathname]);
 
   return <React.Fragment>{children}</React.Fragment>;
 };

@@ -21,7 +21,7 @@ const NoDataError: React.FC<NoDataErrorProps> = ({ message, ...restProps }) => {
 
   return (
     <React.Fragment>
-      <Paragraph {...paragraphDefaultProps}>{message ?? lang.common.message.error.noData}</Paragraph>
+      <Paragraph {...paragraphDefaultProps}>{message ?? lang.common.description.noData}</Paragraph>
     </React.Fragment>
   );
 };

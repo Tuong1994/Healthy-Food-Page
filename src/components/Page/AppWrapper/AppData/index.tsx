@@ -11,26 +11,28 @@ interface AppDataProps {
 }
 
 const AppData: React.FC<AppDataProps> = ({ children }) => {
-  const { type } = useLang();
+  const { locale } = useLang();
+
+  const [categoriesWithSubsError, setCategoriesWithSubsError] = React.useState<boolean>(false);
 
   const getCategoriesWithSubs = async () => {
-    const response = await getCategories({ hasSub: true, langCode: type });
+    setCategoriesWithSubsError(false);
+    const response = await getCategories({ hasSub: true, langCode: locale });
+    if (!response.success) setCategoriesWithSubsError(true);
     return response;
   };
 
-  const {
-    data: categoriesWithSubsData,
-    isValidating: categoriesWithSubsLoading,
-    error: categoriesWithSubsError,
-  } = useSWR<ApiResponse<List<Category>>, ResponseError>(
-    `getCategoriesWithSubs?type=${type}`,
-    getCategoriesWithSubs
-  );
+  const { data: categoriesWithSubsData, isValidating: categoriesWithSubsLoading } = useSWR<
+    ApiResponse<List<Category>>,
+    ResponseError
+  >(`getCategoriesWithSubs?locale=${locale}`, getCategoriesWithSubs, {
+    refreshInterval: 10000,
+  });
 
   const appData: AppDataState = {
     categoriesWithSubsResponse: {
       loading: categoriesWithSubsLoading,
-      error: categoriesWithSubsError !== undefined,
+      error: categoriesWithSubsError,
       data: categoriesWithSubsData?.data.items ?? [],
     },
   };
