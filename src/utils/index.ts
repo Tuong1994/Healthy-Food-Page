@@ -23,9 +23,9 @@ const utils = {
     return classNames.filter((name) => name).join(" ");
   },
 
-  formatPrice: (type: ELang, price: number) => {
+  formatPrice: (locale: ELang, price = 0) => {
     const displayPrice = price.toLocaleString();
-    const currency = type === ELang.VN ? "đ" : "VND";
+    const currency = locale === ELang.VN ? "đ" : "VND";
     return `${displayPrice} ${currency}`;
   },
 

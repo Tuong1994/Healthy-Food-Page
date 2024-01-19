@@ -16,12 +16,6 @@
     column-gap: 1rem;
     overflow-y: hidden;
     overflow-x: auto;
-    .products-item {
-      flex: 1;
-      .card-body {
-        height: $h-full;
-      }
-    }
   }
   @include respond(lgTablet) {
     padding: $p-1 * 2 $p-1;

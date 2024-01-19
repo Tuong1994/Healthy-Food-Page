@@ -9,13 +9,14 @@ import ProductCardImage from "./ProductCardImage";
 import ProductCardControl from "./ProductCardControl";
 import ProductCardLike from "./ProductCardLike";
 import ProductCardLoading from "./ProductCardLoading";
+import useQuantity from "@/features/product/hooks/useQuantity";
 import Link from "next/link";
-import url from "@/common/constant/url";
 import utils from "@/utils";
+import url from "@/common/constant/url";
 
 const { PRODUCT_DETAIL } = url;
 
-const { Card, Typography } = UI;
+const { Typography } = UI;
 
 const { Paragraph } = Typography;
 
@@ -42,9 +43,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
   const { query } = useRouter();
 
+  const defaultQuantity = useQuantity(product?.id as string)
+
   const responsiveClassName = responsive ? "product-card-responsive" : "";
 
-  const imageResponsiveClassName = responsive ? "body-image" : "";
+  const imageResponsiveClassName = responsive ? "responsive-image" : "";
 
   const mainClassName = utils.formatClassName("product-card", responsiveClassName, rootClassName);
 
@@ -72,32 +75,27 @@ const ProductCard: React.FC<ProductCardProps> = ({
   if (loading) return <ProductCardLoading responsive={responsive} cardSize={cardSize} />;
 
   return (
-    <Card
-      hoverable
-      style={{ minWidth: cardSize() }}
-      rootClassName={mainClassName}
-      bodyClassName="responsive-body"
-    >
+    <div style={{ minWidth: cardSize() }} className={mainClassName}>
       <ProductCardImage
         link={link}
-        isNew={product.isNew as boolean}
+        isNew={product?.isNew as boolean}
         imgWidth={imgWidth}
         imgHeight={imgHeight}
         imageResponsiveClassName={imageResponsiveClassName}
       />
 
-      <div className="body-content">
-        <Link href={link}>
+      <div className="card-group responsive-content">
+        <Link href={link} className="content-title">
           <Paragraph size={13}>{product?.name}</Paragraph>
         </Link>
-        <Paragraph rootClassName="product-card-price" strong size={15}>
+        <Paragraph rootClassName="group-price" strong size={15}>
           {utils.formatPrice(locale, product?.totalPrice ?? 0)}/{renderUnit()}
         </Paragraph>
-        <ProductCardControl />
+        <ProductCardControl productId={product?.id as string} defaultValue={defaultQuantity} />
       </div>
 
       <ProductCardLike />
-    </Card>
+    </div>
   );
 };
 

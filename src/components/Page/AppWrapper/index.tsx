@@ -1,12 +1,14 @@
 import React from "react";
-import { useNotDisplay } from "@/hooks";
 import { Poppins } from "next/font/google";
+import { ToastMessage } from "@/components/UI";
+import { useNotDisplay } from "@/hooks";
 import Header from "../Header";
 import Footer from "../Footer";
 import FooterMobile from "@/components/Mobile/FooterMobile";
 import GridProvider from "@/components/UI/Grid/Provider";
 import AppLang from "./AppLang";
 import AppData from "./AppData";
+import AppAuth from "./AppAuth";
 import utils from "@/utils";
 
 const poppins = Poppins({
@@ -14,11 +16,11 @@ const poppins = Poppins({
   subsets: ["latin"],
 });
 
-interface AppContainerProps {
+interface AppWarpperProps {
   children: React.ReactNode;
 }
 
-const AppContainer: React.FC<AppContainerProps> = ({ children }) => {
+const AppWarpper: React.FC<AppWarpperProps> = ({ children }) => {
   const notDisplay = useNotDisplay();
 
   const fullScreenClassName = notDisplay ? "main-full" : "";
@@ -28,18 +30,21 @@ const AppContainer: React.FC<AppContainerProps> = ({ children }) => {
   return (
     <GridProvider>
       <AppLang>
-        <AppData>
-          <Header />
-          <main className={className}>
-            <React.Fragment>{children}</React.Fragment>
-          </main>
-          <Footer />
-          <FooterMobile />
-          <div id="portal"></div>
-        </AppData>
+        <AppAuth>
+          <AppData>
+            <Header />
+            <main className={className}>
+              <React.Fragment>{children}</React.Fragment>
+            </main>
+            <Footer />
+            <FooterMobile />
+            <ToastMessage />
+            <div id="portal"></div>
+          </AppData>
+        </AppAuth>
       </AppLang>
     </GridProvider>
   );
 };
 
-export default AppContainer;
+export default AppWarpper;

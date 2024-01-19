@@ -1,9 +1,11 @@
 import { Customer } from "../customer/type";
 
+export type AuthInfo = Omit<Customer, "password" | "createdAt" | "updatedAt">;
+
 export type Auth = {
   accessToken: string;
   expired: number;
-  info: Omit<Customer, "password" | "createdAt" | "updatedAt">;
+  info: AuthInfo;
   isAuth: boolean;
 };
 

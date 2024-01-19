@@ -24,7 +24,13 @@ const Empty: React.ForwardRefRenderFunction<HTMLDivElement, EmptyProps> = (
   },
   ref
 ) => {
-  const textDefaultProps: ParagraphProps = { variant: "secondary", italic: true, weight: 400, ...textProps };
+  const textDefaultProps: ParagraphProps = {
+    variant: "secondary",
+    italic: true,
+    align: "center",
+    weight: 400,
+    ...textProps,
+  };
 
   const className = utils.formatClassName("empty", rootClassName);
 

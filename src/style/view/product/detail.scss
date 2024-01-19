@@ -34,4 +34,18 @@
   .detail-tabs {
     margin-bottom: $m-5;
   }
+  .detail-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 1.5rem;
+    @include respond(laptop) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    @include respond(smTablet) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    @include respond(mdPhone) {
+      grid-template-columns: auto;
+    }
+  }
 }

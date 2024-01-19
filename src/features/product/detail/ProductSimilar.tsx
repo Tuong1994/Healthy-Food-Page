@@ -22,13 +22,11 @@ const ProductSimilar: React.FC<ProductSimilarProps> = ({ lang, products }) => {
         {lang.product.detail.similar}
       </Paragraph>
       <Divider />
-      <Row>
-        {products.map((product, idx) => (
-          <Col key={idx} xs={24} md={12} lg={8} span={6}>
-            <ProductCard product={product} imgHeight={200} responsive />
-          </Col>
+      <div className="detail-list">
+        {products.map((product) => (
+          <ProductCard key={product.id} product={product} imgHeight={200} responsive />
         ))}
-      </Row>
+      </div>
     </React.Fragment>
   );
 };

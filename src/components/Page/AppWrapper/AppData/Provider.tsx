@@ -1,8 +1,9 @@
 import React from "react";
-import { CategoriesWithSubsResponse } from "./type";
+import { CartByCustomerResponse, CategoriesWithSubsResponse } from "./type";
 
 export interface AppDataState {
   categoriesWithSubsResponse: CategoriesWithSubsResponse;
+  cartByCustomerResponse: CartByCustomerResponse;
 }
 
 const AppDataContext = React.createContext<AppDataState>({
@@ -10,6 +11,11 @@ const AppDataContext = React.createContext<AppDataState>({
     error: false,
     loading: false,
     data: [],
+  },
+  cartByCustomerResponse: {
+    error: false,
+    loading: false,
+    data: undefined,
   },
 });
 

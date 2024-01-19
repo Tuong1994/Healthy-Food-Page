@@ -1,7 +1,7 @@
 import React from "react";
 import { DropdownItems } from "./type";
 import { ComponentPlacement } from "@/common/type";
-import { useRender, useClickOutside } from "@/hooks";
+import { useRender, useClickOutside, useMounted } from "@/hooks";
 import utils from "@/utils";
 import useLayout from "../Layout/useLayout";
 
@@ -47,6 +47,8 @@ const Dropdown: React.ForwardRefRenderFunction<HTMLDivElement, DropdownProps> = 
 
   const render = useRender(open);
 
+  const isMounted = useMounted()
+
   const dropdownRef = React.useRef<HTMLDivElement>(null);
 
   useClickOutside(dropdownRef, setOpen);
@@ -90,6 +92,8 @@ const Dropdown: React.ForwardRefRenderFunction<HTMLDivElement, DropdownProps> = 
   const handleClick = () => trigger === "click" && handleOpen();
 
   const handleHover = () => trigger === "hover" && handleOpen();
+
+  if(!isMounted) return null
 
   return (
     <div

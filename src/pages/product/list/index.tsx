@@ -93,13 +93,11 @@ const Products: NextPage<ProductsProps> = ({ categoryResponse, subCategoryRespon
     if (!products.length) return <Empty text={lang.common.description.empty} />;
     return (
       <React.Fragment>
-        <Row justify={products.length < 4 ? "start" : "between"} gutters={[14]}>
+        <div className="body-list">
           {products.map((product) => (
-            <Col key={product.id} xs={24} md={12} lg={8} span={6}>
-              <ProductCard product={product} imgHeight={200} responsive />
-            </Col>
+            <ProductCard key={product.id} product={product} imgHeight={200} responsive />
           ))}
-        </Row>
+        </div>
 
         <Pagination
           ghost
@@ -151,6 +149,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       langCode: apiQuery.langCode,
     });
   const productsResponse = await getProductsPaging({ ...apiQuery });
+
   return {
     props: {
       productsResponse,

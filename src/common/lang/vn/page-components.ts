@@ -1,7 +1,10 @@
 const page_components_vn = {
   header: {
     category: "Danh mục",
-    cart: "Đi tới giỏ hàng",
+    cart: {
+      note: "Giỏ hàng của bạn chưa có sản phẩm nào",
+      action: "Đi tới giỏ hàng",
+    },
     translate: {
       title: "Ngôn ngữ",
       en: "Tiếng Anh",
@@ -29,6 +32,11 @@ const page_components_vn = {
     bad: "Tệ",
     terrible: "Quá tệ",
     modalTitle: "Đánh giá sản phẩm",
+  },
+  auth: {
+    note: "Phiên của bạn đã hết hạn, vui lòng đăng nhập lại",
+    logout: "Đăng xuấ",
+    relogin: "Đăng nhập lại",
   },
 };
 

@@ -1,37 +1,60 @@
 import { NextPage } from "next";
 import { UI, Control } from "@/components";
-import { HiLockClosed, HiPhone, HiUser } from "react-icons/hi2";
+import { HiLockClosed, HiPhone } from "react-icons/hi2";
 import { HiMail } from "react-icons/hi";
-import { useLang } from "@/hooks";
+import { AuthInfo, AuthSignIn, AuthSignUp } from "@/services/auth/type";
+import { signIn, signUp } from "@/services/auth/api";
+import { useAsync, useLang, useRule } from "@/hooks";
+import { useRouter } from "next/router";
 import AuthHeader from "@/components/Page/Auth/AuthHeader";
 import AuthBack from "@/components/Page/Auth/AuthBack";
 import AuthNote from "@/components/Page/Auth/AuthNote";
+import useMessage from "@/components/UI/ToastMessage/useMessage";
 import Link from "next/link";
 import url from "@/common/constant/url";
+import useAuthStore from "@/store/AuthStore";
+import { HttpStatus } from "@/services/axios";
 
-const { AUTH_SIGN_IN } = url;
+const { HOME, AUTH_SIGN_IN } = url;
 
 const { Space, Card, Button, Typography } = UI;
 
 const { Title, Paragraph } = Typography;
 
-const { Form, FormItem, Input, InputPassword } = Control;
-
-interface FormData {
-  account: string;
-  password: string;
-  phone: string;
-  email: string;
-}
+const { Form, FormItem, Input, InputPhone, InputPassword } = Control;
 
 const SignUp: NextPage = () => {
   const { lang } = useLang();
 
-  const initialData: FormData = {
-    account: "",
+  const { email, phone, password } = useRule();
+
+  const { loading, call: onSubmit } = useAsync<AuthInfo>(signUp);
+
+  const setAuth = useAuthStore((state) => state.setAuth);
+
+  const messageApi = useMessage();
+
+  const router = useRouter();
+
+  const initialData: AuthSignUp = {
+    email: "",
     password: "",
     phone: "",
-    email: "",
+  };
+
+  const handleSubmit = async (formData: AuthSignUp) => {
+    const response = await onSubmit(formData);
+    if (!response.success) {
+      const status = response.error?.status;
+      let message = lang.common.message.error.api;
+      if (status === HttpStatus.FORBIDDEN) message = lang.common.message.error.emailExist;
+      return messageApi.error(message);
+    }
+    const signInData: AuthSignIn = { email: formData.email, password: formData.password };
+    const signInResponse = await signIn(signInData);
+    setAuth(signInResponse.data);
+    messageApi.success(lang.common.message.success.signUp);
+    setTimeout(() => router.push(HOME), 200);
   };
 
   return (
@@ -48,22 +71,21 @@ const SignUp: NextPage = () => {
           }
           bodyClassName="wrap-form"
         >
-          <Form<FormData> color="green" sizes="lg" initialData={initialData}>
-            <FormItem name="account">
-              <Input label={lang.common.form.label.account} addonBefore={<HiUser />} />
+          <Form<AuthSignUp> color="green" sizes="lg" initialData={initialData} onFinish={handleSubmit}>
+            <FormItem name="email" rules={email()}>
+              <Input label={lang.common.form.label.email} addonBefore={<HiMail />} />
             </FormItem>
-            <FormItem name="password">
+            <FormItem name="password" rules={password()}>
               <InputPassword label={lang.common.form.label.password} addonBefore={<HiLockClosed />} />
             </FormItem>
-            <FormItem name="phone">
-              <Input label={lang.common.form.label.phone} addonBefore={<HiPhone />} />
-            </FormItem>
-            <FormItem name="email">
-              <Input label={lang.common.form.label.email} addonBefore={<HiMail />} />
+            <FormItem name="phone" rules={phone()}>
+              <InputPhone label={lang.common.form.label.phone} addonBefore={<HiPhone />} />
             </FormItem>
 
             <div className="form-actions">
-              <Button rootClassName="actions-btn">{lang.auth.signUp.title}</Button>
+              <Button loading={loading} rootClassName="actions-btn">
+                {lang.auth.signUp.title}
+              </Button>
             </div>
 
             <Space rootClassName="form-note" align="middle" justify="center">

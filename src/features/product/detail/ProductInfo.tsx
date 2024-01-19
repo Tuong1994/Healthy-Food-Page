@@ -4,11 +4,11 @@ import { Lang } from "@/common/type";
 import { HiShoppingCart } from "react-icons/hi2";
 import { Product } from "@/services/product/type";
 import { ELang } from "@/common/enum";
+import { useDisplayInventoryStatus, useDisplayProductOrigin, useDisplayProductUnit } from "@/hooks";
 import ProductCardControl from "@/components/Page/ProductCard/ProductCardControl";
 import ProductCardLike from "@/components/Page/ProductCard/ProductCardLike";
 import Rate from "@/components/Page/Rate";
 import utils from "@/utils";
-import { useDisplayInventoryStatus, useDisplayProductOrigin, useDisplayProductUnit } from "@/hooks";
 
 const { Space, Divider, Button, Badge, Image, InfoRow, Grid, Typography } = UI;
 
@@ -77,7 +77,7 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ locale, lang, product }) => {
         <Divider />
 
         <Space align="middle" size="lg">
-          <ProductCardControl />
+          <ProductCardControl productId={product.id as string} />
           <Button color="green" sizes="lg">
             <Space align="middle">
               <HiShoppingCart />

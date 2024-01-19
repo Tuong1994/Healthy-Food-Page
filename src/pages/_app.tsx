@@ -1,7 +1,7 @@
 import React from "react";
 import type { AppProps } from "next/app";
 import Head from "next/head";
-import AppContainer from "@/components/Page/AppWrapper/AppContainer";
+import AppWrapper from "@/components/Page/AppWrapper";
 import "@/style/main.scss";
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -14,9 +14,9 @@ export default function App({ Component, pageProps }: AppProps) {
         <link rel="shortcut icon" href="/logo/logo-no-background-short.svg" />
       </Head>
 
-      <AppContainer>
+      <AppWrapper>
         <Component {...pageProps} />
-      </AppContainer>
+      </AppWrapper>
     </>
   );
 }

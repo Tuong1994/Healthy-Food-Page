@@ -4,6 +4,7 @@
   position: fixed;
   top: 0;
   right: 0;
+  z-index: 29;
   .message-item {
     min-width: max-content;
     width: $w-10 * 3;
@@ -31,7 +32,7 @@
         justify-content: center;
       }
       .content-message {
-        width: $w-full;
+        width: calc($w-full - 5rem);
         .message-text {
           margin-bottom: $m-1 + 0.5;
         }

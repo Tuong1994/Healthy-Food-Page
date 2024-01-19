@@ -1,7 +1,10 @@
 const page_components_en = {
   header: {
     category: "Categories",
-    cart: "Go to cart",
+    cart: {
+      note: "You're cart don't have any products",
+      action: "Go to cart"
+    },
     translate: {
       title: "Language",
       en: "English",
@@ -29,6 +32,11 @@ const page_components_en = {
     bad: "Bad",
     terrible: "Terrible",
     modalTitle: "Rate product",
+  },
+  auth: {
+    note: "Your session expired, please re-login",
+    logout: "Logout",
+    relogin: "Re-login",
   },
 };
 

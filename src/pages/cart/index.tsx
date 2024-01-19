@@ -4,9 +4,10 @@ import { UI } from "@/components";
 import { BreadcrumbItems } from "@/components/UI/Breadcrumb/type";
 import { useLang } from "@/hooks";
 import Link from "next/link";
-import CartConfirm from "@/features/cart/CartConfirm";
-import CartPayment from "@/features/cart/CartPayment";
-import CartEmpty from "@/features/cart/CartEmpty";
+import CartConfirm from "@/features/cart/components/CartConfirm";
+import CartPayment from "@/features/cart/components/CartPayment";
+import CartEmpty from "@/features/cart/components/CartEmpty";
+import useCartStore from "@/store/CartStore";
 import url from "@/common/constant/url";
 
 const { HOME } = url;
@@ -17,6 +18,8 @@ const isEmpty = false;
 
 const Cart: NextPage = () => {
   const { lang } = useLang();
+
+  const cart = useCartStore(state => state.cart)
 
   const [isConfirmed, setIsConfirmed] = React.useState<boolean>(false);
 

@@ -44,6 +44,16 @@ const common_en = {
       select: "Select",
       search: "Search",
     },
+    rule: {
+      required: "This field is required",
+      phone: "Phone invalid",
+      email: "Email invalid",
+      whiteSpace: "White space are not allowed",
+      min: "{{min}} is minimum",
+      max: "{{max}} is maximum",
+      minLength: "Must have at least {{min}} character",
+      maxLength: "Maximum length {{max}} characters",
+    },
   },
   unit: {
     quanity: "qty",
@@ -88,8 +98,20 @@ const common_en = {
     empty: "No data",
   },
   message: {
-    success: {},
-    error: {},
+    success: {
+      signIn: "Sign in success",
+      signUp: "Sign up success",
+      logout: "Logouted",
+      addItemCart: "Product is added to cart",
+      updateCart: "Cart been updated",
+    },
+    error: {
+      authEmail: "Email is not correct. Please try again",
+      authPassword: "Password is not correct. Please try again",
+      emailExist: "Email is already exist",
+      logout: "Logout failed",
+      api: "Api network failed",
+    },
   },
 };
 

@@ -46,7 +46,7 @@ const CartConfirm: React.FC<CartConfirmProps> = ({ handleConfirm }) => {
       id: "quantity",
       title: lang.common.table.head.quantity,
       dataIndex: "quantity",
-      render: (data: number) => <ProductCardControl defaultValue={data} min={1} />,
+      render: (data: number) => <ProductCardControl defaultValue={data} min={1} productId="" />,
     },
     {
       id: "price",

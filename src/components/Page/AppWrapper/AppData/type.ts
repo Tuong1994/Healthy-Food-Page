@@ -1,3 +1,4 @@
+import { Cart } from "@/services/cart/type";
 import { Category } from "@/services/category/type";
 
 export type CommonProps = {
@@ -7,4 +8,8 @@ export type CommonProps = {
 
 export type CategoriesWithSubsResponse = {
   data: Category[];
+} & CommonProps;
+
+export type CartByCustomerResponse = {
+  data: Cart | undefined;
 } & CommonProps;

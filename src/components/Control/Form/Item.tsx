@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import { Controller, useController } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";

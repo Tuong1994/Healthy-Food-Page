@@ -1,9 +1,9 @@
 import React from "react";
 import { UI } from "@/components";
-import { Product } from "@/services/product/type";
+import { Url } from "next/dist/shared/lib/router/router";
 import Link from "next/link";
 import url from "@/common/constant/url";
-import { Url } from "next/dist/shared/lib/router/router";
+import utils from "@/utils";
 
 const { PRODUCT_DETAIL } = url;
 
@@ -14,6 +14,7 @@ interface ProductCardImageProps {
   isNew: boolean;
   imgWidth: number | string;
   imgHeight: number | string;
+  rootClassName?: string;
   imageResponsiveClassName?: string;
 }
 
@@ -22,10 +23,13 @@ const ProductCardImage: React.FC<ProductCardImageProps> = ({
   isNew,
   imgWidth,
   imgHeight,
+  rootClassName = "",
   imageResponsiveClassName = "",
 }) => {
+  const mainClassName = utils.formatClassName("card-image", rootClassName);
+
   return (
-    <div className="product-card-image">
+    <div className={mainClassName}>
       <Link href={link}>
         <Image
           imgWidth={imgWidth}

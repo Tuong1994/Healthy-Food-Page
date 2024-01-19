@@ -10,7 +10,7 @@ const { Dropdown, Space } = UI;
 interface HeaderTranslateProps {}
 
 const HeaderTranslate: React.FC<HeaderTranslateProps> = () => {
-  const {type, lang, handleSwitchLang} = useLang()
+  const {locale, lang, handleSwitchLang} = useLang()
 
   const items: DropdownItems = [
     {
@@ -34,7 +34,7 @@ const HeaderTranslate: React.FC<HeaderTranslateProps> = () => {
   ];
 
   const renderLabel = () => {
-    if (type === ELang.EN) return "/flag/en_flag.svg";
+    if (locale === ELang.EN) return "/flag/en_flag.svg";
     return "/flag/vn_flag.svg";
   };
 

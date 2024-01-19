@@ -11,11 +11,13 @@ const Method = {
 
 export const defaultApiResponse = <T>(): ApiResponse<T> => ({ data: {} as T, success: false });
 
-const ApiResponseError = (error: any) => {
+export const ApiResponseError = (error: any) => {
   let responseError: ResponseError = { status: 0, message: "" };
+  const status = error.response.data.statusCode;
+  const message = error.response?.data.message;
   responseError = {
-    status: error.response?.status ?? 0,
-    message: error.response?.statusText ?? "",
+    status: status ? status : error.response?.status || 0,
+    message: message ? message : error.response?.statusText || "",
   };
   return responseError;
 };

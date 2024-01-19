@@ -2,14 +2,20 @@ import { NextPage } from "next";
 import { UI, Control } from "@/components";
 import { HiLockClosed } from "react-icons/hi2";
 import { HiMail } from "react-icons/hi";
-import { useLang } from "@/hooks";
+import { Auth, AuthSignIn } from "@/services/auth/type";
+import { signIn } from "@/services/auth/api";
+import { useAsync, useLang, useRule } from "@/hooks";
+import { useRouter } from "next/router";
+import { HttpStatus } from "@/services/axios";
+import useMessage from "@/components/UI/ToastMessage/useMessage";
 import AuthHeader from "@/components/Page/Auth/AuthHeader";
 import AuthBack from "@/components/Page/Auth/AuthBack";
 import AuthNote from "@/components/Page/Auth/AuthNote";
 import Link from "next/link";
+import useAuthStore from "@/store/AuthStore";
 import url from "@/common/constant/url";
 
-const { AUTH_SIGN_UP } = url;
+const { AUTH_SIGN_UP, HOME } = url;
 
 const { Card, Space, Button, Typography } = UI;
 
@@ -17,17 +23,36 @@ const { Title } = Typography;
 
 const { Form, FormItem, Input, InputPassword } = Control;
 
-interface FormData {
-  email: string;
-  password: string;
-}
-
 const SignIn: NextPage = () => {
+  const messageApi = useMessage();
+
   const { lang } = useLang();
 
-  const initialData: FormData = {
+  const { loading, call: submit } = useAsync<Auth>(signIn);
+
+  const { email, password } = useRule();
+
+  const router = useRouter();
+
+  const setAuth = useAuthStore((state) => state.setAuth);
+
+  const initialData: AuthSignIn = {
     email: "",
     password: "",
+  };
+
+  const handleSubmit = async (formData: AuthSignIn) => {
+    const response = await submit(formData);
+    if (!response.success) {
+      const status = response.error?.status;
+      let message = lang.common.message.error.api;
+      if (status === HttpStatus.NOT_FOUND) message = lang.common.message.error.authEmail;
+      if (status === HttpStatus.FORBIDDEN) message = lang.common.message.error.authPassword;
+      return messageApi.error(message);
+    }
+    setAuth(response.data);
+    messageApi.success(lang.common.message.success.signIn);
+    setTimeout(() => router.push(HOME), 200);
   };
 
   return (
@@ -44,18 +69,12 @@ const SignIn: NextPage = () => {
           }
           bodyClassName="wrap-form"
         >
-          <Form<FormData> color="green" sizes="lg" initialData={initialData}>
-            <FormItem name="email">
-              <Input
-                label={lang.common.form.label.email}
-                addonBefore={<HiMail />}
-              />
+          <Form<AuthSignIn> color="green" sizes="lg" initialData={initialData} onFinish={handleSubmit}>
+            <FormItem name="email" rules={email()}>
+              <Input label={lang.common.form.label.email} addonBefore={<HiMail />} />
             </FormItem>
-            <FormItem name="password">
-              <InputPassword
-                label={lang.common.form.label.password}
-                addonBefore={<HiLockClosed />}
-              />
+            <FormItem name="password" rules={password()}>
+              <InputPassword label={lang.common.form.label.password} addonBefore={<HiLockClosed />} />
             </FormItem>
 
             <Space justify="end">
@@ -63,7 +82,7 @@ const SignIn: NextPage = () => {
             </Space>
 
             <div className="form-actions">
-              <Button rootClassName="actions-btn">
+              <Button rootClassName="actions-btn" loading={loading}>
                 {lang.auth.signIn.title}
               </Button>
               <Link href={AUTH_SIGN_UP}>

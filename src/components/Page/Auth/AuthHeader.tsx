@@ -9,7 +9,7 @@ const { Select } = Control;
 interface AuthHeaderProps {}
 
 const AuthHeader: React.FC<AuthHeaderProps> = () => {
-  const { type, handleSwitchLang } = useLang();
+  const { locale, handleSwitchLang } = useLang();
 
   const options: SelectOptions = [
     { label: "EN", value: ELang.EN },
@@ -24,7 +24,7 @@ const AuthHeader: React.FC<AuthHeaderProps> = () => {
         color="green"
         hasSearch={false}
         hasClear={false}
-        defaultValue={type}
+        defaultValue={locale}
         options={options}
         onChangeSelect={handleSelect}
       />

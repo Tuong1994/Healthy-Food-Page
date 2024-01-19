@@ -62,6 +62,7 @@ export default ProductPage;
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { query } = context;
   const apiQuery = { productId: query.id as string, langCode: query.langCode as ELang };
+  
   const productResponse = await getProduct(apiQuery);
   let productsResponse: ApiResponse<Paging<ProductType>> = defaultApiResponse<Paging<ProductType>>();
   if (productResponse && productResponse.success)
@@ -71,6 +72,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       langCode: query.langCode as ELang,
       categoryId: productResponse.data.categoryId,
     });
+
   return {
     props: {
       productResponse,

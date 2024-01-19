@@ -44,6 +44,16 @@ const common_vn = {
       select: "Chọn",
       search: "Tìm kiếm",
     },
+    rule: {
+      required: "Trường này là bắt buộc",
+      phone: "Điện thoại không hợp lệ",
+      email: "Email không hợp lệ",
+      whiteSpace: "Không được có khoảng trắng",
+      min: "{{min}} là tối thiểu",
+      max: "{{max}} là tối đa",
+      minLength: "Phải có ít nhất {{min}} ký tự",
+      maxLength: "Độ dài tối đa là {{max}} ký tự",
+    },
   },
   unit: {
     quanity: "sl",
@@ -88,8 +98,20 @@ const common_vn = {
     empty: "Không có dữ liệu",
   },
   message: {
-    success: {},
-    error: {},
+    success: {
+      signIn: "Đăng nhập thành công",
+      signUp: "Đăng ký thành công",
+      logout: "Đã đăng xuất",
+      addItemCart: "Sản phẩm đã được thêm vào giỏ hàng",
+      updateCart: "Giỏ hàng đã được cập nhật",
+    },
+    error: {
+      authEmail: "Email không đúng. Vui lòng thử lại",
+      authPassword: "Mật khẩu không đúng. Vui lòng thử lại",
+      emailExist: "Email này đã tồn tại",
+      logout: "Lỗi đăng xuất",
+      api: "Đã xảy ra lỗi",
+    },
   },
 };
 
