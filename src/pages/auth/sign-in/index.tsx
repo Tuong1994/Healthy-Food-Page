@@ -1,27 +1,24 @@
 import { NextPage } from "next";
-import { UI, Control } from "@/components";
+import { Card, Space, Button, Typography } from "@/components/UI";
+import { Form, FormItem, Input, InputPassword } from "@/components/Control";
+import type { Auth, AuthSignIn } from "@/services/auth/type";
+import { signIn } from "@/services/auth/api";
 import { HiLockClosed } from "react-icons/hi2";
 import { HiMail } from "react-icons/hi";
-import { Auth, AuthSignIn } from "@/services/auth/type";
-import { signIn } from "@/services/auth/api";
 import { useAsync, useLang, useRule } from "@/hooks";
 import { useRouter } from "next/router";
 import { HttpStatus } from "@/services/axios";
 import useMessage from "@/components/UI/ToastMessage/useMessage";
-import AuthHeader from "@/components/Page/Auth/AuthHeader";
-import AuthBack from "@/components/Page/Auth/AuthBack";
-import AuthNote from "@/components/Page/Auth/AuthNote";
-import Link from "next/link";
 import useAuthStore from "@/store/AuthStore";
+import AuthHeader from "@/features/auth/AuthHeader";
+import AuthBack from "@/features/auth/AuthBack";
+import AuthNote from "@/features/auth/AuthNote";
+import Link from "next/link";
 import url from "@/common/constant/url";
 
 const { AUTH_SIGN_UP, HOME } = url;
 
-const { Card, Space, Button, Typography } = UI;
-
 const { Title } = Typography;
-
-const { Form, FormItem, Input, InputPassword } = Control;
 
 const SignIn: NextPage = () => {
   const messageApi = useMessage();

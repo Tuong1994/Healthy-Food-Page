@@ -1,13 +1,10 @@
-import React from "react";
-import { UI, Control } from "@/components";
-import { ModalProps } from "@/components/UI/Modal";
-import { Lang } from "@/common/type";
+import { FC } from "react";
+import { Divider, Modal } from "@/components/UI";
+import { Form, FormItem, Input, TextArea } from "@/components/Control";
+import type { ModalProps } from "@/components/UI/Modal";
+import type { Lang } from "@/common/type";
 import RateRange from "./RateRange";
 import useFormStore from "@/components/Control/Form/FormStore";
-
-const { Divider, Modal } = UI;
-
-const { Form, FormItem, Input, TextArea } = Control;
 
 type FormData = {
   name: string;
@@ -20,7 +17,7 @@ interface RateModalProps extends ModalProps {
   lang: Lang;
 }
 
-const RateModal: React.FC<RateModalProps> = ({ sizes = "sm", color = "green", lang, ...restProps }) => {
+const RateModal: FC<RateModalProps> = ({ sizes = "sm", color = "green", lang, ...restProps }) => {
   const form = useFormStore((state) => state.form);
 
   const initialData: FormData = {
@@ -30,9 +27,7 @@ const RateModal: React.FC<RateModalProps> = ({ sizes = "sm", color = "green", la
     note: "",
   };
 
-  const handleSubmit = () => {
-    console.log(form?.handleSubmit());
-  };
+  const handleSubmit = () => {};
 
   return (
     <Modal
@@ -41,13 +36,13 @@ const RateModal: React.FC<RateModalProps> = ({ sizes = "sm", color = "green", la
       sizes={sizes}
       color={color}
       okButtonProps={{ type: "submit" }}
-      onOk={handleSubmit}
+      onOk={form?.handleSubmit()}
     >
       <RateRange />
 
       <Divider />
 
-      <Form<FormData> initialData={initialData} onFinish={(data) => console.log(data)}>
+      <Form<FormData> initialData={initialData} onFinish={handleSubmit}>
         <FormItem name="name" disabled>
           <Input label={lang.common.form.label.fullName} />
         </FormItem>

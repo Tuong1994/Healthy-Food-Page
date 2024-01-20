@@ -1,6 +1,17 @@
-"use client";
-
-import React from "react";
+import {
+  InputHTMLAttributes,
+  CSSProperties,
+  ReactNode,
+  ForwardRefRenderFunction,
+  ChangeEvent,
+  useContext,
+  useEffect,
+  useState,
+  useRef,
+  useCallback,
+  useMemo,
+  forwardRef,
+} from "react";
 import { ControlColor, ControlShape, Option, SelectOptions } from "../type";
 import { ComponentSize } from "@/common/type";
 import { useFormContext } from "react-hook-form";
@@ -12,15 +23,15 @@ import SelectOption from "./Option";
 import useLayout from "@/components/UI/Layout/useLayout";
 import utils from "@/utils";
 
-export interface TreeSelectProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface TreeSelectProps extends InputHTMLAttributes<HTMLInputElement> {
   rootClassName?: string;
   labelClassName?: string;
   inputClassName?: string;
-  rootStyle?: React.CSSProperties;
-  labelStyle?: React.CSSProperties;
-  label?: React.ReactNode | React.ReactNode[];
-  addonBefore?: React.ReactNode | React.ReactNode[];
-  addonAfter?: React.ReactNode | React.ReactNode[];
+  rootStyle?: CSSProperties;
+  labelStyle?: CSSProperties;
+  label?: ReactNode | ReactNode[];
+  addonBefore?: ReactNode | ReactNode[];
+  addonAfter?: ReactNode | ReactNode[];
   options?: SelectOptions;
   defaultValue?: number | string;
   sizes?: ComponentSize;
@@ -37,10 +48,10 @@ export interface TreeSelectProps extends React.InputHTMLAttributes<HTMLInputElem
   onChangeSearch?: (text: string) => void;
   onChangeSelect?: (value: string | number | boolean) => void;
   onChangePage?: (page: number) => void;
-  dropdownRender?: (menu: React.ReactNode) => React.ReactNode | React.ReactNode[];
+  dropdownRender?: (menu: ReactNode) => ReactNode | ReactNode[];
 }
 
-const TreeSelect: React.ForwardRefRenderFunction<HTMLInputElement, TreeSelectProps> = (
+const TreeSelect: ForwardRefRenderFunction<HTMLInputElement, TreeSelectProps> = (
   {
     rootClassName = "",
     labelClassName = "",
@@ -79,21 +90,21 @@ const TreeSelect: React.ForwardRefRenderFunction<HTMLInputElement, TreeSelectPro
 
   const { layoutTheme: theme } = layoutValue;
 
-  const { color: rhfColor, sizes: rhfSizes, shape: rhfShape } = React.useContext(FormContext);
+  const { color: rhfColor, sizes: rhfSizes, shape: rhfShape } = useContext(FormContext);
 
-  const { isRhf, rhfName, rhfError, rhfValue, rhfDisabled } = React.useContext(FormItemContext);
+  const { isRhf, rhfName, rhfError, rhfValue, rhfDisabled } = useContext(FormItemContext);
 
-  const [currentPage, setCurrentPage] = React.useState<number>(1);
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
-  const [search, setSearch] = React.useState<string>("");
+  const [search, setSearch] = useState<string>("");
 
-  const [selectedOption, setSelectedOption] = React.useState<Option | null>(null);
+  const [selectedOption, setSelectedOption] = useState<Option | null>(null);
 
-  const [dropdown, setDropdown] = React.useState<boolean>(false);
+  const [dropdown, setDropdown] = useState<boolean>(false);
 
-  const [touched, setTouched] = React.useState<boolean>(false);
+  const [touched, setTouched] = useState<boolean>(false);
 
-  const selectRef = React.useRef<HTMLDivElement>(null);
+  const selectRef = useRef<HTMLDivElement>(null);
 
   const render = useRender(dropdown);
 
@@ -103,27 +114,27 @@ const TreeSelect: React.ForwardRefRenderFunction<HTMLInputElement, TreeSelectPro
 
   const totalPages = Math.ceil(total / limit);
 
-  const triggerValidation = React.useCallback(() => {
+  const triggerValidation = useCallback(() => {
     if (touched && !dropdown && !rhfValue) rhfMethods.trigger(rhfName);
     else if (touched && !dropdown && rhfValue) rhfMethods.trigger(rhfName);
     if (touched && !dropdown) setTouched(false);
   }, [touched, dropdown, rhfMethods, rhfName, rhfValue]);
 
   // Trigger validation
-  React.useEffect(() => {
+  useEffect(() => {
     if (!isRhf) return;
     triggerValidation();
   }, [isRhf, triggerValidation]);
 
   // Set default option
-  React.useEffect(() => {
+  useEffect(() => {
     let defaultOption: Option | null = null;
     if (!isRhf) defaultOption = [...options].find((option) => option.value === defaultValue) as Option;
     else defaultOption = [...options].find((option) => option.value === rhfValue) as Option;
     setSelectedOption(defaultOption);
   }, [defaultValue, rhfValue, isRhf]);
 
-  const controlPlaceHolder = React.useMemo(() => {
+  const controlPlaceHolder = useMemo(() => {
     if (placeholder) return placeholder;
     if (dropdown && hasSearch) return "Search";
     return "Select option";
@@ -192,7 +203,7 @@ const TreeSelect: React.ForwardRefRenderFunction<HTMLInputElement, TreeSelectPro
     setTouched(true);
   };
 
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setSearch(value);
     setSelectedOption(null);
@@ -272,4 +283,4 @@ const TreeSelect: React.ForwardRefRenderFunction<HTMLInputElement, TreeSelectPro
   );
 };
 
-export default React.forwardRef(TreeSelect);
+export default forwardRef(TreeSelect);

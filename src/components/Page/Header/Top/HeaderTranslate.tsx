@@ -1,16 +1,14 @@
-import React from "react";
-import { UI } from "@/components";
-import { DropdownItems } from "@/components/UI/Dropdown/type";
+import { FC } from "react";
+import { Dropdown, Space } from "@/components/UI";
+import type { DropdownItems } from "@/components/UI/Dropdown/type";
 import { useLang } from "@/hooks";
 import { ELang } from "@/common/enum";
 import Image from "next/image";
 
-const { Dropdown, Space } = UI;
-
 interface HeaderTranslateProps {}
 
-const HeaderTranslate: React.FC<HeaderTranslateProps> = () => {
-  const {locale, lang, handleSwitchLang} = useLang()
+const HeaderTranslate: FC<HeaderTranslateProps> = () => {
+  const { locale, lang, handleSwitchLang } = useLang();
 
   const items: DropdownItems = [
     {

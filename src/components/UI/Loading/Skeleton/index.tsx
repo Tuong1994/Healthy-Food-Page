@@ -1,4 +1,4 @@
-import React from "react";
+import { HTMLAttributes, ForwardRefRenderFunction, CSSProperties, Fragment, forwardRef } from "react";
 import {
   ButtonSkeletonProps,
   ImageSkeletonProps,
@@ -8,7 +8,7 @@ import {
 } from "./type";
 import utils from "@/utils";
 
-interface CommonProps extends React.HTMLAttributes<HTMLDivElement> {
+interface CommonProps extends HTMLAttributes<HTMLDivElement> {
   type?: SkeletonType;
   rootClassName?: string;
 }
@@ -21,7 +21,7 @@ type SkeletonProps = (
 ) &
   CommonProps;
 
-const Skeleton: React.ForwardRefRenderFunction<HTMLDivElement, SkeletonProps> = (
+const Skeleton: ForwardRefRenderFunction<HTMLDivElement, SkeletonProps> = (
   { rootClassName = "", type, options, style, ...restProps },
   ref
 ) => {
@@ -31,7 +31,7 @@ const Skeleton: React.ForwardRefRenderFunction<HTMLDivElement, SkeletonProps> = 
 
   const className = utils.formatClassName("skeleton", shapeClassName, rootClassName);
 
-  const inlineStyle = (): React.CSSProperties => {
+  const inlineStyle = (): CSSProperties => {
     const rootStyle = { ...style };
     if (type !== "image") {
       const width = typeof options?.width === "number" ? `${options?.width}px` : options?.width;
@@ -53,7 +53,7 @@ const Skeleton: React.ForwardRefRenderFunction<HTMLDivElement, SkeletonProps> = 
   };
 
   return (
-    <React.Fragment>
+    <Fragment>
       {type === "title" && (
         <div style={inlineStyle()} {...commonProps} className={`${className} skeleton-title`}></div>
       )}
@@ -78,8 +78,8 @@ const Skeleton: React.ForwardRefRenderFunction<HTMLDivElement, SkeletonProps> = 
       {type === "button" && (
         <div style={inlineStyle()} {...commonProps} className={`${className} skeleton-button`}></div>
       )}
-    </React.Fragment>
+    </Fragment>
   );
 };
 
-export default React.forwardRef(Skeleton);
+export default forwardRef(Skeleton);

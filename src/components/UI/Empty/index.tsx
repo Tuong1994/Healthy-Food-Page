@@ -1,19 +1,17 @@
-import React from "react";
-import Paragraph, { ParagraphProps } from "../Typography/Paragraph";
+import { HTMLAttributes, ReactNode, ForwardRefRenderFunction, forwardRef } from "react";
 import { HiOutlineDocumentSearch } from "react-icons/hi";
+import Paragraph, { ParagraphProps } from "../Typography/Paragraph";
 import utils from "@/utils";
 
-type EmptyType = "";
-
-export interface EmptyProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface EmptyProps extends HTMLAttributes<HTMLDivElement> {
   rootClassName?: string;
-  icon?: React.ReactNode;
+  icon?: ReactNode;
   text?: string;
   textProps?: ParagraphProps;
-  children?: React.ReactNode;
+  children?: ReactNode;
 }
 
-const Empty: React.ForwardRefRenderFunction<HTMLDivElement, EmptyProps> = (
+const Empty: ForwardRefRenderFunction<HTMLDivElement, EmptyProps> = (
   {
     rootClassName = "",
     children,
@@ -43,4 +41,4 @@ const Empty: React.ForwardRefRenderFunction<HTMLDivElement, EmptyProps> = (
   );
 };
 
-export default React.forwardRef(Empty);
+export default forwardRef(Empty);

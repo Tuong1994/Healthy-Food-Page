@@ -1,4 +1,4 @@
-import React from "react";
+import { useMemo } from "react";
 import { SelectDate } from "../type";
 
 const useDateRange = (year: number, month: number) => {
@@ -21,7 +21,7 @@ const useDateRange = (year: number, month: number) => {
     };
   };
 
-  const dateRange = React.useMemo(() => {
+  const dateRange = useMemo(() => {
     const dates: SelectDate[] = [];
 
     for (let i = firstDayOfMonth; i > 0; i--) {

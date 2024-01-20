@@ -1,15 +1,15 @@
-import React from "react";
+import { FC, Fragment } from "react";
 import { Image } from "@/components/UI";
 import { HiChevronRight } from "react-icons/hi2";
 import { useCategoriesData } from "../AppWrapper/AppData/Provider";
 import { useRouter } from "next/router";
+import { ESort } from "@/common/enum";
 import CategoriesLoading from "./Loading";
 import NoDataError from "../Error/NoDataError";
-import Link from "next/link";
 import useCategoryStore from "@/store/CategoryStore";
+import Link from "next/link";
 import utils from "@/utils";
 import url from "@/common/constant/url";
-import { ESort } from "@/common/enum";
 
 const { PRODUCT_LIST } = url;
 
@@ -17,7 +17,7 @@ interface CategoriesProps {
   highlight?: boolean;
 }
 
-const Categories: React.FC<CategoriesProps> = ({ highlight = false }) => {
+const Categories: FC<CategoriesProps> = ({ highlight = false }) => {
   const { data: categoriesWithSubs, loading, error } = useCategoriesData();
 
   const { query } = useRouter();
@@ -77,10 +77,10 @@ const Categories: React.FC<CategoriesProps> = ({ highlight = false }) => {
   };
 
   return (
-    <React.Fragment>
+    <Fragment>
       {isHighLight && <div className={backdropClassName} onClick={showCategories} />}
       <div className={mainClassName}>{renderContent()}</div>
-    </React.Fragment>
+    </Fragment>
   );
 };
 

@@ -1,13 +1,11 @@
-import React from "react";
-import { UI } from "@/components";
-
-const { Space, Avatar, Typography } = UI;
+import { FC } from "react";
+import { Space, Avatar, Typography } from "@/components/UI";
 
 const { Paragraph } = Typography;
 
 interface CommentAuthorProps {}
 
-const CommentAuthor: React.FC<CommentAuthorProps> = () => {
+const CommentAuthor: FC<CommentAuthorProps> = () => {
   return (
     <Space align="middle">
       <Avatar color="green" />

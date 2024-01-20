@@ -1,33 +1,31 @@
-"use client";
-
-import React from "react";
+import { CSSProperties, ReactNode, FC, TouchEvent, MouseEvent, useState, useRef } from "react";
 
 export interface DraggableProps {
   rootClassName?: string;
-  style?: React.CSSProperties;
-  children?: React.ReactNode | React.ReactNode[];
+  style?: CSSProperties;
+  children?: ReactNode | ReactNode[];
 }
 
-const Draggable: React.FC<DraggableProps> = ({ rootClassName = "", style, children }) => {
-  const [touchX, setTouchX] = React.useState<number>(0);
+const Draggable: FC<DraggableProps> = ({ rootClassName = "", style, children }) => {
+  const [touchX, setTouchX] = useState<number>(0);
 
-  const [touchY, setTouchY] = React.useState<number>(0);
+  const [touchY, setTouchY] = useState<number>(0);
 
-  const [mouseX, setMouseX] = React.useState<number>(0);
+  const [mouseX, setMouseX] = useState<number>(0);
 
-  const [mouseY, setMouseY] = React.useState<number>(0);
+  const [mouseY, setMouseY] = useState<number>(0);
 
-  const [dragged, setDragged] = React.useState<boolean>(false);
+  const [dragged, setDragged] = useState<boolean>(false);
 
-  const dragElRef = React.useRef<HTMLDivElement>(null);
+  const dragElRef = useRef<HTMLDivElement>(null);
 
-  const onTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+  const onTouchStart = (e: TouchEvent<HTMLDivElement>) => {
     setDragged(true);
     setTouchX(e.touches[0].screenX - e.currentTarget.getBoundingClientRect().left);
     setTouchY(e.touches[0].screenY - e.currentTarget.getBoundingClientRect().top);
   };
 
-  const onTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+  const onTouchMove = (e: TouchEvent<HTMLDivElement>) => {
     if (!dragged) return;
     if (dragElRef.current && dragElRef.current !== null) {
       const left = e.touches[0].screenX - touchX;
@@ -39,7 +37,7 @@ const Draggable: React.FC<DraggableProps> = ({ rootClassName = "", style, childr
 
   const onTouchEnd = () => setDragged(false);
 
-  const onMouseStart = (e: React.MouseEvent<HTMLDivElement>) => {
+  const onMouseStart = (e: MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
     setDragged(true);
@@ -47,7 +45,7 @@ const Draggable: React.FC<DraggableProps> = ({ rootClassName = "", style, childr
     setMouseY(e.screenY - e.currentTarget.getBoundingClientRect().top);
   };
 
-  const onMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  const onMouseMove = (e: MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
     if (!dragged) return;

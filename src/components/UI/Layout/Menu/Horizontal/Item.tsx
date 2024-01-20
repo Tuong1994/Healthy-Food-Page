@@ -1,4 +1,4 @@
-import React from "react";
+import { FC, CSSProperties } from "react";
 import { MenuItem } from "../type";
 import { HiOutlineChevronRight } from "react-icons/hi2";
 import { useRender } from "@/hooks";
@@ -8,11 +8,11 @@ interface MenuHorizontalItemProps {
   item: MenuItem;
   activeId: string[];
   itemClassName?: string;
-  itemStyle?: React.CSSProperties;
+  itemStyle?: CSSProperties;
   handleOpenMenu: (id: string) => void;
 }
 
-const MenuHorizontalItem: React.FC<MenuHorizontalItemProps> = ({
+const MenuHorizontalItem: FC<MenuHorizontalItemProps> = ({
   itemClassName = "",
   item,
   activeId,

@@ -1,5 +1,5 @@
-import React from "react";
-import { UI } from "@/components";
+import { FC, ChangeEvent, FocusEvent, useState, useEffect } from "react";
+import { Space, Loading } from "@/components/UI";
 import { useRouter } from "next/router";
 import { HiMinus, HiPlus } from "react-icons/hi2";
 import useAuthStore from "@/store/AuthStore";
@@ -9,13 +9,11 @@ import utils from "@/utils";
 
 const { AUTH_SIGN_IN } = url;
 
-const { Space, Loading } = UI;
-
 const { Spinner } = Loading;
 
 const ICON_SIZE = 20;
 
-interface ProductCardControlProps {
+interface QuantityControlProps {
   productId: string;
   rootClassName?: string;
   defaultValue?: number;
@@ -23,7 +21,7 @@ interface ProductCardControlProps {
   onChangeInput?: (value: number) => void;
 }
 
-const ProductCardControl: React.FC<ProductCardControlProps> = ({
+const QuantityControl: FC<QuantityControlProps> = ({
   rootClassName = "",
   productId = "",
   defaultValue = 0,
@@ -32,7 +30,7 @@ const ProductCardControl: React.FC<ProductCardControlProps> = ({
 }) => {
   const { loading, handlePurchase } = usePurchase();
 
-  const [quantity, setQuantity] = React.useState<number>(defaultValue);
+  const [quantity, setQuantity] = useState<number>(defaultValue);
 
   const auth = useAuthStore((state) => state.auth);
 
@@ -44,15 +42,15 @@ const ProductCardControl: React.FC<ProductCardControlProps> = ({
 
   const mainClassName = utils.formatClassName("product-card-action", rootClassName);
 
-  React.useEffect(() => setQuantity(defaultValue), [defaultValue]);
+  useEffect(() => setQuantity(defaultValue), [defaultValue]);
 
-  const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
     const value = Number(e.target.value);
     setQuantity(value);
     onChangeInput?.(value);
   };
 
-  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+  const handleBlur = (e: FocusEvent<HTMLInputElement>) => {
     if (!auth.isAuth) return router.push(AUTH_SIGN_IN);
     const value = Number(e.target.value);
     handlePurchase(productId, value);
@@ -85,4 +83,4 @@ const ProductCardControl: React.FC<ProductCardControlProps> = ({
   );
 };
 
-export default ProductCardControl;
+export default QuantityControl;

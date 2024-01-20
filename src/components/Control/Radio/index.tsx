@@ -1,6 +1,14 @@
-'use client'
-
-import React from "react";
+import {
+  InputHTMLAttributes,
+  CSSProperties,
+  ReactNode,
+  ForwardRefRenderFunction,
+  ChangeEvent,
+  useContext,
+  useEffect,
+  useState,
+  forwardRef,
+} from "react";
 import { useFormContext } from "react-hook-form";
 import { ComponentColor, ComponentSize } from "@/common/type";
 import FormContext from "../Form/FormContext";
@@ -8,14 +16,14 @@ import FormItemContext from "../Form/FormItemContext";
 import useLayout from "@/components/UI/Layout/useLayout";
 import utils from "@/utils";
 
-export interface RadioProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface RadioProps extends InputHTMLAttributes<HTMLInputElement> {
   rootClassName?: string;
   labelClassName?: string;
   controlClassName?: string;
-  rootStyle?: React.CSSProperties;
-  labelStyle?: React.CSSProperties;
-  controlStyle?: React.CSSProperties;
-  label?: React.ReactNode | React.ReactNode[];
+  rootStyle?: CSSProperties;
+  labelStyle?: CSSProperties;
+  controlStyle?: CSSProperties;
+  label?: ReactNode | ReactNode[];
   sizes?: ComponentSize;
   color?: Exclude<ComponentColor, "gray">;
   required?: boolean;
@@ -23,7 +31,7 @@ export interface RadioProps extends React.InputHTMLAttributes<HTMLInputElement> 
   onCheck?: (value: any) => void;
 }
 
-const Radio: React.ForwardRefRenderFunction<HTMLInputElement, RadioProps> = (
+const Radio: ForwardRefRenderFunction<HTMLInputElement, RadioProps> = (
   {
     rootClassName = "",
     labelClassName = "",
@@ -52,11 +60,11 @@ const Radio: React.ForwardRefRenderFunction<HTMLInputElement, RadioProps> = (
 
   const { layoutTheme: theme } = layoutValue;
 
-  const { color: rhfColor, sizes: rhfSizes } = React.useContext(FormContext);
+  const { color: rhfColor, sizes: rhfSizes } = useContext(FormContext);
 
-  const { isRhf, rhfValue, rhfName, rhfDisabled, rhfError, rhfOnChange } = React.useContext(FormItemContext);
+  const { isRhf, rhfValue, rhfName, rhfDisabled, rhfError, rhfOnChange } = useContext(FormItemContext);
 
-  const [isChecked, setIsChecked] = React.useState<boolean>(checked);
+  const [isChecked, setIsChecked] = useState<boolean>(checked);
 
   const controlName = rhfName ? rhfName : name;
 
@@ -95,12 +103,12 @@ const Radio: React.ForwardRefRenderFunction<HTMLInputElement, RadioProps> = (
 
   const controlCheckClassName = utils.formatClassName("group-checked", controlClassName);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!isRhf) return setIsChecked(checked);
     if (isRhf && rhfValue == value) return setIsChecked(true);
   }, [value, checked, isRhf, rhfValue]);
 
-  const handleChecked = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChecked = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     const checked = e.target.checked;
     setIsChecked(checked);
@@ -139,4 +147,4 @@ const Radio: React.ForwardRefRenderFunction<HTMLInputElement, RadioProps> = (
   );
 };
 
-export default React.forwardRef(Radio);
+export default forwardRef(Radio);

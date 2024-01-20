@@ -1,17 +1,17 @@
-import React from "react";
+import { HTMLAttributes, ReactNode, ForwardRefRenderFunction, forwardRef } from "react";
 import { ComponentAligns, ComponentJustify } from "@/common/type";
 import { GridRowContext } from "./Context";
 import utils from "@/utils";
 
-export interface GridRowProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface GridRowProps extends HTMLAttributes<HTMLDivElement> {
   rootClassName?: string;
-  children?: React.ReactNode | React.ReactNode[];
+  children?: ReactNode | ReactNode[];
   gutters?: [number?, number?];
   justify?: ComponentJustify;
   align?: ComponentAligns;
 }
 
-const GridRow: React.ForwardRefRenderFunction<HTMLDivElement, GridRowProps> = (
+const GridRow: ForwardRefRenderFunction<HTMLDivElement, GridRowProps> = (
   { rootClassName = "", style, gutters = [], justify = "start", align = "top", children, ...restProps },
   ref
 ) => {
@@ -36,4 +36,4 @@ const GridRow: React.ForwardRefRenderFunction<HTMLDivElement, GridRowProps> = (
   );
 };
 
-export default React.forwardRef(GridRow);
+export default forwardRef(GridRow);

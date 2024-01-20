@@ -1,8 +1,10 @@
+import { ReactNode } from "react";
+
 export type MenuItem = {
   id: string;
   isRoot: boolean;
-  label: React.ReactNode | React.ReactNode[];
-  icon?: React.ReactNode | React.ReactNode[];
+  label: ReactNode | ReactNode[];
+  icon?: ReactNode | ReactNode[];
   children?: MenuItem[];
 };
 

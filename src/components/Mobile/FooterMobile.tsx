@@ -1,4 +1,4 @@
-import React from "react";
+import { FC, useMemo } from "react";
 import { HiShoppingBag, HiShoppingCart, HiHeart, HiUser } from "react-icons/hi";
 import { usePathname } from "next/navigation";
 import { useLang, useNotDisplay } from "@/hooks";
@@ -14,14 +14,14 @@ const isAuth = true;
 
 interface FooterMobileProps {}
 
-const FooterMobile: React.FC<FooterMobileProps> = () => {
+const FooterMobile: FC<FooterMobileProps> = () => {
   const { lang } = useLang();
 
   const pathname = usePathname();
 
   const notDisplay = useNotDisplay();
 
-  const items = React.useMemo(
+  const items = useMemo(
     () => [
       { id: "1", label: lang.common.menu.mart, icon: <HiShoppingBag size={ICON_SIZE} />, path: HOME },
       { id: "2", label: lang.common.menu.cart, icon: <HiShoppingCart size={ICON_SIZE} />, path: CART },
@@ -50,7 +50,7 @@ const FooterMobile: React.FC<FooterMobileProps> = () => {
     });
   };
 
-  if (notDisplay) return <React.Fragment></React.Fragment>;
+  if (notDisplay) return null;
 
   return <div className="footer-mobile">{renderItems()}</div>;
 };

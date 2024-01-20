@@ -1,6 +1,15 @@
-"use client";
-
-import React from "react";
+import {
+  InputHTMLAttributes,
+  CSSProperties,
+  ForwardRefRenderFunction,
+  ReactNode,
+  ChangeEvent,
+  DragEvent,
+  useContext,
+  useState,
+  useEffect,
+  forwardRef,
+} from "react";
 import { ControlColor, ControlShape, UploadError, UploadItem, UploadItems } from "@/components/Control/type";
 import { ACCEPT_IMAGE_FILE_TYPE, DEFAULT_FILE_SIZE } from "../../constant";
 import { NoteMessage } from "@/components/UI";
@@ -9,12 +18,12 @@ import ViewArea from "./ViewArea";
 import FormContext from "@/components/Control/Form/FormContext";
 import utils from "@/utils";
 
-export interface MultipleImageUploadProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface MultipleImageUploadProps extends InputHTMLAttributes<HTMLInputElement> {
   rootClassName?: string;
   controlClassName?: string;
-  rootStyle?: React.CSSProperties;
-  controlStyle?: React.CSSProperties;
-  label?: React.ReactNode | React.ReactNode[];
+  rootStyle?: CSSProperties;
+  controlStyle?: CSSProperties;
+  label?: ReactNode | ReactNode[];
   limit?: number;
   maxUpload?: number;
   fileAccepted?: string;
@@ -25,7 +34,7 @@ export interface MultipleImageUploadProps extends React.InputHTMLAttributes<HTML
   onRemoveDefaultImages?: (image: UploadItem) => void;
 }
 
-const MultipleImageUpload: React.ForwardRefRenderFunction<HTMLInputElement, MultipleImageUploadProps> = (
+const MultipleImageUpload: ForwardRefRenderFunction<HTMLInputElement, MultipleImageUploadProps> = (
   {
     rootClassName = "",
     controlClassName = "",
@@ -45,17 +54,17 @@ const MultipleImageUpload: React.ForwardRefRenderFunction<HTMLInputElement, Mult
   },
   ref
 ) => {
-  const { isForm, color: rhfColor, shape: rhfShape } = React.useContext(FormContext);
+  const { isForm, color: rhfColor, shape: rhfShape } = useContext(FormContext);
 
-  const [images, setImages] = React.useState<UploadItems>([]);
+  const [images, setImages] = useState<UploadItems>([]);
 
-  const [viewImages, setViewImages] = React.useState<UploadItems>([]);
+  const [viewImages, setViewImages] = useState<UploadItems>([]);
 
-  const [defaultViewImages, setDefaultViewImages] = React.useState<UploadItems>([]);
+  const [defaultViewImages, setDefaultViewImages] = useState<UploadItems>([]);
 
-  const [error, setError] = React.useState<UploadError | null>(null);
+  const [error, setError] = useState<UploadError | null>(null);
 
-  const [dragged, setDragged] = React.useState<boolean>(false);
+  const [dragged, setDragged] = useState<boolean>(false);
 
   const controlColor = isForm ? rhfColor : color;
 
@@ -89,13 +98,13 @@ const MultipleImageUpload: React.ForwardRefRenderFunction<HTMLInputElement, Mult
   );
 
   // Set default images
-  React.useEffect(() => {
+  useEffect(() => {
     if (defaultImages.length)
       setDefaultViewImages(defaultImages.map((image) => ({ id: utils.uuid(), url: image })));
   }, [defaultImages.length]);
 
   // Generate view images
-  React.useEffect(() => {
+  useEffect(() => {
     const views: UploadItems = images.map((image) => ({
       id: image?.id,
       url: URL.createObjectURL(image?.file as File),
@@ -134,20 +143,20 @@ const MultipleImageUpload: React.ForwardRefRenderFunction<HTMLInputElement, Mult
     else setImages((prev) => [...prev, ...files]);
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
     const imageFiles: File[] = Array.from(e.target.files);
     handleUpload(imageFiles);
   };
 
-  const handleDrag = (e: React.DragEvent<HTMLInputElement>) => {
+  const handleDrag = (e: DragEvent<HTMLInputElement>) => {
     e.preventDefault();
     e.stopPropagation();
     if (e.type === "dragenter" || e.type === "dragover") setDragged(true);
     else if (e.type === "dragleave") setDragged(false);
   };
 
-  const handleDrop = (e: React.DragEvent<HTMLInputElement>) => {
+  const handleDrop = (e: DragEvent<HTMLInputElement>) => {
     e.preventDefault();
     e.stopPropagation();
     setDragged(false);
@@ -209,4 +218,4 @@ const MultipleImageUpload: React.ForwardRefRenderFunction<HTMLInputElement, Mult
   );
 };
 
-export default React.forwardRef(MultipleImageUpload);
+export default forwardRef(MultipleImageUpload);

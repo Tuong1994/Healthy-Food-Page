@@ -1,4 +1,4 @@
-import React from "react";
+import { HTMLAttributes, ForwardRefRenderFunction, CSSProperties, forwardRef } from "react";
 import { ComponentSize } from "@/common/type";
 import utils from "@/utils";
 import useLayout from "../Layout/useLayout";
@@ -7,7 +7,7 @@ type NoteMessageType = "default" | "error";
 
 type NoteMessageSize = ComponentSize | number;
 
-export interface NoteMessageProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface NoteMessageProps extends HTMLAttributes<HTMLDivElement> {
   rootClassName?: string;
   message?: string;
   weight?: number;
@@ -16,7 +16,7 @@ export interface NoteMessageProps extends React.HTMLAttributes<HTMLDivElement> {
   size?: NoteMessageSize;
 }
 
-const NoteMessage: React.ForwardRefRenderFunction<HTMLDivElement, NoteMessageProps> = (
+const NoteMessage: ForwardRefRenderFunction<HTMLDivElement, NoteMessageProps> = (
   {
     rootClassName = "",
     style,
@@ -47,8 +47,8 @@ const NoteMessage: React.ForwardRefRenderFunction<HTMLDivElement, NoteMessagePro
     rootClassName
   );
 
-  const inlineStyle = (): React.CSSProperties => {
-    const customStyle: React.CSSProperties = { ...style, fontWeight: weight };
+  const inlineStyle = (): CSSProperties => {
+    const customStyle: CSSProperties = { ...style, fontWeight: weight };
     if (typeof size === "number") return { ...customStyle, fontSize: `${size}px` };
     if (size === "sm") return { ...customStyle, fontSize: "12px" };
     if (size === "md") return { ...customStyle, fontSize: "14px" };
@@ -63,4 +63,4 @@ const NoteMessage: React.ForwardRefRenderFunction<HTMLDivElement, NoteMessagePro
   );
 };
 
-export default React.forwardRef(NoteMessage);
+export default forwardRef(NoteMessage);

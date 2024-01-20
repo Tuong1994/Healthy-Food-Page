@@ -1,8 +1,6 @@
 import { NextPage } from "next";
-import { UI } from "@/components";
+import { Typography } from "@/components/UI";
 import { useLang } from "@/hooks";
-
-const { Typography } = UI;
 
 const { Title, Paragraph } = Typography;
 

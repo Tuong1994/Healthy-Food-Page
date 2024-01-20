@@ -1,6 +1,12 @@
-"use client";
-
-import React from "react";
+import {
+  ImgHTMLAttributes,
+  CSSProperties,
+  ForwardRefRenderFunction,
+  useState,
+  useEffect,
+  useRef,
+  forwardRef,
+} from "react";
 import { ComponentSize } from "@/common/type";
 import ImageView from "./View";
 import ImageLoading from "./Loading";
@@ -12,9 +18,9 @@ type ImageObjectFit = "fill" | "cover" | "contain" | "none";
 
 type ImageLazyType = "immediate" | "lazy";
 
-export interface ImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
+export interface ImageProps extends ImgHTMLAttributes<HTMLImageElement> {
   rootClassName?: string;
-  rootStyle?: React.CSSProperties;
+  rootStyle?: CSSProperties;
   imgWidth?: number | string;
   imgHeight?: number | string;
   size?: ImageSize;
@@ -27,7 +33,7 @@ export interface ImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   onCheck?: (checked: boolean) => void;
 }
 
-const Image: React.ForwardRefRenderFunction<HTMLImageElement, ImageProps> = (
+const Image: ForwardRefRenderFunction<HTMLImageElement, ImageProps> = (
   {
     rootClassName = "",
     rootStyle,
@@ -42,21 +48,21 @@ const Image: React.ForwardRefRenderFunction<HTMLImageElement, ImageProps> = (
   },
   ref
 ) => {
-  const [loading, setLoading] = React.useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(true);
 
-  const [view, setView] = React.useState<string>("");
+  const [view, setView] = useState<string>("");
 
-  const [checked, setChecked] = React.useState<boolean>(false);
+  const [checked, setChecked] = useState<boolean>(false);
 
   const rootCheckedClassName = checked ? "image-checked" : "";
 
-  const elRef = React.useRef<HTMLDivElement>(null);
+  const elRef = useRef<HTMLDivElement>(null);
 
   const fitClassName = `image-${objectFit}`;
 
   const className = utils.formatClassName("image", fitClassName, rootCheckedClassName, rootClassName);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (lazyType === "lazy") {
       if (window["IntersectionObserver"]) {
         const observer = new IntersectionObserver((entries) => {
@@ -70,7 +76,7 @@ const Image: React.ForwardRefRenderFunction<HTMLImageElement, ImageProps> = (
     } else setView(src as string);
   }, [src]);
 
-  const imageSize = (): React.CSSProperties => {
+  const imageSize = (): CSSProperties => {
     if (size) {
       if (size === "sm") return { width: `100px`, height: `100px` };
       if (size === "md") return { width: `200px`, height: `200px` };
@@ -112,4 +118,4 @@ const Image: React.ForwardRefRenderFunction<HTMLImageElement, ImageProps> = (
   );
 };
 
-export default React.forwardRef(Image);
+export default forwardRef(Image);

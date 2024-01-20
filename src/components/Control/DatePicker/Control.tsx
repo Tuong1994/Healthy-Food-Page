@@ -1,11 +1,11 @@
-import React from "react";
+import { FC, ReactNode } from "react";
 import { HiCalendar, HiOutlineArrowPath } from "react-icons/hi2";
 import moment from "moment";
 import utils from "@/utils";
 
 interface DatePickerControlProps {
-  addonBefore?: React.ReactNode | React.ReactNode[];
-  addonAfter?: React.ReactNode | React.ReactNode[];
+  addonBefore?: ReactNode | ReactNode[];
+  addonAfter?: ReactNode | ReactNode[];
   format: string;
   inputClassName: string;
   showResetIcon: boolean;
@@ -15,7 +15,7 @@ interface DatePickerControlProps {
   handleDropdown: () => void;
 }
 
-const DatePickerControl: React.FC<DatePickerControlProps> = ({
+const DatePickerControl: FC<DatePickerControlProps> = ({
   addonBefore,
   addonAfter,
   inputClassName,

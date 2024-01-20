@@ -1,10 +1,10 @@
-import React from "react";
+import { ReactNode, FC } from "react";
 
 interface TableCellProps {
-  children?: React.ReactNode | React.ReactNode[];
+  children?: ReactNode | ReactNode[];
 }
 
-const TableCell: React.FC<TableCellProps> = ({ children }) => {
+const TableCell: FC<TableCellProps> = ({ children }) => {
   return <div className="table-cell">{children}</div>;
 };
 

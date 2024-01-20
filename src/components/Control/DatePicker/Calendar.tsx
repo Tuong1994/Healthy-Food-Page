@@ -1,4 +1,4 @@
-import React from "react";
+import { FC, useState, useEffect } from "react";
 import { SelectDate } from "../type";
 import CalendarHeader from "./CalendarHeader";
 import CalendarDay from "./CalendarDay";
@@ -13,24 +13,24 @@ interface DatePickerCalendarProps {
   handleSelect: (date: SelectDate) => void;
 }
 
-const DatePickerCalender: React.FC<DatePickerCalendarProps> = ({
+const DatePickerCalender: FC<DatePickerCalendarProps> = ({
   min,
   max,
   dropdown,
   selectedDate,
   handleSelect,
 }) => {
-  const [currentDate, setCurrentDate] = React.useState<Date>(new Date());
+  const [currentDate, setCurrentDate] = useState<Date>(new Date());
 
-  const [currentMonth, setCurrentMonth] = React.useState<number>(new Date().getMonth());
+  const [currentMonth, setCurrentMonth] = useState<number>(new Date().getMonth());
 
-  const [currentYear, setCurrentYear] = React.useState<number>(new Date().getFullYear());
+  const [currentYear, setCurrentYear] = useState<number>(new Date().getFullYear());
 
   const dropdownClassName = dropdown ? "wrap-calendar-active" : "";
 
   const className = utils.formatClassName("wrap-calendar", dropdownClassName);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setCurrentDate(selectedDate);
     setCurrentMonth(selectedDate.getMonth());
     setCurrentYear(selectedDate.getFullYear());

@@ -1,6 +1,17 @@
-'use client'
-
-import React from "react";
+import {
+  InputHTMLAttributes,
+  CSSProperties,
+  ReactNode,
+  ForwardRefRenderFunction,
+  ChangeEvent,
+  useContext,
+  useEffect,
+  useState,
+  useRef,
+  useCallback,
+  useMemo,
+  forwardRef,
+} from "react";
 import { useFormContext } from "react-hook-form";
 import { ControlColor, ControlShape, Option, SelectOptions } from "../type";
 import { ComponentSize } from "@/common/type";
@@ -12,15 +23,15 @@ import FormItemContext from "../Form/FormItemContext";
 import useLayout from "@/components/UI/Layout/useLayout";
 import utils from "@/utils";
 
-export interface SelectTagProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface SelectTagProps extends InputHTMLAttributes<HTMLInputElement> {
   rootClassName?: string;
   labelClassName?: string;
   inputClassName?: string;
-  rootStyle?: React.CSSProperties;
-  labelStyle?: React.CSSProperties;
-  label?: React.ReactNode | React.ReactNode[];
-  addonBefore?: React.ReactNode | React.ReactNode[];
-  addonAfter?: React.ReactNode | React.ReactNode[];
+  rootStyle?: CSSProperties;
+  labelStyle?: CSSProperties;
+  label?: ReactNode | ReactNode[];
+  addonBefore?: ReactNode | ReactNode[];
+  addonAfter?: ReactNode | ReactNode[];
   options?: SelectOptions;
   defaultTags?: any[];
   sizes?: ComponentSize;
@@ -37,10 +48,10 @@ export interface SelectTagProps extends React.InputHTMLAttributes<HTMLInputEleme
   onChangeSearch?: (text: string) => void;
   onChangeSelect?: (tags: any[]) => void;
   onChangePage?: (page: number) => void;
-  dropdownRender?: (menu: React.ReactNode) => React.ReactNode | React.ReactNode[];
+  dropdownRender?: (menu: ReactNode) => ReactNode | ReactNode[];
 }
 
-const SelectTag: React.ForwardRefRenderFunction<HTMLInputElement, SelectTagProps> = (
+const SelectTag: ForwardRefRenderFunction<HTMLInputElement, SelectTagProps> = (
   {
     rootClassName = "",
     labelClassName = "",
@@ -79,21 +90,21 @@ const SelectTag: React.ForwardRefRenderFunction<HTMLInputElement, SelectTagProps
 
   const { layoutTheme: theme } = layoutValue;
 
-  const { color: rhfColor, sizes: rhfSizes, shape: rhfShape } = React.useContext(FormContext);
+  const { color: rhfColor, sizes: rhfSizes, shape: rhfShape } = useContext(FormContext);
 
-  const { isRhf, rhfName, rhfError, rhfValue, rhfDisabled } = React.useContext(FormItemContext);
+  const { isRhf, rhfName, rhfError, rhfValue, rhfDisabled } = useContext(FormItemContext);
 
-  const [currentPage, setCurrentPage] = React.useState<number>(1);
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
-  const [search, setSearch] = React.useState<string>("");
+  const [search, setSearch] = useState<string>("");
 
-  const [selectedOptions, setSelectedOptions] = React.useState<SelectOptions>([]);
+  const [selectedOptions, setSelectedOptions] = useState<SelectOptions>([]);
 
-  const [dropdown, setDropdown] = React.useState<boolean>(false);
+  const [dropdown, setDropdown] = useState<boolean>(false);
 
-  const [touched, setTouched] = React.useState<boolean>(false);
+  const [touched, setTouched] = useState<boolean>(false);
 
-  const selectRef = React.useRef<HTMLDivElement>(null);
+  const selectRef = useRef<HTMLDivElement>(null);
 
   const render = useRender(dropdown);
 
@@ -103,25 +114,25 @@ const SelectTag: React.ForwardRefRenderFunction<HTMLInputElement, SelectTagProps
 
   const totalPages = Math.ceil(total / limit);
 
-  const triggerValidation = React.useCallback(() => {
+  const triggerValidation = useCallback(() => {
     if (touched && !dropdown && !rhfValue) rhfMethods.trigger(rhfName);
     else if (touched && !dropdown && rhfValue) rhfMethods.trigger(rhfName);
     if (touched && !dropdown) setTouched(false);
   }, [touched, dropdown, rhfMethods, rhfName, rhfValue]);
 
   // Trigger validation
-  React.useEffect(() => {
+  useEffect(() => {
     if (!isRhf) return;
     triggerValidation();
   }, [isRhf, triggerValidation]);
 
   // Set default option
-  React.useEffect(() => {
+  useEffect(() => {
     if (!isRhf) return setSelectedOptions(defaultOptions([...defaultTags]));
     setSelectedOptions(defaultOptions([...rhfValue]));
   }, [defaultTags.length, rhfValue, isRhf]);
 
-  const controlPlaceHolder = React.useMemo(() => {
+  const controlPlaceHolder = useMemo(() => {
     if (placeholder) return placeholder;
     if (dropdown && hasSearch) return "Search";
     return "Select option";
@@ -195,7 +206,7 @@ const SelectTag: React.ForwardRefRenderFunction<HTMLInputElement, SelectTagProps
     setTouched(true);
   };
 
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setSearch(value);
     onChangeSearch?.(value);
@@ -281,4 +292,4 @@ const SelectTag: React.ForwardRefRenderFunction<HTMLInputElement, SelectTagProps
   );
 };
 
-export default React.forwardRef(SelectTag);
+export default forwardRef(SelectTag);

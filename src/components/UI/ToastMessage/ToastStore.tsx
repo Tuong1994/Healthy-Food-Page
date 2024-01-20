@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import { create, StateCreator } from "zustand";
 import { ToastMessage, ToastMessages, ToastType } from "./type";
 import {
@@ -9,10 +10,10 @@ import { PiWarningCircle as WarningIcon } from "react-icons/pi";
 import utils from "@/utils";
 
 type MessageOptions = {
-  successIcon?: React.ReactNode;
-  errorIcon?: React.ReactNode;
-  warningIcon?: React.ReactNode;
-  infoIcon?: React.ReactNode;
+  successIcon?: ReactNode;
+  errorIcon?: ReactNode;
+  warningIcon?: ReactNode;
+  infoIcon?: ReactNode;
 };
 
 interface ToastState {

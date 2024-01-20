@@ -1,13 +1,10 @@
-import React from "react";
-import { UI, Control } from "@/components";
-import { Lang } from "@/common/type";
-import { SelectOptions } from "@/components/Control/type";
+import { FC, Fragment, useState } from "react";
+import { Card, Typography } from "@/components/UI";
+import { Select, TextArea } from "@/components/Control";
+import type { Lang } from "@/common/type";
+import type { SelectOptions } from "@/components/Control/type";
 import ShipmentModal from "./ShipmentModal";
 import ShipmentInfo from "./ShipmentInfo";
-
-const { Card, Typography } = UI;
-
-const { Select, TextArea } = Control;
 
 const { Paragraph } = Typography;
 
@@ -15,8 +12,8 @@ interface PaymentReceivedProps {
   lang: Lang;
 }
 
-const PaymentReceived: React.FC<PaymentReceivedProps> = ({ lang }) => {
-  const [received, setReceived] = React.useState<string>("store");
+const PaymentReceived: FC<PaymentReceivedProps> = ({ lang }) => {
+  const [received, setReceived] = useState<string>("store");
 
   const options: SelectOptions = [
     { label: lang.cart.received.store, value: "store" },
@@ -28,7 +25,7 @@ const PaymentReceived: React.FC<PaymentReceivedProps> = ({ lang }) => {
   const handleReset = () => setReceived("store");
 
   return (
-    <React.Fragment>
+    <Fragment>
       <Card
         head={
           <Paragraph weight={600} size={16}>
@@ -53,7 +50,7 @@ const PaymentReceived: React.FC<PaymentReceivedProps> = ({ lang }) => {
       </Card>
 
       <ShipmentModal open={received === "delivery"} onCancel={handleReset} />
-    </React.Fragment>
+    </Fragment>
   );
 };
 

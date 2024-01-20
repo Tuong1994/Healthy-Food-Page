@@ -1,8 +1,6 @@
-import React from "react";
-import { UI } from "@/components";
+import { FC } from "react";
+import { Section, Image, Grid, Typography } from "@/components/UI";
 import { Lang } from "@/common/type";
-
-const { Section, Image, Grid, Typography } = UI;
 
 const { Row, Col } = Grid;
 
@@ -12,7 +10,7 @@ interface AboutBlogProps {
   lang: Lang;
 }
 
-const AboutBlog: React.FC<AboutBlogProps> = ({ lang }) => {
+const AboutBlog: FC<AboutBlogProps> = ({ lang }) => {
   return (
     <Section rootClassName="about-blog">
       <Row gutters={[30, 10]} justify="between" rootClassName="blog-group">

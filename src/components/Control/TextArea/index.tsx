@@ -1,6 +1,15 @@
-"use client";
-
-import React from "react";
+import {
+  TextareaHTMLAttributes,
+  CSSProperties,
+  ReactNode,
+  ForwardRefRenderFunction,
+  ChangeEvent,
+  useContext,
+  useEffect,
+  useState,
+  useRef,
+  forwardRef,
+} from "react";
 import { HiXCircle } from "react-icons/hi2";
 import { useFormContext } from "react-hook-form";
 import { ControlColor, ControlShape, InputValue } from "../type";
@@ -10,13 +19,13 @@ import FormContext from "../Form/FormContext";
 import useLayout from "@/components/UI/Layout/useLayout";
 import utils from "@/utils";
 
-export interface TextAreaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
+export interface TextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   rootClassName?: string;
   labelClassName?: string;
   inputClassName?: string;
-  rootStyle?: React.CSSProperties;
-  labelStyle?: React.CSSProperties;
-  label?: React.ReactNode | React.ReactNode[];
+  rootStyle?: CSSProperties;
+  labelStyle?: CSSProperties;
+  label?: ReactNode | ReactNode[];
   sizes?: ComponentSize;
   color?: ControlColor;
   shape?: ControlShape;
@@ -26,7 +35,7 @@ export interface TextAreaProps extends React.TextareaHTMLAttributes<HTMLTextArea
   onChangeInput?: (text: string) => void;
 }
 
-const TextArea: React.ForwardRefRenderFunction<HTMLTextAreaElement, TextAreaProps> = (
+const TextArea: ForwardRefRenderFunction<HTMLTextAreaElement, TextAreaProps> = (
   {
     rootClassName = "",
     labelClassName = "",
@@ -56,14 +65,14 @@ const TextArea: React.ForwardRefRenderFunction<HTMLTextAreaElement, TextAreaProp
 
   const { layoutTheme: theme } = layoutValue;
 
-  const { color: rhfColor, sizes: rhfSizes, shape: rhfShape } = React.useContext(FormContext);
+  const { color: rhfColor, sizes: rhfSizes, shape: rhfShape } = useContext(FormContext);
 
   const { isRhf, rhfName, rhfError, rhfValue, rhfDisabled, rhfOnChange, rhfOnBlur } =
-    React.useContext(FormItemContext);
+    useContext(FormItemContext);
 
-  const [inputValue, setInputValue] = React.useState<InputValue>(value);
+  const [inputValue, setInputValue] = useState<InputValue>(value);
 
-  const inputRef = React.useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLDivElement>(null);
 
   const controlDisabled = rhfDisabled ? rhfDisabled : disabled;
 
@@ -105,12 +114,12 @@ const TextArea: React.ForwardRefRenderFunction<HTMLTextAreaElement, TextAreaProp
   const controlInputClassName = utils.formatClassName("control-box", inputClassName);
 
   // Focus input when error is trigger
-  React.useEffect(() => {
+  useEffect(() => {
     if (rhfError) inputRef.current?.click();
   }, [rhfError]);
 
   // Set default value
-  React.useEffect(() => {
+  useEffect(() => {
     if (isRhf) return setInputValue(rhfValue);
     setInputValue(value);
   }, [value, isRhf, rhfValue]);
@@ -121,7 +130,7 @@ const TextArea: React.ForwardRefRenderFunction<HTMLTextAreaElement, TextAreaProp
     if (controlSize === "lg") return 18;
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
     setInputValue(value);
     onChangeInput?.(value);
@@ -173,4 +182,4 @@ const TextArea: React.ForwardRefRenderFunction<HTMLTextAreaElement, TextAreaProp
   );
 };
 
-export default React.forwardRef(TextArea);
+export default forwardRef(TextArea);

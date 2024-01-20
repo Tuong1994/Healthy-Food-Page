@@ -1,8 +1,8 @@
-import React from "react";
+import { FC } from "react";
 
 interface CalendarDayProps {}
 
-const CalendarDay: React.FC<CalendarDayProps> = () => {
+const CalendarDay: FC<CalendarDayProps> = () => {
   const days = ["Sun", "Mon", "Tue", "Web", "Thur", "Fri", "Sat"];
 
   return (

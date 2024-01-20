@@ -1,6 +1,14 @@
-'use client'
-
-import React from "react";
+import {
+  CSSProperties,
+  ReactNode,
+  ForwardRefRenderFunction,
+  useContext,
+  useEffect,
+  useState,
+  useRef,
+  useCallback,
+  forwardRef,
+} from "react";
 import { useFormContext } from "react-hook-form";
 import { ControlColor, ControlShape, SelectDate } from "../type";
 import { ComponentSize } from "@/common/type";
@@ -16,11 +24,11 @@ export interface DatePickerProps {
   rootClassName?: string;
   labelClassName?: string;
   inputClassName?: string;
-  rootStyle?: React.CSSProperties;
-  labelStyle?: React.CSSProperties;
-  label?: React.ReactNode | React.ReactNode[];
-  addonBefore?: React.ReactNode | React.ReactNode[];
-  addonAfter?: React.ReactNode | React.ReactNode[];
+  rootStyle?: CSSProperties;
+  labelStyle?: CSSProperties;
+  label?: ReactNode | ReactNode[];
+  addonBefore?: ReactNode | ReactNode[];
+  addonAfter?: ReactNode | ReactNode[];
   disabled?: boolean;
   value?: Date;
   format?: string;
@@ -35,7 +43,7 @@ export interface DatePickerProps {
   onChangeSelect?: (date: Date) => void;
 }
 
-const DatePicker: React.ForwardRefRenderFunction<HTMLDivElement, DatePickerProps> = (
+const DatePicker: ForwardRefRenderFunction<HTMLDivElement, DatePickerProps> = (
   {
     rootClassName = "",
     labelClassName = "",
@@ -66,17 +74,17 @@ const DatePicker: React.ForwardRefRenderFunction<HTMLDivElement, DatePickerProps
 
   const { layoutTheme: theme } = layoutValue;
 
-  const { color: rhfColor, sizes: rhfSizes, shape: rhfShape } = React.useContext(FormContext);
+  const { color: rhfColor, sizes: rhfSizes, shape: rhfShape } = useContext(FormContext);
 
-  const { isRhf, rhfName, rhfError, rhfValue, rhfDisabled } = React.useContext(FormItemContext);
+  const { isRhf, rhfName, rhfError, rhfValue, rhfDisabled } = useContext(FormItemContext);
 
-  const [selectedDate, setSelectedDate] = React.useState<Date>(value instanceof Date ? value : new Date());
+  const [selectedDate, setSelectedDate] = useState<Date>(value instanceof Date ? value : new Date());
 
-  const [dropdown, setDropdown] = React.useState<boolean>(false);
+  const [dropdown, setDropdown] = useState<boolean>(false);
 
-  const [touched, setTouched] = React.useState<boolean>(false);
+  const [touched, setTouched] = useState<boolean>(false);
 
-  const datepickerRef = React.useRef<HTMLDivElement>(null);
+  const datepickerRef = useRef<HTMLDivElement>(null);
 
   const render = useRender(dropdown);
 
@@ -126,20 +134,20 @@ const DatePicker: React.ForwardRefRenderFunction<HTMLDivElement, DatePickerProps
 
   const controlLabelClassName = utils.formatClassName("datepicker-label", labelClassName);
 
-  const triggerValidation = React.useCallback(() => {
+  const triggerValidation = useCallback(() => {
     if (touched && !dropdown && !rhfValue) rhfMethods.trigger(rhfName);
     else if (touched && !dropdown && rhfValue) rhfMethods.trigger(rhfName);
     if (touched && !dropdown) setTouched(false);
   }, [touched, dropdown, rhfMethods, rhfName, rhfValue]);
 
   // Trigger validation
-  React.useEffect(() => {
+  useEffect(() => {
     if (!isRhf) return;
     triggerValidation();
   }, [isRhf, triggerValidation]);
 
   // Set default value
-  React.useEffect(() => {
+  useEffect(() => {
     if (isRhf && rhfValue) setSelectedDate(rhfValue instanceof Date ? rhfValue : new Date());
   }, [isRhf, rhfValue]);
 
@@ -203,4 +211,4 @@ const DatePicker: React.ForwardRefRenderFunction<HTMLDivElement, DatePickerProps
   );
 };
 
-export default React.forwardRef(DatePicker);
+export default forwardRef(DatePicker);

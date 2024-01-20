@@ -1,6 +1,15 @@
-'use client'
-
-import React from "react";
+import {
+  InputHTMLAttributes,
+  CSSProperties,
+  ForwardRefRenderFunction,
+  ReactNode,
+  ChangeEvent,
+  DragEvent,
+  useContext,
+  useState,
+  useEffect,
+  forwardRef,
+} from "react";
 import { ControlColor, ControlShape, UploadError, UploadItem, UploadItems } from "../../type";
 import { ACCEPT_FILE_TYPE, DEFAULT_FILE_SIZE } from "../constant";
 import { NoteMessage } from "@/components/UI";
@@ -10,12 +19,12 @@ import Items from "./Items";
 import utils from "@/utils";
 import useLayout from "@/components/UI/Layout/useLayout";
 
-export interface FileUploadProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface FileUploadProps extends InputHTMLAttributes<HTMLInputElement> {
   rootClassName?: string;
   controlClassName?: string;
-  rootStyle?: React.CSSProperties;
-  controlStyle?: React.CSSProperties;
-  label?: React.ReactNode | React.ReactNode[];
+  rootStyle?: CSSProperties;
+  controlStyle?: CSSProperties;
+  label?: ReactNode | ReactNode[];
   color?: ControlColor;
   shape?: ControlShape;
   limit?: number;
@@ -23,7 +32,7 @@ export interface FileUploadProps extends React.InputHTMLAttributes<HTMLInputElem
   onUpload?: (files: File[]) => void;
 }
 
-const FileUpload: React.ForwardRefRenderFunction<HTMLInputElement, FileUploadProps> = (
+const FileUpload: ForwardRefRenderFunction<HTMLInputElement, FileUploadProps> = (
   {
     rootClassName = "",
     controlClassName = "",
@@ -43,13 +52,13 @@ const FileUpload: React.ForwardRefRenderFunction<HTMLInputElement, FileUploadPro
 
   const { layoutTheme: theme } = layoutValue;
 
-  const { isForm, color: rhfColor, shape: rhfShape } = React.useContext(FormContext);
+  const { isForm, color: rhfColor, shape: rhfShape } = useContext(FormContext);
 
-  const [files, setFiles] = React.useState<UploadItems>([]);
+  const [files, setFiles] = useState<UploadItems>([]);
 
-  const [error, setError] = React.useState<UploadError | null>(null);
+  const [error, setError] = useState<UploadError | null>(null);
 
-  const [dragged, setDragged] = React.useState<boolean>(false);
+  const [dragged, setDragged] = useState<boolean>(false);
 
   const controlColor = isForm ? rhfColor : color;
 
@@ -72,7 +81,7 @@ const FileUpload: React.ForwardRefRenderFunction<HTMLInputElement, FileUploadPro
     rootClassName
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     onUpload?.(files.map((uploadFile) => uploadFile.file as File));
   }, [files.length]);
 
@@ -96,20 +105,20 @@ const FileUpload: React.ForwardRefRenderFunction<HTMLInputElement, FileUploadPro
     setError(null);
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
     const files: File[] = Array.from(e.target.files);
     handleUpload(files);
   };
 
-  const handleDrag = (e: React.DragEvent<HTMLLabelElement>) => {
+  const handleDrag = (e: DragEvent<HTMLLabelElement>) => {
     e.preventDefault();
     e.stopPropagation();
     if (e.type === "dragenter" || e.type === "dragover") setDragged(true);
     else if (e.type === "dragleave") setDragged(false);
   };
 
-  const handleDrop = (e: React.DragEvent<HTMLLabelElement>) => {
+  const handleDrop = (e: DragEvent<HTMLLabelElement>) => {
     e.preventDefault();
     e.stopPropagation();
     setDragged(false);
@@ -159,4 +168,4 @@ const FileUpload: React.ForwardRefRenderFunction<HTMLInputElement, FileUploadPro
   );
 };
 
-export default React.forwardRef(FileUpload);
+export default forwardRef(FileUpload);

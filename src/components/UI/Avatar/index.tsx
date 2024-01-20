@@ -1,13 +1,11 @@
-"use client";
-
-import React from "react";
+import { HTMLAttributes, ReactNode, ForwardRefRenderFunction, useState, useEffect, forwardRef } from "react";
 import { HiUser } from "react-icons/hi2";
 import { ComponentColor, ComponentShape } from "@/common/type";
 import utils from "@/utils";
 
-export interface AvatarProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface AvatarProps extends HTMLAttributes<HTMLDivElement> {
   rootClassName?: string;
-  children?: React.ReactNode | React.ReactNode[];
+  children?: ReactNode | ReactNode[];
   size?: number;
   letter?: string;
   badge?: string;
@@ -16,7 +14,7 @@ export interface AvatarProps extends React.HTMLAttributes<HTMLDivElement> {
   shape?: Exclude<ComponentShape, "round">;
 }
 
-const Avatar: React.ForwardRefRenderFunction<HTMLDivElement, AvatarProps> = (
+const Avatar: ForwardRefRenderFunction<HTMLDivElement, AvatarProps> = (
   {
     rootClassName = "",
     style,
@@ -31,7 +29,7 @@ const Avatar: React.ForwardRefRenderFunction<HTMLDivElement, AvatarProps> = (
   },
   ref
 ) => {
-  const [iconSize, setIconSize] = React.useState<number>(18);
+  const [iconSize, setIconSize] = useState<number>(18);
 
   const shapeClassName = `avatar-${shape}`;
 
@@ -45,7 +43,7 @@ const Avatar: React.ForwardRefRenderFunction<HTMLDivElement, AvatarProps> = (
 
   const badgeClassName = utils.formatClassName("avatar-badge", badgeRadiusClassName);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setIconSize(18);
     if (size < 30 && size % 10 === 0) setIconSize((prev) => prev - 6);
     if (size > 30 && size % 10 === 0) setIconSize((prev) => prev + 6);
@@ -68,4 +66,4 @@ const Avatar: React.ForwardRefRenderFunction<HTMLDivElement, AvatarProps> = (
   );
 };
 
-export default React.forwardRef(Avatar);
+export default forwardRef(Avatar);

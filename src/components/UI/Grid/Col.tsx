@@ -1,11 +1,11 @@
-import React from "react";
+import { HTMLAttributes, ReactNode, ForwardRefRenderFunction, useState, useEffect, forwardRef } from "react";
 import { ColSpan } from "./type";
 import { useAppGrid, useAppGridRow } from "./Provider";
 import utils from "@/utils";
 
-export interface GridColProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface GridColProps extends HTMLAttributes<HTMLDivElement> {
   rootClassName?: string;
-  children?: React.ReactNode | React.ReactNode[];
+  children?: ReactNode | ReactNode[];
   isFill?: boolean;
   span?: ColSpan;
   xs?: ColSpan;
@@ -13,7 +13,7 @@ export interface GridColProps extends React.HTMLAttributes<HTMLDivElement> {
   lg?: ColSpan;
 }
 
-const GridCol: React.ForwardRefRenderFunction<HTMLDivElement, GridColProps> = (
+const GridCol: ForwardRefRenderFunction<HTMLDivElement, GridColProps> = (
   { rootClassName = "", style, children, span, xs, md, lg, isFill, ...restProps },
   ref
 ) => {
@@ -21,9 +21,9 @@ const GridCol: React.ForwardRefRenderFunction<HTMLDivElement, GridColProps> = (
 
   const { gutters } = useAppGridRow();
 
-  const [hide, setHide] = React.useState<boolean>(false);
+  const [hide, setHide] = useState<boolean>(false);
 
-  const [width, setWidth] = React.useState<string>("auto");
+  const [width, setWidth] = useState<string>("auto");
 
   const fillClassName = isFill ? "grid-col-fill" : "";
 
@@ -35,7 +35,7 @@ const GridCol: React.ForwardRefRenderFunction<HTMLDivElement, GridColProps> = (
 
   const inlineStyle = { ...style, width };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (hide) setHide(false);
 
     if (isDesktop) {
@@ -73,4 +73,4 @@ const GridCol: React.ForwardRefRenderFunction<HTMLDivElement, GridColProps> = (
   ) : null;
 };
 
-export default React.forwardRef(GridCol);
+export default forwardRef(GridCol);

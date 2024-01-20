@@ -1,15 +1,13 @@
-import React from "react";
-import { UI } from "@/components";
+import { FC } from "react";
+import { Space } from "@/components/UI";
 import { HiStar } from "react-icons/hi";
 import type { SpaceProps } from "@/components/UI/Space";
-
-const { Space } = UI;
 
 interface RateStarsProps extends SpaceProps {
   point: number;
 }
 
-const RateStars: React.FC<RateStarsProps> = ({ point, ...restProps }) => {
+const RateStars: FC<RateStarsProps> = ({ point, ...restProps }) => {
   const renderColor = (ratePoint: number) => {
     if (ratePoint <= point) return "rate-star-yellow";
     return "";

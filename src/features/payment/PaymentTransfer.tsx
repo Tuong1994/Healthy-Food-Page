@@ -1,9 +1,7 @@
-import React from "react";
-import { UI } from "@/components";
+import { FC } from "react";
+import { Divider, Image, InfoRow, Space, Grid, Typography } from "@/components/UI";
 import type { Lang } from "@/common/type";
 import type { InfoRowProps } from "@/components/UI/InfoRow";
-
-const { Divider, Image, InfoRow, Space, Grid, Typography } = UI;
 
 const { Row, Col } = Grid;
 
@@ -13,7 +11,7 @@ interface PaymentTransferProps {
   lang: Lang;
 }
 
-const PaymentTransfer: React.FC<PaymentTransferProps> = ({ lang }) => {
+const PaymentTransfer: FC<PaymentTransferProps> = ({ lang }) => {
   const infoRowProps: InfoRowProps = {
     labelSpanProps: { xs: 10, md: 10, lg: 10, span: 10 },
     textSpanProps: { xs: 14, md: 14, lg: 14, span: 14 },

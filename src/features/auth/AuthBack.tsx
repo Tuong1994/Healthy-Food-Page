@@ -1,13 +1,11 @@
-import React from "react";
-import { UI } from "@/components";
+import { FC } from "react";
+import { Space, Typography } from "@/components/UI";
 import { HiChevronLeft } from "react-icons/hi2";
-import { Lang } from "@/common/type";
+import type { Lang } from "@/common/type";
 import Link from "next/link";
 import url from "@/common/constant/url";
 
 const { HOME } = url;
-
-const { Space, Typography } = UI;
 
 const { Paragraph } = Typography;
 
@@ -15,7 +13,7 @@ interface AuthBackProps {
   lang: Lang;
 }
 
-const AuthBack: React.FC<AuthBackProps> = ({ lang }) => {
+const AuthBack: FC<AuthBackProps> = ({ lang }) => {
   return (
     <div className="auth-back">
       <Link href={HOME}>

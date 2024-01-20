@@ -1,19 +1,17 @@
-import React from "react";
-import { UI } from "@/components";
+import { FC, useState } from "react";
+import { Space, Button, Typography } from "@/components/UI";
 import { useLang } from "@/hooks";
 import RateModal from "./RateModal";
 import RateStars from "./RateStars";
-
-const { Space, Button, Typography } = UI;
 
 const { Paragraph } = Typography;
 
 interface RateProps {}
 
-const Rate: React.FC<RateProps> = () => {
+const Rate: FC<RateProps> = () => {
   const { lang } = useLang();
 
-  const [open, setOpen] = React.useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false);
 
   const handleOpen = () => setOpen(true);
 

@@ -1,4 +1,13 @@
-import React from "react";
+import {
+  CSSProperties,
+  ReactNode,
+  ForwardRefRenderFunction,
+  Fragment,
+  useRef,
+  useEffect,
+  useImperativeHandle,
+  forwardRef,
+} from "react";
 import { HiXMark } from "react-icons/hi2";
 import { ComponentColor, ComponentSize } from "@/common/type";
 import { useOverflow, useRender } from "@/hooks";
@@ -13,12 +22,12 @@ export interface ModalProps {
   headClassName?: string;
   bodyClassName?: string;
   footClassName?: string;
-  style?: React.CSSProperties;
-  headStyle?: React.CSSProperties;
-  bodyStyle?: React.CSSProperties;
-  footStyle?: React.CSSProperties;
-  head?: React.ReactNode | React.ReactNode[];
-  children?: React.ReactNode | React.ReactNode[];
+  style?: CSSProperties;
+  headStyle?: CSSProperties;
+  bodyStyle?: CSSProperties;
+  footStyle?: CSSProperties;
+  head?: ReactNode | ReactNode[];
+  children?: ReactNode | ReactNode[];
   hasHead?: boolean;
   hasFoot?: boolean;
   hasCloseIcon?: boolean;
@@ -28,13 +37,13 @@ export interface ModalProps {
   color?: ComponentColor;
   okButtonProps?: ButtonProps;
   cancelButtonProps?: ButtonProps;
-  okButtonTitle?: React.ReactNode | React.ReactNode[];
-  cancelButtonTitle?: React.ReactNode | React.ReactNode[];
+  okButtonTitle?: ReactNode | ReactNode[];
+  cancelButtonTitle?: ReactNode | ReactNode[];
   onOk?: () => void;
   onCancel?: () => void;
 }
 
-const Modal: React.ForwardRefRenderFunction<HTMLDivElement, ModalProps> = (
+const Modal: ForwardRefRenderFunction<HTMLDivElement, ModalProps> = (
   {
     rootClassName = "",
     headClassName = "",
@@ -72,9 +81,9 @@ const Modal: React.ForwardRefRenderFunction<HTMLDivElement, ModalProps> = (
 
   const { lang } = useLang();
 
-  const modalRef = React.useRef<HTMLDivElement>(null);
+  const modalRef = useRef<HTMLDivElement>(null);
 
-  const modalBackdropRef = React.useRef<HTMLDivElement>(null);
+  const modalBackdropRef = useRef<HTMLDivElement>(null);
 
   const sizeClassName = `modal-${sizes}`;
 
@@ -107,9 +116,9 @@ const Modal: React.ForwardRefRenderFunction<HTMLDivElement, ModalProps> = (
 
   const okActionProps: ButtonProps = { ...okButtonProps, color: okButtonColor };
 
-  React.useImperativeHandle(ref, () => modalRef.current as HTMLDivElement);
+  useImperativeHandle(ref, () => modalRef.current as HTMLDivElement);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!document) return;
     const modals = document.querySelectorAll(".modal-active");
     if (modals.length === 1) return;
@@ -124,7 +133,7 @@ const Modal: React.ForwardRefRenderFunction<HTMLDivElement, ModalProps> = (
   return (
     <Portal>
       {render && (
-        <React.Fragment>
+        <Fragment>
           <div
             ref={modalBackdropRef}
             className={backdropClassName}
@@ -154,10 +163,10 @@ const Modal: React.ForwardRefRenderFunction<HTMLDivElement, ModalProps> = (
               </div>
             )}
           </div>
-        </React.Fragment>
+        </Fragment>
       )}
     </Portal>
   );
 };
 
-export default React.forwardRef(Modal);
+export default forwardRef(Modal);

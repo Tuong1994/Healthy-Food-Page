@@ -1,4 +1,4 @@
-import React from "react";
+import { createContext, ReactNode, useContext } from "react";
 import { CartByCustomerResponse, CategoriesWithSubsResponse } from "./type";
 
 export interface AppDataState {
@@ -6,7 +6,7 @@ export interface AppDataState {
   cartByCustomerResponse: CartByCustomerResponse;
 }
 
-const AppDataContext = React.createContext<AppDataState>({
+const AppDataContext = createContext<AppDataState>({
   categoriesWithSubsResponse: {
     error: false,
     loading: false,
@@ -19,16 +19,16 @@ const AppDataContext = React.createContext<AppDataState>({
   },
 });
 
-const AppDataProiver = ({ children, data }: { children?: React.ReactNode; data: AppDataState }) => {
+const AppDataProiver = ({ children, data }: { children?: ReactNode; data: AppDataState }) => {
   return <AppDataContext.Provider value={data}>{children}</AppDataContext.Provider>;
 };
 
 export default AppDataProiver;
 
-export const useAppData = () => React.useContext(AppDataContext);
+export const useAppData = () => useContext(AppDataContext);
 
 export const useCategoriesData = () => {
-  const { categoriesWithSubsResponse } = React.useContext(AppDataContext);
+  const { categoriesWithSubsResponse } = useContext(AppDataContext);
   const { data, loading, error } = categoriesWithSubsResponse;
   return { data, loading, error };
 };

@@ -1,6 +1,8 @@
+import { ReactNode } from "react";
+
 type CarouselItem = {
   id: string;
-  content?: React.ReactNode | React.ReactNode[];
+  content?: ReactNode | ReactNode[];
   url?: string;
 };
 

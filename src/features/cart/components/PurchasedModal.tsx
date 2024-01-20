@@ -1,14 +1,12 @@
-import React from "react";
-import { UI } from "@/components";
-import { ModalProps } from "@/components/UI/Modal";
-import { Lang } from "@/common/type";
-import { Columns } from "@/components/UI/Table/type";
+import { FC } from "react";
+import { Modal, Card, Divider, Table, Image, Badge, Typography } from "@/components/UI";
+import type { ModalProps } from "@/components/UI/Modal";
+import type { Lang } from "@/common/type";
+import type { Columns } from "@/components/UI/Table/type";
 import { ELang } from "@/common/enum";
 import ShipmentInfo from "./ShipmentInfo";
 import PaymentInfo from "./PaymentInfo";
 import utils from "@/utils";
-
-const { Modal, Card, Divider, Table, Image, Badge, Typography } = UI;
 
 const { Paragraph } = Typography;
 
@@ -24,7 +22,7 @@ interface PurchasedModalProps extends ModalProps {
   lang: Lang;
 }
 
-const PurchasedModal: React.FC<PurchasedModalProps> = ({ locale, lang, ...restProps }) => {
+const PurchasedModal: FC<PurchasedModalProps> = ({ locale, lang, ...restProps }) => {
   const dataSource: Data[] = [
     { id: "1", name: "Product 1", quantity: 1, price: 100000 },
     { id: "2", name: "Product 2", quantity: 5, price: 200000 },

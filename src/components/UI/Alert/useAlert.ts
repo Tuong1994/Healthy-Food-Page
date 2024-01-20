@@ -1,10 +1,10 @@
-import React from "react";
+import { useEffect } from "react";
 import useAlertStore, { AlertOptions } from "./AlertStore";
 
 const useAlert = (options?: AlertOptions) => {
   const [onOpen, configOptions] = useAlertStore((state) => [state.onOpen, state.configOptions]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (options) configOptions(options);
   }, []);
 

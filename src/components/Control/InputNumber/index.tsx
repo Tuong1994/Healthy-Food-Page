@@ -1,6 +1,16 @@
-'use client'
-
-import React from "react";
+import {
+  InputHTMLAttributes,
+  CSSProperties,
+  ReactNode,
+  ForwardRefRenderFunction,
+  ChangeEvent,
+  useContext,
+  useEffect,
+  useState,
+  useRef,
+  useCallback,
+  forwardRef,
+} from "react";
 import { HiXCircle } from "react-icons/hi2";
 import { useFormContext } from "react-hook-form";
 import { ControlColor, ControlShape, InputValue } from "../type";
@@ -12,15 +22,15 @@ import formatNumber from "./formatNumber";
 import useLayout from "@/components/UI/Layout/useLayout";
 import utils from "@/utils";
 
-export interface InputNumberProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface InputNumberProps extends InputHTMLAttributes<HTMLInputElement> {
   rootClassName?: string;
   labelClassName?: string;
   inputClassName?: string;
-  rootStyle?: React.CSSProperties;
-  labelStyle?: React.CSSProperties;
-  label?: React.ReactNode | React.ReactNode[];
-  addonBefore?: React.ReactNode | React.ReactNode[];
-  addonAfter?: React.ReactNode | React.ReactNode[];
+  rootStyle?: CSSProperties;
+  labelStyle?: CSSProperties;
+  label?: ReactNode | ReactNode[];
+  addonBefore?: ReactNode | ReactNode[];
+  addonAfter?: ReactNode | ReactNode[];
   sizes?: ComponentSize;
   color?: ControlColor;
   shape?: ControlShape;
@@ -30,7 +40,7 @@ export interface InputNumberProps extends React.InputHTMLAttributes<HTMLInputEle
   onChangeInput?: (number: number) => void;
 }
 
-const InputNumber: React.ForwardRefRenderFunction<HTMLInputElement, InputNumberProps> = (
+const InputNumber: ForwardRefRenderFunction<HTMLInputElement, InputNumberProps> = (
   {
     rootClassName = "",
     labelClassName = "",
@@ -61,15 +71,15 @@ const InputNumber: React.ForwardRefRenderFunction<HTMLInputElement, InputNumberP
 
   const { layoutTheme: theme } = layoutValue;
 
-  const { color: rhfColor, sizes: rhfSizes, shape: rhfShape } = React.useContext(FormContext);
+  const { color: rhfColor, sizes: rhfSizes, shape: rhfShape } = useContext(FormContext);
 
-  const { isRhf, rhfName, rhfError, rhfValue, rhfDisabled } = React.useContext(FormItemContext);
+  const { isRhf, rhfName, rhfError, rhfValue, rhfDisabled } = useContext(FormItemContext);
 
-  const [inputValue, setInputValue] = React.useState<InputValue>(value);
+  const [inputValue, setInputValue] = useState<InputValue>(value);
 
-  const [touched, setTouched] = React.useState<boolean>(false);
+  const [touched, setTouched] = useState<boolean>(false);
 
-  const inputRef = React.useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLDivElement>(null);
 
   const controlDisabled = rhfDisabled ? rhfDisabled : disabled;
 
@@ -110,24 +120,24 @@ const InputNumber: React.ForwardRefRenderFunction<HTMLInputElement, InputNumberP
 
   const controlInputClassName = utils.formatClassName("control-box", inputClassName);
 
-  const triggerValidation = React.useCallback(() => {
+  const triggerValidation = useCallback(() => {
     if (touched && !rhfValue) rhfMethods.trigger(rhfName);
     else if (touched && rhfValue) rhfMethods.trigger(rhfName);
   }, [touched, rhfMethods, rhfName, rhfValue]);
 
   // Trigger validation
-  React.useEffect(() => {
+  useEffect(() => {
     if (!isRhf) return;
     triggerValidation();
   }, [isRhf, triggerValidation]);
 
   // Focus input when error is trigger
-  React.useEffect(() => {
+  useEffect(() => {
     if (rhfError) inputRef.current?.click();
   }, [rhfError]);
 
   // Set default value
-  React.useEffect(() => {
+  useEffect(() => {
     if (isRhf) {
       const numberFormatRhfValue = formatNumber(String(rhfValue));
       return setInputValue(numberFormatRhfValue);
@@ -146,7 +156,7 @@ const InputNumber: React.ForwardRefRenderFunction<HTMLInputElement, InputNumberP
 
   const handleBlur = () => setTouched(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     const inputFormatValue = formatNumber(value);
     const numberValue = value.replace(ONLY_DIGIT_REGEX, "");
@@ -202,4 +212,4 @@ const InputNumber: React.ForwardRefRenderFunction<HTMLInputElement, InputNumberP
   );
 };
 
-export default React.forwardRef(InputNumber);
+export default forwardRef(InputNumber);

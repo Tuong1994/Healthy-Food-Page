@@ -1,12 +1,12 @@
-import React from "react";
+import { HTMLAttributes, ReactNode, ForwardRefRenderFunction, forwardRef } from "react";
 import utils from "@/utils";
 
-export interface LayoutBodyProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface LayoutBodyProps extends HTMLAttributes<HTMLDivElement> {
   rootClassName?: string;
-  children?: React.ReactNode | React.ReactNode[];
+  children?: ReactNode | ReactNode[];
 }
 
-const LayoutBody: React.ForwardRefRenderFunction<HTMLDivElement, LayoutBodyProps> = (
+const LayoutBody: ForwardRefRenderFunction<HTMLDivElement, LayoutBodyProps> = (
   { rootClassName = "", children, ...restProps },
   ref
 ) => {
@@ -19,4 +19,4 @@ const LayoutBody: React.ForwardRefRenderFunction<HTMLDivElement, LayoutBodyProps
   );
 };
 
-export default React.forwardRef(LayoutBody);
+export default forwardRef(LayoutBody);

@@ -1,9 +1,7 @@
-import React from "react";
-import { UI } from "@/components";
-import { Lang } from "@/common/type";
+import { FC, Fragment, useState, useEffect } from "react";
+import { Card, Accordion, InfoRow, NoteMessage, Typography } from "@/components/UI";
 import { HiCheck } from "react-icons/hi2";
-
-const { Card, Accordion, InfoRow, NoteMessage, Typography } = UI;
+import type { Lang } from "@/common/type";
 
 const { Paragraph } = Typography;
 
@@ -12,20 +10,20 @@ interface PaymentMethodProps {
   onSelectedMethod?: (id: string) => void;
 }
 
-const PaymentMethod: React.FC<PaymentMethodProps> = ({ lang, onSelectedMethod }) => {
-  const [selectedMethod, setSelectedMethod] = React.useState<string>("");
+const PaymentMethod: FC<PaymentMethodProps> = ({ lang, onSelectedMethod }) => {
+  const [selectedMethod, setSelectedMethod] = useState<string>("");
 
   const methods = [
     {
       id: "1",
       title: lang.cart.methods.transfer.title,
       content: (
-        <React.Fragment>
+        <Fragment>
           <Paragraph italic>{lang.cart.methods.transfer.content}</Paragraph>
           <InfoRow label={lang.cart.methods.transfer.holders} text={lang.common.company} />
           <InfoRow label={lang.cart.methods.transfer.number} text="015.736.772" />
           <InfoRow label={lang.cart.methods.transfer.branch} text="VIB - HCM" />
-        </React.Fragment>
+        </Fragment>
       ),
     },
     {
@@ -66,7 +64,7 @@ const PaymentMethod: React.FC<PaymentMethodProps> = ({ lang, onSelectedMethod })
     });
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     onSelectedMethod?.(selectedMethod);
   }, [selectedMethod]);
 

@@ -1,6 +1,8 @@
+import { ReactNode } from "react";
+
 export type DropdownItem = {
   id: string;
-  label: React.ReactNode | React.ReactNode[];
+  label: ReactNode | ReactNode[];
 };
 
 export type DropdownItems = DropdownItem[];

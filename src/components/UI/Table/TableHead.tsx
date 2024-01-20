@@ -1,3 +1,4 @@
+import { Key, ReactNode } from "react";
 import { Columns } from "./type";
 import { CheckBox } from "@/components/Control";
 import { HiMinus } from "react-icons/hi2";
@@ -9,14 +10,14 @@ interface TableHeadProps<M> {
   totalRows: number;
   hasRowSelection: boolean;
   hasRowExpand: boolean;
-  rowSelectedKeys: React.Key[];
-  removeButtonTitle?: React.ReactNode | React.ReactNode[];
-  cancelButtonTitle?: React.ReactNode | React.ReactNode[];
+  rowSelectedKeys: Key[];
+  removeButtonTitle?: ReactNode | ReactNode[];
+  cancelButtonTitle?: ReactNode | ReactNode[];
   removeButtonProps?: ButtonProps;
   cancelButtonProps?: ButtonProps;
   handleSelectAllRow: () => void;
   handleCancelSelect: () => void;
-  onSelectRow?: (keys: React.Key[]) => void;
+  onSelectRow?: (keys: Key[]) => void;
 }
 
 const TableHead = <M extends object>({

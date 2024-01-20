@@ -1,4 +1,4 @@
-import React from "react";
+import { FC, CSSProperties, useState } from "react";
 import {
   HiOutlineMagnifyingGlassMinus as GlassMinus,
   HiOutlineMagnifyingGlassPlus as GlassPlus,
@@ -16,20 +16,20 @@ export interface ImageViewPopupProps {
   onClose: () => void;
 }
 
-const ImageViewPopup: React.FC<ImageViewPopupProps> = ({ open, url, onClose }) => {
+const ImageViewPopup: FC<ImageViewPopupProps> = ({ open, url, onClose }) => {
   const render = useRender(open);
 
   useOverflow(open);
 
-  const [scale, setScale] = React.useState<number>(1);
+  const [scale, setScale] = useState<number>(1);
 
-  const [rotate, setRotate] = React.useState<number>(0);
+  const [rotate, setRotate] = useState<number>(0);
 
   const openClassName = open ? "image-popup-active" : "";
 
   const className = utils.formatClassName("image-popup", openClassName);
 
-  const imageStyle: React.CSSProperties = { transform: `rotate(${rotate}deg) scale(${scale})` };
+  const imageStyle: CSSProperties = { transform: `rotate(${rotate}deg) scale(${scale})` };
 
   const handleRotate = () => setRotate((prev) => prev + 90);
 

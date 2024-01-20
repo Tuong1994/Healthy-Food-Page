@@ -1,18 +1,16 @@
-'use client'
-
-import React from "react";
+import { HTMLAttributes, ReactNode, ForwardRefRenderFunction, useEffect, forwardRef } from "react";
 import LayoutContext, { LayoutColor, LayoutContextState, LayoutTheme } from "../Context";
 import useLayout from "../useLayout";
 import utils from "@/utils";
 
-export interface LayoutContainerProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface LayoutContainerProps extends HTMLAttributes<HTMLDivElement> {
   rootClassName?: string;
-  children?: React.ReactNode | React.ReactNode[];
+  children?: ReactNode | ReactNode[];
   theme?: LayoutTheme;
   color?: LayoutColor;
 }
 
-const LayoutContainer: React.ForwardRefRenderFunction<HTMLDivElement, LayoutContainerProps> = (
+const LayoutContainer: ForwardRefRenderFunction<HTMLDivElement, LayoutContainerProps> = (
   { rootClassName = "", theme = "light", color = "blue", children, ...restProps },
   ref
 ) => {
@@ -22,7 +20,7 @@ const LayoutContainer: React.ForwardRefRenderFunction<HTMLDivElement, LayoutCont
 
   const className = utils.formatClassName("container", rootClassName);
 
-  React.useEffect(() => layoutApi.onSwitchTheme(theme), []);
+  useEffect(() => layoutApi.onSwitchTheme(theme), []);
 
   return (
     <LayoutContext.Provider value={initialValue}>
@@ -33,4 +31,4 @@ const LayoutContainer: React.ForwardRefRenderFunction<HTMLDivElement, LayoutCont
   );
 };
 
-export default React.forwardRef(LayoutContainer);
+export default forwardRef(LayoutContainer);

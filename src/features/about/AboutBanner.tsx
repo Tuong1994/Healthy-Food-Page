@@ -1,8 +1,6 @@
-import React from "react";
-import { UI } from "@/components";
-import { Lang } from "@/common/type";
-
-const { Section, Button, Image, Space, UList, Grid, Typography } = UI;
+import { FC } from "react";
+import { Section, Button, Image, Space, UList, Grid, Typography } from "@/components/UI";
+import type { Lang } from "@/common/type";
 
 const { Row, Col } = Grid;
 
@@ -14,7 +12,7 @@ interface AboutBannerProps {
   lang: Lang;
 }
 
-const AboutBanner: React.FC<AboutBannerProps> = ({ lang }) => {
+const AboutBanner: FC<AboutBannerProps> = ({ lang }) => {
   return (
     <Section rootClassName="about-banner">
       <Row justify="between">

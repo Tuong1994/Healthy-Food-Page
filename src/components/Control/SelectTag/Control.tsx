@@ -1,17 +1,24 @@
-import React from "react";
+import {
+  InputHTMLAttributes,
+  ReactNode,
+  ForwardRefRenderFunction,
+  useRef,
+  useEffect,
+  forwardRef,
+} from "react";
 import { FaSpinner } from "react-icons/fa";
 import { HiOutlineChevronDown, HiXCircle } from "react-icons/hi2";
 import { SelectOptions } from "../type";
 import Tags from "./Tags";
 import utils from "@/utils";
 
-interface SelectTagControlProps extends React.InputHTMLAttributes<HTMLInputElement> {
+interface SelectTagControlProps extends InputHTMLAttributes<HTMLInputElement> {
   rhfError: boolean;
   dropdown: boolean;
   loading: boolean;
   inputClassName?: string;
-  addonBefore?: React.ReactNode | React.ReactNode[];
-  addonAfter?: React.ReactNode | React.ReactNode[];
+  addonBefore?: ReactNode | ReactNode[];
+  addonAfter?: ReactNode | ReactNode[];
   controlDisabled: boolean | undefined;
   showClearIcon: boolean;
   selectedOptions: SelectOptions;
@@ -21,7 +28,7 @@ interface SelectTagControlProps extends React.InputHTMLAttributes<HTMLInputEleme
   handleDropdown: () => void;
 }
 
-const SelectTagControl: React.ForwardRefRenderFunction<HTMLInputElement, SelectTagControlProps> = (
+const SelectTagControl: ForwardRefRenderFunction<HTMLInputElement, SelectTagControlProps> = (
   {
     rhfError,
     dropdown,
@@ -40,14 +47,14 @@ const SelectTagControl: React.ForwardRefRenderFunction<HTMLInputElement, SelectT
   },
   ref
 ) => {
-  const selectRef = React.useRef<HTMLDivElement>(null);
+  const selectRef = useRef<HTMLDivElement>(null);
 
   const iconRotateClassName = dropdown ? "action-icon-rotate" : "";
 
   const controlInputClassName = utils.formatClassName("control-box", inputClassName);
 
   // Focus input when error is trigger
-  React.useEffect(() => {
+  useEffect(() => {
     if (rhfError) selectRef.current?.click();
   }, [rhfError]);
 
@@ -90,4 +97,4 @@ const SelectTagControl: React.ForwardRefRenderFunction<HTMLInputElement, SelectT
   );
 };
 
-export default React.forwardRef(SelectTagControl);
+export default forwardRef(SelectTagControl);

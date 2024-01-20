@@ -1,4 +1,4 @@
-import React from "react";
+import { CSSProperties, ForwardRefRenderFunction, useState, forwardRef } from "react";
 import { ImageProps } from ".";
 import { AiOutlineEye } from "react-icons/ai";
 import { BsTrash } from "react-icons/bs";
@@ -14,10 +14,10 @@ type ViewImage = {
 interface ImageViewProps extends ImageProps {
   checked: boolean;
   handleCheck: (checked: boolean) => void;
-  imageSize: () => React.CSSProperties;
+  imageSize: () => CSSProperties;
 }
 
-const ImageView: React.ForwardRefRenderFunction<HTMLImageElement, ImageViewProps> = (
+const ImageView: ForwardRefRenderFunction<HTMLImageElement, ImageViewProps> = (
   {
     imageSize,
     src = "",
@@ -32,7 +32,7 @@ const ImageView: React.ForwardRefRenderFunction<HTMLImageElement, ImageViewProps
   },
   ref
 ) => {
-  const [popup, setPopup] = React.useState<ViewImage>({ url: "", open: false });
+  const [popup, setPopup] = useState<ViewImage>({ url: "", open: false });
 
   const viewCheckedClassName = checked ? "group-view-checked" : "";
 
@@ -73,4 +73,4 @@ const ImageView: React.ForwardRefRenderFunction<HTMLImageElement, ImageViewProps
   );
 };
 
-export default React.forwardRef(ImageView);
+export default forwardRef(ImageView);

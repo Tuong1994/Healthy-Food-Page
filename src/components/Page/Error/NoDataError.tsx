@@ -1,7 +1,7 @@
-import React from "react";
+import { FC, Fragment } from "react";
 import { useLang } from "@/hooks";
 import { Typography } from "@/components/UI";
-import { ParagraphProps } from "@/components/UI/Typography/Paragraph";
+import type { ParagraphProps } from "@/components/UI/Typography/Paragraph";
 
 const { Paragraph } = Typography;
 
@@ -9,7 +9,7 @@ interface NoDataErrorProps extends ParagraphProps {
   message?: string;
 }
 
-const NoDataError: React.FC<NoDataErrorProps> = ({ message, ...restProps }) => {
+const NoDataError: FC<NoDataErrorProps> = ({ message, ...restProps }) => {
   const { lang } = useLang();
 
   const paragraphDefaultProps: ParagraphProps = {
@@ -20,9 +20,9 @@ const NoDataError: React.FC<NoDataErrorProps> = ({ message, ...restProps }) => {
   };
 
   return (
-    <React.Fragment>
+    <Fragment>
       <Paragraph {...paragraphDefaultProps}>{message ?? lang.common.description.noData}</Paragraph>
-    </React.Fragment>
+    </Fragment>
   );
 };
 

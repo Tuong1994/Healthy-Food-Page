@@ -1,6 +1,4 @@
-"use client";
-
-import React from "react";
+import { CSSProperties, ForwardRefRenderFunction, useContext, useState, forwardRef } from "react";
 import { MenuItems } from "../type";
 import LayoutContext, { LayoutColor } from "../../Context";
 import MenuVerticalItem from "./Item";
@@ -9,18 +7,18 @@ import utils from "@/utils";
 export interface MenuVerticalProps {
   rootClassName?: string;
   itemClassName?: string;
-  itemStyle?: React.CSSProperties;
+  itemStyle?: CSSProperties;
   items?: MenuItems;
   color?: LayoutColor;
 }
 
-const MenuVertical: React.ForwardRefRenderFunction<HTMLDivElement, MenuVerticalProps> = (
+const MenuVertical: ForwardRefRenderFunction<HTMLDivElement, MenuVerticalProps> = (
   { rootClassName = "", itemClassName, itemStyle, items = [], color = "blue", ...restProps },
   ref
 ) => {
-  const { theme, layouted, color: layoutColor } = React.useContext(LayoutContext);
+  const { theme, layouted, color: layoutColor } = useContext(LayoutContext);
 
-  const [activeId, setActiveId] = React.useState<string[]>([]);
+  const [activeId, setActiveId] = useState<string[]>([]);
 
   const themeClassName = theme === "dark" ? "menu-vertical-dark" : "";
 
@@ -50,4 +48,4 @@ const MenuVertical: React.ForwardRefRenderFunction<HTMLDivElement, MenuVerticalP
   );
 };
 
-export default React.forwardRef(MenuVertical);
+export default forwardRef(MenuVertical);

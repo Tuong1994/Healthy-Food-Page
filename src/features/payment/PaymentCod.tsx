@@ -1,8 +1,6 @@
-import React from "react";
-import { UI } from "@/components";
-import { Lang } from "@/common/type";
-
-const { Divider, Image, Grid, Typography } = UI;
+import { FC } from "react";
+import { Divider, Image, Grid, Typography } from "@/components/UI";
+import type { Lang } from "@/common/type";
 
 const { Row, Col } = Grid;
 
@@ -12,7 +10,7 @@ interface PaymentCodProps {
   lang: Lang;
 }
 
-const PaymentCod: React.FC<PaymentCodProps> = ({ lang }) => {
+const PaymentCod: FC<PaymentCodProps> = ({ lang }) => {
   return (
     <div className="payment-cod">
       <Row justify="between">

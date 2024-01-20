@@ -1,7 +1,9 @@
+import { ReactNode } from "react";
+
 export type TabsItem = {
   id: string;
-  title: React.ReactNode | React.ReactNode[];
-  content: React.ReactNode | React.ReactNode[];
+  title: ReactNode | ReactNode[];
+  content: ReactNode | ReactNode[];
 };
 
 export type TabsItems = TabsItem[];

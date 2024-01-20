@@ -1,6 +1,4 @@
-'use client'
-
-import React from "react";
+import { CSSProperties, ForwardRefRenderFunction, useRef, useEffect, forwardRef } from "react";
 import { useRender } from "@/hooks";
 import Portal from "@/components/Portal";
 import useAlertStore from "./AlertStore";
@@ -8,13 +6,10 @@ import utils from "@/utils";
 
 export interface AlertProps {
   rootClassName?: string;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
 }
 
-const Alert: React.ForwardRefRenderFunction<HTMLDivElement, AlertProps> = (
-  { rootClassName = "", style },
-  ref
-) => {
+const Alert: ForwardRefRenderFunction<HTMLDivElement, AlertProps> = ({ rootClassName = "", style }, ref) => {
   const [open, type, message, options, onClose] = useAlertStore((state) => [
     state.open,
     state.type,
@@ -25,7 +20,7 @@ const Alert: React.ForwardRefRenderFunction<HTMLDivElement, AlertProps> = (
 
   const { placement, icons } = options;
 
-  const timeRef = React.useRef<any>(null);
+  const timeRef = useRef<any>(null);
 
   const render = useRender(open);
 
@@ -43,7 +38,7 @@ const Alert: React.ForwardRefRenderFunction<HTMLDivElement, AlertProps> = (
     rootClassName
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     timeRef.current = setTimeout(() => onClose?.(), 3000);
     return () => clearTimeout(timeRef.current);
   });
@@ -70,4 +65,4 @@ const Alert: React.ForwardRefRenderFunction<HTMLDivElement, AlertProps> = (
   );
 };
 
-export default React.forwardRef(Alert);
+export default forwardRef(Alert);

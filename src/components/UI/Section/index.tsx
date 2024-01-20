@@ -1,14 +1,12 @@
-"use client";
-
-import React from "react";
+import { HTMLAttributes, ReactNode, ForwardRefRenderFunction, forwardRef } from "react";
 import utils from "@/utils";
 
-export interface SectionProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface SectionProps extends HTMLAttributes<HTMLDivElement> {
   rootClassName?: string;
-  children?: React.ReactNode | React.ReactNode[];
+  children?: ReactNode | ReactNode[];
 }
 
-const Section: React.ForwardRefRenderFunction<HTMLDivElement, SectionProps> = (
+const Section: ForwardRefRenderFunction<HTMLDivElement, SectionProps> = (
   { rootClassName = "", children, ...restProps },
   ref
 ) => {
@@ -21,4 +19,4 @@ const Section: React.ForwardRefRenderFunction<HTMLDivElement, SectionProps> = (
   );
 };
 
-export default React.forwardRef(Section);
+export default forwardRef(Section);

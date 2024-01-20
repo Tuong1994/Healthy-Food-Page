@@ -1,24 +1,32 @@
-import React from "react";
+import {
+  HTMLAttributes,
+  ReactNode,
+  ForwardRefRenderFunction,
+  useState,
+  useEffect,
+  useRef,
+  forwardRef,
+} from "react";
 import { HiOutlineChevronDown as ArrowDown } from "react-icons/hi2";
 import utils from "@/utils";
 import useLayout from "../Layout/useLayout";
 
 type AccordionType = "default" | "group";
 
-export interface AccordionProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface AccordionProps extends HTMLAttributes<HTMLDivElement> {
   rootClassName?: string;
   bordered?: boolean;
   hasArrow?: boolean;
   type?: AccordionType;
   isCollapsed?: boolean;
-  extra?: React.ReactNode | React.ReactNode[];
-  label?: React.ReactNode | React.ReactNode[];
-  children?: React.ReactNode | React.ReactNode[];
-  expandIcon?: (collapse: boolean) => React.ReactNode;
+  extra?: ReactNode | ReactNode[];
+  label?: ReactNode | ReactNode[];
+  children?: ReactNode | ReactNode[];
+  expandIcon?: (collapse: boolean) => ReactNode;
   onCollapse?: (collapse: boolean) => void;
 }
 
-const Accordion: React.ForwardRefRenderFunction<HTMLDivElement, AccordionProps> = (
+const Accordion: ForwardRefRenderFunction<HTMLDivElement, AccordionProps> = (
   {
     rootClassName = "",
     bordered = true,
@@ -38,9 +46,9 @@ const Accordion: React.ForwardRefRenderFunction<HTMLDivElement, AccordionProps> 
 
   const { layoutTheme: theme } = layoutValue;
 
-  const [collapse, setCollapse] = React.useState<boolean>(false);
+  const [collapse, setCollapse] = useState<boolean>(false);
 
-  const panelRef = React.useRef<HTMLDivElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
 
   const collapsed = type === "default" ? collapse : isCollapsed;
 
@@ -58,11 +66,11 @@ const Accordion: React.ForwardRefRenderFunction<HTMLDivElement, AccordionProps> 
     rootClassName
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     onCollapse?.(collapse);
   }, [collapse]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!panelRef.current) return;
     if (panelRef.current === null) return;
 
@@ -104,4 +112,4 @@ const Accordion: React.ForwardRefRenderFunction<HTMLDivElement, AccordionProps> 
   );
 };
 
-export default React.forwardRef(Accordion);
+export default forwardRef(Accordion);

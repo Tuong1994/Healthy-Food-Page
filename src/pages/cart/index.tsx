@@ -1,8 +1,8 @@
-import React from "react";
+import { Fragment, useState } from "react";
 import { NextPage } from "next";
-import { UI } from "@/components";
-import { BreadcrumbItems } from "@/components/UI/Breadcrumb/type";
+import { Breadcrumb } from "@/components/UI";
 import { useLang } from "@/hooks";
+import type { BreadcrumbItems } from "@/components/UI/Breadcrumb/type";
 import Link from "next/link";
 import CartConfirm from "@/features/cart/components/CartConfirm";
 import CartPayment from "@/features/cart/components/CartPayment";
@@ -12,16 +12,14 @@ import url from "@/common/constant/url";
 
 const { HOME } = url;
 
-const { Breadcrumb } = UI;
-
 const isEmpty = false;
 
 const Cart: NextPage = () => {
   const { lang } = useLang();
 
-  const cart = useCartStore(state => state.cart)
+  const cart = useCartStore((state) => state.cart);
 
-  const [isConfirmed, setIsConfirmed] = React.useState<boolean>(false);
+  const [isConfirmed, setIsConfirmed] = useState<boolean>(false);
 
   const items: BreadcrumbItems = [
     { id: "1", label: <Link href={HOME}>{lang.common.menu.home}</Link> },
@@ -37,13 +35,13 @@ const Cart: NextPage = () => {
       <Breadcrumb items={items} />
 
       {!isEmpty ? (
-        <React.Fragment>
+        <Fragment>
           {!isConfirmed ? (
             <CartConfirm handleConfirm={handleConfirm} />
           ) : (
             <CartPayment handleUnConfirm={handleUnConfirm} />
           )}
-        </React.Fragment>
+        </Fragment>
       ) : (
         <CartEmpty lang={lang} />
       )}

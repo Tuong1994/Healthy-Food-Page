@@ -1,8 +1,6 @@
-import React from "react";
-import { UI } from "@/components";
-import { Lang } from "@/common/type";
-
-const { Section, Space, Avatar, Image, Divider, Grid, Typography } = UI;
+import { FC } from "react";
+import { Section, Space, Avatar, Image, Divider, Grid, Typography } from "@/components/UI";
+import type { Lang } from "@/common/type";
 
 const { Row, Col } = Grid;
 
@@ -12,7 +10,7 @@ interface AboutStoryProps {
   lang: Lang;
 }
 
-const AboutStory: React.FC<AboutStoryProps> = ({ lang }) => {
+const AboutStory: FC<AboutStoryProps> = ({ lang }) => {
   const stories = [
     {
       id: "1",
@@ -72,7 +70,9 @@ const AboutStory: React.FC<AboutStoryProps> = ({ lang }) => {
             <Paragraph strong size={18} rootClassName="story-author">
               {story.author}
             </Paragraph>
-            <Paragraph variant="secondary" size={13}>{story.position}</Paragraph>
+            <Paragraph variant="secondary" size={13}>
+              {story.position}
+            </Paragraph>
           </div>
         </Space>
       </Col>

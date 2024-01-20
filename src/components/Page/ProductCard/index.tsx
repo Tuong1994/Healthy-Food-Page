@@ -1,22 +1,20 @@
-import React from "react";
-import { UI } from "@/components";
-import { useLang } from "@/hooks";
-import { Product } from "@/services/product/type";
+import { FC } from "react";
+import { Typography } from "@/components/UI";
+import type { Product } from "@/services/product/type";
+import type { Url } from "next/dist/shared/lib/router/router";
 import { EProductUnit } from "@/services/product/enum";
+import { useLang } from "@/hooks";
 import { useRouter } from "next/router";
-import { Url } from "next/dist/shared/lib/router/router";
 import ProductCardImage from "./ProductCardImage";
-import ProductCardControl from "./ProductCardControl";
 import ProductCardLike from "./ProductCardLike";
 import ProductCardLoading from "./ProductCardLoading";
-import useQuantity from "@/features/product/hooks/useQuantity";
+import QuantityControl from "../QuantityControl";
+import useQuantity from "../QuantityControl/useQuantity";
 import Link from "next/link";
 import utils from "@/utils";
 import url from "@/common/constant/url";
 
 const { PRODUCT_DETAIL } = url;
-
-const { Typography } = UI;
 
 const { Paragraph } = Typography;
 
@@ -30,7 +28,7 @@ interface ProductCardProps {
   loading?: boolean;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({
+const ProductCard: FC<ProductCardProps> = ({
   product,
   rootClassName = "",
   imgWidth = "100%",
@@ -43,7 +41,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
   const { query } = useRouter();
 
-  const defaultQuantity = useQuantity(product?.id as string)
+  const defaultQuantity = useQuantity(product?.id as string);
 
   const responsiveClassName = responsive ? "product-card-responsive" : "";
 
@@ -91,7 +89,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <Paragraph rootClassName="group-price" strong size={15}>
           {utils.formatPrice(locale, product?.totalPrice ?? 0)}/{renderUnit()}
         </Paragraph>
-        <ProductCardControl productId={product?.id as string} defaultValue={defaultQuantity} />
+        <QuantityControl productId={product?.id as string} defaultValue={defaultQuantity} />
       </div>
 
       <ProductCardLike />

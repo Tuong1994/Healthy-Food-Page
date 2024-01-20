@@ -1,11 +1,11 @@
-import React from "react";
+import { FC } from "react";
 import CommentControl from "./CommentControl";
 import CommentList from "./CommentList";
 import useCommentStore from "@/store/CommentStore";
 
 interface CommentProps {}
 
-const Comment: React.FC<CommentProps> = () => {
+const Comment: FC<CommentProps> = () => {
   const comments = useCommentStore((state) => state.comments);
 
   const rootComments = comments.filter((comment) => !comment.parentId);

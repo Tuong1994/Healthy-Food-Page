@@ -1,14 +1,12 @@
-import React from "react";
-import { UI } from "@/components";
-import { Lang } from "@/common/type";
+import { FC } from "react";
+import { Grid, Space } from "@/components/UI";
 import { FaPhone } from "react-icons/fa";
+import type { Lang } from "@/common/type";
 import Link from "next/link";
 import HeaderTranslate from "./HeaderTranslate";
 import url from "@/common/constant/url";
 
 const { ABOUT } = url;
-
-const { Grid, Space } = UI;
 
 const { Row, Col } = Grid;
 
@@ -16,7 +14,7 @@ interface HeaderTopProps {
   lang: Lang;
 }
 
-const HeaderTop: React.FC<HeaderTopProps> = ({ lang }) => {
+const HeaderTop: FC<HeaderTopProps> = ({ lang }) => {
   return (
     <Row rootClassName="header-top" justify="between" align="middle">
       <Col>

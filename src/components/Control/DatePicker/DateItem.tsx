@@ -1,4 +1,4 @@
-import React from "react";
+import { FC } from "react";
 import { SelectDate } from "../type";
 import useSelectRange from "./useSelectRange";
 import utils from "@/utils";
@@ -11,7 +11,7 @@ interface DateItemProps {
   handleSelectDate: (date: SelectDate) => void;
 }
 
-const DateItem: React.FC<DateItemProps> = ({ min, max, currentDate, selectDate, handleSelectDate }) => {
+const DateItem: FC<DateItemProps> = ({ min, max, currentDate, selectDate, handleSelectDate }) => {
   const selectRange = useSelectRange({ date: selectDate, min, max });
 
   const { className: disabledClassName, disabled } = selectRange;

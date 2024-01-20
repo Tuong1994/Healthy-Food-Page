@@ -1,15 +1,13 @@
-import React from "react";
-import { UI } from "@/components";
-import { Columns } from "@/components/UI/Table/type";
+import { FC, useState } from "react";
+import { Table, Image, Pagination, Divider, Grid, Typography } from "@/components/UI";
 import { useLang } from "@/hooks";
+import type { Columns } from "@/components/UI/Table/type";
 import PaymentMethod from "./PaymentMethod";
 import PaymentReceived from "./PaymentReceived";
 import PaymentInfo from "./PaymentInfo";
 import PaymentActions from "./PaymentActions";
 import PurchasedModal from "./PurchasedModal";
 import utils from "@/utils";
-
-const { Table, Image, Pagination, Divider, Grid, Typography } = UI;
 
 const { Row, Col } = Grid;
 
@@ -26,10 +24,10 @@ interface CartPaymentProps {
   handleUnConfirm: () => void;
 }
 
-const CartPayment: React.FC<CartPaymentProps> = ({ handleUnConfirm }) => {
+const CartPayment: FC<CartPaymentProps> = ({ handleUnConfirm }) => {
   const { locale, lang } = useLang();
 
-  const [open, setOpen] = React.useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false);
 
   const dataSource: Data[] = [
     { id: "1", name: "Product 1", quantity: 1, price: 100000 },

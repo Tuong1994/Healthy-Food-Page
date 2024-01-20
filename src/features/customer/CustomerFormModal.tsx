@@ -1,18 +1,15 @@
-import React from "react";
-import { UI, Control } from "@/components";
+import { FC, Fragment, useState } from "react";
+import { Space, Modal, Button, Divider, Grid } from "@/components/UI";
+import { Form, FormItem, Upload, Input, InputPhone, Select, DatePicker } from "@/components/Control";
 import type { Lang } from "@/common/type";
 import type { ModalProps } from "@/components/UI/Modal";
 import type { GridRowProps } from "@/components/UI/Grid/Row";
+import type { GridColProps } from "@/components/UI/Grid/Col";
+import type { Customer } from "@/services/customer/type";
 import { EGender, ERole } from "@/services/customer/enum";
-import { GridColProps } from "@/components/UI/Grid/Col";
-import { Customer } from "@/services/customer/type";
 import { useSelectOption } from "@/hooks";
 
-const { Space, Modal, Button, Divider, Grid } = UI;
-
 const { Row, Col } = Grid;
-
-const { Form, FormItem, Upload, Input, InputPhone, Select, DatePicker } = Control;
 
 const { ImageUpload } = Upload;
 
@@ -23,10 +20,10 @@ interface CustomerFormModalProps extends ModalProps {
   handleOpenPassword: () => void;
 }
 
-const CustomerFormModal: React.FC<CustomerFormModalProps> = ({ lang, handleOpenPassword, ...restProps }) => {
+const CustomerFormModal: FC<CustomerFormModalProps> = ({ lang, handleOpenPassword, ...restProps }) => {
   const { gender } = useSelectOption();
 
-  const [showMore, setShowMore] = React.useState<boolean>(false);
+  const [showMore, setShowMore] = useState<boolean>(false);
 
   const rowProps: GridRowProps = {
     gutters: [5, 5],
@@ -125,7 +122,7 @@ const CustomerFormModal: React.FC<CustomerFormModalProps> = ({ lang, handleOpenP
         )}
 
         {showMore && (
-          <React.Fragment>
+          <Fragment>
             <Divider>
               <Space align="middle">
                 <span>{lang.customer.modal.location}</span>
@@ -165,7 +162,7 @@ const CustomerFormModal: React.FC<CustomerFormModalProps> = ({ lang, handleOpenP
                 </FormItem>
               </Col>
             </Row>
-          </React.Fragment>
+          </Fragment>
         )}
       </Form>
     </Modal>

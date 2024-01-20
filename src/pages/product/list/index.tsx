@@ -1,12 +1,12 @@
-import React from "react";
-import { UI } from "@/components";
+import { Fragment, useMemo } from "react";
 import { GetServerSideProps, NextPage } from "next";
-import { BreadcrumbItems } from "@/components/UI/Breadcrumb/type";
+import { Breadcrumb, Card, Pagination, Empty, Grid, Typography } from "@/components/UI";
+import type { BreadcrumbItems } from "@/components/UI/Breadcrumb/type";
+import type { ApiQuery, ApiResponse, Paging } from "@/services/type";
+import type { Product } from "@/services/product/type";
+import type { Category } from "@/services/category/type";
+import type { SubCategory } from "@/services/subcategory/type";
 import { defaultApiResponse } from "@/services";
-import { ApiQuery, ApiResponse, Paging } from "@/services/type";
-import { Product } from "@/services/product/type";
-import { Category } from "@/services/category/type";
-import { SubCategory } from "@/services/subcategory/type";
 import { getSubCategory } from "@/services/subcategory/api";
 import { getProductsPaging } from "@/services/product/api";
 import { getCategory } from "@/services/category/api";
@@ -19,8 +19,6 @@ import NoDataError from "@/components/Page/Error/NoDataError";
 import url from "@/common/constant/url";
 
 const { HOME, PRODUCT_LIST } = url;
-
-const { Breadcrumb, Card, Pagination, Empty, Grid, Typography } = UI;
 
 const { Title } = Typography;
 
@@ -37,17 +35,17 @@ const Products: NextPage<ProductsProps> = ({ categoryResponse, subCategoryRespon
 
   const { query, push: routerPush } = useRouter();
 
-  const categoryName = React.useMemo(() => {
+  const categoryName = useMemo(() => {
     if (categoryResponse && !categoryResponse.success) return "";
     return categoryResponse.data.name;
   }, [categoryResponse, categoryResponse?.data?.name]);
 
-  const subCategoryName = React.useMemo(() => {
+  const subCategoryName = useMemo(() => {
     if (subCategoryResponse && !subCategoryResponse.success) return "";
     return subCategoryResponse.data.name;
   }, [subCategoryResponse, subCategoryResponse?.data?.name]);
 
-  const pageTitle = React.useMemo(() => {
+  const pageTitle = useMemo(() => {
     if (!subCategoryName) return categoryName;
     return `${categoryName} - ${subCategoryName}`;
   }, [categoryName, subCategoryName]);
@@ -92,7 +90,7 @@ const Products: NextPage<ProductsProps> = ({ categoryResponse, subCategoryRespon
     const products: Product[] = productsResponse.data.items ? productsResponse.data.items : [];
     if (!products.length) return <Empty text={lang.common.description.empty} />;
     return (
-      <React.Fragment>
+      <Fragment>
         <div className="body-list">
           {products.map((product) => (
             <ProductCard key={product.id} product={product} imgHeight={200} responsive />
@@ -108,7 +106,7 @@ const Products: NextPage<ProductsProps> = ({ categoryResponse, subCategoryRespon
           limit={12}
           onChangePage={handleChangePage}
         />
-      </React.Fragment>
+      </Fragment>
     );
   };
 

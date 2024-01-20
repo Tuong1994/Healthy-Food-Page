@@ -1,9 +1,9 @@
-import { UI } from "@/components";
+import { Breadcrumb } from "@/components/UI";
 import { GetServerSideProps, NextPage } from "next";
-import { BreadcrumbItems } from "@/components/UI/Breadcrumb/type";
+import type { BreadcrumbItems } from "@/components/UI/Breadcrumb/type";
+import type { ApiResponse, Paging } from "@/services/type";
+import type { Product as ProductType } from "@/services/product/type";
 import { getProduct, getProductsPaging } from "@/services/product/api";
-import { ApiResponse, Paging } from "@/services/type";
-import { Product as ProductType } from "@/services/product/type";
 import { defaultApiResponse } from "@/services";
 import { ELang } from "@/common/enum";
 import { useLang } from "@/hooks";
@@ -14,8 +14,6 @@ import ProductTabs from "@/features/product/detail/ProductTabs";
 import url from "@/common/constant/url";
 
 const { HOME, PRODUCT_LIST } = url;
-
-const { Breadcrumb } = UI;
 
 interface ProductPageProps {
   productResponse: ApiResponse<ProductType>;
@@ -62,7 +60,7 @@ export default ProductPage;
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { query } = context;
   const apiQuery = { productId: query.id as string, langCode: query.langCode as ELang };
-  
+
   const productResponse = await getProduct(apiQuery);
   let productsResponse: ApiResponse<Paging<ProductType>> = defaultApiResponse<Paging<ProductType>>();
   if (productResponse && productResponse.success)

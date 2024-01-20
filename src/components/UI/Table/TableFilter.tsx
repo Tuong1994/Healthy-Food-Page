@@ -1,4 +1,4 @@
-import React from "react";
+import { FC, ReactNode } from "react";
 import type { TableColor } from ".";
 import type { Lang } from "@/common/type";
 import { Grid } from "..";
@@ -10,12 +10,12 @@ const { Row, Col } = Grid;
 interface TableFilterProps {
   lang: Lang;
   color: TableColor;
-  filter?: React.ReactNode | React.ReactNode[];
+  filter?: ReactNode | ReactNode[];
   onFilter?: () => void;
   onCancelFilter?: () => void;
 }
 
-const TableFilter: React.FC<TableFilterProps> = ({ color, filter, onFilter, onCancelFilter }) => {
+const TableFilter: FC<TableFilterProps> = ({ color, filter, onFilter, onCancelFilter }) => {
   return (
     <Row rootClassName="table-filter">
       {filter}

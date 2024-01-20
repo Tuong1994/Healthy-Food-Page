@@ -1,8 +1,8 @@
-import React from "react";
+import { ReactNode, useContext } from "react";
 import { useViewpoint } from "@/hooks";
 import { GridAppContext, GridRowContext } from "./Context";
 
-const GridProvider = ({ children }: { children: React.ReactNode }) => {
+const GridProvider = ({ children }: { children: ReactNode }) => {
   const { isPhone, isTablet, isLaptop, isDesktop, screenWidth } = useViewpoint();
   return (
     <GridAppContext.Provider value={{ isPhone, isTablet, isLaptop, isDesktop, screenWidth }}>
@@ -13,6 +13,6 @@ const GridProvider = ({ children }: { children: React.ReactNode }) => {
 
 export default GridProvider;
 
-export const useAppGrid = () => React.useContext(GridAppContext)
+export const useAppGrid = () => useContext(GridAppContext);
 
-export const useAppGridRow = () => React.useContext(GridRowContext)
+export const useAppGridRow = () => useContext(GridRowContext);

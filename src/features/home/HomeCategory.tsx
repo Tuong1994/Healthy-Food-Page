@@ -1,9 +1,9 @@
-import React from "react";
-import { UI } from "@/components";
-import { useLang } from "@/hooks";
-import { Category } from "@/services/category/type";
-import { Product } from "@/services/product/type";
+import { FC } from "react";
+import { Empty, Typography, Grid } from "@/components/UI";
+import type { Product } from "@/services/product/type";
+import type { Category } from "@/services/category/type";
 import { ESort } from "@/common/enum";
+import { useLang } from "@/hooks";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import ProductCard from "@/components/Page/ProductCard";
@@ -11,8 +11,6 @@ import NoDataError from "@/components/Page/Error/NoDataError";
 import url from "@/common/constant/url";
 
 const { PRODUCT_LIST } = url;
-
-const { Empty, Typography, Grid } = UI;
 
 const { Title } = Typography;
 
@@ -24,7 +22,7 @@ interface HomeCategoryProps {
   products: Product[];
 }
 
-const HomeCategory: React.FC<HomeCategoryProps> = ({ loading, error, products = [] }) => {
+const HomeCategory: FC<HomeCategoryProps> = ({ loading, error, products = [] }) => {
   const { lang } = useLang();
 
   const { query } = useRouter();

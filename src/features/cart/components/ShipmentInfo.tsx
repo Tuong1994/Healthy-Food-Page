@@ -1,15 +1,13 @@
-import React from "react";
-import { UI } from "@/components";
+import { FC } from "react";
+import { Divider, InfoRow } from "@/components/UI";
 import type { Lang } from "@/common/type";
 import type { InfoRowProps } from "@/components/UI/InfoRow";
-
-const { Divider, InfoRow } = UI;
 
 interface ShipmentInfoProps {
   lang: Lang;
 }
 
-const ShipmentInfo: React.FC<ShipmentInfoProps> = ({ lang }) => {
+const ShipmentInfo: FC<ShipmentInfoProps> = ({ lang }) => {
   const commonProps: InfoRowProps = {
     labelSpanProps: { xs: 8, md: 4, lg: 5, span: 4 },
     textSpanProps: { xs: 16, md: 18 },

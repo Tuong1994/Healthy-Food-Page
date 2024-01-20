@@ -1,23 +1,21 @@
-import React from "react";
-import { UI } from "@/components";
+import { FC, Fragment } from "react";
+import { Space, Avatar, Button, Dropdown, Grid, Typography, Loading } from "@/components/UI";
 import type { Lang } from "@/common/type";
 import type { DropdownItems } from "@/components/UI/Dropdown/type";
+import type { ApiQuery } from "@/services/type";
 import { BsGear } from "react-icons/bs";
 import { HiUser } from "react-icons/hi2";
 import { HiLogout } from "react-icons/hi";
 import { useAsync, useMounted } from "@/hooks";
 import { useRouter } from "next/router";
 import { logout } from "@/services/auth/api";
-import { ApiQuery } from "@/services/type";
 import { HttpStatus } from "@/services/axios";
-import Link from "next/link";
-import url from "@/common/constant/url";
 import useAuthStore from "@/store/AuthStore";
 import useMessage from "@/components/UI/ToastMessage/useMessage";
+import Link from "next/link";
+import url from "@/common/constant/url";
 
 const { HOME, AUTH_SIGN_IN, AUTH_SIGN_UP, CUSTOMER } = url;
-
-const { Space, Avatar, Button, Dropdown, Grid, Typography, Loading } = UI;
 
 const { Row, Col } = Grid;
 
@@ -29,7 +27,7 @@ interface HeaderAuthProps {
   lang: Lang;
 }
 
-const HeaderAuth: React.FC<HeaderAuthProps> = ({ lang }) => {
+const HeaderAuth: FC<HeaderAuthProps> = ({ lang }) => {
   const messageApi = useMessage();
 
   const isMounted = useMounted();
@@ -93,7 +91,7 @@ const HeaderAuth: React.FC<HeaderAuthProps> = ({ lang }) => {
   return (
     <Row align="middle" justify={isAuth ? "end" : "between"} rootClassName="bottom-auth">
       {!isAuth ? (
-        <React.Fragment>
+        <Fragment>
           <Col span={12}>
             <Link href={AUTH_SIGN_IN}>
               <Button sizes="lg" ghost rootClassName="auth-btn">
@@ -108,13 +106,13 @@ const HeaderAuth: React.FC<HeaderAuthProps> = ({ lang }) => {
               </Button>
             </Link>
           </Col>
-        </React.Fragment>
+        </Fragment>
       ) : (
         <Col>
           <Dropdown items={items} placement="right">
             <Space align="middle">
               <Avatar color="green" />
-              <Paragraph strong>{info.fullName ?? 'Customer'}</Paragraph>
+              <Paragraph strong>{info.fullName ?? "Customer"}</Paragraph>
             </Space>
           </Dropdown>
         </Col>

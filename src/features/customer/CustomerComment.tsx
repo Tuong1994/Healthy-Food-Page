@@ -1,17 +1,15 @@
-import React from "react";
-import { UI } from "@/components";
+import { FC, Fragment } from "react";
+import { Image, Table, Pagination } from "@/components/UI";
 import type { Lang } from "@/common/type";
 import type { Comment } from "@/services/comment/type";
 import type { Columns } from "@/components/UI/Table/type";
 import moment from "moment";
 
-const { Image, Table, Pagination } = UI;
-
 interface CustomerCommentProps {
   lang: Lang;
 }
 
-const CustomerComment: React.FC<CustomerCommentProps> = ({ lang }) => {
+const CustomerComment: FC<CustomerCommentProps> = ({ lang }) => {
   const dataSource: Comment[] = [
     {
       id: "1",
@@ -71,10 +69,10 @@ const CustomerComment: React.FC<CustomerCommentProps> = ({ lang }) => {
   ];
 
   return (
-    <React.Fragment>
+    <Fragment>
       <Table<Comment> color="green" dataSource={dataSource} columns={columns} />
       <Pagination rootClassName="customer-table-pagination" color="green" shape="square" ghost />
-    </React.Fragment>
+    </Fragment>
   );
 };
 

@@ -1,15 +1,22 @@
-import React from "react";
+import {
+  InputHTMLAttributes,
+  ReactNode,
+  ForwardRefRenderFunction,
+  useRef,
+  useEffect,
+  forwardRef,
+} from "react";
 import { FaSpinner } from "react-icons/fa";
 import { HiOutlineChevronDown, HiXCircle } from "react-icons/hi2";
 import utils from "@/utils";
 
-interface SelectControlProps extends React.InputHTMLAttributes<HTMLInputElement> {
+interface SelectControlProps extends InputHTMLAttributes<HTMLInputElement> {
   rhfError: boolean;
   dropdown: boolean;
   loading: boolean;
   inputClassName?: string;
-  addonBefore?: React.ReactNode | React.ReactNode[];
-  addonAfter?: React.ReactNode | React.ReactNode[];
+  addonBefore?: ReactNode | ReactNode[];
+  addonAfter?: ReactNode | ReactNode[];
   controlDisabled: boolean | undefined;
   showClearIcon: boolean;
   iconSize: () => number | undefined;
@@ -18,7 +25,7 @@ interface SelectControlProps extends React.InputHTMLAttributes<HTMLInputElement>
   handleDropdown: () => void;
 }
 
-const SelectControl: React.ForwardRefRenderFunction<HTMLInputElement, SelectControlProps> = (
+const SelectControl: ForwardRefRenderFunction<HTMLInputElement, SelectControlProps> = (
   {
     rhfError,
     dropdown,
@@ -36,14 +43,14 @@ const SelectControl: React.ForwardRefRenderFunction<HTMLInputElement, SelectCont
   },
   ref
 ) => {
-  const selectRef = React.useRef<HTMLDivElement>(null);
+  const selectRef = useRef<HTMLDivElement>(null);
 
   const iconRotateClassName = dropdown ? "action-icon-rotate" : "";
 
   const controlInputClassName = utils.formatClassName("control-box", inputClassName);
 
   // Focus input when error is trigger
-  React.useEffect(() => {
+  useEffect(() => {
     if (rhfError) selectRef.current?.click();
   }, [rhfError]);
 
@@ -84,4 +91,4 @@ const SelectControl: React.ForwardRefRenderFunction<HTMLInputElement, SelectCont
   );
 };
 
-export default React.forwardRef(SelectControl);
+export default forwardRef(SelectControl);

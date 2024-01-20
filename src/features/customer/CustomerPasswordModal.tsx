@@ -1,11 +1,8 @@
-import React from "react";
-import { UI, Control } from "@/components";
+import { FC } from "react";
+import { Modal } from "@/components/UI";
+import { Form, FormItem, InputPassword } from "@/components/Control";
 import type { ModalProps } from "@/components/UI/Modal";
 import type { Lang } from "@/common/type";
-
-const { Modal } = UI;
-
-const { Form, FormItem, InputPassword } = Control;
 
 interface FormData {
   oldPassword: string;
@@ -16,7 +13,7 @@ interface CustomerPasswordModalProps extends ModalProps {
   lang: Lang;
 }
 
-const CustomerPasswordModal: React.FC<CustomerPasswordModalProps> = ({ lang, ...restProps }) => {
+const CustomerPasswordModal: FC<CustomerPasswordModalProps> = ({ lang, ...restProps }) => {
   const initialData: FormData = {
     oldPassword: "",
     newPassword: "",

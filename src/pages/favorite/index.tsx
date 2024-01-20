@@ -1,14 +1,13 @@
 import { NextPage } from "next";
-import { UI } from "@/components";
-import type { BreadcrumbItems } from "@/components/UI/Breadcrumb/type";
+import { Breadcrumb, Card, Pagination, Typography, Grid } from "@/components/UI";
 import { useLang } from "@/hooks";
+import type { BreadcrumbItems } from "@/components/UI/Breadcrumb/type";
 import ProductCard from "@/components/Page/ProductCard";
 import Link from "next/link";
 import url from "@/common/constant/url";
+import { Product } from "@/services/product/type";
 
 const { HOME } = url;
-
-const { Breadcrumb, Card, Pagination, Typography, Grid } = UI;
 
 const { Row, Col } = Grid;
 
@@ -32,7 +31,7 @@ const Favorite: NextPage = () => {
         <Row justify="between" gutters={[14]}>
           {[...Array(5)].map((_, idx) => (
             <Col key={idx} xs={24} md={12} lg={8} span={6}>
-              <ProductCard imgHeight={200} responsive />
+              <ProductCard product={{} as Product} imgHeight={200} responsive />
             </Col>
           ))}
         </Row>

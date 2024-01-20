@@ -1,13 +1,11 @@
-import React from "react";
-import { UI } from "@/components";
-import { Comment } from "@/services/comment/type";
+import { FC, useState } from "react";
+import { Space, Typography } from "@/components/UI";
+import type { Comment } from "@/services/comment/type";
 import { HiReply } from "react-icons/hi";
 import { HiPencil, HiTrash } from "react-icons/hi2";
 import CommentAuthor from "./CommentAuthor";
 import CommentControl from "./CommentControl";
 import CommentList from "./CommentList";
-
-const { Space, Typography } = UI;
 
 const { Paragraph } = Typography;
 
@@ -29,8 +27,8 @@ const userId = "1";
 
 const isAuth = true;
 
-const CommentItem: React.FC<CommentItemProps> = ({ comment, comments = [] }) => {
-  const [activeComment, setActiveComment] = React.useState<ActiveComment>({
+const CommentItem: FC<CommentItemProps> = ({ comment, comments = [] }) => {
+  const [activeComment, setActiveComment] = useState<ActiveComment>({
     id: comment.id as string,
     type: null,
   });

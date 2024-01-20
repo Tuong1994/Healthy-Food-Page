@@ -1,19 +1,26 @@
-import React from "react";
+import {
+  InputHTMLAttributes,
+  CSSProperties,
+  ReactNode,
+  ForwardRefRenderFunction,
+  DragEvent,
+  forwardRef,
+} from "react";
 import { AiOutlineUpload } from "react-icons/ai";
 import { UploadError } from "../../type";
 import utils from "@/utils";
 
-interface FileUploadControlProps extends React.InputHTMLAttributes<HTMLInputElement> {
+interface FileUploadControlProps extends InputHTMLAttributes<HTMLInputElement> {
   controlClassName?: string;
-  controlStyle?: React.CSSProperties;
-  label?: React.ReactNode | React.ReactNode[];
+  controlStyle?: CSSProperties;
+  label?: ReactNode | ReactNode[];
   error: UploadError | null;
   dragged: boolean;
-  handleDrag: (e: React.DragEvent<HTMLLabelElement>) => void;
-  handleDrop: (e: React.DragEvent<HTMLLabelElement>) => void;
+  handleDrag: (e: DragEvent<HTMLLabelElement>) => void;
+  handleDrop: (e: DragEvent<HTMLLabelElement>) => void;
 }
 
-const FileUploadControl: React.ForwardRefRenderFunction<HTMLInputElement, FileUploadControlProps> = (
+const FileUploadControl: ForwardRefRenderFunction<HTMLInputElement, FileUploadControlProps> = (
   {
     controlClassName = "",
     controlStyle,
@@ -66,4 +73,4 @@ const FileUploadControl: React.ForwardRefRenderFunction<HTMLInputElement, FileUp
   );
 };
 
-export default React.forwardRef(FileUploadControl);
+export default forwardRef(FileUploadControl);

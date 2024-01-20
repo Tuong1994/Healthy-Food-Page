@@ -1,11 +1,8 @@
-import React from "react";
-import { UI, Control } from "@/components";
+import { FC, useState } from "react";
+import { Space, Button } from "@/components/UI";
+import { TextArea } from "@/components/Control";
 import { useLang } from "@/hooks";
 import CommentAuthor from "./CommentAuthor";
-
-const { Space, Button } = UI;
-
-const { TextArea } = Control;
 
 interface CommentControlProps {
   hasAuthor?: boolean;
@@ -16,7 +13,7 @@ interface CommentControlProps {
   onCancel?: () => void;
 }
 
-const CommentControl: React.FC<CommentControlProps> = ({
+const CommentControl: FC<CommentControlProps> = ({
   isRoot = true,
   hasAuthor = true,
   defaultValue = "",
@@ -26,7 +23,7 @@ const CommentControl: React.FC<CommentControlProps> = ({
 }) => {
   const { lang } = useLang();
 
-  const [content, setContent] = React.useState<string>(defaultValue);
+  const [content, setContent] = useState<string>(defaultValue);
 
   const handleChange = (text: string) => {
     setContent(text);

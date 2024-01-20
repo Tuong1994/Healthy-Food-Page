@@ -1,13 +1,13 @@
-import React from "react";
+import { useState, useEffect } from "react";
 
 const useMounted = () => {
-  const [isMounted, setIsMounted] = React.useState<boolean>(false);
+  const [isMounted, setIsMounted] = useState<boolean>(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setIsMounted(true);
   }, []);
 
   return isMounted;
 };
 
-export default useMounted
+export default useMounted;

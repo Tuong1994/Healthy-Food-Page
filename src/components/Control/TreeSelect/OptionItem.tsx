@@ -1,4 +1,4 @@
-import React from "react";
+import { FC, useState } from "react";
 import { Option } from "../type";
 import { HiCheck, HiChevronRight } from "react-icons/hi2";
 import utils from "@/utils";
@@ -10,8 +10,8 @@ interface OptionItemProps {
   handleSelect: (option: Option) => void;
 }
 
-const OptionItem: React.FC<OptionItemProps> = ({ option, isSelected, handleSelect, iconSize }) => {
-  const [collapsed, setCollapsed] = React.useState<boolean>(false);
+const OptionItem: FC<OptionItemProps> = ({ option, isSelected, handleSelect, iconSize }) => {
+  const [collapsed, setCollapsed] = useState<boolean>(false);
 
   const childActiveClassName = collapsed ? "item-child-active" : "";
 

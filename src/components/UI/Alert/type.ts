@@ -1,8 +1,10 @@
+import { ReactNode } from "react";
+
 export type AlertType = "success" | "error" | "warning" | "info";
 
 export type AlertIcon = {
-  successIcon?: React.ReactNode;
-  errorIcon?: React.ReactNode;
-  warningIcon?: React.ReactNode;
-  infoIcon?: React.ReactNode;
+  successIcon?: ReactNode;
+  errorIcon?: ReactNode;
+  warningIcon?: ReactNode;
+  infoIcon?: ReactNode;
 };

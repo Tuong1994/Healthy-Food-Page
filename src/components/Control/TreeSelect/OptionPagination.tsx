@@ -1,4 +1,4 @@
-import React from "react";
+import { FC } from "react";
 import { HiOutlineChevronRight as ArrowRight, HiOutlineChevronLeft as ArrowLeft } from "react-icons/hi2";
 import utils from "@/utils";
 
@@ -9,7 +9,7 @@ interface OptionPaginationProps {
   handleChangePage: (type: "prev" | "next") => void;
 }
 
-const OptionPagination: React.FC<OptionPaginationProps> = ({
+const OptionPagination: FC<OptionPaginationProps> = ({
   currentPage,
   totalPages,
   loading,

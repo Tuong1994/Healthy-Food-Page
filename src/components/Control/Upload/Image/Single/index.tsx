@@ -1,6 +1,14 @@
-"use client";
-
-import React from "react";
+import {
+  InputHTMLAttributes,
+  CSSProperties,
+  ForwardRefRenderFunction,
+  ChangeEvent,
+  DragEvent,
+  useContext,
+  useState,
+  useEffect,
+  forwardRef,
+} from "react";
 import { ACCEPT_IMAGE_FILE_TYPE, DEFAULT_FILE_SIZE } from "../../constant";
 import { ControlColor, ControlShape, UploadError } from "@/components/Control/type";
 import { NoteMessage } from "@/components/UI";
@@ -10,11 +18,11 @@ import Image from "@/components/UI/Image";
 import FormContext from "@/components/Control/Form/FormContext";
 import utils from "@/utils";
 
-export interface SingleImageUploadProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface SingleImageUploadProps extends InputHTMLAttributes<HTMLInputElement> {
   rootClassName?: string;
   controlClassName?: string;
-  rootStyle?: React.CSSProperties;
-  controlStyle?: React.CSSProperties;
+  rootStyle?: CSSProperties;
+  controlStyle?: CSSProperties;
   shape?: ControlShape;
   color?: ControlColor;
   limit?: number;
@@ -24,7 +32,7 @@ export interface SingleImageUploadProps extends React.InputHTMLAttributes<HTMLIn
   onUpload?: (imageFile: File | null) => void;
 }
 
-const SingleImageUpload: React.ForwardRefRenderFunction<HTMLInputElement, SingleImageUploadProps> = (
+const SingleImageUpload: ForwardRefRenderFunction<HTMLInputElement, SingleImageUploadProps> = (
   {
     rootClassName = "",
     controlClassName = "",
@@ -42,17 +50,17 @@ const SingleImageUpload: React.ForwardRefRenderFunction<HTMLInputElement, Single
   },
   ref
 ) => {
-  const { isForm, color: rhfColor, shape: rhfShape } = React.useContext(FormContext);
+  const { isForm, color: rhfColor, shape: rhfShape } = useContext(FormContext);
 
-  const [image, setImage] = React.useState<File | null>(null);
+  const [image, setImage] = useState<File | null>(null);
 
-  const [viewImage, setViewImage] = React.useState<string>("");
+  const [viewImage, setViewImage] = useState<string>("");
 
-  const [error, setError] = React.useState<UploadError | null>(null);
+  const [error, setError] = useState<UploadError | null>(null);
 
-  const [dragged, setDragged] = React.useState<boolean>(false);
+  const [dragged, setDragged] = useState<boolean>(false);
 
-  const [uploading, setUploading] = React.useState<boolean>(loading);
+  const [uploading, setUploading] = useState<boolean>(loading);
 
   const controlColor = isForm ? rhfColor : color;
 
@@ -86,12 +94,12 @@ const SingleImageUpload: React.ForwardRefRenderFunction<HTMLInputElement, Single
   );
 
   // Set default image
-  React.useEffect(() => {
+  useEffect(() => {
     if (defaultImageUrl) setViewImage(defaultImageUrl);
   }, [defaultImageUrl]);
 
   // Generate view image
-  React.useEffect(() => {
+  useEffect(() => {
     if (!image) return;
     const reader = new FileReader();
     reader.onloadstart = () => setUploading(true);
@@ -119,19 +127,19 @@ const SingleImageUpload: React.ForwardRefRenderFunction<HTMLInputElement, Single
     onUpload?.(imageFile);
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const imageFile = e.target.files ? e.target.files[0] : null;
     if (imageFile) handleUpload(imageFile);
   };
 
-  const handleDrag = (e: React.DragEvent<HTMLDivElement>) => {
+  const handleDrag = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
     if (e.type === "dragenter" || e.type === "dragover") setDragged(true);
     else if (e.type === "dragleave") setDragged(false);
   };
 
-  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+  const handleDrop = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
     setDragged(false);
@@ -194,4 +202,4 @@ const SingleImageUpload: React.ForwardRefRenderFunction<HTMLInputElement, Single
   );
 };
 
-export default React.forwardRef(SingleImageUpload);
+export default forwardRef(SingleImageUpload);

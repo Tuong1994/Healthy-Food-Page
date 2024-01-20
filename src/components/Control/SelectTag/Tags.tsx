@@ -1,11 +1,11 @@
-import React from "react";
+import { FC } from "react";
 import { SelectOptions } from "../type";
 
 interface TagsProps {
   selectedOptions: SelectOptions;
 }
 
-const Tags: React.FC<TagsProps> = ({ selectedOptions }) => {
+const Tags: FC<TagsProps> = ({ selectedOptions }) => {
   const renderContent = () => {
     if (selectedOptions.length === 1) return selectedOptions[0].label;
     return `${selectedOptions.length} +`;

@@ -1,6 +1,15 @@
-"use client";
-
-import React from "react";
+import {
+  InputHTMLAttributes,
+  CSSProperties,
+  ReactNode,
+  ForwardRefRenderFunction,
+  ChangeEvent,
+  useContext,
+  useEffect,
+  useState,
+  useRef,
+  forwardRef,
+} from "react";
 import { HiXCircle } from "react-icons/hi2";
 import { useFormContext } from "react-hook-form";
 import { ControlColor, ControlShape, InputValue } from "../type";
@@ -10,15 +19,15 @@ import FormContext from "../Form/FormContext";
 import useLayout from "@/components/UI/Layout/useLayout";
 import utils from "@/utils";
 
-export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   rootClassName?: string;
   labelClassName?: string;
   inputClassName?: string;
-  rootStyle?: React.CSSProperties;
-  labelStyle?: React.CSSProperties;
-  label?: React.ReactNode | React.ReactNode[];
-  addonBefore?: React.ReactNode | React.ReactNode[];
-  addonAfter?: React.ReactNode | React.ReactNode[];
+  rootStyle?: CSSProperties;
+  labelStyle?: CSSProperties;
+  label?: ReactNode | ReactNode[];
+  addonBefore?: ReactNode | ReactNode[];
+  addonAfter?: ReactNode | ReactNode[];
   sizes?: ComponentSize;
   color?: ControlColor;
   shape?: ControlShape;
@@ -28,7 +37,7 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
   onChangeInput?: (text: string) => void;
 }
 
-const Input: React.ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
+const Input: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
   {
     rootClassName = "",
     labelClassName = "",
@@ -59,14 +68,14 @@ const Input: React.ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
 
   const { layoutTheme: theme } = layoutValue;
 
-  const { color: rhfColor, sizes: rhfSizes, shape: rhfShape } = React.useContext(FormContext);
+  const { color: rhfColor, sizes: rhfSizes, shape: rhfShape } = useContext(FormContext);
 
   const { isRhf, rhfName, rhfError, rhfValue, rhfDisabled, rhfOnChange, rhfOnBlur } =
-    React.useContext(FormItemContext);
+    useContext(FormItemContext);
 
-  const [inputValue, setInputValue] = React.useState<InputValue>(value);
+  const [inputValue, setInputValue] = useState<InputValue>(value);
 
-  const inputRef = React.useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLDivElement>(null);
 
   const controlDisabled = rhfDisabled ? rhfDisabled : disabled;
 
@@ -108,12 +117,12 @@ const Input: React.ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
   const controlInputClassName = utils.formatClassName("control-box", inputClassName);
 
   // Focus input when error is trigger
-  React.useEffect(() => {
+  useEffect(() => {
     if (rhfError) inputRef.current?.click();
   }, [rhfError]);
 
   // Set default value
-  React.useEffect(() => {
+  useEffect(() => {
     if (isRhf) return setInputValue(rhfValue);
     setInputValue(value);
   }, [value, isRhf, rhfValue]);
@@ -124,7 +133,7 @@ const Input: React.ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
     if (controlSize === "lg") return 18;
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setInputValue(value);
     onChangeInput?.(value);
@@ -180,4 +189,4 @@ const Input: React.ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
   );
 };
 
-export default React.forwardRef(Input);
+export default forwardRef(Input);

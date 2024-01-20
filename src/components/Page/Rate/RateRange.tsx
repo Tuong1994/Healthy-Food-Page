@@ -1,18 +1,16 @@
-import React from "react";
-import { UI } from "@/components";
+import { FC, MouseEvent, useState } from "react";
+import { Space, Tooltip } from "@/components/UI";
 import { HiStar } from "react-icons/hi2";
 import useLangStore from "@/store/LangStore";
 
-const { Space, Tooltip } = UI;
-
 interface RateRangeProps {}
 
-const RateRange: React.FC<RateRangeProps> = () => {
+const RateRange: FC<RateRangeProps> = () => {
   const lang = useLangStore((state) => state.lang);
 
-  const [point, setPoint] = React.useState<number>(0);
+  const [point, setPoint] = useState<number>(0);
 
-  const [hoverIdx, setHoverIdx] = React.useState<number>(0);
+  const [hoverIdx, setHoverIdx] = useState<number>(0);
 
   const descriptions = [
     lang.pageComponent.rate.wonderful,
@@ -29,7 +27,7 @@ const RateRange: React.FC<RateRangeProps> = () => {
 
   const handleSelect = (ratePoint: number) => setPoint(ratePoint);
 
-  const handleHover = (e: React.MouseEvent, point: number) => {
+  const handleHover = (e: MouseEvent, point: number) => {
     if (e.type === "mouseenter") return setHoverIdx(point);
     return setHoverIdx(0);
   };
@@ -51,8 +49,8 @@ const RateRange: React.FC<RateRangeProps> = () => {
                 <HiStar
                   size={35}
                   className={`item-star ${renderColor(ratePoint)}`}
-                  onMouseEnter={(e: React.MouseEvent) => handleHover(e, ratePoint)}
-                  onMouseLeave={(e: React.MouseEvent) => handleHover(e, ratePoint)}
+                  onMouseEnter={(e: MouseEvent) => handleHover(e, ratePoint)}
+                  onMouseLeave={(e: MouseEvent) => handleHover(e, ratePoint)}
                 />
               </label>
             </Tooltip>

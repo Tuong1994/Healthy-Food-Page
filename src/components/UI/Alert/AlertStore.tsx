@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import { create, StateCreator } from "zustand";
 import {
   HiCheckCircle as SuccessIcon,
@@ -15,10 +16,10 @@ export type AlertOptions = {
 
 interface AlertState {
   open: boolean;
-  message: React.ReactNode;
+  message: ReactNode;
   type: AlertType;
   options: AlertOptions;
-  onOpen: (message: React.ReactNode, type: AlertType) => void;
+  onOpen: (message: ReactNode, type: AlertType) => void;
   onClose: () => void;
   configOptions: (options: AlertOptions) => void;
 }
@@ -36,7 +37,7 @@ const store: StateCreator<AlertState> = (set) => ({
       infoIcon: <InfoIcon size={20} />,
     },
   },
-  onOpen: (message: React.ReactNode, type: AlertType) =>
+  onOpen: (message: ReactNode, type: AlertType) =>
     set((state) => ({ ...state, open: true, message, type })),
   onClose: () => set((state) => ({ ...state, open: false })),
   configOptions: (options) => set((state) => ({ ...state, options: { ...state.options, ...options } })),

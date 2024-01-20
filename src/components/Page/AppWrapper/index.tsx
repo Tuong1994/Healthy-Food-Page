@@ -1,4 +1,4 @@
-import React from "react";
+import { ReactNode, FC } from "react";
 import { Poppins } from "next/font/google";
 import { ToastMessage } from "@/components/UI";
 import { useNotDisplay } from "@/hooks";
@@ -17,10 +17,10 @@ const poppins = Poppins({
 });
 
 interface AppWarpperProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
-const AppWarpper: React.FC<AppWarpperProps> = ({ children }) => {
+const AppWarpper: FC<AppWarpperProps> = ({ children }) => {
   const notDisplay = useNotDisplay();
 
   const fullScreenClassName = notDisplay ? "main-full" : "";
@@ -33,9 +33,7 @@ const AppWarpper: React.FC<AppWarpperProps> = ({ children }) => {
         <AppAuth>
           <AppData>
             <Header />
-            <main className={className}>
-              <React.Fragment>{children}</React.Fragment>
-            </main>
+            <main className={className}>{children}</main>
             <Footer />
             <FooterMobile />
             <ToastMessage />

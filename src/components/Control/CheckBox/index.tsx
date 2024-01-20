@@ -1,6 +1,14 @@
-"use client";
-
-import React from "react";
+import {
+  InputHTMLAttributes,
+  CSSProperties,
+  ReactNode,
+  ForwardRefRenderFunction,
+  ChangeEvent,
+  useContext,
+  useEffect,
+  useState,
+  forwardRef,
+} from "react";
 import { HiCheck } from "react-icons/hi2";
 import { useFormContext } from "react-hook-form";
 import { InputValue } from "../type";
@@ -9,21 +17,21 @@ import FormContext from "../Form/FormContext";
 import FormItemContext from "../Form/FormItemContext";
 import utils from "@/utils";
 
-export interface CheckBoxProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface CheckBoxProps extends InputHTMLAttributes<HTMLInputElement> {
   rootClassName?: string;
   labelClassName?: string;
   controlClassName?: string;
-  rootStyle?: React.CSSProperties;
-  labelStyle?: React.CSSProperties;
-  controlStyle?: React.CSSProperties;
-  label?: React.ReactNode | React.ReactNode[];
+  rootStyle?: CSSProperties;
+  labelStyle?: CSSProperties;
+  controlStyle?: CSSProperties;
+  label?: ReactNode | ReactNode[];
   sizes?: ComponentSize;
   color?: Exclude<ComponentColor, "gray">;
   onCheck?: (checked: boolean) => void;
   onCheckInput?: (value: InputValue) => void;
 }
 
-const CheckBox: React.ForwardRefRenderFunction<HTMLInputElement, CheckBoxProps> = (
+const CheckBox: ForwardRefRenderFunction<HTMLInputElement, CheckBoxProps> = (
   {
     rootClassName = "",
     labelClassName = "",
@@ -45,11 +53,11 @@ const CheckBox: React.ForwardRefRenderFunction<HTMLInputElement, CheckBoxProps> 
 ) => {
   const rhfMethods = useFormContext();
 
-  const { color: rhfColor, sizes: rhfSizes } = React.useContext(FormContext);
+  const { color: rhfColor, sizes: rhfSizes } = useContext(FormContext);
 
-  const { type, isRhf, rhfName, rhfValue, rhfDisabled, rhfError } = React.useContext(FormItemContext);
+  const { type, isRhf, rhfName, rhfValue, rhfDisabled, rhfError } = useContext(FormItemContext);
 
-  const [isChecked, setIsChecked] = React.useState<boolean>(checked);
+  const [isChecked, setIsChecked] = useState<boolean>(checked);
 
   const controlDisabled = rhfDisabled ? rhfDisabled : disabled;
 
@@ -81,7 +89,7 @@ const CheckBox: React.ForwardRefRenderFunction<HTMLInputElement, CheckBoxProps> 
 
   const controlCheckClassName = utils.formatClassName("group-checked", controlClassName);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!isRhf) return setIsChecked(checked);
 
     const isBoolean = typeof rhfValue === "boolean";
@@ -119,7 +127,7 @@ const CheckBox: React.ForwardRefRenderFunction<HTMLInputElement, CheckBoxProps> 
     }
   };
 
-  const handleChecked = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChecked = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     const checked = e.target.checked;
     setIsChecked(checked);
@@ -159,4 +167,4 @@ const CheckBox: React.ForwardRefRenderFunction<HTMLInputElement, CheckBoxProps> 
   );
 };
 
-export default React.forwardRef(CheckBox);
+export default forwardRef(CheckBox);

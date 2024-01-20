@@ -1,4 +1,4 @@
-import React from "react";
+import { useMemo } from "react";
 import { SelectDate } from "../type";
 
 type Params = {
@@ -12,7 +12,7 @@ const DISABLED_CLASSNAME = "date-item-disabled";
 const useSelectRange = (args: Params) => {
   const { date, min, max } = args;
 
-  const selectRange = React.useMemo(() => {
+  const selectRange = useMemo(() => {
     let className: string = "";
     let disabled: boolean = false;
 

@@ -1,14 +1,14 @@
-import React from "react";
+import { Dispatch, SetStateAction, FC } from "react";
 import { TabsItem } from "./type";
 import utils from "@/utils";
 
 interface TabsHeadProps {
   item: TabsItem;
   tabActiveClassName: string;
-  setTabActive: React.Dispatch<React.SetStateAction<string>>;
+  setTabActive: Dispatch<SetStateAction<string>>;
 }
 
-const TabsHead: React.FC<TabsHeadProps> = ({ item, tabActiveClassName, setTabActive }) => {
+const TabsHead: FC<TabsHeadProps> = ({ item, tabActiveClassName, setTabActive }) => {
   const className = utils.formatClassName("head-item", tabActiveClassName);
 
   return (

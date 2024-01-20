@@ -1,22 +1,20 @@
-"use client";
-
-import React from "react";
+import { HTMLAttributes, ReactNode, CSSProperties, FC, Ref, useContext, forwardRef } from "react";
 import { FaCheck } from "react-icons/fa";
 import ListContext, { ListContextState } from "./ListContext";
 import utils from "@/utils";
 
-export interface ListProps extends React.HTMLAttributes<HTMLUListElement> {
+export interface ListProps extends HTMLAttributes<HTMLUListElement> {
   rootClassName?: string;
   headClassName?: string;
   contentClassName?: string;
-  rootStyle?: React.CSSProperties;
-  headStyle?: React.CSSProperties;
-  head?: React.ReactNode | React.ReactNode[];
-  icon?: React.ReactNode | React.ReactNode[];
-  children?: React.ReactNode | React.ReactNode[];
+  rootStyle?: CSSProperties;
+  headStyle?: CSSProperties;
+  head?: ReactNode | ReactNode[];
+  icon?: ReactNode | ReactNode[];
+  children?: ReactNode | ReactNode[];
 }
 
-export const List: React.FC<ListProps> = React.forwardRef(
+export const List: FC<ListProps> = forwardRef(
   (
     {
       rootClassName = "",
@@ -29,7 +27,7 @@ export const List: React.FC<ListProps> = React.forwardRef(
       children,
       ...restProps
     },
-    ref: React.Ref<HTMLUListElement>
+    ref: Ref<HTMLUListElement>
   ) => {
     const initialValue: ListContextState = { icon };
 
@@ -56,19 +54,19 @@ export const List: React.FC<ListProps> = React.forwardRef(
   }
 );
 
-export interface ListItemProps extends React.HTMLAttributes<HTMLLIElement> {
+export interface ListItemProps extends HTMLAttributes<HTMLLIElement> {
   rootClassName?: string;
   contentClassName?: string;
-  contentStyle?: React.CSSProperties;
-  children?: React.ReactNode | React.ReactNode[];
+  contentStyle?: CSSProperties;
+  children?: ReactNode | ReactNode[];
 }
 
-export const ListItem: React.FC<ListItemProps> = React.forwardRef(
+export const ListItem: FC<ListItemProps> = forwardRef(
   (
     { rootClassName = "", contentClassName = "", contentStyle, children, ...restProps },
-    ref: React.Ref<HTMLLIElement>
+    ref: Ref<HTMLLIElement>
   ) => {
-    const { icon } = React.useContext(ListContext);
+    const { icon } = useContext(ListContext);
 
     const mainClassName = utils.formatClassName("list-item", rootClassName);
 

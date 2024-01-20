@@ -1,10 +1,10 @@
-import React from "react";
+import { useState, useCallback } from "react";
 import { ApiResponse } from "@/services/type";
 
 const useAsync = <T>(func: (...params: any) => Promise<ApiResponse<T>>, dependencies = []) => {
-  const [loading, setLoading] = React.useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const call = React.useCallback(async (...params: any) => {
+  const call = useCallback(async (...params: any) => {
     setLoading(true);
     const response = (await func(...params)) as ApiResponse<T>;
     setLoading(false);

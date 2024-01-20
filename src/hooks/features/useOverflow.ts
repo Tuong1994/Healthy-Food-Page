@@ -1,7 +1,7 @@
-import React from "react";
+import { useEffect } from "react";
 
 const useOverflow = (trigger: boolean) => {
-  React.useEffect(() => {
+  useEffect(() => {
     if (trigger) document.body.style.overflow = "hidden";
     else document.body.style.overflow = "unset";
   }, [trigger]);

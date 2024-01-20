@@ -1,16 +1,16 @@
-import React from "react";
+import { FC } from "react";
+import { useLang, useNotDisplay } from "@/hooks";
 import HeaderBottom from "./Bottom";
 import HeaderTop from "./Top";
-import { useLang, useNotDisplay } from "@/hooks";
 
 interface HeaderProps {}
 
-const Header: React.FC<HeaderProps> = () => {
+const Header: FC<HeaderProps> = () => {
   const { lang } = useLang();
 
   const notDisplay = useNotDisplay();
 
-  if (notDisplay) return <React.Fragment></React.Fragment>;
+  if (notDisplay) return null;
 
   return (
     <div className="header">

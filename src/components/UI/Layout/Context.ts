@@ -1,4 +1,4 @@
-import React from "react";
+import { createContext } from "react";
 import { ComponentColor } from "@/common/type";
 
 export type LayoutTheme = "dark" | "light";
@@ -11,7 +11,7 @@ export interface LayoutContextState {
   layouted: boolean;
 }
 
-const LayoutContext = React.createContext<LayoutContextState>({
+const LayoutContext = createContext<LayoutContextState>({
   theme: "light",
   color: "blue",
   layouted: false,

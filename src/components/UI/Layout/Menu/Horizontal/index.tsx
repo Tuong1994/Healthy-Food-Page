@@ -1,6 +1,4 @@
-"use client";
-
-import React from "react";
+import { CSSProperties, ForwardRefRenderFunction, useContext, useState, forwardRef } from "react";
 import { MenuItems } from "../type";
 import LayoutContext, { LayoutColor } from "../../Context";
 import MenuHorizontalItem from "./Item";
@@ -9,18 +7,18 @@ import utils from "@/utils";
 export interface MenuHorizontalProps {
   rootClassName?: string;
   itemClassName?: string;
-  itemStyle?: React.CSSProperties;
+  itemStyle?: CSSProperties;
   items?: MenuItems;
   color?: LayoutColor;
 }
 
-const MenuHorizontal: React.ForwardRefRenderFunction<HTMLDivElement, MenuHorizontalProps> = (
+const MenuHorizontal: ForwardRefRenderFunction<HTMLDivElement, MenuHorizontalProps> = (
   { rootClassName = "", itemClassName, itemStyle, items = [], color = "blue", ...restProps },
   ref
 ) => {
-  const { layouted, color: layoutColor } = React.useContext(LayoutContext);
+  const { layouted, color: layoutColor } = useContext(LayoutContext);
 
-  const [activeId, setActiveId] = React.useState<string[]>([]);
+  const [activeId, setActiveId] = useState<string[]>([]);
 
   const colorClassName = `menu-horizontal-${layouted ? layoutColor : color}`;
 
@@ -50,4 +48,4 @@ const MenuHorizontal: React.ForwardRefRenderFunction<HTMLDivElement, MenuHorizon
   );
 };
 
-export default React.forwardRef(MenuHorizontal);
+export default forwardRef(MenuHorizontal);

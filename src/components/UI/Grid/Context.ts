@@ -1,4 +1,4 @@
-import React from "react";
+import { createContext } from "react";
 
 export interface GridAppContextState {
   screenWidth?: number;
@@ -12,7 +12,7 @@ export interface GridRowContextState {
   gutters: [number?, number?];
 }
 
-export const GridAppContext = React.createContext<GridAppContextState>({
+export const GridAppContext = createContext<GridAppContextState>({
   screenWidth: 0,
   isPhone: false,
   isTablet: false,
@@ -20,6 +20,6 @@ export const GridAppContext = React.createContext<GridAppContextState>({
   isDesktop: false,
 });
 
-export const GridRowContext = React.createContext<GridRowContextState>({
+export const GridRowContext = createContext<GridRowContextState>({
   gutters: [],
 });

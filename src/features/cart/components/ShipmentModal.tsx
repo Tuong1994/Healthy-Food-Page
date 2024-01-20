@@ -1,13 +1,10 @@
-import React from "react";
-import { UI, Control } from "@/components";
-import { ModalProps } from "@/components/UI/Modal";
+import { FC } from "react";
+import { Modal, Typography } from "@/components/UI";
+import { Form, FormItem, Input } from "@/components/Control";
 import { useLang } from "@/hooks";
-
-const { Modal, Typography } = UI;
+import type { ModalProps } from "@/components/UI/Modal";
 
 const { Paragraph } = Typography;
-
-const { Form, FormItem, Input, TextArea } = Control;
 
 interface FormData {
   name: string;
@@ -18,7 +15,7 @@ interface FormData {
 
 interface ShipmentModalProps extends ModalProps {}
 
-const ShipmentModal: React.FC<ShipmentModalProps> = ({ ...restProps }) => {
+const ShipmentModal: FC<ShipmentModalProps> = ({ ...restProps }) => {
   const { lang } = useLang();
 
   const initialData: FormData = {

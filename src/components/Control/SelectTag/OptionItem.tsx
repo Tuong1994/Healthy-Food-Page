@@ -1,4 +1,4 @@
-import React from "react";
+import { FC } from "react";
 import { Option } from "../type";
 import { HiCheck } from "react-icons/hi2";
 import utils from "@/utils";
@@ -10,7 +10,7 @@ interface OptionItemProps {
   handleSelect: (option: Option) => void;
 }
 
-const OptionItem: React.FC<OptionItemProps> = ({ option, isSelected, handleSelect, iconSize }) => {
+const OptionItem: FC<OptionItemProps> = ({ option, isSelected, handleSelect, iconSize }) => {
   const selectedClassName = isSelected(option) ? "list-item-selected" : "";
 
   const itemClassName = utils.formatClassName("list-item", selectedClassName);

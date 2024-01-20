@@ -1,11 +1,9 @@
-import React from "react";
-import { UI } from "@/components";
-import { Lang } from "@/common/type";
-import { CarouselItems } from "@/components/UI/Carousel/type";
+import { FC } from "react";
+import { Section, Image, Carousel, Grid, Typography } from "@/components/UI";
+import type { Lang } from "@/common/type";
+import type { CarouselItems } from "@/components/UI/Carousel/type";
 import useSubCategoryStore from "@/store/SubCategoryStore";
 import Link from "next/link";
-
-const { Section, Image, Carousel, Grid, Typography } = UI;
 
 const { Row, Col } = Grid;
 
@@ -17,7 +15,7 @@ interface AboutCategoryProps {
   lang: Lang;
 }
 
-const AboutCategory: React.FC<AboutCategoryProps> = ({ lang }) => {
+const AboutCategory: FC<AboutCategoryProps> = ({ lang }) => {
   const subcategories = useSubCategoryStore((state) => state.subcategories);
 
   const renderCategory = (start: number, end: number) => {

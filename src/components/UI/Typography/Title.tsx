@@ -1,13 +1,13 @@
-import React from "react";
+import { HTMLAttributes, ReactNode, ForwardRefRenderFunction, Fragment, forwardRef } from "react";
 import { TypographyAlign, TypographyVariant } from "./type";
-import utils from "@/utils";
 import useLayout from "../Layout/useLayout";
+import utils from "@/utils";
 
 type TitleLevel = 1 | 2 | 3 | 4 | 5 | 6;
 
-export interface TitleProps extends React.HTMLAttributes<HTMLHeadingElement> {
+export interface TitleProps extends HTMLAttributes<HTMLHeadingElement> {
   rootClassName?: string;
-  children?: React.ReactNode | React.ReactNode[];
+  children?: ReactNode | ReactNode[];
   weight?: number;
   level?: TitleLevel;
   underline?: boolean;
@@ -17,7 +17,7 @@ export interface TitleProps extends React.HTMLAttributes<HTMLHeadingElement> {
   variant?: TypographyVariant;
 }
 
-const Title: React.ForwardRefRenderFunction<HTMLHeadingElement, TitleProps> = (
+const Title: ForwardRefRenderFunction<HTMLHeadingElement, TitleProps> = (
   {
     rootClassName = "",
     level = 1,
@@ -67,15 +67,15 @@ const Title: React.ForwardRefRenderFunction<HTMLHeadingElement, TitleProps> = (
   };
 
   return (
-    <React.Fragment>
+    <Fragment>
       {level === 1 && <h1 {...commonProps}>{children}</h1>}
       {level === 2 && <h2 {...commonProps}>{children}</h2>}
       {level === 3 && <h3 {...commonProps}>{children}</h3>}
       {level === 4 && <h4 {...commonProps}>{children}</h4>}
       {level === 5 && <h5 {...commonProps}>{children}</h5>}
       {level === 6 && <h6 {...commonProps}>{children}</h6>}
-    </React.Fragment>
+    </Fragment>
   );
 };
 
-export default React.forwardRef(Title);
+export default forwardRef(Title);

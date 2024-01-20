@@ -1,5 +1,5 @@
-import React from "react";
-import { UI } from "@/components";
+import { FC, Fragment } from "react";
+import { Table, Image, Pagination } from "@/components/UI";
 import type { Order } from "@/services/order/type";
 import type { Columns } from "@/components/UI/Table/type";
 import type { OrderItem } from "@/services/order/type";
@@ -8,12 +8,10 @@ import { useLang, useDisplayOrderStatus, useDisplayPaymentMethod, useDisplayPaym
 import utils from "@/utils";
 import moment from "moment";
 
-const { Table, Image, Pagination } = UI;
-
 interface CustomerOrderProps {}
 
-const CustomerOrder: React.FC<CustomerOrderProps> = () => {
-  const { lang, type } = useLang();
+const CustomerOrder: FC<CustomerOrderProps> = () => {
+  const { lang, locale } = useLang();
 
   const dataSource: Order[] = [
     {
@@ -148,7 +146,7 @@ const CustomerOrder: React.FC<CustomerOrderProps> = () => {
         id: "productPrice",
         title: lang.common.table.head.price,
         dataIndex: "productPrice",
-        render: (data: number) => <>{utils.formatPrice(type, data)}</>,
+        render: (data: number) => <>{utils.formatPrice(locale, data)}</>,
       },
     ];
 
@@ -156,7 +154,7 @@ const CustomerOrder: React.FC<CustomerOrderProps> = () => {
   };
 
   return (
-    <React.Fragment>
+    <Fragment>
       <Table<Order>
         color="green"
         hasRowExpand
@@ -165,7 +163,7 @@ const CustomerOrder: React.FC<CustomerOrderProps> = () => {
         expandRowTable={expandRowTable}
       />
       <Pagination rootClassName="customer-table-pagination" color="green" shape="square" ghost />
-    </React.Fragment>
+    </Fragment>
   );
 };
 

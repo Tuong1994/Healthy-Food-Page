@@ -1,18 +1,16 @@
-import React from "react";
-import { UI } from "@/components";
+import { FC, Fragment } from "react";
+import { Image, Table, Pagination } from "@/components/UI";
 import type { Lang } from "@/common/type";
 import type { Rate } from "@/services/rate/type";
-import { Columns } from "@/components/UI/Table/type";
+import type { Columns } from "@/components/UI/Table/type";
 import RateStars from "@/components/Page/Rate/RateStars";
 import moment from "moment";
-
-const { Image, Table, Pagination } = UI;
 
 interface CustomerRateProps {
   lang: Lang;
 }
 
-const CustomerRate: React.FC<CustomerRateProps> = ({ lang }) => {
+const CustomerRate: FC<CustomerRateProps> = ({ lang }) => {
   const dataSource: Rate[] = [
     {
       id: "1",
@@ -69,10 +67,12 @@ const CustomerRate: React.FC<CustomerRateProps> = ({ lang }) => {
     },
   ];
 
-  return <React.Fragment>
-    <Table<Rate> color="green" dataSource={dataSource} columns={columns} />
-    <Pagination rootClassName="customer-table-pagination" color="green" shape="square" ghost />
-  </React.Fragment>;
+  return (
+    <Fragment>
+      <Table<Rate> color="green" dataSource={dataSource} columns={columns} />
+      <Pagination rootClassName="customer-table-pagination" color="green" shape="square" ghost />
+    </Fragment>
+  );
 };
 
 export default CustomerRate;

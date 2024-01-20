@@ -1,7 +1,7 @@
-import React from "react";
+import { FC } from "react";
 import { Skeleton } from "@/components/UI/Loading";
 
-const CategoriesMobileLoading: React.FC<{}> = () => {
+const CategoriesMobileLoading: FC<{}> = () => {
   const renderCategories = (start: number, end: number) => {
     return [...Array(8)].slice(start, end).map((_, idx) => (
       <div className="inner-item" key={idx}>

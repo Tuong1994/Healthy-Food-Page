@@ -1,19 +1,19 @@
-import React from "react";
+import { HTMLAttributes, ReactNode, CSSProperties, ForwardRefRenderFunction, forwardRef } from "react";
 import utils from "@/utils";
 import useLayout from "../Layout/useLayout";
 
-export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface CardProps extends HTMLAttributes<HTMLDivElement> {
   rootClassName?: string;
   headClassName?: string;
   bodyClassName?: string;
-  headStyle?: React.CSSProperties;
-  bodyStyle?: React.CSSProperties;
-  head?: React.ReactNode | React.ReactNode[];
-  children?: React.ReactNode | React.ReactNode[];
+  headStyle?: CSSProperties;
+  bodyStyle?: CSSProperties;
+  head?: ReactNode | ReactNode[];
+  children?: ReactNode | ReactNode[];
   hoverable?: boolean;
 }
 
-const Card: React.ForwardRefRenderFunction<HTMLDivElement, CardProps> = (
+const Card: ForwardRefRenderFunction<HTMLDivElement, CardProps> = (
   {
     rootClassName = "",
     headClassName = "",
@@ -64,4 +64,4 @@ const Card: React.ForwardRefRenderFunction<HTMLDivElement, CardProps> = (
   );
 };
 
-export default React.forwardRef(Card);
+export default forwardRef(Card);

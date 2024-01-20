@@ -1,6 +1,12 @@
-"use client";
-
-import React from "react";
+import {
+  HTMLAttributes,
+  ReactNode,
+  ForwardRefRenderFunction,
+  Fragment,
+  useContext,
+  useEffect,
+  forwardRef,
+} from "react";
 import { CgArrowsShrinkH as ShrinkIcon } from "react-icons/cg";
 import { HiBars3, HiXMark } from "react-icons/hi2";
 import { GridAppContext } from "../../Grid/Context";
@@ -13,21 +19,21 @@ import utils from "@/utils";
 
 const ICON_SIZE = 20;
 
-export interface LayoutSideProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface LayoutSideProps extends HTMLAttributes<HTMLDivElement> {
   rootClassName?: string;
-  children?: React.ReactNode | React.ReactNode[];
+  children?: ReactNode | ReactNode[];
   collapsable?: boolean;
   hasCollapseButton?: boolean;
   onCollapse?: (collapse: boolean) => void;
 }
 
-const LayoutSide: React.ForwardRefRenderFunction<HTMLDivElement, LayoutSideProps> = (
+const LayoutSide: ForwardRefRenderFunction<HTMLDivElement, LayoutSideProps> = (
   { rootClassName = "", collapsable = false, hasCollapseButton = true, children, onCollapse, ...restProps },
   ref
 ) => {
-  const { color, layouted } = React.useContext(LayoutContext);
+  const { color, layouted } = useContext(LayoutContext);
 
-  const { isPhone, isTablet } = React.useContext(GridAppContext);
+  const { isPhone, isTablet } = useContext(GridAppContext);
 
   const { layoutValue } = useLayout();
 
@@ -76,12 +82,12 @@ const LayoutSide: React.ForwardRefRenderFunction<HTMLDivElement, LayoutSideProps
 
   const mobileBackDropClassName = utils.formatClassName("side-mobile-backdrop", backdropShowClassName);
 
-  React.useEffect(() => onResizeContent(), []);
+  useEffect(() => onResizeContent(), []);
 
-  React.useEffect(() => onCollapse?.(shrinked), [shrinked]);
+  useEffect(() => onCollapse?.(shrinked), [shrinked]);
 
   return (
-    <React.Fragment>
+    <Fragment>
       <aside ref={ref} {...restProps} className={className}>
         <div className="side-content">{children}</div>
         {!isResponsive && collapsable && (
@@ -106,8 +112,8 @@ const LayoutSide: React.ForwardRefRenderFunction<HTMLDivElement, LayoutSideProps
           <HiBars3 size={12} />
         </Button>
       )}
-    </React.Fragment>
+    </Fragment>
   );
 };
 
-export default React.forwardRef(LayoutSide);
+export default forwardRef(LayoutSide);

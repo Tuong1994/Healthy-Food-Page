@@ -1,20 +1,18 @@
-"use client";
-
-import React from "react";
+import { HTMLAttributes, ReactNode, ForwardRefRenderFunction, useContext, forwardRef } from "react";
 import LayoutContext from "../Context";
 import useLayout from "../useLayout";
 import utils from "@/utils";
 
-export interface LayoutContentProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface LayoutContentProps extends HTMLAttributes<HTMLDivElement> {
   rootClassName?: string;
-  children?: React.ReactNode | React.ReactNode[];
+  children?: ReactNode | ReactNode[];
 }
 
-const LayoutContent: React.ForwardRefRenderFunction<HTMLDivElement, LayoutContentProps> = (
+const LayoutContent: ForwardRefRenderFunction<HTMLDivElement, LayoutContentProps> = (
   { rootClassName = "", children, ...restProps },
   ref
 ) => {
-  const { layouted } = React.useContext(LayoutContext);
+  const { layouted } = useContext(LayoutContext);
 
   const { layoutValue } = useLayout();
 
@@ -44,4 +42,4 @@ const LayoutContent: React.ForwardRefRenderFunction<HTMLDivElement, LayoutConten
   );
 };
 
-export default React.forwardRef(LayoutContent);
+export default forwardRef(LayoutContent);

@@ -1,4 +1,4 @@
-import React from "react";
+import { useMemo } from "react";
 import { BsThreeDots } from "react-icons/bs";
 
 type PaginationParams = {
@@ -22,7 +22,7 @@ const usePagination = (args: PaginationParams) => {
 
   const totalShowPages = siblingCount + 5;
 
-  const paginationRange = React.useMemo(() => {
+  const paginationRange = useMemo(() => {
     if (totalShowPages > totalPages) return range(1, totalPages);
 
     const leftSiblingIdx = Math.max(currentPage - siblingCount, 1);

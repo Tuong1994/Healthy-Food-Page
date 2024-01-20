@@ -1,6 +1,6 @@
-import React from "react";
-import { UI } from "@/components";
-import { BreadcrumbItems } from "@/components/UI/Breadcrumb/type";
+import { FC } from "react";
+import { Breadcrumb, Typography, Grid } from "@/components/UI";
+import type { BreadcrumbItems } from "@/components/UI/Breadcrumb/type";
 import { ESort } from "@/common/enum";
 import { useCategoriesData } from "../AppWrapper/AppData/Provider";
 import { useRouter } from "next/router";
@@ -11,15 +11,13 @@ import url from "@/common/constant/url";
 
 const { PRODUCT_LIST } = url;
 
-const { Breadcrumb, Typography, Grid } = UI;
-
 const { Row, Col } = Grid;
 
 const { Paragraph } = Typography;
 
 interface FooterTopProps {}
 
-const FooterTop: React.FC<FooterTopProps> = () => {
+const FooterTop: FC<FooterTopProps> = () => {
   const { data: categoriesWithSubs, loading, error } = useCategoriesData();
 
   const { query } = useRouter();
@@ -50,7 +48,9 @@ const FooterTop: React.FC<FooterTopProps> = () => {
                   query: { categoryId: category.id, ...commonQuery },
                 }}
               >
-                <Paragraph strong rootClassName="top-category">{category.name}</Paragraph>
+                <Paragraph strong rootClassName="top-category">
+                  {category.name}
+                </Paragraph>
               </Link>
               <Breadcrumb items={items} separator="|" style={{ marginTop: "10px" }} />
             </Col>

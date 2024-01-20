@@ -1,4 +1,4 @@
-import React from "react";
+import { FC } from "react";
 import { SelectDate } from "../type";
 import DateItem from "./DateItem";
 import useDateRange from "./useDateRange";
@@ -12,7 +12,7 @@ interface CalendarDateProps {
   handleSelectDate: (date: SelectDate) => void;
 }
 
-const CalendarDate: React.FC<CalendarDateProps> = ({
+const CalendarDate: FC<CalendarDateProps> = ({
   min,
   max,
   currentDate,

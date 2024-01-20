@@ -1,4 +1,4 @@
-import React from "react";
+import { CSSProperties, FC, useState } from "react";
 import { MenuItem } from "../type";
 import { HiOutlineChevronDown } from "react-icons/hi2";
 import { Tooltip } from "@/components/UI";
@@ -10,12 +10,12 @@ interface MenuVerticalItemProps {
   item: MenuItem;
   activeId: string[];
   itemClassName?: string;
-  itemStyle?: React.CSSProperties;
+  itemStyle?: CSSProperties;
   color?: LayoutColor;
   handleSelectMenu: (id: string) => void;
 }
 
-const MenuVerticalItem: React.FC<MenuVerticalItemProps> = ({
+const MenuVerticalItem: FC<MenuVerticalItemProps> = ({
   item,
   activeId,
   itemClassName = "",
@@ -23,7 +23,7 @@ const MenuVerticalItem: React.FC<MenuVerticalItemProps> = ({
   color = "blue",
   handleSelectMenu,
 }) => {
-  const [open, setOpen] = React.useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false);
 
   const shrinked = useLayoutStore((state) => state.shrinked);
 

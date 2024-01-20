@@ -1,4 +1,4 @@
-import React from "react";
+import { FC, useMemo } from "react";
 import {
   HiOutlineChevronDoubleLeft as ArrowLeft,
   HiOutlineChevronDoubleRight as ArrowRight,
@@ -14,7 +14,7 @@ interface CalendarHeaderProps {
   handleSwitchMonth: (type: "prev" | "next") => void;
 }
 
-const CalendarHeader: React.FC<CalendarHeaderProps> = ({
+const CalendarHeader: FC<CalendarHeaderProps> = ({
   currentMonth,
   currentYear,
   handleSelectMonth,
@@ -36,7 +36,7 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
     "December",
   ];
 
-  const years = React.useMemo(() => {
+  const years = useMemo(() => {
     let startYear = 1970;
     const yearRange: number[] = [];
     const currentYear = new Date().getFullYear();

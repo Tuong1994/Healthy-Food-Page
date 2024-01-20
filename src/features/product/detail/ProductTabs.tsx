@@ -1,14 +1,14 @@
-import React from "react";
+import { FC } from "react";
 import { Tabs } from "@/components/UI";
-import { Lang } from "@/common/type";
-import { TabsItems } from "@/components/UI/Tabs/type";
+import type { Lang } from "@/common/type";
+import type { TabsItems } from "@/components/UI/Tabs/type";
 import Comment from "@/components/Page/Comment";
 
 interface ProductTabsProps {
   lang: Lang;
 }
 
-const ProductTabs: React.FC<ProductTabsProps> = ({ lang }) => {
+const ProductTabs: FC<ProductTabsProps> = ({ lang }) => {
   const tabs: TabsItems = [
     {
       id: "1",

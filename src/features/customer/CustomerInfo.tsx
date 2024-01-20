@@ -1,5 +1,5 @@
-import React from "react";
-import { UI } from "@/components";
+import { FC, Fragment, useState } from "react";
+import { Card, Avatar, Space, Divider, InfoRow, Tooltip, Button, Typography } from "@/components/UI";
 import type { Lang } from "@/common/type";
 import type { InfoRowProps } from "@/components/UI/InfoRow";
 import { EGender } from "@/services/customer/enum";
@@ -11,21 +11,19 @@ import CustomerFormModal from "./CustomerFormModal";
 import CustomerPasswordModal from "./CustomerPasswordModal";
 import utils from "@/utils";
 
-const { Card, Avatar, Space, Divider, InfoRow, Tooltip, Button, Typography } = UI;
-
 const { Paragraph } = Typography;
 
 interface CustomerInfoProps {
   lang: Lang;
 }
 
-const CustomerInfo: React.FC<CustomerInfoProps> = ({ lang }) => {
-  const [openForm, setOpenForm] = React.useState<boolean>(false);
+const CustomerInfo: FC<CustomerInfoProps> = ({ lang }) => {
+  const [openForm, setOpenForm] = useState<boolean>(false);
 
-  const [openPassword, setOpenPassword] = React.useState<boolean>(false);
+  const [openPassword, setOpenPassword] = useState<boolean>(false);
 
   const commonProps: InfoRowProps = {
-    rootClassName: 'info-item',
+    rootClassName: "info-item",
     hasColon: false,
     labelProps: { style: { width: "auto" } },
     textProps: { weight: 400, strong: false },
@@ -42,7 +40,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({ lang }) => {
   const handleClosePassword = () => setOpenPassword(false);
 
   return (
-    <React.Fragment>
+    <Fragment>
       <Card bodyClassName="customer-info">
         <Space align="middle">
           <Avatar color="black" size={50} />
@@ -67,9 +65,13 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({ lang }) => {
         </Space>
 
         <InfoRow {...commonProps} labelElement={<HiUser />} text="Jack Williams" />
-        <InfoRow {...commonProps} labelElement={<HiPhone />} text={utils.formatPhoneNumber('0793229970')} />
+        <InfoRow {...commonProps} labelElement={<HiPhone />} text={utils.formatPhoneNumber("0793229970")} />
         <InfoRow {...commonProps} labelElement={<HiMail />} text="jack@example.com" />
-        <InfoRow {...commonProps} labelElement={<FaTransgender />} textElement={useDisplayGender(EGender.MALE)} />
+        <InfoRow
+          {...commonProps}
+          labelElement={<FaTransgender />}
+          textElement={useDisplayGender(EGender.MALE)}
+        />
         <InfoRow {...commonProps} labelElement={<HiCalendar />} text="28/11/1994" />
         <InfoRow
           {...commonProps}
@@ -86,7 +88,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({ lang }) => {
       />
 
       <CustomerPasswordModal lang={lang} open={openPassword} onCancel={handleClosePassword} />
-    </React.Fragment>
+    </Fragment>
   );
 };
 

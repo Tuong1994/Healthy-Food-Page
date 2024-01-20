@@ -1,9 +1,9 @@
-import React from "react";
+import { FC } from "react";
 import { Spinner } from "@/components/UI/Loading";
 
 interface SingleImageUploadLoadingProps {}
 
-const SingleImageUploadLoading: React.FC<SingleImageUploadLoadingProps> = () => {
+const SingleImageUploadLoading: FC<SingleImageUploadLoadingProps> = () => {
   return (
     <div className="group-loading">
       <Spinner />

@@ -1,4 +1,4 @@
-import React from "react";
+import { FC } from "react";
 import { Image } from "@/components/UI";
 import { useCategoriesData } from "@/components/Page/AppWrapper/AppData/Provider";
 import { useRouter } from "next/router";
@@ -12,7 +12,7 @@ const { PRODUCT_LIST } = url;
 
 interface CategoriesMobileProps {}
 
-const CategoriesMobile: React.FC<CategoriesMobileProps> = () => {
+const CategoriesMobile: FC<CategoriesMobileProps> = () => {
   const { data: categoriesWithSubs, loading, error } = useCategoriesData();
 
   const { query } = useRouter();

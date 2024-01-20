@@ -1,8 +1,6 @@
-import React from "react";
-import { UI } from "@/components";
-import { Lang } from "@/common/type";
-
-const { Button, Grid } = UI;
+import { FC } from "react";
+import { Button, Grid } from "@/components/UI";
+import type { Lang } from "@/common/type";
 
 const { Row, Col } = Grid;
 
@@ -12,7 +10,7 @@ interface PaymentActionsProps {
   handleOrder: () => void;
 }
 
-const PaymentActions: React.FC<PaymentActionsProps> = ({ lang, handleUnConfirm, handleOrder }) => {
+const PaymentActions: FC<PaymentActionsProps> = ({ lang, handleUnConfirm, handleOrder }) => {
   return (
     <div className="payment-actions">
       <Row justify="between">

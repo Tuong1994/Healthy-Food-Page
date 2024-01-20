@@ -1,16 +1,14 @@
-import React from "react";
-import { UI } from "@/components";
-import { Lang } from "@/common/type";
+import { FC } from "react";
+import { Space, Divider, Button, Badge, Image, InfoRow, Grid, Typography } from "@/components/UI";
+import type { Lang } from "@/common/type";
+import type { Product } from "@/services/product/type";
 import { HiShoppingCart } from "react-icons/hi2";
-import { Product } from "@/services/product/type";
 import { ELang } from "@/common/enum";
 import { useDisplayInventoryStatus, useDisplayProductOrigin, useDisplayProductUnit } from "@/hooks";
-import ProductCardControl from "@/components/Page/ProductCard/ProductCardControl";
+import QuantityControl from "@/components/Page/QuantityControl";
 import ProductCardLike from "@/components/Page/ProductCard/ProductCardLike";
 import Rate from "@/components/Page/Rate";
 import utils from "@/utils";
-
-const { Space, Divider, Button, Badge, Image, InfoRow, Grid, Typography } = UI;
 
 const { Title, Paragraph } = Typography;
 
@@ -22,7 +20,7 @@ interface ProductInfoProps {
   product: Product;
 }
 
-const ProductInfo: React.FC<ProductInfoProps> = ({ locale, lang, product }) => {
+const ProductInfo: FC<ProductInfoProps> = ({ locale, lang, product }) => {
   return (
     <Row justify="between" rootClassName="detail-info">
       <Col xs={24} md={12} lg={10} span={8}>
@@ -77,7 +75,7 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ locale, lang, product }) => {
         <Divider />
 
         <Space align="middle" size="lg">
-          <ProductCardControl productId={product.id as string} />
+          <QuantityControl productId={product.id as string} />
           <Button color="green" sizes="lg">
             <Space align="middle">
               <HiShoppingCart />

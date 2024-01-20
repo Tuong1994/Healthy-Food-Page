@@ -1,8 +1,8 @@
-import React from "react";
+import { FC } from "react";
 
 interface OptionEmptyProps {}
 
-const OptionEmpty: React.FC<OptionEmptyProps> = () => {
+const OptionEmpty: FC<OptionEmptyProps> = () => {
   return <div className="list-empty">No option</div>;
 };
 

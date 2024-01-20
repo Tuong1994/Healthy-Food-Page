@@ -1,16 +1,15 @@
-import React from "react";
+import { ReactNode, FC, useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 
 interface PortalProps {
-  children?: React.ReactNode | React.ReactNode[];
+  children?: ReactNode | ReactNode[];
 }
 
-const Portal: React.FC<PortalProps> = ({ children }) => {
-  const [mounted, setMounted] = React.useState<boolean>(false);
+const Portal: FC<PortalProps> = ({ children }) => {
+  const [mounted, setMounted] = useState<boolean>(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setMounted(true);
-
     return () => setMounted(false);
   });
 

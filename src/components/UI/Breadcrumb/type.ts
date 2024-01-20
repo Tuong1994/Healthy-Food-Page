@@ -1,6 +1,8 @@
+import { ReactNode } from "react";
+
 type BreadcrumbItem = {
   id: string;
-  label: React.ReactNode | React.ReactNode[];
+  label: ReactNode | ReactNode[];
   actived?: boolean;
 };
 

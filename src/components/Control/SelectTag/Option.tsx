@@ -1,4 +1,4 @@
-import React from "react";
+import { ReactNode, ForwardRefRenderFunction, forwardRef } from "react";
 import { Option, SelectOptions } from "../type";
 import OptionItem from "./OptionItem";
 import OptionPagination from "./OptionPagination";
@@ -17,10 +17,10 @@ export interface SelectTagOptionProps {
   iconSize: () => number | undefined;
   handleSelect: (option: Option) => void;
   handleChangePage: (type: "prev" | "next") => void;
-  dropdownRender?: (menu: React.ReactNode) => React.ReactNode | React.ReactNode[];
+  dropdownRender?: (menu: ReactNode) => ReactNode | ReactNode[];
 }
 
-const SelectTagOption: React.ForwardRefRenderFunction<HTMLDivElement, SelectTagOptionProps> = (
+const SelectTagOption: ForwardRefRenderFunction<HTMLDivElement, SelectTagOptionProps> = (
   {
     async,
     loading,
@@ -78,4 +78,4 @@ const SelectTagOption: React.ForwardRefRenderFunction<HTMLDivElement, SelectTagO
   );
 };
 
-export default React.forwardRef(SelectTagOption);
+export default forwardRef(SelectTagOption);

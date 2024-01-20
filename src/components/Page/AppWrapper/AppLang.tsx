@@ -1,24 +1,24 @@
-import React from "react";
+import { FC, ReactNode, Fragment, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useLang } from "@/hooks";
 
 interface AppLangProps {
-  children?: React.ReactNode;
+  children?: ReactNode;
 }
 
-const AppLang: React.FC<AppLangProps> = ({ children }) => {
+const AppLang: FC<AppLangProps> = ({ children }) => {
   const { locale } = useLang();
 
   const router = useRouter();
 
-  React.useEffect(() => {
+  useEffect(() => {
     router.replace({
       pathname: router.pathname,
       query: { ...router.query, langCode: locale },
     });
   }, [locale, router.pathname]);
 
-  return <React.Fragment>{children}</React.Fragment>;
+  return <Fragment>{children}</Fragment>;
 };
 
 export default AppLang;

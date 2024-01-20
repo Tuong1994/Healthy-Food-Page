@@ -1,10 +1,8 @@
-import React from "react";
-import { UI } from "@/components";
-import { CarouselItems } from "@/components/UI/Carousel/type";
+import { FC } from "react";
+import { Grid, Carousel } from "@/components/UI";
+import type { CarouselItems } from "@/components/UI/Carousel/type";
 import Categories from "@/components/Page/Categories";
 import useCategoryStore from "@/store/CategoryStore";
-
-const { Grid, Carousel } = UI;
 
 const { Row, Col } = Grid;
 
@@ -12,7 +10,7 @@ const { Horizontal } = Carousel;
 
 interface HomeBannerProps {}
 
-const HomeBanner: React.FC<HomeBannerProps> = () => {
+const HomeBanner: FC<HomeBannerProps> = () => {
   const show = useCategoryStore((state) => state.show);
 
   const slides: CarouselItems = [

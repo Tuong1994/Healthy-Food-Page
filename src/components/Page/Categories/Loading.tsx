@@ -1,11 +1,9 @@
-import React from "react";
-import { UI } from "@/components";
-
-const { Loading, Space } = UI;
+import { FC } from "react";
+import { Loading, Space } from "@/components/UI";
 
 const { Skeleton } = Loading;
 
-const CategoriesLoading: React.FC<{}> = () => {
+const CategoriesLoading: FC<{}> = () => {
   return (
     <div className="categories-loading">
       {[...Array(8)].map((_, idx) => (

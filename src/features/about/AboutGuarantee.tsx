@@ -1,8 +1,6 @@
-import React from "react";
-import { Lang } from "@/common/type";
-import { UI } from "@/components";
-
-const { Section, Grid, Typography } = UI;
+import { FC } from "react";
+import { Section, Grid, Typography } from "@/components/UI";
+import type { Lang } from "@/common/type";
 
 const { Title, Paragraph } = Typography;
 
@@ -12,7 +10,7 @@ interface AboutGuaranteeProps {
   lang: Lang;
 }
 
-const AboutGuarantee: React.FC<AboutGuaranteeProps> = ({ lang }) => {
+const AboutGuarantee: FC<AboutGuaranteeProps> = ({ lang }) => {
   return (
     <Section rootClassName="about-guarantee">
       <Title align="center" weight={700} rootClassName="guarantee-title">

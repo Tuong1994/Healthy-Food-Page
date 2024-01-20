@@ -1,12 +1,12 @@
-import React from "react";
+import { useState, useEffect } from "react";
 
 const useViewpoint = () => {
   if (typeof window === "undefined")
     return { screenWidth: 0, isPhone: false, isTablet: false, isLaptop: false, isDesktop: false };
 
-  const [screenWidth, setScreenWidth] = React.useState<number>(window.innerWidth);
+  const [screenWidth, setScreenWidth] = useState<number>(window.innerWidth);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handleResize = () => setScreenWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);

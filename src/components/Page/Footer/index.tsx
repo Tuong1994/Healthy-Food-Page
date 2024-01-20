@@ -1,14 +1,14 @@
-import React from "react";
+import { FC } from "react";
 import { useNotDisplay } from "@/hooks";
 import FooterTop from "./FooterTop";
 import FooterBottom from "./FooterBottom";
 
 interface FooterProps {}
 
-const Footer: React.FC<FooterProps> = () => {
+const Footer: FC<FooterProps> = () => {
   const notDisplay = useNotDisplay();
 
-  if (notDisplay) return <React.Fragment></React.Fragment>;
+  if (notDisplay) return null;
 
   return (
     <div className="footer">

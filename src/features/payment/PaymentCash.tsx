@@ -1,8 +1,6 @@
-import React from "react";
-import { UI } from "@/components";
-import { Lang } from "@/common/type";
-
-const { Divider, InfoRow, Grid, Typography } = UI;
+import { FC } from "react";
+import { Divider, InfoRow, Typography } from "@/components/UI";
+import type { Lang } from "@/common/type";
 
 const { Paragraph } = Typography;
 
@@ -10,7 +8,7 @@ interface PaymentCashProps {
   lang: Lang;
 }
 
-const PaymentCash: React.FC<PaymentCashProps> = ({ lang }) => {
+const PaymentCash: FC<PaymentCashProps> = ({ lang }) => {
   return (
     <div className="payment-cash">
       <Paragraph size={22} weight={600} variant="success">
@@ -22,7 +20,7 @@ const PaymentCash: React.FC<PaymentCashProps> = ({ lang }) => {
       </Paragraph>
       <InfoRow
         rootClassName="cash-address"
-        label={lang.common.form.label.address}
+        label={lang.common.form.label.fullAddress}
         text={lang.pageComponent.footer.address}
         labelSpanProps={{ xs: 6, md: 3, span: 2 }}
         textSpanProps={{ xs: 18, md: 18, span: 14 }}

@@ -1,14 +1,14 @@
-import React from "react";
+import { InputHTMLAttributes, CSSProperties, ReactNode, ForwardRefRenderFunction, forwardRef } from "react";
 import { BsCloudUpload } from "react-icons/bs";
 import utils from "@/utils";
 
-interface MultipleImageUploadControlProps extends React.InputHTMLAttributes<HTMLInputElement> {
+interface MultipleImageUploadControlProps extends InputHTMLAttributes<HTMLInputElement> {
   controlClassName?: string;
-  controlStyle?: React.CSSProperties;
-  label?: React.ReactNode | React.ReactNode[];
+  controlStyle?: CSSProperties;
+  label?: ReactNode | ReactNode[];
 }
 
-const MultipleImageUploadControl: React.ForwardRefRenderFunction<
+const MultipleImageUploadControl: ForwardRefRenderFunction<
   HTMLInputElement,
   MultipleImageUploadControlProps
 > = ({ controlClassName = "", controlStyle, label, ...restProps }, ref) => {
@@ -32,4 +32,4 @@ const MultipleImageUploadControl: React.ForwardRefRenderFunction<
   );
 };
 
-export default React.forwardRef(MultipleImageUploadControl);
+export default forwardRef(MultipleImageUploadControl);

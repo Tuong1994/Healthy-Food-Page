@@ -1,14 +1,12 @@
-import React from "react";
-import { Control } from "@/components";
-import { SelectOptions } from "@/components/Control/type";
+import { FC } from "react";
+import { Select } from "@/components/Control";
 import { ELang } from "@/common/enum";
 import { useLang } from "@/hooks";
-
-const { Select } = Control;
+import type { SelectOptions } from "@/components/Control/type";
 
 interface AuthHeaderProps {}
 
-const AuthHeader: React.FC<AuthHeaderProps> = () => {
+const AuthHeader: FC<AuthHeaderProps> = () => {
   const { locale, handleSwitchLang } = useLang();
 
   const options: SelectOptions = [

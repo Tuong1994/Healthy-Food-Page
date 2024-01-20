@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import { UI } from "@/components";
+import { Breadcrumb, Tabs, Grid } from "@/components/UI";
 import type { BreadcrumbItems } from "@/components/UI/Breadcrumb/type";
 import type { TabsItems } from "@/components/UI/Tabs/type";
 import { useLang } from "@/hooks";
@@ -11,8 +11,6 @@ import CustomerRate from "@/features/customer/CustomerRate";
 import url from "@/common/constant/url";
 
 const { HOME } = url;
-
-const { Breadcrumb, Tabs, Grid } = UI;
 
 const { Row, Col } = Grid;
 

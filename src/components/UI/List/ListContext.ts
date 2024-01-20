@@ -1,9 +1,9 @@
-import React from "react";
+import { ReactNode, createContext } from "react";
 
 export type ListContextState = {
-  icon?: React.ReactNode | React.ReactNode[];
+  icon?: ReactNode | ReactNode[];
 };
 
-const ListContext = React.createContext<ListContextState>({});
+const ListContext = createContext<ListContextState>({});
 
 export default ListContext;

@@ -1,4 +1,4 @@
-import React from "react";
+import { FC, ReactNode, Fragment, useState, useCallback, useEffect } from "react";
 import { useRouter } from "next/router";
 import { logout, refresh } from "@/services/auth/api";
 import RedirectModal from "./RedirectModal";
@@ -8,13 +8,13 @@ import url from "@/common/constant/url";
 const { HOME, AUTH_SIGN_IN } = url;
 
 interface AppAuthProps {
-  children?: React.ReactNode;
+  children?: ReactNode;
 }
 
-const AppAuth: React.FC<AppAuthProps> = ({ children }) => {
+const AppAuth: FC<AppAuthProps> = ({ children }) => {
   const [auth, resetAuth] = useAuthStore((state) => [state.auth, state.resetAuth]);
 
-  const [open, setOpen] = React.useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false);
 
   const router = useRouter();
 
@@ -22,13 +22,13 @@ const AppAuth: React.FC<AppAuthProps> = ({ children }) => {
 
   let interval: any;
 
-  const onRefresh = React.useCallback(async () => {
+  const onRefresh = useCallback(async () => {
     setOpen(false);
     const response = await refresh({ customerId: info.id });
     if (!response.success) setOpen(true);
   }, [isAuth]);
 
-  const onLogout = React.useCallback(async () => {
+  const onLogout = useCallback(async () => {
     if (!isAuth) return;
     await logout({ customerId: info.id });
     resetAuth();
@@ -46,11 +46,11 @@ const AppAuth: React.FC<AppAuthProps> = ({ children }) => {
     router.push(HOME);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     onRefresh();
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!isAuth) return;
     const time = expired - Date.now() - 500;
     interval = setInterval(() => onRefresh(), time);
@@ -58,10 +58,10 @@ const AppAuth: React.FC<AppAuthProps> = ({ children }) => {
   });
 
   return (
-    <React.Fragment>
+    <Fragment>
       {children}
       <RedirectModal open={open} onOk={handleReLogin} onCancel={handleReturn} />
-    </React.Fragment>
+    </Fragment>
   );
 };
 

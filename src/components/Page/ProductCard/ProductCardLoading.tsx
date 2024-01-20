@@ -1,4 +1,4 @@
-import React from "react";
+import { FC } from "react";
 import { Space, Card, Loading, Grid } from "@/components/UI";
 import { useAppGrid } from "@/components/UI/Grid/Provider";
 
@@ -11,7 +11,7 @@ interface ProductCardLoadingProps {
   cardSize: () => string;
 }
 
-const ProductCardLoading: React.FC<ProductCardLoadingProps> = ({ responsive, cardSize }) => {
+const ProductCardLoading: FC<ProductCardLoadingProps> = ({ responsive, cardSize }) => {
   const { isPhone } = useAppGrid();
 
   if (isPhone && responsive) {

@@ -1,9 +1,9 @@
-import React from "react";
-import { UI } from "@/components";
-import { Lang } from "@/common/type";
+import { FC, Fragment, useState, useRef } from "react";
+import { Avatar, Button, Space, Image, Empty, Typography } from "@/components/UI";
 import { useClickOutside, useLang, useRender } from "@/hooks";
 import { CgShoppingCart } from "react-icons/cg";
 import { useRouter } from "next/router";
+import type { Lang } from "@/common/type";
 import useSumQuantity from "@/features/cart/hooks/useSumQuanity";
 import useSumPrice from "@/features/cart/hooks/useSumPrice";
 import useAuthStore from "@/store/AuthStore";
@@ -14,15 +14,13 @@ import url from "@/common/constant/url";
 
 const { CART, AUTH_SIGN_IN, PRODUCT_DETAIL } = url;
 
-const { Avatar, Button, Space, Image, Empty, Typography } = UI;
-
 const { Paragraph } = Typography;
 
 interface HeaderCartProps {
   lang: Lang;
 }
 
-const HeaderCart: React.FC<HeaderCartProps> = ({ lang }) => {
+const HeaderCart: FC<HeaderCartProps> = ({ lang }) => {
   const { locale } = useLang();
 
   const auth = useAuthStore((state) => state.auth);
@@ -35,9 +33,9 @@ const HeaderCart: React.FC<HeaderCartProps> = ({ lang }) => {
 
   const totalPrice = useSumPrice("cart");
 
-  const [open, setOpen] = React.useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false);
 
-  const cartRef = React.useRef<HTMLDivElement>(null);
+  const cartRef = useRef<HTMLDivElement>(null);
 
   const render = useRender(open);
 
@@ -46,7 +44,7 @@ const HeaderCart: React.FC<HeaderCartProps> = ({ lang }) => {
   const dropdownClassName = open ? "cart-dropdown-active" : "";
 
   const handleOpen = () => {
-    // if (!auth.isAuth) return router.push(AUTH_SIGN_IN);
+    if (!auth.isAuth) return router.push(AUTH_SIGN_IN);
     setOpen(!open);
   };
 
@@ -55,7 +53,7 @@ const HeaderCart: React.FC<HeaderCartProps> = ({ lang }) => {
     if (cart.items && !cart.items.length) return <Empty text={lang.pageComponent.header.cart.note} />;
 
     return (
-      <React.Fragment>
+      <Fragment>
         <div className="dropdown-inner">
           {cart.items.map((item) => (
             <Link href={`${PRODUCT_DETAIL}/1`} className="inner-item" key={item.id}>
@@ -84,7 +82,7 @@ const HeaderCart: React.FC<HeaderCartProps> = ({ lang }) => {
             </Button>
           </Link>
         </div>
-      </React.Fragment>
+      </Fragment>
     );
   };
   return (

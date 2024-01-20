@@ -1,13 +1,9 @@
-import React from "react";
-import { UI } from "@/components";
-import { Url } from "next/dist/shared/lib/router/router";
+import { FC } from "react";
+import { Image, Badge } from "@/components/UI";
+import { useLang } from "@/hooks";
+import type { Url } from "next/dist/shared/lib/router/router";
 import Link from "next/link";
-import url from "@/common/constant/url";
 import utils from "@/utils";
-
-const { PRODUCT_DETAIL } = url;
-
-const { Image, Badge } = UI;
 
 interface ProductCardImageProps {
   link: Url;
@@ -18,7 +14,7 @@ interface ProductCardImageProps {
   imageResponsiveClassName?: string;
 }
 
-const ProductCardImage: React.FC<ProductCardImageProps> = ({
+const ProductCardImage: FC<ProductCardImageProps> = ({
   link,
   isNew,
   imgWidth,
@@ -26,6 +22,8 @@ const ProductCardImage: React.FC<ProductCardImageProps> = ({
   rootClassName = "",
   imageResponsiveClassName = "",
 }) => {
+  const { lang } = useLang();
+
   const mainClassName = utils.formatClassName("card-image", rootClassName);
 
   return (
@@ -40,7 +38,7 @@ const ProductCardImage: React.FC<ProductCardImageProps> = ({
       </Link>
       {isNew && (
         <Badge shape="square" color="blue" rootClassName="image-badge">
-          New
+          {lang.common.status.new}
         </Badge>
       )}
     </div>

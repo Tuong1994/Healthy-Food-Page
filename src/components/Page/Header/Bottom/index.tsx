@@ -1,6 +1,6 @@
-import React from "react";
-import { UI } from "@/components";
-import { Lang } from "@/common/type";
+import { FC } from "react";
+import { Grid, Layout } from "@/components/UI";
+import type { Lang } from "@/common/type";
 import Logo from "@/components/Page/Logo";
 import Link from "next/link";
 import HeaderSearch from "./HeaderSearch";
@@ -13,8 +13,6 @@ import url from "@/common/constant/url";
 
 const { HOME } = url;
 
-const { Grid, Layout } = UI;
-
 const { Row, Col } = Grid;
 
 const { Head } = Layout;
@@ -23,7 +21,7 @@ interface HeaderBottomProps {
   lang: Lang;
 }
 
-const HeaderBottom: React.FC<HeaderBottomProps> = ({ lang }) => {
+const HeaderBottom: FC<HeaderBottomProps> = ({ lang }) => {
   return (
     <Head rootClassName="header-bottom">
       <Row align="middle" justify="between">

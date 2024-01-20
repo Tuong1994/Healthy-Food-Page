@@ -1,9 +1,6 @@
-import React from "react";
+import { RefObject, Dispatch, SetStateAction, useEffect } from "react";
 
-const useClickOutside = (
-  ref: React.RefObject<any>,
-  setTrigger: React.Dispatch<React.SetStateAction<boolean>>
-) => {
+const useClickOutside = (ref: RefObject<any>, setTrigger: Dispatch<SetStateAction<boolean>>) => {
   if (typeof window === "undefined") return;
 
   const handleClickOutside = (e: Event) => {
@@ -12,7 +9,7 @@ const useClickOutside = (
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     window.addEventListener("mousedown", handleClickOutside);
     return () => window.removeEventListener("mousedown", handleClickOutside);
   }, []);

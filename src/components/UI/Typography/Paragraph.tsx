@@ -1,11 +1,11 @@
-import React from "react";
+import { HTMLAttributes, ReactNode, ForwardRefRenderFunction, CSSProperties, forwardRef } from "react";
 import { TypographyAlign, TypographyVariant } from "./type";
 import utils from "@/utils";
 import useLayout from "../Layout/useLayout";
 
-export interface ParagraphProps extends React.HTMLAttributes<HTMLParagraphElement> {
+export interface ParagraphProps extends HTMLAttributes<HTMLParagraphElement> {
   rootClassName?: string;
-  children?: React.ReactNode | React.ReactNode[];
+  children?: ReactNode | ReactNode[];
   weight?: number;
   size?: number;
   lineHeight?: number;
@@ -18,7 +18,7 @@ export interface ParagraphProps extends React.HTMLAttributes<HTMLParagraphElemen
   variant?: TypographyVariant;
 }
 
-const Paragraph: React.ForwardRefRenderFunction<HTMLParagraphElement, ParagraphProps> = (
+const Paragraph: ForwardRefRenderFunction<HTMLParagraphElement, ParagraphProps> = (
   {
     rootClassName = "",
     children,
@@ -55,7 +55,7 @@ const Paragraph: React.ForwardRefRenderFunction<HTMLParagraphElement, ParagraphP
 
   const themeClassName = `paragraph-${theme}`;
 
-  const inlineStyle = (): React.CSSProperties => {
+  const inlineStyle = (): CSSProperties => {
     const defaultStyle = { ...style, fontSize: `${size}px`, lineHeight: `${lineHeight}px` };
     if (strong) return defaultStyle;
     return { ...defaultStyle, fontWeight: weight };
@@ -80,4 +80,4 @@ const Paragraph: React.ForwardRefRenderFunction<HTMLParagraphElement, ParagraphP
   );
 };
 
-export default React.forwardRef(Paragraph);
+export default forwardRef(Paragraph);

@@ -1,4 +1,4 @@
-import React from "react";
+import { Key, ReactNode, Fragment, useState } from "react";
 import { TableColor } from ".";
 import { Columns } from "./type";
 import { CheckBox } from "@/components/Control";
@@ -7,13 +7,13 @@ import TableCell from "./TableCell";
 interface TableBodyProps<M> {
   dataSource: M[];
   columns: Columns<M>;
-  rowKey?: React.Key;
-  rowSelectedKeys: React.Key[];
+  rowKey?: Key;
+  rowSelectedKeys: Key[];
   color?: TableColor;
   hasRowSelection: boolean;
   hasRowExpand: boolean;
-  handleSelectRow: (key: React.Key) => void;
-  expandRowTable?: (data: M) => React.ReactNode | React.ReactNode[];
+  handleSelectRow: (key: Key) => void;
+  expandRowTable?: (data: M) => ReactNode | ReactNode[];
 }
 
 const TableBody = <M extends object>({
@@ -27,7 +27,7 @@ const TableBody = <M extends object>({
   handleSelectRow,
   expandRowTable,
 }: TableBodyProps<M>) => {
-  const [expandedRow, setExpandedRow] = React.useState<React.Key>("");
+  const [expandedRow, setExpandedRow] = useState<Key>("");
 
   const expandClassName = (key: string) => (expandedRow === key ? "cell-expand-action-expanded" : "");
 
@@ -46,7 +46,7 @@ const TableBody = <M extends object>({
       {dataSource.map((data, idx) => {
         const key = rowKey ? data[rowKey as keyof M] : `row-${idx}`;
         return (
-          <React.Fragment key={key}>
+          <Fragment key={key}>
             <tr className={isSeleted(key) ? "table-row-selected" : ""}>
               {hasRowSelection && (
                 <td>
@@ -74,7 +74,7 @@ const TableBody = <M extends object>({
                   <TableCell>
                     {column.render
                       ? column.render(data[column.dataIndex], data, idx)
-                      : (data[column.dataIndex] as React.ReactNode)}
+                      : (data[column.dataIndex] as ReactNode)}
                   </TableCell>
                 </td>
               ))}
@@ -88,7 +88,7 @@ const TableBody = <M extends object>({
                 </td>
               </tr>
             )}
-          </React.Fragment>
+          </Fragment>
         );
       })}
     </tbody>

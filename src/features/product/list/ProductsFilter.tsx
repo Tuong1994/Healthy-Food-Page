@@ -1,8 +1,8 @@
-import React from "react";
-import { UI } from "@/components";
-import { DropdownItems } from "@/components/UI/Dropdown/type";
+import { FC, useState } from "react";
+import { Dropdown, Space } from "@/components/UI";
+import type { DropdownItems } from "@/components/UI/Dropdown/type";
+import type { Lang } from "@/common/type";
 import { ESort } from "@/common/enum";
-import { Lang } from "@/common/type";
 import { HiChevronDown } from "react-icons/hi2";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -10,16 +10,14 @@ import url from "@/common/constant/url";
 
 const { PRODUCT_LIST } = url;
 
-const { Dropdown, Space } = UI;
-
 interface ProductsFilterProps {
   lang: Lang;
 }
 
-const ProductsFilter: React.FC<ProductsFilterProps> = ({ lang }) => {
+const ProductsFilter: FC<ProductsFilterProps> = ({ lang }) => {
   const { query } = useRouter();
 
-  const [title, setTitle] = React.useState<string>(lang.options.sort.priceGoUp);
+  const [title, setTitle] = useState<string>(lang.options.sort.priceGoUp);
 
   const items: DropdownItems = [
     {

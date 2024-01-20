@@ -1,6 +1,13 @@
-"use client";
-
-import React from "react";
+import {
+  CSSProperties,
+  ReactNode,
+  ForwardRefRenderFunction,
+  TouchEvent,
+  MouseEvent,
+  useState,
+  useEffect,
+  forwardRef,
+} from "react";
 import { CarouselItems } from "./type";
 import { HiOutlineChevronLeft as ArrowLeft, HiOutlineChevronRight as ArrowRight } from "react-icons/hi2";
 import useCarousel from "./useCarousel";
@@ -8,7 +15,7 @@ import utils from "@/utils";
 
 export interface CarouselHorizontalProps {
   rootClassName?: string;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
   items?: CarouselItems;
   slideId?: string;
   time?: number;
@@ -16,8 +23,8 @@ export interface CarouselHorizontalProps {
   autoPlay?: boolean;
   hasArrow?: boolean;
   hasManualStop?: boolean;
-  leftButtonIcon?: React.ReactNode | React.ReactNode[];
-  rightButtonIcon?: React.ReactNode | React.ReactNode[];
+  leftButtonIcon?: ReactNode | ReactNode[];
+  rightButtonIcon?: ReactNode | ReactNode[];
   mode?: "dark" | "light";
 }
 
@@ -25,7 +32,7 @@ const widthSpan = 100;
 
 let interval: any;
 
-const CarouselHorizontal: React.ForwardRefRenderFunction<HTMLDivElement, CarouselHorizontalProps> = (
+const CarouselHorizontal: ForwardRefRenderFunction<HTMLDivElement, CarouselHorizontalProps> = (
   {
     rootClassName = "",
     style,
@@ -46,23 +53,23 @@ const CarouselHorizontal: React.ForwardRefRenderFunction<HTMLDivElement, Carouse
   },
   ref
 ) => {
-  const [slidePos, setSlidePos] = React.useState<number>(0);
+  const [slidePos, setSlidePos] = useState<number>(0);
 
-  const [touchStartPos, setTouchStartPos] = React.useState<number>(0);
-  const [touchEndPos, setTouchEndPos] = React.useState<number>(0);
-  const [touched, setTouched] = React.useState<boolean>(false);
-  const [touchSwiped, setTouchSwiped] = React.useState<boolean>(false);
+  const [touchStartPos, setTouchStartPos] = useState<number>(0);
+  const [touchEndPos, setTouchEndPos] = useState<number>(0);
+  const [touched, setTouched] = useState<boolean>(false);
+  const [touchSwiped, setTouchSwiped] = useState<boolean>(false);
 
-  const [mouseStartPos, setMouseStartPos] = React.useState<number>(0);
-  const [mouseEndPos, setMouseEndPos] = React.useState<number>(0);
-  const [clicked, setClicked] = React.useState<boolean>(false);
-  const [mouseSwiped, setMouseSwiped] = React.useState<boolean>(false);
+  const [mouseStartPos, setMouseStartPos] = useState<number>(0);
+  const [mouseEndPos, setMouseEndPos] = useState<number>(0);
+  const [clicked, setClicked] = useState<boolean>(false);
+  const [mouseSwiped, setMouseSwiped] = useState<boolean>(false);
 
-  const [manualStop, setManualStop] = React.useState<boolean>(time !== undefined);
+  const [manualStop, setManualStop] = useState<boolean>(time !== undefined);
 
   const { translateFull, translatePartial, translateAnimation } = useCarousel({ items, slideId, slidePos });
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (autoPlay) {
       if (manualStop && !clicked && !touched) {
         interval = setInterval(() => handleNextSlide(), time);
@@ -130,7 +137,7 @@ const CarouselHorizontal: React.ForwardRefRenderFunction<HTMLDivElement, Carouse
     handleManualStop();
   };
 
-  const onTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+  const onTouchStart = (e: TouchEvent<HTMLDivElement>) => {
     setTouchStartPos(e.touches[0].clientX);
     setTouchEndPos(e.touches[0].clientX);
     setTouched(true);
@@ -138,7 +145,7 @@ const CarouselHorizontal: React.ForwardRefRenderFunction<HTMLDivElement, Carouse
     handleManualStop();
   };
 
-  const onTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+  const onTouchMove = (e: TouchEvent<HTMLDivElement>) => {
     if (!touched) return;
     setTouchEndPos(e.touches[0].clientX);
     const viewWidth = document.getElementById("carouselView")?.offsetWidth;
@@ -160,7 +167,7 @@ const CarouselHorizontal: React.ForwardRefRenderFunction<HTMLDivElement, Carouse
     translateAnimation("slow");
   };
 
-  const onMouseStart = (e: React.MouseEvent<HTMLDivElement>) => {
+  const onMouseStart = (e: MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     setMouseStartPos(e.clientX);
     setMouseEndPos(e.clientX);
@@ -169,7 +176,7 @@ const CarouselHorizontal: React.ForwardRefRenderFunction<HTMLDivElement, Carouse
     handleManualStop();
   };
 
-  const onMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  const onMouseMove = (e: MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     if (!clicked) return;
     setMouseEndPos(e.clientX);
@@ -243,4 +250,4 @@ const CarouselHorizontal: React.ForwardRefRenderFunction<HTMLDivElement, Carouse
   );
 };
 
-export default React.forwardRef(CarouselHorizontal);
+export default forwardRef(CarouselHorizontal);

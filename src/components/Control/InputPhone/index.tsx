@@ -1,6 +1,16 @@
-'use client'
-
-import React from "react";
+import {
+  InputHTMLAttributes,
+  CSSProperties,
+  ReactNode,
+  ForwardRefRenderFunction,
+  ChangeEvent,
+  useContext,
+  useEffect,
+  useState,
+  useRef,
+  useCallback,
+  forwardRef,
+} from "react";
 import { HiXCircle } from "react-icons/hi2";
 import { useFormContext } from "react-hook-form";
 import { ControlColor, ControlShape, InputValue } from "../type";
@@ -12,15 +22,15 @@ import formatPhoneNumber from "./formatPhoneNumber";
 import useLayout from "@/components/UI/Layout/useLayout";
 import utils from "@/utils";
 
-export interface InputPhoneProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface InputPhoneProps extends InputHTMLAttributes<HTMLInputElement> {
   rootClassName?: string;
   labelClassName?: string;
   inputClassName?: string;
-  rootStyle?: React.CSSProperties;
-  labelStyle?: React.CSSProperties;
-  label?: React.ReactNode | React.ReactNode[];
-  addonBefore?: React.ReactNode | React.ReactNode[];
-  addonAfter?: React.ReactNode | React.ReactNode[];
+  rootStyle?: CSSProperties;
+  labelStyle?: CSSProperties;
+  label?: ReactNode | ReactNode[];
+  addonBefore?: ReactNode | ReactNode[];
+  addonAfter?: ReactNode | ReactNode[];
   sizes?: ComponentSize;
   color?: ControlColor;
   shape?: ControlShape;
@@ -30,7 +40,7 @@ export interface InputPhoneProps extends React.InputHTMLAttributes<HTMLInputElem
   onChangeInput?: (text: string) => void;
 }
 
-const InputPhone: React.ForwardRefRenderFunction<HTMLInputElement, InputPhoneProps> = (
+const InputPhone: ForwardRefRenderFunction<HTMLInputElement, InputPhoneProps> = (
   {
     rootClassName = "",
     labelClassName = "",
@@ -61,15 +71,15 @@ const InputPhone: React.ForwardRefRenderFunction<HTMLInputElement, InputPhonePro
 
   const { layoutTheme: theme } = layoutValue;
 
-  const { color: rhfColor, sizes: rhfSizes, shape: rhfShape } = React.useContext(FormContext);
+  const { color: rhfColor, sizes: rhfSizes, shape: rhfShape } = useContext(FormContext);
 
-  const { isRhf, rhfName, rhfError, rhfValue, rhfDisabled } = React.useContext(FormItemContext);
+  const { isRhf, rhfName, rhfError, rhfValue, rhfDisabled } = useContext(FormItemContext);
 
-  const [inputValue, setInputValue] = React.useState<InputValue>("");
+  const [inputValue, setInputValue] = useState<InputValue>("");
 
-  const [touched, setTouched] = React.useState<boolean>(false);
+  const [touched, setTouched] = useState<boolean>(false);
 
-  const inputRef = React.useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLDivElement>(null);
 
   const controlDisabled = rhfDisabled ? rhfDisabled : disabled;
 
@@ -110,24 +120,24 @@ const InputPhone: React.ForwardRefRenderFunction<HTMLInputElement, InputPhonePro
 
   const controlInputClassName = utils.formatClassName("control-box", inputClassName);
 
-  const triggerValidation = React.useCallback(() => {
+  const triggerValidation = useCallback(() => {
     if (touched && !rhfValue) rhfMethods.trigger(rhfName);
     else if (touched && rhfValue) rhfMethods.trigger(rhfName);
   }, [touched, rhfMethods, rhfName, rhfValue]);
 
   // Trigger validation
-  React.useEffect(() => {
+  useEffect(() => {
     if (!isRhf) return;
     triggerValidation();
   }, [isRhf, triggerValidation]);
 
   // Focus input when error is trigger
-  React.useEffect(() => {
+  useEffect(() => {
     if (rhfError) inputRef.current?.click();
   }, [rhfError]);
 
   // Set default value
-  React.useEffect(() => {
+  useEffect(() => {
     if (isRhf) {
       const phoneFormatRhfValue = formatPhoneNumber(rhfValue as string);
       return setInputValue(phoneFormatRhfValue);
@@ -146,7 +156,7 @@ const InputPhone: React.ForwardRefRenderFunction<HTMLInputElement, InputPhonePro
 
   const handleBlur = () => setTouched(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     const inputFormatValue = formatPhoneNumber(value);
     const inputValue = value.replace(ONLY_DIGIT_REGEX, "");
@@ -203,4 +213,4 @@ const InputPhone: React.ForwardRefRenderFunction<HTMLInputElement, InputPhonePro
   );
 };
 
-export default React.forwardRef(InputPhone);
+export default forwardRef(InputPhone);

@@ -1,11 +1,11 @@
-import React from "react";
+import { CSSProperties, ForwardRefRenderFunction, forwardRef } from "react";
 import { Spinner } from "../Loading";
 
 interface ImageLoadingProps {
-  imageSize: () => React.CSSProperties;
+  imageSize: () => CSSProperties;
 }
 
-const ImageLoading: React.ForwardRefRenderFunction<HTMLDivElement, ImageLoadingProps> = ({ imageSize }, ref) => {
+const ImageLoading: ForwardRefRenderFunction<HTMLDivElement, ImageLoadingProps> = ({ imageSize }, ref) => {
   return (
     <div ref={ref} style={imageSize()} className="image-loading">
       <Spinner size={20} />
@@ -13,4 +13,4 @@ const ImageLoading: React.ForwardRefRenderFunction<HTMLDivElement, ImageLoadingP
   );
 };
 
-export default React.forwardRef(ImageLoading);
+export default forwardRef(ImageLoading);

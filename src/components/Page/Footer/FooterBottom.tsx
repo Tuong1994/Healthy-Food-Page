@@ -1,13 +1,11 @@
-import React from "react";
-import { UI } from "@/components";
+import { FC } from "react";
+import { Grid, UList, Typography, Space, Image } from "@/components/UI";
 import { FaFacebook, FaInstagram, FaLinkedin, FaYoutube } from "react-icons/fa";
 import { useLang } from "@/hooks";
 import Link from "next/link";
 import url from "@/common/constant/url";
 
 const { HOME, ABOUT, PAYMENT, DELIVERY, EXCHANGE } = url;
-
-const { Grid, UList, Typography, Space, Image } = UI;
 
 const { Row, Col } = Grid;
 
@@ -19,7 +17,7 @@ interface FooterBottomProps {}
 
 const ICON_SIZE = 20;
 
-const FooterBottom: React.FC<FooterBottomProps> = () => {
+const FooterBottom: FC<FooterBottomProps> = () => {
   const { lang } = useLang();
 
   return (

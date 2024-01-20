@@ -1,17 +1,15 @@
-import React from "react";
-import { UI } from "@/components";
-import { Lang } from "@/common/type";
+import { FC } from "react";
+import { Button, Space } from "@/components/UI";
 import { FaListAlt } from "react-icons/fa";
+import type { Lang } from "@/common/type";
 import Categories from "../../Categories";
 import useCategoryStore from "@/store/CategoryStore";
-
-const { Button, Space } = UI;
 
 interface HeaderCategoryProps {
   lang: Lang;
 }
 
-const HeaderCategory: React.FC<HeaderCategoryProps> = ({ lang }) => {
+const HeaderCategory: FC<HeaderCategoryProps> = ({ lang }) => {
   const [show, showCategories] = useCategoryStore((state) => [state.show, state.showCategories]);
 
   return (

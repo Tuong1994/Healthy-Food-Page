@@ -1,15 +1,15 @@
-import React from "react";
+import { FC } from "react";
 import { CgHeart } from "react-icons/cg";
+import { useMounted } from "@/hooks";
+import useAuthStore from "@/store/AuthStore";
 import Link from "next/link";
 import url from "@/common/constant/url";
-import useAuthStore from "@/store/AuthStore";
-import { useMounted } from "@/hooks";
 
 const { AUTH_SIGN_IN, FAVORITE } = url;
 
 interface HeaderLikesProps {}
 
-const HeaderLikes: React.FC<HeaderLikesProps> = () => {
+const HeaderLikes: FC<HeaderLikesProps> = () => {
   const auth = useAuthStore((state) => state.auth);
 
   const isMounted = useMounted();

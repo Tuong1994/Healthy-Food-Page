@@ -1,5 +1,5 @@
-import React from "react";
-import { UI } from "@/components";
+import { FC, useState, useMemo, Fragment } from "react";
+import { Button, Space, Drawer, Divider, Grid } from "@/components/UI";
 import { FaBars } from "react-icons/fa";
 import { ELang } from "@/common/enum";
 import { useLang } from "@/hooks";
@@ -10,18 +10,16 @@ import utils from "@/utils";
 
 const { HOME, ABOUT, PAYMENT, DELIVERY, EXCHANGE, AUTH_SIGN_UP } = url;
 
-const { Button, Space, Drawer, Divider, Grid } = UI;
-
 const { Row, Col } = Grid;
 
 interface HeaderMobileProps {}
 
-const HeaderMobile: React.FC<HeaderMobileProps> = () => {
-  const { type, lang, handleSwitchLang } = useLang();
+const HeaderMobile: FC<HeaderMobileProps> = () => {
+  const { locale, lang, handleSwitchLang } = useLang();
 
-  const [open, setOpen] = React.useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false);
 
-  const menu = React.useMemo(
+  const menu = useMemo(
     () => [
       { id: "1", label: lang.common.menu.home, path: HOME },
       { id: "2", label: lang.common.menu.about, path: ABOUT },
@@ -40,14 +38,14 @@ const HeaderMobile: React.FC<HeaderMobileProps> = () => {
     ));
   };
 
-  const activeClassName = (currentType: ELang) => (type === currentType ? "side-lang-active" : "");
+  const activeClassName = (currentLocale: ELang) => (locale === currentLocale ? "side-lang-active" : "");
 
   const handleOpen = () => setOpen(true);
 
   const handleClose = () => setOpen(false);
 
   return (
-    <React.Fragment>
+    <Fragment>
       <Space rootClassName="bottom-mobile" align="middle" size="md">
         <Link href={AUTH_SIGN_UP}>
           <Button sizes="lg" rootClassName="mobile-auth-btn">
@@ -86,7 +84,7 @@ const HeaderMobile: React.FC<HeaderMobileProps> = () => {
           </Col>
         </Row>
       </Drawer>
-    </React.Fragment>
+    </Fragment>
   );
 };
 

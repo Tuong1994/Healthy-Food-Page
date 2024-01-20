@@ -1,12 +1,10 @@
 import { NextPage } from "next";
-import { UI } from "@/components";
+import { Typography } from "@/components/UI";
 import { useLang } from "@/hooks";
 import PaymentMethods from "@/features/payment/PaymentMethods";
 import PaymentTransfer from "@/features/payment/PaymentTransfer";
 import PaymentCash from "@/features/payment/PaymentCash";
 import PaymentCod from "@/features/payment/PaymentCod";
-
-const { Typography } = UI;
 
 const { Title } = Typography;
 

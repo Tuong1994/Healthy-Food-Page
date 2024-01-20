@@ -1,7 +1,7 @@
-import React from "react";
+import { FC, useState, useRef, useEffect } from "react";
 import { Option, SelectOptions } from "../type";
 import { HiOutlineChevronDown as ArrowDown } from "react-icons/hi2";
-import {useRender, useClickOutside }from "@/hooks";
+import { useRender, useClickOutside } from "@/hooks";
 import utils from "@/utils";
 
 interface HeaderSelectProps {
@@ -11,18 +11,18 @@ interface HeaderSelectProps {
   onSelect?: (option: Option) => void;
 }
 
-const HeaderSelect: React.FC<HeaderSelectProps> = ({ type, options, currentOption, onSelect }) => {
-  const [dropdown, setDropdown] = React.useState<boolean>(false);
+const HeaderSelect: FC<HeaderSelectProps> = ({ type, options, currentOption, onSelect }) => {
+  const [dropdown, setDropdown] = useState<boolean>(false);
 
-  const [selectedOption, setSelectedOption] = React.useState<Option | null>(null);
+  const [selectedOption, setSelectedOption] = useState<Option | null>(null);
 
-  const selectRef = React.useRef<HTMLDivElement>(null);
+  const selectRef = useRef<HTMLDivElement>(null);
 
   const render = useRender(dropdown);
 
   useClickOutside(selectRef, setDropdown);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setSelectedOption([...options].find((option) => option.value === currentOption) as Option);
   }, [currentOption]);
 

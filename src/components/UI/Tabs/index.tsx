@@ -1,22 +1,22 @@
-import React from "react";
-import TabsHead from "./Head";
+import { HTMLAttributes, CSSProperties, ForwardRefRenderFunction, useState, forwardRef } from "react";
 import { TabsItems } from "./type";
 import { ComponentColor } from "@/common/type";
+import TabsHead from "./Head";
 import utils from "@/utils";
 import useLayout from "../Layout/useLayout";
 
-export interface TabsProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface TabsProps extends HTMLAttributes<HTMLDivElement> {
   rootClassName?: string;
   headClassName?: string;
   contentClassName?: string;
-  style?: React.CSSProperties;
-  headStyle?: React.CSSProperties;
-  contentStyle?: React.CSSProperties;
+  style?: CSSProperties;
+  headStyle?: CSSProperties;
+  contentStyle?: CSSProperties;
   items: TabsItems;
   color?: Exclude<ComponentColor, "black" | "white" | "gray">;
 }
 
-const Tabs: React.ForwardRefRenderFunction<HTMLDivElement, TabsProps> = (
+const Tabs: ForwardRefRenderFunction<HTMLDivElement, TabsProps> = (
   {
     rootClassName = "",
     headClassName = "",
@@ -34,7 +34,7 @@ const Tabs: React.ForwardRefRenderFunction<HTMLDivElement, TabsProps> = (
 
   const { layoutTheme: theme } = layoutValue;
 
-  const [tabActive, setTabActive] = React.useState<string>("1");
+  const [tabActive, setTabActive] = useState<string>("1");
 
   const colorClassName = `tabs-${color}`;
 
@@ -83,4 +83,4 @@ const Tabs: React.ForwardRefRenderFunction<HTMLDivElement, TabsProps> = (
   );
 };
 
-export default React.forwardRef(Tabs);
+export default forwardRef(Tabs);

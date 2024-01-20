@@ -1,29 +1,29 @@
-import React from "react";
-import { useLang } from "@/hooks";
+import { ReactNode, FC, useState } from "react";
+import type{ Category } from "@/services/category/type";
+import type{ ApiResponse, List, ResponseError } from "@/services/type";
+import type{ Cart } from "@/services/cart/type";
 import { getCategories } from "@/services/category/api";
-import { Category } from "@/services/category/type";
-import { ApiResponse, List, ResponseError } from "@/services/type";
 import { getCart } from "@/services/cart/api";
-import { Cart } from "@/services/cart/type";
-import AppDataProiver, { AppDataState } from "./Provider";
+import { useLang } from "@/hooks";
+import AppDataProiver, { type AppDataState } from "./Provider";
 import useAuthStore from "@/store/AuthStore";
 import useSWR, { SWRConfiguration } from "swr";
 import useCartStore from "@/store/CartStore";
 
 interface AppDataProps {
-  children?: React.ReactNode;
+  children?: ReactNode;
 }
 
-const AppData: React.FC<AppDataProps> = ({ children }) => {
+const AppData: FC<AppDataProps> = ({ children }) => {
   const { locale } = useLang();
 
   const auth = useAuthStore((state) => state.auth);
 
   const setCart = useCartStore((state) => state.setCart);
 
-  const [categoriesWithSubsError, setCategoriesWithSubsError] = React.useState<boolean>(false);
+  const [categoriesWithSubsError, setCategoriesWithSubsError] = useState<boolean>(false);
 
-  const [cartByCustomerError, setCartByCustomerError] = React.useState<boolean>(false);
+  const [cartByCustomerError, setCartByCustomerError] = useState<boolean>(false);
 
   const getCategoriesWithSubs = async () => {
     setCategoriesWithSubsError(false);

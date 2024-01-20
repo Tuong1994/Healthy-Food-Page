@@ -1,12 +1,10 @@
-import React from "react";
-import { UI } from "@/components";
-import { Columns } from "@/components/UI/Table/type";
+import { FC } from "react";
+import { Table, Image, Pagination, Divider, Space, Button, Typography } from "@/components/UI";
 import { HiTrash } from "react-icons/hi2";
 import { useLang } from "@/hooks";
-import ProductCardControl from "@/components/Page/ProductCard/ProductCardControl";
+import type { Columns } from "@/components/UI/Table/type";
+import QuantityControl from "@/components/Page/QuantityControl";
 import utils from "@/utils";
-
-const { Table, Image, Pagination, Divider, Space, Button, Typography } = UI;
 
 const { Title } = Typography;
 
@@ -21,7 +19,7 @@ interface CartConfirmProps {
   handleConfirm: () => void;
 }
 
-const CartConfirm: React.FC<CartConfirmProps> = ({ handleConfirm }) => {
+const CartConfirm: FC<CartConfirmProps> = ({ handleConfirm }) => {
   const { locale, lang } = useLang();
 
   const dataSource: Data[] = [
@@ -46,7 +44,7 @@ const CartConfirm: React.FC<CartConfirmProps> = ({ handleConfirm }) => {
       id: "quantity",
       title: lang.common.table.head.quantity,
       dataIndex: "quantity",
-      render: (data: number) => <ProductCardControl defaultValue={data} min={1} productId="" />,
+      render: (data: number) => <QuantityControl defaultValue={data} min={1} productId="" />,
     },
     {
       id: "price",

@@ -1,6 +1,4 @@
-"use client";
-
-import React from "react";
+import { ButtonHTMLAttributes, ReactNode, ForwardRefRenderFunction, useContext, forwardRef } from "react";
 import { ComponentColor, ComponentSize } from "@/common/type";
 import { ControlShape } from "@/components/Control/type";
 import Spinner from "../Loading/Spinner";
@@ -10,9 +8,9 @@ import utils from "@/utils";
 
 type ButtonColor = Exclude<ComponentColor, "white" | "gray">;
 
-export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   rootClassName?: string;
-  children?: React.ReactNode | React.ReactNode[];
+  children?: ReactNode | ReactNode[];
   loading?: boolean;
   ghost?: boolean;
   disabled?: boolean;
@@ -22,7 +20,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   color?: ButtonColor;
 }
 
-const Button: React.ForwardRefRenderFunction<HTMLButtonElement, ButtonProps> = (
+const Button: ForwardRefRenderFunction<HTMLButtonElement, ButtonProps> = (
   {
     rootClassName = "",
     children,
@@ -37,7 +35,7 @@ const Button: React.ForwardRefRenderFunction<HTMLButtonElement, ButtonProps> = (
   },
   ref
 ) => {
-  const { color: rhfColor, sizes: rhfSizes, shape: rhfShape } = React.useContext(FormContext);
+  const { color: rhfColor, sizes: rhfSizes, shape: rhfShape } = useContext(FormContext);
 
   const { layoutValue } = useLayout();
 
@@ -54,7 +52,7 @@ const Button: React.ForwardRefRenderFunction<HTMLButtonElement, ButtonProps> = (
   const sizeClassName = `button-${buttonSize}`;
 
   const shapeClassName = `button-${buttonShape}`;
-  
+
   const textClassName = text ? "button-text" : "";
 
   const disabledClassName = disabled ? "button-disabled" : "";
@@ -91,4 +89,4 @@ const Button: React.ForwardRefRenderFunction<HTMLButtonElement, ButtonProps> = (
   );
 };
 
-export default React.forwardRef(Button);
+export default forwardRef(Button);

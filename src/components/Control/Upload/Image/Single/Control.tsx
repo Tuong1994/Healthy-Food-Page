@@ -1,16 +1,16 @@
-import React from "react";
+import { InputHTMLAttributes, CSSProperties, ForwardRefRenderFunction, forwardRef } from "react";
 import { HiPlus } from "react-icons/hi2";
 import utils from "@/utils";
 
-interface SingleImageUploadControlProps extends React.InputHTMLAttributes<HTMLInputElement> {
+interface SingleImageUploadControlProps extends InputHTMLAttributes<HTMLInputElement> {
   controlClassName?: string;
-  controlStyle?: React.CSSProperties;
+  controlStyle?: CSSProperties;
 }
 
-const SingleImageUploadControl: React.ForwardRefRenderFunction<
-  HTMLInputElement,
-  SingleImageUploadControlProps
-> = ({ controlClassName = "", controlStyle, ...restProps }, ref) => {
+const SingleImageUploadControl: ForwardRefRenderFunction<HTMLInputElement, SingleImageUploadControlProps> = (
+  { controlClassName = "", controlStyle, ...restProps },
+  ref
+) => {
   const controlInputClassName = utils.formatClassName("group-control", controlClassName);
 
   return (
@@ -21,4 +21,4 @@ const SingleImageUploadControl: React.ForwardRefRenderFunction<
   );
 };
 
-export default React.forwardRef(SingleImageUploadControl);
+export default forwardRef(SingleImageUploadControl);

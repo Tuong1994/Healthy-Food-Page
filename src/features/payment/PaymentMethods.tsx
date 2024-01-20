@@ -1,10 +1,8 @@
-import React from "react";
-import { UI } from "@/components";
-import { Lang } from "@/common/type";
+import { FC, useMemo } from "react";
+import { Card, Grid, Typography } from "@/components/UI";
 import { HiCreditCard, HiTruck } from "react-icons/hi2";
 import { HiCash } from "react-icons/hi";
-
-const { Card, Grid, Typography } = UI;
+import type { Lang } from "@/common/type";
 
 const { Row, Col } = Grid;
 
@@ -16,10 +14,10 @@ interface PaymentMethodsProps {
   lang: Lang;
 }
 
-const PaymentMethods: React.FC<PaymentMethodsProps> = ({ lang }) => {
+const PaymentMethods: FC<PaymentMethodsProps> = ({ lang }) => {
   const iconProps = { size: ICON_SIZE, className: "item-icon" };
 
-  const methods = React.useMemo(
+  const methods = useMemo(
     () => [
       {
         id: "1",
@@ -72,7 +70,9 @@ const PaymentMethods: React.FC<PaymentMethodsProps> = ({ lang }) => {
 
   return (
     <div className="payment-methods">
-      <Row gutters={[10, 15]} justify="center">{renderMethods()}</Row>
+      <Row gutters={[10, 15]} justify="center">
+        {renderMethods()}
+      </Row>
     </div>
   );
 };

@@ -1,17 +1,17 @@
-import React from "react";
+import { ReactNode, useEffect } from "react";
 import useToastStore from "./ToastStore";
 
 type MessageOptions = {
-  successIcon?: React.ReactNode;
-  errorIcon?: React.ReactNode;
-  warningIcon?: React.ReactNode;
-  infoIcon?: React.ReactNode;
+  successIcon?: ReactNode;
+  errorIcon?: ReactNode;
+  warningIcon?: ReactNode;
+  infoIcon?: ReactNode;
 };
 
 const useMessage = (options?: MessageOptions) => {
   const [addToast, configOptions] = useToastStore((state) => [state.addToast, state.configOptions]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (options) configOptions(options);
   }, []);
 

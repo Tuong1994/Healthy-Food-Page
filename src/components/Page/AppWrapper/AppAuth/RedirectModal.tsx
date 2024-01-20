@@ -1,15 +1,13 @@
-import React from "react";
-import { UI } from "@/components";
-import { ModalProps } from "@/components/UI/Modal";
+import { FC } from "react";
+import { Modal, Typography } from "@/components/UI";
 import { useLang } from "@/hooks";
-
-const { Modal, Typography } = UI;
+import type { ModalProps } from "@/components/UI/Modal";
 
 const { Paragraph } = Typography;
 
 interface RedirectModalProps extends ModalProps {}
 
-const RedirectModal: React.FC<RedirectModalProps> = ({ ...restProps }) => {
+const RedirectModal: FC<RedirectModalProps> = ({ ...restProps }) => {
   const { lang } = useLang();
 
   const modalDefaultProps: ModalProps = {
