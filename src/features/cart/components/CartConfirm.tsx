@@ -1,87 +1,144 @@
-import { FC } from "react";
+import { FC, Key, useState } from "react";
 import { Table, Image, Pagination, Divider, Space, Button, Typography } from "@/components/UI";
-import { HiTrash } from "react-icons/hi2";
-import { useLang } from "@/hooks";
+import type { CartItem } from "@/services/cart/type";
 import type { Columns } from "@/components/UI/Table/type";
+import type { Product } from "@/services/product/type";
+import { PiWarning } from "react-icons/pi";
+import { removeCartItems } from "@/services/cart/api";
+import { REPLACE_NUM_REGEX } from "@/common/constant/regex";
+import { useAsync, useLang } from "@/hooks";
+import { mutate } from "swr";
+import { useRouter } from "next/router";
 import QuantityControl from "@/components/Page/QuantityControl";
+import ConfirmModal from "@/components/Page/ConfirmModal";
+import useMessage from "@/components/UI/ToastMessage/useMessage";
+import useCartStore from "@/store/CartStore";
+import url from "@/common/constant/url";
 import utils from "@/utils";
 
-const { Title } = Typography;
+const { CART } = url;
 
-interface Data {
-  id: string;
-  name: string;
-  quantity: number;
-  price: number;
-}
+const { Title } = Typography;
 
 interface CartConfirmProps {
   handleConfirm: () => void;
 }
 
 const CartConfirm: FC<CartConfirmProps> = ({ handleConfirm }) => {
+  const messageApi = useMessage();
+
+  const cart = useCartStore((state) => state.cart);
+
+  const { data: cartResponse } = cart;
+
   const { locale, lang } = useLang();
 
-  const dataSource: Data[] = [
-    { id: "1", name: "Product 1", quantity: 1, price: 100000 },
-    { id: "2", name: "Product 2", quantity: 5, price: 200000 },
-    { id: "3", name: "Product 3", quantity: 3, price: 500000 },
-  ];
+  const { query, push: routerPush } = useRouter();
 
-  const columns: Columns<Data> = [
+  const [openModal, setOpenModal] = useState<boolean>(false);
+
+  const [ids, setIds] = useState<Key[]>([]);
+
+  const { loading, call: onRemove } = useAsync(removeCartItems);
+
+  const dataSource = (): CartItem[] => {
+    if (!cart.data) return [];
+    const { data: cartDetail } = cart.data;
+    return cartDetail.items.map((item) => ({ ...item })) || [];
+  };
+
+  const columns: Columns<CartItem> = [
     {
       id: "image",
       title: lang.common.table.head.image,
-      dataIndex: "id",
-      render: () => <Image imgWidth={50} imgHeight={50} />,
+      dataIndex: "product",
+      render: (product: Product) => <Image imgWidth={50} imgHeight={50} />,
     },
     {
       id: "name",
       title: lang.common.table.head.productName,
-      dataIndex: "name",
+      dataIndex: "product",
+      render: (product: Product) => <>{product.name}</>,
     },
     {
       id: "quantity",
       title: lang.common.table.head.quantity,
       dataIndex: "quantity",
-      render: (data: number) => <QuantityControl defaultValue={data} min={1} productId="" />,
+      render: (quantity: number, item: CartItem) => (
+        <QuantityControl defaultValue={quantity} min={1} productId={item.productId} />
+      ),
     },
     {
       id: "price",
       title: lang.common.table.head.price,
-      dataIndex: "price",
-      render: (data: number) => <>{utils.formatPrice(locale, data)}</>,
-    },
-    {
-      id: "action",
-      title: "",
-      dataIndex: "id",
-      render: () => (
-        <button className="confirm-delete-btn">
-          <HiTrash size={20} />
-        </button>
-      ),
+      dataIndex: "product",
+      render: (product: Product) => <>{utils.formatPrice(locale, product.totalPrice)}</>,
     },
   ];
+
+  const handleChangePage = (page: number) => {
+    routerPush({ pathname: CART, query: { ...query, page } });
+  };
+
+  const handleOpenModal = (ids: Key[]) => {
+    setOpenModal(true);
+    setIds(ids);
+  };
+
+  const handleCloseModal = () => setOpenModal(false);
+
+  const handleRemoveItems = async () => {
+    const listIds = ids.join(",");
+    const response = await onRemove({ ids: listIds });
+    setOpenModal(false);
+    if (!response.success) return messageApi.error(lang.common.message.error.remove);
+    messageApi.success(lang.common.message.success.updateCart);
+    mutate(`getCartByCustomer?customerId=${cartResponse?.data.customerId}`);
+  };
 
   return (
     <div className="cart-confirm">
       <Title level={6}>{lang.cart.confirm}</Title>
 
-      <Table<Data> color="green" dataSource={dataSource} columns={columns} />
+      <Table<CartItem>
+        color="green"
+        rowKey="id"
+        hasRowSelection
+        dataSource={dataSource()}
+        columns={columns}
+        showRemove={openModal}
+        onSelectRows={handleOpenModal}
+      />
 
-      <Pagination color="green" shape="square" ghost rootClassName="confirm-pagination" />
+      <Pagination
+        color="green"
+        shape="square"
+        ghost
+        total={cartResponse?.totalItems}
+        rootClassName="confirm-pagination"
+        onChangePage={handleChangePage}
+      />
 
       <Divider />
 
       <Space justify="end">
-        <Button sizes="lg" color="black" ghost>
-          {lang.common.actions.update}
-        </Button>
         <Button sizes="lg" color="green" onClick={handleConfirm}>
           {lang.cart.actions.payment}
         </Button>
       </Space>
+
+      <ConfirmModal
+        open={openModal}
+        okButtonProps={{ loading }}
+        onOk={handleRemoveItems}
+        onCancel={handleCloseModal}
+        desciption={
+          <Space align="middle" justify="center">
+            <PiWarning size={18} />
+            <span>{lang.cart.removeModal.description.replace(REPLACE_NUM_REGEX, String(ids.length))}</span>
+          </Space>
+        }
+      />
     </div>
   );
 };

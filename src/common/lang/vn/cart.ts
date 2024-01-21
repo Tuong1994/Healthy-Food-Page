@@ -35,6 +35,7 @@ const cart_vn = {
   },
   info: {
     title: "Thông tin chung",
+    product: "Tổng số sản phẩm",
     totalPrice: "Tổng giá tiền",
     deliveryFee: "Phí vận chuyển",
     tax: "VAT",
@@ -49,6 +50,9 @@ const cart_vn = {
   empty: {
     note: "Bạn không có sản phẩm nào trong giỏ hàng",
     action: "Trở về trang chủ",
+  },
+  removeModal: {
+    description: "Bạn có muốn xóa {{num}} dòng đã chọn không ?",
   },
 };
 

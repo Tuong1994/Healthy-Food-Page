@@ -110,6 +110,7 @@ const common_en = {
       authPassword: "Password is not correct. Please try again",
       emailExist: "Email is already exist",
       logout: "Logout failed",
+      remove: "Remove failed",
       api: "Api network failed",
     },
   },

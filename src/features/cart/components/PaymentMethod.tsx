@@ -1,21 +1,22 @@
 import { FC, Fragment, useState, useEffect } from "react";
 import { Card, Accordion, InfoRow, NoteMessage, Typography } from "@/components/UI";
 import { HiCheck } from "react-icons/hi2";
+import { EPaymentMethod } from "@/services/order/enum";
 import type { Lang } from "@/common/type";
 
 const { Paragraph } = Typography;
 
 interface PaymentMethodProps {
   lang: Lang;
-  onSelectedMethod?: (id: string) => void;
+  onSelectedMethod?: (method: EPaymentMethod) => void;
 }
 
 const PaymentMethod: FC<PaymentMethodProps> = ({ lang, onSelectedMethod }) => {
-  const [selectedMethod, setSelectedMethod] = useState<string>("");
+  const [selectedMethod, setSelectedMethod] = useState<EPaymentMethod | number>(-1);
 
   const methods = [
     {
-      id: "1",
+      id: EPaymentMethod.TRANSFER,
       title: lang.cart.methods.transfer.title,
       content: (
         <Fragment>
@@ -27,19 +28,19 @@ const PaymentMethod: FC<PaymentMethodProps> = ({ lang, onSelectedMethod }) => {
       ),
     },
     {
-      id: "2",
+      id: EPaymentMethod.COD,
       title: lang.cart.methods.cod.title,
       content: <Paragraph italic>{lang.cart.methods.cod.content}</Paragraph>,
     },
     {
-      id: "3",
+      id: EPaymentMethod.CASH,
       title: lang.cart.methods.cash.title,
       content: <Paragraph italic>{lang.cart.methods.cash.content}</Paragraph>,
     },
   ];
 
-  const handleSelect = (id: string) => {
-    if (selectedMethod === id) return setSelectedMethod("");
+  const handleSelect = (id: EPaymentMethod) => {
+    if (selectedMethod === id) return setSelectedMethod(-1);
     setSelectedMethod(id);
   };
 
@@ -77,7 +78,7 @@ const PaymentMethod: FC<PaymentMethodProps> = ({ lang, onSelectedMethod }) => {
         </Paragraph>
       }
     >
-      {selectedMethod === "" && <NoteMessage type="error" message={lang.cart.methods.note} />}
+      {selectedMethod === -1 && <NoteMessage type="error" message={lang.cart.methods.note} />}
       {renderMethods()}
     </Card>
   );

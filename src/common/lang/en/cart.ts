@@ -35,6 +35,7 @@ const cart_en = {
   },
   info: {
     title: "General infomation",
+    product: "Total products",
     totalPrice: "Total price",
     deliveryFee: "Delivery fee",
     tax: "VAT",
@@ -49,6 +50,9 @@ const cart_en = {
   empty: {
     note: "You have no product in your cart",
     action: "Back to home",
+  },
+  removeModal: {
+    description: "Do you want to remove {{num}} selected row ?",
   },
 };
 

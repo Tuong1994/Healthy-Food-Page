@@ -32,6 +32,10 @@ const QuantityControl: FC<QuantityControlProps> = ({
 
   const [quantity, setQuantity] = useState<number>(defaultValue);
 
+  const [prevQuantity, setPrevQuantity] = useState<number>(0);
+
+  const [focused, setFocused] = useState<boolean>(false);
+
   const auth = useAuthStore((state) => state.auth);
 
   const router = useRouter();
@@ -50,10 +54,16 @@ const QuantityControl: FC<QuantityControlProps> = ({
     onChangeInput?.(value);
   };
 
+  const handleFocus = () => {
+    setFocused(true);
+    setPrevQuantity(quantity);
+  };
+
   const handleBlur = (e: FocusEvent<HTMLInputElement>) => {
     if (!auth.isAuth) return router.push(AUTH_SIGN_IN);
     const value = Number(e.target.value);
-    handlePurchase(productId, value);
+    if (focused && value !== prevQuantity) handlePurchase(productId, value);
+    setFocused(false);
   };
 
   const handleChangeClick = (type: "plus" | "minus") => {
@@ -75,7 +85,13 @@ const QuantityControl: FC<QuantityControlProps> = ({
       >
         {loading ? <Spinner /> : <HiMinus size={ICON_SIZE} />}
       </button>
-      <input className="action-input" value={quantity} onChange={handleChangeInput} onBlur={handleBlur} />
+      <input
+        className="action-input"
+        value={quantity}
+        onChange={handleChangeInput}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
+      />
       <button className="action-btn" onClick={() => handleChangeClick("plus")}>
         {loading ? <Spinner /> : <HiPlus size={ICON_SIZE} />}
       </button>

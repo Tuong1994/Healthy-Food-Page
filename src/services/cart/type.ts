@@ -22,6 +22,11 @@ export type Cart = {
   updatedAt?: Date | string;
 };
 
+export type CartWithItemsPaging = {
+  totalItems: number;
+  data: Cart;
+};
+
 export type CartFormData = {
   customerId: string;
   items: Pick<CartItem, "productId" | "cartId" | "quantity">[];

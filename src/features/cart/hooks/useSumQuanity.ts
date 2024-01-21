@@ -8,9 +8,10 @@ const useSumQuantity = (type: RecordType) => {
   let totalQuantity = 0;
 
   const cartSumQuantity = () => {
-    if (!cart) return 0;
-    if (cart.items && !cart.items.length) return 0;
-    const quantity = cart.items.reduce((total, item) => {
+    if (!cart.data) return 0;
+    const { data: cartDetail } = cart.data;
+    if (cartDetail.items && !cartDetail.items.length) return 0;
+    const quantity = cartDetail.items.reduce((total, item) => {
       return (total += item.quantity);
     }, 0);
     return quantity;

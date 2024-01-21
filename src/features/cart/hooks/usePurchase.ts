@@ -1,8 +1,9 @@
-import React from "react";
-import { CartFormData, CartItem } from "@/services/cart/type";
+import { useState } from "react";
+import type { Cart, CartFormData, CartItem } from "@/services/cart/type";
+import type { ApiQuery } from "@/services/type";
 import { createCart, updateCart } from "@/services/cart/api";
 import { useLang } from "@/hooks";
-import { ApiQuery } from "@/services/type";
+import { mutate } from "swr";
 import useCartStore from "@/store/CartStore";
 import useMessage from "@/components/UI/ToastMessage/useMessage";
 import useAuthStore from "@/store/AuthStore";
@@ -16,51 +17,63 @@ const usePurchase = () => {
 
   const [cart, setCart] = useCartStore((state) => [state.cart, state.setCart]);
 
-  const [loading, setLoading] = React.useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const handlePurchase = async (productId: string, quantity: number) => {
-    setLoading(true);
-    const item = { productId, quantity, cartId: "" };
-    const cartData: CartFormData = { customerId: auth.info.id ?? "", items: [item] };
+  const onCreateCart = async (cartData: CartFormData) => {
+    const response = await createCart(cartData);
+    if (!response.success) {
+      setLoading(false);
+      return messageApi.error(lang.common.message.error.api);
+    }
+    messageApi.success(lang.common.message.success.addItemCart);
+    mutate(`getCartByCustomer?customerId=${auth.info.id}`);
+  };
 
-    if (!cart || !cart.items || !cart.items.length) {
-      const response = await createCart(cartData);
-      if (!response.success) {
-        setLoading(false);
-        return messageApi.error(lang.common.message.error.api);
+  const onUpdateCart = async (cartDetail: Cart, cartData: CartFormData) => {
+    if (!cart.data) return;
+    const { totalItems } = cart.data;
+    let updateCartItems: CartItem[] = [...cartDetail.items];
+    const apiQuery: ApiQuery = { cartId: cartDetail.id };
+    const hasItems = updateCartItems && updateCartItems && updateCartItems.length > 0;
+    if (hasItems) {
+      const newItems = [...cartData.items];
+      for (let i = 0; i < newItems.length; i++) {
+        const newItem = newItems[i];
+        const idx = updateCartItems.findIndex((item) => item.productId === newItem.productId);
+        const cartItem = updateCartItems[idx];
+        if (idx === -1) updateCartItems.push(newItem);
+        else cartItem.quantity = newItem.quantity;
       }
-      messageApi.success(lang.common.message.success.addItemCart);
-      setCart(response.data);
-    } else {
-      let updateCartItems: CartItem[] = [...cart.items];
-      const apiQuery: ApiQuery = { cartId: cart.id };
-      const hasItems = updateCartItems && updateCartItems && updateCartItems.length > 0;
-      if (hasItems) {
-        const newItems = [...cartData.items];
-        for (let i = 0; i < newItems.length; i++) {
-          const newItem = newItems[i];
-          const idx = updateCartItems.findIndex((item) => item.productId === newItem.productId);
-          const cartItem = updateCartItems[idx];
-          if (idx === -1) updateCartItems.push(newItem);
-          else cartItem.quantity = newItem.quantity;
-        }
-        setCart({ ...cart, items: updateCartItems });
-      }
-
-      const items = updateCartItems.map((item) => ({
-        id: item.id,
-        quantity: item.quantity,
-        productId: item.productId,
-        cartId: cart.id ?? '',
-      }));
-      const response = await updateCart(apiQuery, { ...cart, items });
-      if (!response.success) {
-        setLoading(false);
-        return messageApi.error(lang.common.message.error.api);
-      }
-      messageApi.success(lang.common.message.success.updateCart);
+      const updatedCart = {
+        ...cart,
+        data: { totalItems, data: { ...cartDetail, items: updateCartItems } },
+      };
+      setCart(updatedCart);
     }
 
+    const items = updateCartItems.map((item) => ({
+      id: item.id,
+      quantity: item.quantity,
+      productId: item.productId,
+      cartId: cartDetail.id ?? "",
+    }));
+    const response = await updateCart(apiQuery, { ...cartDetail, items });
+    if (!response.success) {
+      setLoading(false);
+      return messageApi.error(lang.common.message.error.api);
+    }
+    messageApi.success(lang.common.message.success.updateCart);
+    mutate(`getCartByCustomer?customerId=${auth.info.id}`);
+  };
+
+  const handlePurchase = async (productId: string, quantity: number) => {
+    if (!cart.data) return;
+    setLoading(true);
+    const { data: cartDetail } = cart.data;
+    const item = { productId, quantity, cartId: "" };
+    const cartData: CartFormData = { customerId: auth.info.id ?? "", items: [item] };
+    if (!cartDetail || !cartDetail.items || !cartDetail.items.length) await onCreateCart(cartData);
+    else await onUpdateCart(cartDetail, cartData);
     setLoading(false);
   };
 

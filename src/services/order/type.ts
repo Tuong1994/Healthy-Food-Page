@@ -1,16 +1,14 @@
 import { EOrderStatus, EPaymentStatus, EPaymentMethod } from "./enum";
-import type { ImageUpload } from "@/services/image/type";
 import type { Shipment } from "@/services/shipment/type";
+import type { Product } from "../product/type";
 
 export type OrderItem = {
   id?: string;
 
-  productId: string;
-  productName: string;
-  productPrice: number;
-  productImage: ImageUpload | null;
   quantity: number;
   orderId: string;
+  productId: string;
+  product?: Pick<Product, "id" | "name" | "totalPrice" | "image">;
 
   createdAt?: Date | string;
   updatedAt?: Date | string;
@@ -19,12 +17,13 @@ export type OrderItem = {
 export type Order = {
   id?: string;
 
-  orderNumber: string;
   status: EOrderStatus;
-  paymentMethod: EPaymentMethod;
   paymentStatus: EPaymentStatus;
+  paymentMethod: EPaymentMethod | number;
   customerId: string;
+  note: string;
   items: OrderItem[];
+  orderNumber?: string;
   shipment?: Shipment;
 
   createdAt?: Date | string;

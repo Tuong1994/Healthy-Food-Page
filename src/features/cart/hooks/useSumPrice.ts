@@ -8,9 +8,10 @@ const useSumPrice = (type: RecordType) => {
   let totalPrice = 0;
 
   const cartSumPrice = () => {
-    if (!cart) return 0;
-    if (cart.items && !cart.items.length) return 0;
-    const price = cart.items.reduce((total, item) => {
+    if (!cart.data) return 0;
+    const { data: cartDetail } = cart.data;
+    if (cartDetail.items && !cartDetail.items.length) return 0;
+    const price = cartDetail.items.reduce((total, item) => {
       return (total += (item.product?.totalPrice ?? 0) * item.quantity);
     }, 0);
     return price;

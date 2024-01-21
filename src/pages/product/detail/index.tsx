@@ -42,7 +42,7 @@ const ProductPage: NextPage<ProductPageProps> = ({ productResponse, productsResp
         </Link>
       ),
     },
-    { id: "3", label: "Product", actived: true },
+    { id: "3", label: product.name, actived: true },
   ];
 
   return (

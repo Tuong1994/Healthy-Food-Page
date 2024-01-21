@@ -64,7 +64,7 @@ const Put = <T, D = any>(apiPath: string, body: T, config?: AxiosRequestConfig<T
   return call<T, D>({ method: Method.PUT, apiPath, body, config });
 };
 const Delete = <D>(apiPath: string, config?: AxiosRequestConfig) => {
-  return call<any, D>({ method: Method.POST, apiPath, config });
+  return call<any, D>({ method: Method.DELETE, apiPath, config });
 };
 
 const Fetch = { Get, Post, Put, Delete };

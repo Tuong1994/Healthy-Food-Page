@@ -1,6 +1,7 @@
 export enum EOrderStatus {
-  DELIVERING = 1,
-  DELIVERED = 2,
+  WAITTING = 1,
+  DELIVERING = 2,
+  DELIVERED = 3,
 }
 
 export enum EPaymentStatus {

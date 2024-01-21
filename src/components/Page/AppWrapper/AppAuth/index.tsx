@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { logout, refresh } from "@/services/auth/api";
 import RedirectModal from "./RedirectModal";
 import useAuthStore from "@/store/AuthStore";
+import useCartStore from "@/store/CartStore";
 import url from "@/common/constant/url";
 
 const { HOME, AUTH_SIGN_IN } = url;
@@ -14,13 +15,15 @@ interface AppAuthProps {
 const AppAuth: FC<AppAuthProps> = ({ children }) => {
   const [auth, resetAuth] = useAuthStore((state) => [state.auth, state.resetAuth]);
 
-  const [open, setOpen] = useState<boolean>(false);
+  const resetCart = useCartStore((state) => state.resetCart);
 
   const router = useRouter();
 
-  const { isAuth, info, expired } = auth;
+  const [open, setOpen] = useState<boolean>(false);
 
-  let interval: any;
+  const [reLogin, setReLogin] = useState<boolean>(false);
+
+  const { isAuth, info, expired } = auth;
 
   const onRefresh = useCallback(async () => {
     setOpen(false);
@@ -32,28 +35,37 @@ const AppAuth: FC<AppAuthProps> = ({ children }) => {
     if (!isAuth) return;
     await logout({ customerId: info.id });
     resetAuth();
+    resetCart();
   }, [isAuth]);
 
   const handleReLogin = async () => {
     setOpen(false);
+    setReLogin(true);
     await onLogout();
     router.push(AUTH_SIGN_IN);
   };
 
   const handleReturn = async () => {
     setOpen(false);
+    setReLogin(false);
     await onLogout();
     router.push(HOME);
   };
 
+  // Refresh token when first access page
   useEffect(() => {
-    onRefresh();
+    if (isAuth) onRefresh();
   }, []);
 
+  // Refresh token interval
   useEffect(() => {
     if (!isAuth) return;
+    if (expired < Date.now()) return;
+    let interval: any;
     const time = expired - Date.now() - 500;
-    interval = setInterval(() => onRefresh(), time);
+    interval = setInterval(() => {
+      if (!reLogin) onRefresh();
+    }, time);
     return () => clearInterval(interval);
   });
 

@@ -5,11 +5,14 @@ const useQuantity = (productId: string) => {
 
   let quantity = 0;
 
-  if (!cart) return;
-  if (cart.items && !cart.items.length) return;
+  if (!cart.data) return;
+  
+  const { data: cartDetail } = cart.data;
 
-  const idx = cart.items.findIndex((item) => item.productId === productId);
-  if (idx !== -1) quantity = cart.items[idx].quantity;
+  if (cartDetail.items && !cartDetail.items.length) return;
+
+  const idx = cartDetail.items.findIndex((item) => item.productId === productId);
+  if (idx !== -1) quantity = cartDetail.items[idx].quantity;
 
   return quantity;
 };

@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { Grid, Layout } from "@/components/UI";
 import type { Lang } from "@/common/type";
+import { useLang } from "@/hooks";
 import Logo from "@/components/Page/Logo";
 import Link from "next/link";
 import HeaderSearch from "./HeaderSearch";
@@ -22,11 +23,13 @@ interface HeaderBottomProps {
 }
 
 const HeaderBottom: FC<HeaderBottomProps> = ({ lang }) => {
+  const { locale } = useLang();
+
   return (
     <Head rootClassName="header-bottom">
       <Row align="middle" justify="between">
         <Col>
-          <Link href={HOME}>
+          <Link href={{ pathname: HOME, query: { langCode: locale } }}>
             <Logo />
           </Link>
         </Col>

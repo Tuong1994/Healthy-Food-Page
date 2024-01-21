@@ -1,16 +1,23 @@
 import { create, StateCreator } from "zustand";
-import { Cart } from "@/services/cart/type";
+import { CartWithItemsPaging } from "@/services/cart/type";
+import { ApiFetchState } from "@/services/type";
+
+type CartResponse = {
+  data: CartWithItemsPaging | undefined;
+} & ApiFetchState;
 
 interface CartState {
-  cart: Cart | null;
-  setCart: (cart: Cart) => void;
+  cart: CartResponse;
+  setCart: (cart: CartResponse) => void;
   resetCart: () => void;
 }
 
+const defaultCart = { loading: false, error: false, data: undefined };
+
 const store: StateCreator<CartState> = (set) => ({
-  cart: null,
+  cart: defaultCart,
   setCart: (cart) => set((state) => ({ ...state, cart })),
-  resetCart: () => set((state) => ({ ...state, cart: null })),
+  resetCart: () => set((state) => ({ ...state, cart: defaultCart })),
 });
 
 const useCartStore = create(store);

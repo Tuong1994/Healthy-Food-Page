@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { Image } from "@/components/UI";
-import { useCategoriesData } from "@/components/Page/AppWrapper/AppData/Provider";
-import { useRouter } from "next/router";
 import { ESort } from "@/common/enum";
+import { useRouter } from "next/router";
+import useCategoryStore from "@/store/CategoryStore";
 import CategoriesMobileLoading from "./Loading";
 import NoDataError from "@/components/Page/Error/NoDataError";
 import Link from "next/link";
@@ -13,7 +13,9 @@ const { PRODUCT_LIST } = url;
 interface CategoriesMobileProps {}
 
 const CategoriesMobile: FC<CategoriesMobileProps> = () => {
-  const { data: categoriesWithSubs, loading, error } = useCategoriesData();
+  const categories = useCategoryStore((state) => state.categories);
+
+  const { data: categoriesWithSubs, loading, error } = categories;
 
   const { query } = useRouter();
 

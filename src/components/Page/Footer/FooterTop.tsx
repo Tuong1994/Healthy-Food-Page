@@ -2,8 +2,8 @@ import { FC } from "react";
 import { Breadcrumb, Typography, Grid } from "@/components/UI";
 import type { BreadcrumbItems } from "@/components/UI/Breadcrumb/type";
 import { ESort } from "@/common/enum";
-import { useCategoriesData } from "../AppWrapper/AppData/Provider";
 import { useRouter } from "next/router";
+import useCategoryStore from "@/store/CategoryStore";
 import FooterLoading from "./FooterLoading";
 import NoDataError from "../Error/NoDataError";
 import Link from "next/link";
@@ -18,7 +18,9 @@ const { Paragraph } = Typography;
 interface FooterTopProps {}
 
 const FooterTop: FC<FooterTopProps> = () => {
-  const { data: categoriesWithSubs, loading, error } = useCategoriesData();
+  const categories = useCategoryStore((state) => state.categories);
+
+  const { data: categoriesWithSubs, loading, error } = categories;
 
   const { query } = useRouter();
 

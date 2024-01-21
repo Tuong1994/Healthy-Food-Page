@@ -49,19 +49,28 @@ const HeaderCart: FC<HeaderCartProps> = ({ lang }) => {
   };
 
   const renderContent = () => {
-    if (!cart) return <Empty text={lang.pageComponent.header.cart.note} />;
-    if (cart.items && !cart.items.length) return <Empty text={lang.pageComponent.header.cart.note} />;
+    if (!cart.data) return <Empty text={lang.pageComponent.header.cart.note} />;
+    const { data: cartDetail } = cart.data;
+    if (cartDetail.items && !cartDetail.items.length)
+      return <Empty text={lang.pageComponent.header.cart.note} />;
 
     return (
       <Fragment>
         <div className="dropdown-inner">
-          {cart.items.map((item) => (
-            <Link href={`${PRODUCT_DETAIL}/1`} className="inner-item" key={item.id}>
+          {cartDetail.items.map((item) => (
+            <Link
+              key={item.id}
+              className="inner-item"
+              href={{
+                pathname: PRODUCT_DETAIL,
+                query: { id: item.productId, langCode: locale },
+              }}
+            >
               <Space>
                 <Image imgWidth={60} imgHeight={60} src="/default-image.jpg" alt="product" />
                 <div>
                   <Paragraph rootClassName="item-name">{item.product?.name}</Paragraph>
-                  <Space size={80}>
+                  <Space size={65}>
                     <Paragraph size={16} strong>
                       {utils.formatPrice(locale, item.product?.totalPrice as number)}
                     </Paragraph>
@@ -76,7 +85,12 @@ const HeaderCart: FC<HeaderCartProps> = ({ lang }) => {
         </div>
         <div className="dropdown-action">
           <span className="action-text">{utils.formatPrice(locale, totalPrice)}</span>
-          <Link href={CART}>
+          <Link
+            href={{
+              pathname: CART,
+              query: { id: cartDetail.customerId, page: 1, limit: 10, langCode: locale },
+            }}
+          >
             <Button sizes="sm" color="green">
               {lang.pageComponent.header.cart.action}
             </Button>
@@ -85,6 +99,7 @@ const HeaderCart: FC<HeaderCartProps> = ({ lang }) => {
       </Fragment>
     );
   };
+
   return (
     <div ref={cartRef} className="bottom-cart">
       <Avatar badge={String(totalQuantity)} rootClassName="cart-icon" onClick={handleOpen}>

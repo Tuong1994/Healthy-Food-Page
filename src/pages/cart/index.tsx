@@ -1,23 +1,33 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { NextPage } from "next";
 import { Breadcrumb } from "@/components/UI";
 import { useLang } from "@/hooks";
+import { useRouter } from "next/router";
+import { usePathname } from "next/navigation";
 import type { BreadcrumbItems } from "@/components/UI/Breadcrumb/type";
 import Link from "next/link";
 import CartConfirm from "@/features/cart/components/CartConfirm";
 import CartPayment from "@/features/cart/components/CartPayment";
 import CartEmpty from "@/features/cart/components/CartEmpty";
-import useCartStore from "@/store/CartStore";
 import url from "@/common/constant/url";
+import useAuthStore from "@/store/AuthStore";
 
 const { HOME } = url;
 
 const isEmpty = false;
 
-const Cart: NextPage = () => {
-  const { lang } = useLang();
+interface CartProps {}
 
-  const cart = useCartStore((state) => state.cart);
+const Cart: NextPage<CartProps> = () => {
+  const { locale, lang } = useLang();
+
+  const { pathname, replace: routerReplace } = useRouter();
+
+  const auth = useAuthStore((state) => state.auth);
+
+  useEffect(() => {
+    routerReplace({ pathname, query: { id: auth.info.id, page: 1, limit: 10, langCode: locale } });
+  }, []);
 
   const [isConfirmed, setIsConfirmed] = useState<boolean>(false);
 

@@ -86,6 +86,10 @@
             display: block;
             padding: $p-1;
             border-bottom: 1px solid $bg-gray;
+            transition: all $transition-time-sm $transition-fn;
+            &:hover {
+              background: $bg-green-rgba-xs;
+            }
             &:last-child {
               border-bottom: unset;
             }

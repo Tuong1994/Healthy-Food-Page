@@ -1,7 +1,6 @@
 import { FC, Fragment } from "react";
 import { Image } from "@/components/UI";
 import { HiChevronRight } from "react-icons/hi2";
-import { useCategoriesData } from "../AppWrapper/AppData/Provider";
 import { useRouter } from "next/router";
 import { ESort } from "@/common/enum";
 import CategoriesLoading from "./Loading";
@@ -18,7 +17,9 @@ interface CategoriesProps {
 }
 
 const Categories: FC<CategoriesProps> = ({ highlight = false }) => {
-  const { data: categoriesWithSubs, loading, error } = useCategoriesData();
+  const categories = useCategoryStore((state) => state.categories);
+
+  const { data: categoriesWithSubs, loading, error } = categories;
 
   const { query } = useRouter();
 

@@ -57,6 +57,11 @@ export type ApiConfig<T> = {
   config?: AxiosRequestConfig<T>;
 };
 
+export type ApiFetchState = {
+  loading: boolean;
+  error: boolean
+}
+
 export type ResponseError = {
   status: number;
   message: string;
