@@ -3,8 +3,6 @@ import { Card, InfoRow, Divider, Typography } from "@/components/UI";
 import type { Lang } from "@/common/type";
 import type { InfoRowProps } from "@/components/UI/InfoRow";
 import { ELang } from "@/common/enum";
-import useSumQuantity from "../hooks/useSumQuanity";
-import useSumPrice from "../hooks/useSumPrice";
 import utils from "@/utils";
 
 const { Paragraph } = Typography;
@@ -12,15 +10,22 @@ const { Paragraph } = Typography;
 interface PaymentInfoProps {
   locale: ELang;
   lang: Lang;
+  totalPrice: number;
+  totalQuatity: number;
+  shipmentFee: number;
+  totalPayment: number;
+  hasHead?: boolean;
 }
 
-const PaymentInfo: FC<PaymentInfoProps> = ({ locale, lang }) => {
-  const totalQuatity = useSumQuantity("cart");
-
-  const totalPrice = useSumPrice("cart");
-
-  const totalPayment = totalPrice + (totalPrice * 10) / 100;
-
+const PaymentInfo: FC<PaymentInfoProps> = ({
+  locale,
+  totalPrice,
+  totalQuatity,
+  shipmentFee,
+  totalPayment,
+  hasHead = true,
+  lang,
+}) => {
   const commonProps: InfoRowProps = {
     labelSpanProps: { span: 10 },
     textSpanProps: { span: 14 },
@@ -29,9 +34,11 @@ const PaymentInfo: FC<PaymentInfoProps> = ({ locale, lang }) => {
   return (
     <Card
       head={
-        <Paragraph weight={600} size={16}>
-          {lang.cart.info.title}
-        </Paragraph>
+        hasHead ? (
+          <Paragraph weight={600} size={16}>
+            {lang.cart.info.title}
+          </Paragraph>
+        ) : undefined
       }
     >
       <InfoRow label={lang.cart.info.product} text={String(totalQuatity)} {...commonProps} />
@@ -40,7 +47,11 @@ const PaymentInfo: FC<PaymentInfoProps> = ({ locale, lang }) => {
         text={utils.formatPrice(locale, totalPrice)}
         {...commonProps}
       />
-      <InfoRow label={lang.cart.info.deliveryFee} text={utils.formatPrice(locale, 0)} {...commonProps} />
+      <InfoRow
+        label={lang.cart.info.deliveryFee}
+        text={utils.formatPrice(locale, shipmentFee)}
+        {...commonProps}
+      />
       <InfoRow label={lang.cart.info.tax} text="10%" {...commonProps} />
       <Divider />
       <InfoRow

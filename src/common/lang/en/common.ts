@@ -104,6 +104,7 @@ const common_en = {
       logout: "Logouted",
       addItemCart: "Product is added to cart",
       updateCart: "Cart been updated",
+      payment: 'Payment success'
     },
     error: {
       authEmail: "Email is not correct. Please try again",
@@ -111,6 +112,7 @@ const common_en = {
       emailExist: "Email is already exist",
       logout: "Logout failed",
       remove: "Remove failed",
+      payment: "Payment failed",
       api: "Api network failed",
     },
   },

@@ -3,6 +3,8 @@ import type { Cart, CartFormData, CartItem } from "@/services/cart/type";
 import type { ApiQuery } from "@/services/type";
 import { createCart, updateCart } from "@/services/cart/api";
 import { useLang } from "@/hooks";
+import { useRouter } from "next/router";
+import { cartSwrKey } from "@/components/Page/AppWrapper/AppData/swrkey";
 import { mutate } from "swr";
 import useCartStore from "@/store/CartStore";
 import useMessage from "@/components/UI/ToastMessage/useMessage";
@@ -13,11 +15,15 @@ const usePurchase = () => {
 
   const { lang } = useLang();
 
+  const { query } = useRouter();
+
   const auth = useAuthStore((state) => state.auth);
 
   const [cart, setCart] = useCartStore((state) => [state.cart, state.setCart]);
 
   const [loading, setLoading] = useState<boolean>(false);
+
+  const mutateKey = cartSwrKey(auth.info?.id, query.page, query.limit, query.langCode);
 
   const onCreateCart = async (cartData: CartFormData) => {
     const response = await createCart(cartData);
@@ -26,7 +32,7 @@ const usePurchase = () => {
       return messageApi.error(lang.common.message.error.api);
     }
     messageApi.success(lang.common.message.success.addItemCart);
-    mutate(`getCartByCustomer?customerId=${auth.info.id}`);
+    mutate(mutateKey);
   };
 
   const onUpdateCart = async (cartDetail: Cart, cartData: CartFormData) => {
@@ -46,7 +52,7 @@ const usePurchase = () => {
       }
       const updatedCart = {
         ...cart,
-        data: { totalItems, data: { ...cartDetail, items: updateCartItems } },
+        data: { totalItems, detail: { ...cartDetail, items: updateCartItems } },
       };
       setCart(updatedCart);
     }
@@ -63,13 +69,13 @@ const usePurchase = () => {
       return messageApi.error(lang.common.message.error.api);
     }
     messageApi.success(lang.common.message.success.updateCart);
-    mutate(`getCartByCustomer?customerId=${auth.info.id}`);
+    mutate(mutateKey);
   };
 
   const handlePurchase = async (productId: string, quantity: number) => {
     if (!cart.data) return;
     setLoading(true);
-    const { data: cartDetail } = cart.data;
+    const { detail: cartDetail } = cart.data;
     const item = { productId, quantity, cartId: "" };
     const cartData: CartFormData = { customerId: auth.info.id ?? "", items: [item] };
     if (!cartDetail || !cartDetail.items || !cartDetail.items.length) await onCreateCart(cartData);

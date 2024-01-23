@@ -1,50 +1,52 @@
 import { FC, Key, useState } from "react";
 import { Table, Image, Pagination, Divider, Space, Button, Typography } from "@/components/UI";
-import type { CartItem } from "@/services/cart/type";
+import type { CartItem, CartWithItemsPaging } from "@/services/cart/type";
 import type { Columns } from "@/components/UI/Table/type";
 import type { Product } from "@/services/product/type";
 import { PiWarning } from "react-icons/pi";
 import { removeCartItems } from "@/services/cart/api";
 import { REPLACE_NUM_REGEX } from "@/common/constant/regex";
 import { useAsync, useLang } from "@/hooks";
-import { mutate } from "swr";
+import { cartSwrKey } from "@/components/Page/AppWrapper/AppData/swrkey";
 import { useRouter } from "next/router";
+import { mutate } from "swr";
 import QuantityControl from "@/components/Page/QuantityControl";
 import ConfirmModal from "@/components/Page/ConfirmModal";
+import Link from "next/link";
 import useMessage from "@/components/UI/ToastMessage/useMessage";
 import useCartStore from "@/store/CartStore";
 import url from "@/common/constant/url";
 import utils from "@/utils";
 
-const { CART } = url;
+const { CART, PRODUCT_DETAIL } = url;
 
 const { Title } = Typography;
 
 interface CartConfirmProps {
+  loading: boolean;
+  cart: CartWithItemsPaging | undefined;
   handleConfirm: () => void;
 }
 
-const CartConfirm: FC<CartConfirmProps> = ({ handleConfirm }) => {
+const CartConfirm: FC<CartConfirmProps> = ({ loading, cart, handleConfirm }) => {
   const messageApi = useMessage();
-
-  const cart = useCartStore((state) => state.cart);
-
-  const { data: cartResponse } = cart;
 
   const { locale, lang } = useLang();
 
   const { query, push: routerPush } = useRouter();
 
+  const resetCart = useCartStore((state) => state.resetCart);
+
   const [openModal, setOpenModal] = useState<boolean>(false);
 
   const [ids, setIds] = useState<Key[]>([]);
 
-  const { loading, call: onRemove } = useAsync(removeCartItems);
+  const { loading: removeLoading, call: onRemoveItem } = useAsync(removeCartItems);
 
   const dataSource = (): CartItem[] => {
-    if (!cart.data) return [];
-    const { data: cartDetail } = cart.data;
-    return cartDetail.items.map((item) => ({ ...item })) || [];
+    if (!cart) return [];
+    const { detail: cartDetail } = cart;
+    return cartDetail?.items.map((item) => ({ ...item })) || [];
   };
 
   const columns: Columns<CartItem> = [
@@ -58,7 +60,14 @@ const CartConfirm: FC<CartConfirmProps> = ({ handleConfirm }) => {
       id: "name",
       title: lang.common.table.head.productName,
       dataIndex: "product",
-      render: (product: Product) => <>{product.name}</>,
+      render: (product: Product) => (
+        <Link
+          className="confirm-product-link"
+          href={{ pathname: PRODUCT_DETAIL, query: { id: product.id, langCode: locale } }}
+        >
+          {product.name}
+        </Link>
+      ),
     },
     {
       id: "quantity",
@@ -89,11 +98,13 @@ const CartConfirm: FC<CartConfirmProps> = ({ handleConfirm }) => {
 
   const handleRemoveItems = async () => {
     const listIds = ids.join(",");
-    const response = await onRemove({ ids: listIds });
+    const cartItemsLength = cart?.detail?.items.length || 0;
+    const response = await onRemoveItem({ cartId: cart?.detail?.id, ids: listIds });
     setOpenModal(false);
     if (!response.success) return messageApi.error(lang.common.message.error.remove);
+    if (cartItemsLength === 0) resetCart();
+    if (cartItemsLength >= 1) mutate(cartSwrKey(cart?.detail?.customerId, query.page, query.limit, locale));
     messageApi.success(lang.common.message.success.updateCart);
-    mutate(`getCartByCustomer?customerId=${cartResponse?.data.customerId}`);
   };
 
   return (
@@ -104,6 +115,7 @@ const CartConfirm: FC<CartConfirmProps> = ({ handleConfirm }) => {
         color="green"
         rowKey="id"
         hasRowSelection
+        loading={loading}
         dataSource={dataSource()}
         columns={columns}
         showRemove={openModal}
@@ -114,7 +126,7 @@ const CartConfirm: FC<CartConfirmProps> = ({ handleConfirm }) => {
         color="green"
         shape="square"
         ghost
-        total={cartResponse?.totalItems}
+        total={cart?.totalItems}
         rootClassName="confirm-pagination"
         onChangePage={handleChangePage}
       />
@@ -129,7 +141,7 @@ const CartConfirm: FC<CartConfirmProps> = ({ handleConfirm }) => {
 
       <ConfirmModal
         open={openModal}
-        okButtonProps={{ loading }}
+        okButtonProps={{ loading: removeLoading }}
         onOk={handleRemoveItems}
         onCancel={handleCloseModal}
         desciption={

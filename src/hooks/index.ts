@@ -17,6 +17,7 @@ import useDisplayInventoryStatus from "./data-display/useDisplayInventoryStatus"
 import useDisplayProductOrigin from "./data-display/useDisplayProductOrigin";
 import useDisplayProductStatus from "./data-display/useDisplayProductStatus";
 import useDisplayProductUnit from "./data-display/useDisplayProductUnit";
+import useDisplayRecievedType from "./data-display/useDisplayRecievedType";
 
 export {
   useClickOutside,
@@ -38,4 +39,5 @@ export {
   useDisplayProductOrigin,
   useDisplayProductStatus,
   useDisplayProductUnit,
+  useDisplayRecievedType,
 };

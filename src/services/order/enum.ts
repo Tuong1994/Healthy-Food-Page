@@ -5,7 +5,6 @@ export enum EOrderStatus {
 }
 
 export enum EPaymentStatus {
-  WAITTING = 1,
   UNPAID = 2,
   PAID = 3,
 }
@@ -14,4 +13,9 @@ export enum EPaymentMethod {
   TRANSFER = 1,
   CASH = 2,
   COD = 3,
+}
+
+export enum ERecievedType {
+  STORE = 1,
+  DELIVERY = 2,
 }

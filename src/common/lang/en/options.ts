@@ -48,6 +48,10 @@ const options_en = {
     unPaid: "Unpaid",
     paid: "Paid",
   },
+  recievedType: {
+    store: "Store",
+    delivery: "Delivery",
+  },
 };
 
 export default options_en;

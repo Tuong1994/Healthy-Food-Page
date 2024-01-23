@@ -3,8 +3,9 @@ import { useEffect, useState } from "react";
 import { getCategories } from "@/services/category/api";
 import type { ApiResponse, List, ResponseError } from "@/services/type";
 import type { Category } from "@/services/category/type";
-import useCategoryStore from "@/store/CategoryStore";
+import { categorySwrKey } from "../swrkey";
 import useSWR, { SWRConfiguration } from "swr";
+import useCategoryStore from "@/store/CategoryStore";
 
 const useGetCategories = () => {
   const { locale } = useLang();
@@ -14,7 +15,7 @@ const useGetCategories = () => {
   const [error, setError] = useState<boolean>(false);
 
   const getCategoriesWithSubs = async () => {
-    setError(false);
+    if (error) setError(false);
     const response = await getCategories({ hasSub: true, langCode: locale });
     if (!response.success) setError(true);
     return response;
@@ -28,7 +29,7 @@ const useGetCategories = () => {
   const { data: categoriesWithSubsData, isValidating: loading } = useSWR<
     ApiResponse<List<Category>>,
     ResponseError
-  >(`getCategoriesWithSubs?locale=${locale}`, getCategoriesWithSubs, config);
+  >(categorySwrKey(locale), getCategoriesWithSubs, config);
 
   useEffect(() => {
     setCategories({
@@ -36,7 +37,7 @@ const useGetCategories = () => {
       loading,
       data: categoriesWithSubsData?.data.items ?? [],
     });
-  }, [loading]);
+  }, [loading, error, categoriesWithSubsData]);
 };
 
 export default useGetCategories;

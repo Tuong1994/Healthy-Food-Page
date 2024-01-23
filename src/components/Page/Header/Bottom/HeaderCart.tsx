@@ -29,9 +29,9 @@ const HeaderCart: FC<HeaderCartProps> = ({ lang }) => {
 
   const router = useRouter();
 
-  const totalQuantity = useSumQuantity("cart");
+  const totalQuantity = useSumQuantity({ type: "cart" });
 
-  const totalPrice = useSumPrice("cart");
+  const totalPrice = useSumPrice({ type: "cart" });
 
   const [open, setOpen] = useState<boolean>(false);
 
@@ -49,15 +49,15 @@ const HeaderCart: FC<HeaderCartProps> = ({ lang }) => {
   };
 
   const renderContent = () => {
-    if (!cart.data) return <Empty text={lang.pageComponent.header.cart.note} />;
-    const { data: cartDetail } = cart.data;
-    if (cartDetail.items && !cartDetail.items.length)
+    if (!cart.data || !cart.data.detail) return <Empty text={lang.pageComponent.header.cart.note} />;
+    const { detail: cartDetail } = cart.data;
+    if (cartDetail?.items && !cartDetail?.items.length)
       return <Empty text={lang.pageComponent.header.cart.note} />;
 
     return (
       <Fragment>
         <div className="dropdown-inner">
-          {cartDetail.items.map((item) => (
+          {cartDetail?.items.map((item) => (
             <Link
               key={item.id}
               className="inner-item"
@@ -65,6 +65,7 @@ const HeaderCart: FC<HeaderCartProps> = ({ lang }) => {
                 pathname: PRODUCT_DETAIL,
                 query: { id: item.productId, langCode: locale },
               }}
+              onClick={handleOpen}
             >
               <Space>
                 <Image imgWidth={60} imgHeight={60} src="/default-image.jpg" alt="product" />
@@ -88,8 +89,9 @@ const HeaderCart: FC<HeaderCartProps> = ({ lang }) => {
           <Link
             href={{
               pathname: CART,
-              query: { id: cartDetail.customerId, page: 1, limit: 10, langCode: locale },
+              query: { id: cartDetail?.customerId, page: 1, limit: 10, langCode: locale },
             }}
+            onClick={handleOpen}
           >
             <Button sizes="sm" color="green">
               {lang.pageComponent.header.cart.action}

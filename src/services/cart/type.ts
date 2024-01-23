@@ -24,7 +24,7 @@ export type Cart = {
 
 export type CartWithItemsPaging = {
   totalItems: number;
-  data: Cart;
+  detail: Cart;
 };
 
 export type CartFormData = {

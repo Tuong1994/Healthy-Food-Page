@@ -8,7 +8,7 @@ const cart_vn = {
   },
   methods: {
     title: "Hình thức thanh toán",
-    note: "Chọn phương thức thanh toán",
+    note: "Vui lòng chọn phương thức thanh toán trước khi đặt hàng",
     transfer: {
       title: "Chuyển khoản",
       content:
@@ -43,6 +43,8 @@ const cart_vn = {
   },
   shipment: {
     title: "Thông tin vận chuyển",
+    editLabel: "Chỉnh sửa",
+    removeLabel: "Xóa",
   },
   purchased: {
     title: "Mua hàng thành công",

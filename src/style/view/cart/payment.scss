@@ -1,10 +1,16 @@
 .cart-payment {
+  .payment-product-link {
+    color: $text-blue;
+  }
   .payment-pagination {
     margin-top: $m-2;
   }
   .payment-received {
     .received-select {
       width: $w-10 * 2.5;
+    }
+    .received-note {
+      margin-top: $m-2;
     }
   }
   .payment-method {
@@ -29,4 +35,23 @@
 
 .shipment-info {
   padding: $p-2 0;
+  position: relative;
+  .info-edit-action {
+    position: absolute;
+    top: 6rem;
+    right: 1rem;
+    .action-icon {
+      cursor: pointer;
+      &:nth-child(1) {
+        path {
+          color: $text-blue;
+        }
+      }
+      &:nth-child(2) {
+        path {
+          color: $text-red;
+        }
+      }
+    }
+  }
 }

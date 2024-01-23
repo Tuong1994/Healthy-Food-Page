@@ -48,6 +48,10 @@ const options_vn = {
     unPaid: "Chưa thanh toán",
     paid: "Đã thanh toán",
   },
+  recievedType: {
+    store: "Cửa hàng",
+    delivery: "Giao nhận",
+  },
 };
 
 export default options_vn;

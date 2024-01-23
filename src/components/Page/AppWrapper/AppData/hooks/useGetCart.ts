@@ -4,6 +4,8 @@ import { CartWithItemsPaging } from "@/services/cart/type";
 import { ApiQuery, ApiResponse, ResponseError } from "@/services/type";
 import { useLang } from "@/hooks";
 import { useRouter } from "next/router";
+import { HttpStatus } from "@/services/axios";
+import { cartSwrKey } from "../swrkey";
 import useSWR, { SWRConfiguration } from "swr";
 import useAuthStore from "@/store/AuthStore";
 import useCartStore from "@/store/CartStore";
@@ -20,7 +22,6 @@ const useGetCart = () => {
   const [error, setError] = useState<boolean>(false);
 
   const getCartByCustomer = async () => {
-    setError(false);
     const { page, limit } = query;
     const apiQuery: ApiQuery = {
       page: page ? Number(page) : 1,
@@ -28,13 +29,14 @@ const useGetCart = () => {
       customerId: auth.info.id,
       langCode: locale,
     };
+    if (error) setError(false);
     const response = await getCart(apiQuery);
     if (!response.success) setError(true);
     return response;
   };
 
   const config: SWRConfiguration = {
-    refreshInterval: 100000,
+    refreshInterval: 0,
     revalidateOnFocus: false,
   };
 
@@ -42,9 +44,7 @@ const useGetCart = () => {
     ApiResponse<CartWithItemsPaging>,
     ResponseError
   >(
-    auth.isAuth
-      ? `getCartByCustomer?customerId=${auth.info.id}&page=${query.page}&limit=${query.limit}`
-      : null,
+    auth.isAuth ? cartSwrKey(auth.info?.id, query.page, query.limit, locale) : null,
     getCartByCustomer,
     config
   );
@@ -55,7 +55,7 @@ const useGetCart = () => {
       error,
       data: cartByCustomerData?.data,
     });
-  }, [loading]);
+  }, [loading, error, cartByCustomerData]);
 };
 
 export default useGetCart;

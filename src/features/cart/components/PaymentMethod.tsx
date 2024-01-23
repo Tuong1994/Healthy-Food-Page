@@ -1,19 +1,19 @@
-import { FC, Fragment, useState, useEffect } from "react";
+import { FC, Fragment } from "react";
 import { Card, Accordion, InfoRow, NoteMessage, Typography } from "@/components/UI";
 import { HiCheck } from "react-icons/hi2";
 import { EPaymentMethod } from "@/services/order/enum";
 import type { Lang } from "@/common/type";
+import type { OrderFormData } from "@/services/order/type";
 
 const { Paragraph } = Typography;
 
 interface PaymentMethodProps {
   lang: Lang;
-  onSelectedMethod?: (method: EPaymentMethod) => void;
+  order: OrderFormData;
+  onSelectedMethod: (method: EPaymentMethod) => void;
 }
 
-const PaymentMethod: FC<PaymentMethodProps> = ({ lang, onSelectedMethod }) => {
-  const [selectedMethod, setSelectedMethod] = useState<EPaymentMethod | number>(-1);
-
+const PaymentMethod: FC<PaymentMethodProps> = ({ lang, order, onSelectedMethod }) => {
   const methods = [
     {
       id: EPaymentMethod.TRANSFER,
@@ -39,14 +39,11 @@ const PaymentMethod: FC<PaymentMethodProps> = ({ lang, onSelectedMethod }) => {
     },
   ];
 
-  const handleSelect = (id: EPaymentMethod) => {
-    if (selectedMethod === id) return setSelectedMethod(-1);
-    setSelectedMethod(id);
-  };
+  const handleSelect = (method: EPaymentMethod) => onSelectedMethod(method);
 
   const renderMethods = () => {
     return methods.map((method) => {
-      const isSelected = selectedMethod === method.id;
+      const isSelected = order.paymentMethod === method.id;
       const extra = isSelected ? <HiCheck size={18} /> : null;
       const selectedClassName = isSelected ? "method-item-selected" : "";
       return (
@@ -55,7 +52,7 @@ const PaymentMethod: FC<PaymentMethodProps> = ({ lang, onSelectedMethod }) => {
           extra={extra}
           key={method.id}
           label={method.title}
-          isCollapsed={selectedMethod === method.id}
+          isCollapsed={order.paymentMethod === method.id}
           rootClassName={`method-item ${selectedClassName}`}
           onClick={() => handleSelect(method.id)}
         >
@@ -64,10 +61,6 @@ const PaymentMethod: FC<PaymentMethodProps> = ({ lang, onSelectedMethod }) => {
       );
     });
   };
-
-  useEffect(() => {
-    onSelectedMethod?.(selectedMethod);
-  }, [selectedMethod]);
 
   return (
     <Card
@@ -78,7 +71,7 @@ const PaymentMethod: FC<PaymentMethodProps> = ({ lang, onSelectedMethod }) => {
         </Paragraph>
       }
     >
-      {selectedMethod === -1 && <NoteMessage type="error" message={lang.cart.methods.note} />}
+      {order.paymentMethod === -1 && <NoteMessage type="error" message={lang.cart.methods.note} />}
       {renderMethods()}
     </Card>
   );

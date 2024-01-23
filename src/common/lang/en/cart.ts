@@ -8,7 +8,7 @@ const cart_en = {
   },
   methods: {
     title: "Payment methods",
-    note: "Select payment method",
+    note: "Please select payment method before order",
     transfer: {
       title: "Transfer",
       content:
@@ -43,6 +43,8 @@ const cart_en = {
   },
   shipment: {
     title: "Shipment infomation",
+    editLabel: "Edit",
+    removeLabel: 'Remove',
   },
   purchased: {
     title: "Purchased success",
