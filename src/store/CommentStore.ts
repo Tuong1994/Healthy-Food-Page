@@ -1,10 +1,10 @@
 import { create, StateCreator } from "zustand";
 import type { Comment } from "@/services/comment/type";
-import type { Paging } from "@/services/type";
+import type { List } from "@/services/type";
 
 interface CommentState {
-  comments: Paging<Comment>;
-  setComments: (comments: Paging<Comment>) => void;
+  comments: List<Comment>;
+  setComments: (comments: List<Comment>) => void;
 }
 
 const store: StateCreator<CommentState> = (set) => ({

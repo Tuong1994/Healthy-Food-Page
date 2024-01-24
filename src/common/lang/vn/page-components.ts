@@ -35,6 +35,7 @@ const page_components_vn = {
   },
   comment: {
     note: "Đăng nhập và để lại bình luận của bạn",
+    more: "Xem thêm",
   },
   auth: {
     note: "Phiên của bạn đã hết hạn, vui lòng đăng nhập lại",

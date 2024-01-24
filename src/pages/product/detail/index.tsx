@@ -73,7 +73,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const { query } = context;
 
   const apiProductQuery: ApiQuery = { productId: query.id as string, langCode: query.langCode as ELang };
-  const apiCommentsQuery: ApiQuery = { page: 1, limit: 50, productId: query.id as string };
+  const apiCommentsQuery: ApiQuery = { limit: 15, productId: query.id as string };
 
   const productResponse = await getProduct(apiProductQuery);
   const commentsResponse = await getComments(apiCommentsQuery);

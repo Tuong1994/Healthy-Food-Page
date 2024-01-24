@@ -35,6 +35,7 @@ const page_components_en = {
   },
   comment: {
     note: "Sign in and leave your comment",
+    more: 'See more',
   },
   auth: {
     note: "Your session expired, please re-login",

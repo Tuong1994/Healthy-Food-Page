@@ -1,5 +1,5 @@
-import { FC, useState } from "react";
-import { Paragraph } from "@/components/UI/Typography";
+import { FC, useEffect, useState } from "react";
+import { Button, Typography, Loading } from "@/components/UI";
 import type { Comment, CommentFormData } from "@/services/comment/type";
 import type { ApiQuery } from "@/services/type";
 import { useAsync, useLang, useMounted } from "@/hooks";
@@ -11,6 +11,10 @@ import useCommentStore from "@/store/CommentStore";
 import useProductStore from "@/store/ProductStore";
 import useMessage from "@/components/UI/ToastMessage/useMessage";
 import utils from "@/utils";
+
+const { Paragraph } = Typography;
+
+const { Spinner } = Loading;
 
 export type ActionType = "reply" | "edit" | "remove";
 
@@ -34,6 +38,8 @@ const Comment: FC<CommentProps> = () => {
 
   const [comments, setComments] = useCommentStore((state) => [state.comments, state.setComments]);
 
+  const { loading: listLoading, call: onGet } = useAsync(getComments);
+
   const { loading: createLoading, call: onCreate } = useAsync(createComment);
 
   const { loading: updateLoading, call: onUpdate } = useAsync(updateComment);
@@ -53,18 +59,24 @@ const Comment: FC<CommentProps> = () => {
     customerId: auth.info.id ?? "",
   });
 
-  const { items: fullComments } = comments;
+  const [limit, setLimit] = useState<number>(15);
+
+  const { totalItems, items: fullComments } = comments;
 
   const rootComments = fullComments.filter((comment) => !comment.parentId);
+
+  const hasSeeMore = totalItems !== fullComments.length;
 
   const listScrollableClassName = fullComments.length > 10 ? "comment-list-scrollable" : "";
 
   const onReFetch = async () => {
-    const apiQuery: ApiQuery = { page: 1, limit: 10, productId: product.id };
-    const response = await getComments(apiQuery);
+    const apiQuery: ApiQuery = { limit, productId: product.id };
+    const response = await onGet(apiQuery);
     if (!response.success) return messageAPi.error(lang.common.message.error.api);
     setComments(response.data);
   };
+
+  const handleGetMore = () => setLimit((prev) => prev + 20);
 
   const handleChangeInput = (text: string) => setComment((prev) => ({ ...prev, content: text }));
 
@@ -111,6 +123,10 @@ const Comment: FC<CommentProps> = () => {
     );
   };
 
+  useEffect(() => {
+    onReFetch();
+  }, [limit]);
+
   if (!isMounted) return null;
 
   return (
@@ -130,6 +146,11 @@ const Comment: FC<CommentProps> = () => {
           setComment={setComment}
           setActiveComment={setActiveComment}
         />
+        {hasSeeMore && (
+          <Button text onClick={handleGetMore}>
+            {listLoading ? <Spinner /> : lang.pageComponent.comment.more}
+          </Button>
+        )}
       </div>
     </div>
   );

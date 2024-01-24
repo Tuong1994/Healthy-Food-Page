@@ -1,11 +1,11 @@
 import { getApiQuery } from "../helper";
-import { ApiQuery, Paging } from "../type";
+import { ApiQuery, List, Paging } from "../type";
 import { Comment, CommentFormData } from "./type";
 import commentApiPaths from "./path";
 import Fetch from "..";
 
 export const getComments = async (query: ApiQuery) => {
-  const response = await Fetch.Get<Paging<Comment>>(commentApiPaths.getList + getApiQuery(query));
+  const response = await Fetch.Get<List<Comment>>(commentApiPaths.getList + getApiQuery(query));
   return response;
 };
 
