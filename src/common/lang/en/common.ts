@@ -103,8 +103,11 @@ const common_en = {
       signUp: "Sign up success",
       logout: "Logouted",
       addItemCart: "Product is added to cart",
-      updateCart: "Cart been updated",
-      payment: 'Payment success'
+      updateCart: "Cart has been updated",
+      rate: "Thank you for your rating",
+      addComment: "Thank you for your comment",
+      updateComment: "Comment has been updated",
+      removeComment: "Comment has been removed",
     },
     error: {
       authEmail: "Email is not correct. Please try again",

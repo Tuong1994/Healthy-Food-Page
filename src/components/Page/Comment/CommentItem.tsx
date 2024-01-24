@@ -1,43 +1,58 @@
-import { FC, useState } from "react";
-import { Space, Typography } from "@/components/UI";
-import type { Comment } from "@/services/comment/type";
+import { Dispatch, FC, SetStateAction, useState } from "react";
+import { Space, Typography, Loading } from "@/components/UI";
+import type { Comment, CommentFormData } from "@/services/comment/type";
+import type { ActionType, ActiveComment } from ".";
 import { HiReply } from "react-icons/hi";
 import { HiPencil, HiTrash } from "react-icons/hi2";
 import CommentAuthor from "./CommentAuthor";
 import CommentControl from "./CommentControl";
 import CommentList from "./CommentList";
+import useAuthStore from "@/store/AuthStore";
 
 const { Paragraph } = Typography;
 
-type ActionType = "reply" | "edit";
+const { Spinner } = Loading;
 
-type ActiveComment = {
-  id: string;
-  type: ActionType | null;
-};
+const ICON_SIZE = 14;
 
 interface CommentItemProps {
   comment: Comment;
   comments: Comment[];
+  activeComment: ActiveComment;
+  createLoading: boolean;
+  updateLoading: boolean;
+  removeLoading: boolean;
+  handleCreate: (parentId?: string) => void;
+  handleUpdate: () => void;
+  handleRemove: (id: string) => void;
+  setComment: Dispatch<SetStateAction<CommentFormData>>;
+  setActiveComment: Dispatch<SetStateAction<ActiveComment>>;
 }
 
-const ICON_SIZE = 14;
+const CommentItem: FC<CommentItemProps> = ({
+  comment,
+  comments = [],
+  activeComment,
+  createLoading,
+  updateLoading,
+  removeLoading,
+  handleCreate,
+  handleUpdate,
+  handleRemove,
+  setComment,
+  setActiveComment,
+}) => {
+  const auth = useAuthStore((state) => state.auth);
 
-const userId = "1";
+  const { isAuth, info } = auth;
 
-const isAuth = true;
-
-const CommentItem: FC<CommentItemProps> = ({ comment, comments = [] }) => {
-  const [activeComment, setActiveComment] = useState<ActiveComment>({
-    id: comment.id as string,
-    type: null,
-  });
+  const customerId = info.id ?? "";
 
   const canReply = isAuth;
 
-  const canEdit = comment.customerId === userId;
+  const canEdit = comment.customerId === customerId;
 
-  const canRemove = comment.customerId === userId;
+  const canRemove = comment.customerId === customerId;
 
   const isReply = activeComment.id === comment.id && activeComment.type === "reply";
 
@@ -45,14 +60,19 @@ const CommentItem: FC<CommentItemProps> = ({ comment, comments = [] }) => {
 
   const childComments = comments.filter((child) => child.parentId === comment.id);
 
-  const handleAction = (type: ActionType) => setActiveComment({ ...activeComment, type });
+  const handleChangeInput = (text: string) => setComment((prev) => ({ ...prev, content: text }));
 
-  const handleCancel = () => setActiveComment({ ...activeComment, type: null });
+  const handleAction = (type: ActionType) => {
+    if (type === "edit" || type === "reply") setComment({ ...comment });
+    setActiveComment({ ...activeComment, id: comment.id ?? "", type });
+  };
+
+  const handleCancel = () => setActiveComment({ ...activeComment, id: "", type: null });
 
   return (
     <div className="comment-item">
       <div className="item-content">
-        <CommentAuthor />
+        <CommentAuthor comment={comment} />
 
         {!isEdit && (
           <div className="content-text">
@@ -65,6 +85,9 @@ const CommentItem: FC<CommentItemProps> = ({ comment, comments = [] }) => {
             hasAuthor={false}
             isRoot={false}
             defaultValue={comment.content}
+            saveButtonProps={{ loading: updateLoading }}
+            onChangeInput={handleChangeInput}
+            onSave={handleUpdate}
             onCancel={handleCancel}
           />
         )}
@@ -82,20 +105,40 @@ const CommentItem: FC<CommentItemProps> = ({ comment, comments = [] }) => {
               </button>
             )}
             {canRemove && (
-              <button className="content-btn">
-                <HiTrash size={ICON_SIZE} />
+              <button className="content-btn" onClick={() => handleRemove(comment.id ?? "")}>
+                {removeLoading ? <Spinner /> : <HiTrash size={ICON_SIZE} />}
               </button>
             )}
           </Space>
         )}
 
-        {isReply && <CommentControl hasAuthor={false} isRoot={false} onCancel={handleCancel} />}
+        {isReply && (
+          <CommentControl
+            hasAuthor={false}
+            isRoot={false}
+            saveButtonProps={{ loading: createLoading }}
+            onSave={() => handleCreate(comment.id)}
+            onCancel={handleCancel}
+          />
+        )}
       </div>
 
       {childComments.length > 0 && (
         <div className="item-child">
           <div className="child-expand"></div>
-          <CommentList rootComments={childComments} fullComments={comments} />
+          <CommentList
+            fullComments={comments}
+            rootComments={childComments}
+            activeComment={activeComment}
+            createLoading={createLoading}
+            updateLoading={updateLoading}
+            removeLoading={removeLoading}
+            handleCreate={handleCreate}
+            handleUpdate={handleUpdate}
+            handleRemove={handleRemove}
+            setComment={setComment}
+            setActiveComment={setActiveComment}
+          />
         </div>
       )}
     </div>

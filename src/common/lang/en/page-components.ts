@@ -3,7 +3,7 @@ const page_components_en = {
     category: "Categories",
     cart: {
       note: "You're cart don't have any products",
-      action: "Go to cart"
+      action: "Go to cart",
     },
     translate: {
       title: "Language",
@@ -32,6 +32,9 @@ const page_components_en = {
     bad: "Bad",
     terrible: "Terrible",
     modalTitle: "Rate product",
+  },
+  comment: {
+    note: "Sign in and leave your comment",
   },
   auth: {
     note: "Your session expired, please re-login",

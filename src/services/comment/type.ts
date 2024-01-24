@@ -1,17 +1,18 @@
-import { ImageUpload } from "../image/type";
+import type { Customer } from "../customer/type";
+import type { Product } from "../product/type";
 
 export type Comment = {
   id?: string;
 
-  parentId: string;
   content: string;
+  parentId: string | null;
   customerId: string;
   productId: string;
-  productName: string;
-  productImage: ImageUpload | null;
+  product?: Pick<Product, "id" | "name" | "image">;
+  customer?: Pick<Customer, "fullName" | "image">;
 
   createdAt?: Date | string;
   updatedAt?: Date | string;
 };
 
-export type CommentFormData = Pick<Comment, "parentId" | "content" | "customerId" | "productId">;
+export type CommentFormData = Pick<Comment, "id" | "parentId" | "content" | "customerId" | "productId">;

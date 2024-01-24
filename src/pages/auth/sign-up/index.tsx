@@ -9,6 +9,7 @@ import { useAsync, useLang, useRule } from "@/hooks";
 import { useRouter } from "next/router";
 import { HttpStatus } from "@/services/axios";
 import useAuthStore from "@/store/AuthStore";
+import usePathnameStore from "@/store/PathnameStore";
 import useMessage from "@/components/UI/ToastMessage/useMessage";
 import AuthHeader from "@/features/auth/AuthHeader";
 import AuthBack from "@/features/auth/AuthBack";
@@ -16,22 +17,24 @@ import AuthNote from "@/features/auth/AuthNote";
 import Link from "next/link";
 import url from "@/common/constant/url";
 
-const { HOME, AUTH_SIGN_IN } = url;
+const {  AUTH_SIGN_IN } = url;
 
 const { Title, Paragraph } = Typography;
 
 const SignUp: NextPage = () => {
+  const messageApi = useMessage();
+
   const { lang } = useLang();
 
   const { email, phone, password } = useRule();
 
   const { loading, call: onSubmit } = useAsync<AuthInfo>(signUp);
 
+  const router = useRouter();
+
   const setAuth = useAuthStore((state) => state.setAuth);
 
-  const messageApi = useMessage();
-
-  const router = useRouter();
+  const previousPath = usePathnameStore((state) => state.previousPath);
 
   const initialData: AuthSignUp = {
     email: "",
@@ -51,7 +54,7 @@ const SignUp: NextPage = () => {
     const signInResponse = await signIn(signInData);
     setAuth(signInResponse.data);
     messageApi.success(lang.common.message.success.signUp);
-    setTimeout(() => router.push(HOME), 200);
+    setTimeout(() => router.push(previousPath), 200);
   };
 
   return (

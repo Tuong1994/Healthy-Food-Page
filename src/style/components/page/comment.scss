@@ -6,8 +6,10 @@
     }
   }
   .comment-list {
-    height: $h-10 * 4;
     padding-right: $p-1;
+  }
+  .comment-list-scrollable {
+    height: $h-10 * 4;
     overflow-y: auto;
     overflow-x: hidden;
   }
@@ -43,7 +45,7 @@
       }
     }
     .item-child {
-      padding-left: $p-1;
+      padding-left: $p-1 + 0.5;
       position: relative;
       .child-expand {
         width: 1px;
@@ -52,7 +54,7 @@
         background: $bg-gray;
         position: absolute;
         bottom: 0;
-        left: 0;
+        left: 0.5rem;
       }
     }
   }

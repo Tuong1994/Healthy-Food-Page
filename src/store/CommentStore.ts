@@ -1,23 +1,15 @@
 import { create, StateCreator } from "zustand";
-import { Comment } from "@/services/comment/type";
+import type { Comment } from "@/services/comment/type";
+import type { Paging } from "@/services/type";
 
 interface CommentState {
-  comments: Comment[];
+  comments: Paging<Comment>;
+  setComments: (comments: Paging<Comment>) => void;
 }
 
-const store: StateCreator<CommentState> = () => ({
-  comments: [
-    { id: "1", parentId: "", content: "Root comment", customerId: "1", productId: "" },
-    { id: "2", parentId: "1", content: "Child comment", customerId: "", productId: "" },
-    { id: "3", parentId: "2", content: "Child comment", customerId: "", productId: "" },
-    { id: "4", parentId: "", content: "Root comment", customerId: "1", productId: "" },
-    { id: "5", parentId: "4", content: "Child comment", customerId: "", productId: "" },
-    { id: "6", parentId: "4", content: "Child comment", customerId: "", productId: "" },
-    { id: "7", parentId: "", content: "Child comment", customerId: "", productId: "" },
-    { id: "8", parentId: "", content: "Child comment", customerId: "", productId: "" },
-    { id: "9", parentId: "", content: "Child comment", customerId: "", productId: "" },
-    { id: "10", parentId: "", content: "Child comment", customerId: "", productId: "" },
-  ],
+const store: StateCreator<CommentState> = (set) => ({
+  comments: { totalItems: 0, page: 1, limit: 10, items: [] },
+  setComments: (comments) => set((state) => ({ ...state, comments })),
 });
 
 const useCommentStore = create(store);

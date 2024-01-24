@@ -1,8 +1,7 @@
 import { FC } from "react";
-import { Space, Divider, Button, Badge, Image, InfoRow, Grid, Typography } from "@/components/UI";
+import { Space, Divider, Badge, Image, InfoRow, Grid, Typography } from "@/components/UI";
 import type { Lang } from "@/common/type";
 import type { Product } from "@/services/product/type";
-import { HiShoppingCart } from "react-icons/hi2";
 import { ELang } from "@/common/enum";
 import { useDisplayInventoryStatus, useDisplayProductOrigin, useDisplayProductUnit } from "@/hooks";
 import QuantityControl from "@/components/Page/QuantityControl";
@@ -38,9 +37,12 @@ const ProductInfo: FC<ProductInfoProps> = ({ locale, lang, product }) => {
         <Title level={6} rootClassName="info-name">
           {product.name}
         </Title>
-        <Paragraph strong size={25} rootClassName="info-price">
-          {utils.formatPrice(locale, product.totalPrice)}
-        </Paragraph>
+        <Space align="middle" size="lg">
+          <Paragraph strong size={25} rootClassName="info-price">
+            {utils.formatPrice(locale, product.totalPrice)}
+          </Paragraph>
+          <QuantityControl productId={product.id as string} />
+        </Space>
 
         <Divider />
 
@@ -70,19 +72,9 @@ const ProductInfo: FC<ProductInfoProps> = ({ locale, lang, product }) => {
           textElement={useDisplayProductOrigin(product.origin)}
         />
 
-        <Rate />
-
         <Divider />
 
-        <Space align="middle" size="lg">
-          <QuantityControl productId={product.id as string} />
-          <Button color="green" sizes="lg">
-            <Space align="middle">
-              <HiShoppingCart />
-              <span>{lang.product.detail.purchase}</span>
-            </Space>
-          </Button>
-        </Space>
+        <Rate product={product} />
       </Col>
     </Row>
   );

@@ -4,7 +4,6 @@ import { CartWithItemsPaging } from "@/services/cart/type";
 import { ApiQuery, ApiResponse, ResponseError } from "@/services/type";
 import { useLang } from "@/hooks";
 import { useRouter } from "next/router";
-import { HttpStatus } from "@/services/axios";
 import { cartSwrKey } from "../swrkey";
 import useSWR, { SWRConfiguration } from "swr";
 import useAuthStore from "@/store/AuthStore";

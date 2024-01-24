@@ -1,9 +1,12 @@
+import { useEffect } from "react";
 import { Breadcrumb } from "@/components/UI";
 import { GetServerSideProps, NextPage } from "next";
 import type { BreadcrumbItems } from "@/components/UI/Breadcrumb/type";
-import type { ApiResponse, Paging } from "@/services/type";
+import type { ApiQuery, ApiResponse, Paging } from "@/services/type";
 import type { Product as ProductType } from "@/services/product/type";
+import type { Comment } from "@/services/comment/type";
 import { getProduct, getProductsPaging } from "@/services/product/api";
+import { getComments } from "@/services/comment/api";
 import { defaultApiResponse } from "@/services";
 import { ELang } from "@/common/enum";
 import { useLang } from "@/hooks";
@@ -11,6 +14,8 @@ import Link from "next/link";
 import ProductInfo from "@/features/product/detail/ProductInfo";
 import ProductSimilar from "@/features/product/detail/ProductSimilar";
 import ProductTabs from "@/features/product/detail/ProductTabs";
+import useProductStore from "@/store/ProductStore";
+import useCommentStore from "@/store/CommentStore";
 import url from "@/common/constant/url";
 
 const { HOME, PRODUCT_LIST } = url;
@@ -18,12 +23,19 @@ const { HOME, PRODUCT_LIST } = url;
 interface ProductPageProps {
   productResponse: ApiResponse<ProductType>;
   productsResponse: ApiResponse<Paging<ProductType>>;
+  commentsResponse: ApiResponse<Paging<Comment>>;
 }
 
-const ProductPage: NextPage<ProductPageProps> = ({ productResponse, productsResponse }) => {
+const ProductPage: NextPage<ProductPageProps> = ({ productResponse, productsResponse, commentsResponse }) => {
   const { locale, lang } = useLang();
 
-  const product = productResponse.data;
+  const [product, setProduct] = useProductStore((state) => [state.product, state.setProduct]);
+
+  const setComments = useCommentStore((state) => state.setComments);
+
+  useEffect(() => setProduct(productResponse.data), [productResponse]);
+
+  useEffect(() => setComments(commentsResponse.data), [commentsResponse]);
 
   const similarProducts = productsResponse.data.items;
 
@@ -59,10 +71,15 @@ export default ProductPage;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { query } = context;
-  const apiQuery = { productId: query.id as string, langCode: query.langCode as ELang };
 
-  const productResponse = await getProduct(apiQuery);
+  const apiProductQuery: ApiQuery = { productId: query.id as string, langCode: query.langCode as ELang };
+  const apiCommentsQuery: ApiQuery = { page: 1, limit: 50, productId: query.id as string };
+
+  const productResponse = await getProduct(apiProductQuery);
+  const commentsResponse = await getComments(apiCommentsQuery);
+
   let productsResponse: ApiResponse<Paging<ProductType>> = defaultApiResponse<Paging<ProductType>>();
+
   if (productResponse && productResponse.success)
     productsResponse = await getProductsPaging({
       page: 1,
@@ -75,6 +92,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     props: {
       productResponse,
       productsResponse,
+      commentsResponse,
     },
   };
 };

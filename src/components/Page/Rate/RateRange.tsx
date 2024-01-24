@@ -3,9 +3,11 @@ import { Space, Tooltip } from "@/components/UI";
 import { HiStar } from "react-icons/hi2";
 import useLangStore from "@/store/LangStore";
 
-interface RateRangeProps {}
+interface RateRangeProps {
+  onSelectPoint?: (point: number) => void;
+}
 
-const RateRange: FC<RateRangeProps> = () => {
+const RateRange: FC<RateRangeProps> = ({ onSelectPoint }) => {
   const lang = useLangStore((state) => state.lang);
 
   const [point, setPoint] = useState<number>(0);
@@ -13,11 +15,11 @@ const RateRange: FC<RateRangeProps> = () => {
   const [hoverIdx, setHoverIdx] = useState<number>(0);
 
   const descriptions = [
-    lang.pageComponent.rate.wonderful,
-    lang.pageComponent.rate.good,
-    lang.pageComponent.rate.normal,
-    lang.pageComponent.rate.bad,
     lang.pageComponent.rate.terrible,
+    lang.pageComponent.rate.bad,
+    lang.pageComponent.rate.normal,
+    lang.pageComponent.rate.good,
+    lang.pageComponent.rate.wonderful,
   ];
 
   const renderColor = (ratePoint: number) => {
@@ -25,7 +27,10 @@ const RateRange: FC<RateRangeProps> = () => {
     return "";
   };
 
-  const handleSelect = (ratePoint: number) => setPoint(ratePoint);
+  const handleSelect = (ratePoint: number) => {
+    setPoint(ratePoint);
+    onSelectPoint?.(ratePoint);
+  };
 
   const handleHover = (e: MouseEvent, point: number) => {
     if (e.type === "mouseenter") return setHoverIdx(point);
@@ -35,10 +40,10 @@ const RateRange: FC<RateRangeProps> = () => {
   return (
     <div className="rate-range">
       <Space size={5} justify="center">
-        {[...Array(5)].map((_, idx) => {
+        {descriptions.map((description, idx) => {
           const ratePoint = idx + 1;
           return (
-            <Tooltip label={descriptions[idx]} key={idx}>
+            <Tooltip color="green" label={description} key={idx}>
               <label className="range-item">
                 <input
                   type="radio"

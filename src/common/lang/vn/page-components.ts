@@ -33,6 +33,9 @@ const page_components_vn = {
     terrible: "Quá tệ",
     modalTitle: "Đánh giá sản phẩm",
   },
+  comment: {
+    note: "Đăng nhập và để lại bình luận của bạn",
+  },
   auth: {
     note: "Phiên của bạn đã hết hạn, vui lòng đăng nhập lại",
     logout: "Đăng xuấ",

@@ -8,15 +8,16 @@ import { HiMail } from "react-icons/hi";
 import { useAsync, useLang, useRule } from "@/hooks";
 import { useRouter } from "next/router";
 import { HttpStatus } from "@/services/axios";
-import useMessage from "@/components/UI/ToastMessage/useMessage";
 import useAuthStore from "@/store/AuthStore";
+import usePathnameStore from "@/store/PathnameStore";
+import useMessage from "@/components/UI/ToastMessage/useMessage";
 import AuthHeader from "@/features/auth/AuthHeader";
 import AuthBack from "@/features/auth/AuthBack";
 import AuthNote from "@/features/auth/AuthNote";
 import Link from "next/link";
 import url from "@/common/constant/url";
 
-const { AUTH_SIGN_UP, HOME } = url;
+const { AUTH_SIGN_UP } = url;
 
 const { Title } = Typography;
 
@@ -30,6 +31,8 @@ const SignIn: NextPage = () => {
   const { email, password } = useRule();
 
   const router = useRouter();
+
+  const previousPath = usePathnameStore((state) => state.previousPath);
 
   const setAuth = useAuthStore((state) => state.setAuth);
 
@@ -49,7 +52,7 @@ const SignIn: NextPage = () => {
     }
     setAuth(response.data);
     messageApi.success(lang.common.message.success.signIn);
-    setTimeout(() => router.push(HOME), 200);
+    setTimeout(() => router.push(previousPath), 200);
   };
 
   return (

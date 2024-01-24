@@ -22,6 +22,7 @@ export type Product = {
   subCategoryId: string;
   isNew?: boolean;
   point?: number;
+  totalVoted?: number;
 
   category?: Category;
   subCategory?: SubCategory;

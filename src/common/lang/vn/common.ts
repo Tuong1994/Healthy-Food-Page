@@ -104,7 +104,10 @@ const common_vn = {
       logout: "Đã đăng xuất",
       addItemCart: "Sản phẩm đã được thêm vào giỏ hàng",
       updateCart: "Giỏ hàng đã được cập nhật",
-      payment: 'Thanh toán thành công'
+      rate: "Cảm ơn vì sự đánh giá của bạn",
+      addComment: "Cảm ơn bạn đã bình luận",
+      updateComment: "Bình luận đã được cập nhật",
+      removeComment: "Bình luận đã được xóa",
     },
     error: {
       authEmail: "Email không đúng. Vui lòng thử lại",
