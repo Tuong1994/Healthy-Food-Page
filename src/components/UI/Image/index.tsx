@@ -42,7 +42,7 @@ const Image: ForwardRefRenderFunction<HTMLImageElement, ImageProps> = (
     imgHeight,
     objectFit = "fill",
     lazyType = "lazy",
-    src = "/default-image.jpg",
+    src = "/default-image.png",
     onCheck,
     ...restProps
   },

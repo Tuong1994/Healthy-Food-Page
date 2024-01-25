@@ -86,6 +86,7 @@ const common_en = {
       status: "Status",
       paymentStatus: "Payment status",
       paymentMethod: "Payment method",
+      recievedType: 'Recieved method',
       comment: "Comment",
       rate: "Rate",
       createdAt: "Created date",

@@ -86,6 +86,7 @@ const common_vn = {
       status: "Trạng thái",
       paymentStatus: "Tình trạng thanh toán",
       paymentMethod: "Phương thức thanh toán",
+      recievedType: "Phương thức nhận hàng",
       comment: "Bình luận",
       rate: "Đánh giá",
       createdAt: "Ngày tạo",

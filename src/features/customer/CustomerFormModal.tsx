@@ -44,12 +44,14 @@ const CustomerFormModal: FC<CustomerFormModalProps> = ({ lang, handleOpenPasswor
     phone: "0793229970",
     gender: EGender.MALE,
     birthday: new Date("1994-11-28"),
-    address_en: "79/24/13 Au Co str",
-    address_vn: "79/24/13 Au Co",
-    cityCode: 0,
-    districtCode: 0,
-    wardCode: 0,
     role: ERole.CUSTOMER,
+    address: {
+      address_en: "79/24/13 Au Co str",
+      address_vn: "79/24/13 Au Co",
+      cityCode: 0,
+      districtCode: 0,
+      wardCode: 0,
+    },
   };
 
   const handleShowMore = () => setShowMore(!showMore);

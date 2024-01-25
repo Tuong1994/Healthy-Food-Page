@@ -7,12 +7,12 @@
   left: 0;
   z-index: 20;
   opacity: 0;
-  transition: opacity $transition-time-sm $transition-fn;
+  transition: opacity $transition-time-xs $transition-fn;
 }
 
 .drawer-backdrop-active {
   opacity: 1;
-  animation: fade $transition-time-sm $transition-fn;
+  animation: fade $transition-time-xs $transition-fn;
 }
 
 .drawer {
@@ -24,7 +24,7 @@
   right: -100%;
   z-index: 25;
   opacity: 0;
-  transition: all $transition-time-md $transition-fn;
+  transition: all $transition-time-sm $transition-fn;
   .drawer-head {
     padding: $p-1 $p-2;
     height: $h-5;
@@ -56,8 +56,12 @@
   }
 }
 
+.drawer-full {
+  width: $w-full;
+}
+
 .drawer-active {
   opacity: 1;
   right: 0;
-  animation: fadeInRight $transition-time-md $transition-fn;
+  animation: fadeInRight $transition-time-sm $transition-fn;
 }

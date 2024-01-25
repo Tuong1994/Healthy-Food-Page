@@ -60,9 +60,12 @@ const AppAuth: FC<AppAuthProps> = ({ children }) => {
   // Refresh token interval
   useEffect(() => {
     if (!isAuth) return;
-    if (expired < Date.now()) return;
+
+    const expiredTime = expired ?? 0;
+    if (expiredTime < Date.now()) return setOpen(true);
+
     let interval: any;
-    const time = expired - Date.now() - 500;
+    const time = expiredTime - Date.now() - 500;
     interval = setInterval(() => {
       if (!reLogin) onRefresh();
     }, time);

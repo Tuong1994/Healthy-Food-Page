@@ -14,13 +14,21 @@ interface CustomerPasswordModalProps extends ModalProps {
 }
 
 const CustomerPasswordModal: FC<CustomerPasswordModalProps> = ({ lang, ...restProps }) => {
+  const modalDefaultProps: ModalProps = {
+    color: "green",
+    sizes: "sm",
+    head: lang.customer.form.action,
+    okButtonTitle: lang.common.actions.save,
+    ...restProps,
+  };
+
   const initialData: FormData = {
     oldPassword: "",
     newPassword: "",
   };
 
   return (
-    <Modal color="green" sizes="sm" {...restProps}>
+    <Modal {...modalDefaultProps}>
       <Form<FormData> initialData={initialData}>
         <FormItem name="oldPassword">
           <InputPassword required label={lang.common.form.label.oldPassword} />

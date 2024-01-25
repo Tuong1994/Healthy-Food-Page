@@ -1,27 +1,25 @@
-import { FC, Fragment, useState } from "react";
+import { FC } from "react";
 import { Card, Avatar, Space, Divider, InfoRow, Tooltip, Button, Typography } from "@/components/UI";
 import type { Lang } from "@/common/type";
 import type { InfoRowProps } from "@/components/UI/InfoRow";
-import { EGender } from "@/services/customer/enum";
-import { HiCalendar, HiPhone, HiUser } from "react-icons/hi2";
+import type { Customer } from "@/services/customer/type";
+import { ERole } from "@/services/customer/enum";
+import { HiCalendar, HiPhone } from "react-icons/hi2";
 import { HiLocationMarker, HiMail, HiPencilAlt } from "react-icons/hi";
 import { FaTransgender } from "react-icons/fa";
 import { useDisplayGender } from "@/hooks";
-import CustomerFormModal from "./CustomerFormModal";
-import CustomerPasswordModal from "./CustomerPasswordModal";
 import utils from "@/utils";
+import moment from "moment";
 
 const { Paragraph } = Typography;
 
 interface CustomerInfoProps {
   lang: Lang;
+  customer: Customer;
+  handleOpenEdit: () => void;
 }
 
-const CustomerInfo: FC<CustomerInfoProps> = ({ lang }) => {
-  const [openForm, setOpenForm] = useState<boolean>(false);
-
-  const [openPassword, setOpenPassword] = useState<boolean>(false);
-
+const CustomerInfo: FC<CustomerInfoProps> = ({ lang, customer, handleOpenEdit }) => {
   const commonProps: InfoRowProps = {
     rootClassName: "info-item",
     hasColon: false,
@@ -31,64 +29,60 @@ const CustomerInfo: FC<CustomerInfoProps> = ({ lang }) => {
     textSpanProps: { xs: 20, md: 20, lg: 20, span: 20 },
   };
 
-  const handleOpenForm = () => setOpenForm(true);
-
-  const handleOpenPassword = () => setOpenPassword(true);
-
-  const handleCloseForm = () => setOpenForm(false);
-
-  const handleClosePassword = () => setOpenPassword(false);
+  const hasAdmin = customer.role === ERole.ADMIN || customer.role === ERole.SUPER_ADMIN;
 
   return (
-    <Fragment>
-      <Card bodyClassName="customer-info">
-        <Space align="middle">
-          <Avatar color="black" size={50} />
-          <div className="info-group">
-            <Paragraph strong size={16}>
-              {lang.customer.greeting}, User name
-            </Paragraph>
+    <Card bodyClassName="customer-info">
+      <Space align="middle">
+        <Avatar color="black" size={50} />
+        <div className="info-group">
+          <Paragraph strong size={16}>
+            {lang.customer.greeting}, {customer.fullName}
+          </Paragraph>
+          {hasAdmin && (
             <a href="#">
               <Button sizes="sm" color="black">
                 {lang.customer.admin}
               </Button>
             </a>
-          </div>
-        </Space>
+          )}
+        </div>
+      </Space>
 
-        <Divider />
+      <Divider />
 
-        <Space justify="end">
-          <Tooltip label={lang.common.actions.edit} placement="left" onClick={handleOpenForm}>
-            <HiPencilAlt className="info-edit-icon" size={18} />
-          </Tooltip>
-        </Space>
+      <Space justify="end">
+        <Tooltip label={lang.common.actions.edit} placement="left" onClick={handleOpenEdit}>
+          <HiPencilAlt className="info-edit-icon" size={18} />
+        </Tooltip>
+      </Space>
 
-        <InfoRow {...commonProps} labelElement={<HiUser />} text="Jack Williams" />
-        <InfoRow {...commonProps} labelElement={<HiPhone />} text={utils.formatPhoneNumber("0793229970")} />
-        <InfoRow {...commonProps} labelElement={<HiMail />} text="jack@example.com" />
+      <InfoRow {...commonProps} labelElement={<HiMail />} text={customer.email} />
+      {customer.phone && (
+        <InfoRow
+          {...commonProps}
+          labelElement={<HiPhone />}
+          text={utils.formatPhoneNumber(customer.phone ?? "")}
+        />
+      )}
+      {customer.gender && (
         <InfoRow
           {...commonProps}
           labelElement={<FaTransgender />}
-          textElement={useDisplayGender(EGender.MALE)}
+          textElement={useDisplayGender(customer.gender)}
         />
-        <InfoRow {...commonProps} labelElement={<HiCalendar />} text="28/11/1994" />
+      )}
+      {customer.birthday && (
         <InfoRow
           {...commonProps}
-          labelElement={<HiLocationMarker />}
-          text="79/24/13 Au Co Str, Ward 14, District 11, HCMC"
+          labelElement={<HiCalendar />}
+          text={moment(customer.birthday).format("DD/MM/YYYY")}
         />
-      </Card>
-
-      <CustomerFormModal
-        lang={lang}
-        open={openForm}
-        onCancel={handleCloseForm}
-        handleOpenPassword={handleOpenPassword}
-      />
-
-      <CustomerPasswordModal lang={lang} open={openPassword} onCancel={handleClosePassword} />
-    </Fragment>
+      )}
+      {customer.address?.fullAddress && (
+        <InfoRow {...commonProps} labelElement={<HiLocationMarker />} text={customer.address?.fullAddress} />
+      )}
+    </Card>
   );
 };
 

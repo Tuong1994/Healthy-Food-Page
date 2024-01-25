@@ -4,7 +4,7 @@ export enum EGender {
 }
 
 export enum ERole {
-  CUSTOMER = 1,
+  SUPER_ADMIN = 1,
   ADMIN = 2,
-  SUPERADMIN = 3,
+  CUSTOMER = 3,
 }

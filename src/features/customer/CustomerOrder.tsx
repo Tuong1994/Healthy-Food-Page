@@ -1,96 +1,66 @@
-import { FC, Fragment } from "react";
-import { Table, Image, Pagination } from "@/components/UI";
+import { FC, Fragment, useState } from "react";
+import { Table, Image, Pagination, Empty } from "@/components/UI";
 import type { Order } from "@/services/order/type";
 import type { Columns } from "@/components/UI/Table/type";
 import type { OrderItem } from "@/services/order/type";
-import { EOrderStatus, EPaymentStatus, EPaymentMethod } from "@/services/order/enum";
-import { useLang, useDisplayOrderStatus, useDisplayPaymentMethod, useDisplayPaymentStatus } from "@/hooks";
+import type { ApiQuery } from "@/services/type";
+import type { Product } from "@/services/product/type";
+import { getOrders } from "@/services/order/api";
+import { EOrderStatus, EPaymentStatus, EPaymentMethod, ERecievedType } from "@/services/order/enum";
+import { ELang } from "@/common/enum";
+import { useRouter } from "next/router";
+import {
+  useLang,
+  useDisplayOrderStatus,
+  useDisplayPaymentMethod,
+  useDisplayPaymentStatus,
+  useDisplayRecievedType,
+} from "@/hooks";
+import NoDataError from "@/components/Page/Error/NoDataError";
+import useSWR from "swr";
 import utils from "@/utils";
 import moment from "moment";
 
-interface CustomerOrderProps {}
+interface CustomerOrderProps {
+  selectedTab: string;
+}
 
-const CustomerOrder: FC<CustomerOrderProps> = () => {
+const CustomerOrder: FC<CustomerOrderProps> = ({ selectedTab }) => {
   const { lang, locale } = useLang();
 
-  const dataSource: Order[] = [
+  const { query } = useRouter();
+
+  const customerId = query.id as string;
+
+  const langCode = query.langCode as ELang;
+
+  const [error, setError] = useState<boolean>(false);
+
+  const [apiQuery, setApiQuery] = useState<ApiQuery>({
+    page: 1,
+    limit: 10,
+    customerId,
+    langCode,
+  });
+
+  const swrKey = `getOrders?page=${apiQuery.page}&customerId=${customerId}&langCode=${langCode}`;
+
+  const getOrdersByCustomer = async () => {
+    const response = await getOrders(apiQuery);
+    if (!response.success) setError(true);
+    return response;
+  };
+
+  const { data: ordersResponse, isValidating: loading } = useSWR(
+    selectedTab === "order" ? swrKey : null,
+    getOrdersByCustomer,
     {
-      id: "1",
-      orderNumber: "#00001",
-      status: EOrderStatus.DELIVERED,
-      paymentStatus: EPaymentStatus.PAID,
-      paymentMethod: EPaymentMethod.TRANSFER,
-      customerId: "1",
-      createdAt: new Date(),
-      items: [
-        {
-          id: "item-1",
-          productName: "Product 1",
-          productPrice: 100000,
-          productImage: null,
-          productId: "product-1",
-          quantity: 1,
-          orderId: "1",
-        },
-        {
-          id: "item-2",
-          productName: "Product 2",
-          productPrice: 100000,
-          productImage: null,
-          productId: "product-2",
-          quantity: 1,
-          orderId: "1",
-        },
-        {
-          id: "item-3",
-          productName: "Product 3",
-          productPrice: 100000,
-          productImage: null,
-          productId: "product-3",
-          quantity: 1,
-          orderId: "1",
-        },
-        {
-          id: "item-4",
-          productName: "Product 4",
-          productPrice: 100000,
-          productImage: null,
-          productId: "product-4",
-          quantity: 1,
-          orderId: "1",
-        },
-      ],
-    },
-    {
-      id: "2",
-      orderNumber: "#00002",
-      status: EOrderStatus.DELIVERING,
-      paymentStatus: EPaymentStatus.UNPAID,
-      paymentMethod: EPaymentMethod.COD,
-      customerId: "1",
-      createdAt: new Date(),
-      items: [
-        {
-          id: "item-1",
-          productName: "Product 4",
-          productPrice: 200000,
-          productImage: null,
-          productId: "product-4",
-          quantity: 2,
-          orderId: "1",
-        },
-        {
-          id: "item-2",
-          productName: "Product 5",
-          productPrice: 200000,
-          productImage: null,
-          productId: "product-6",
-          quantity: 5,
-          orderId: "1",
-        },
-      ],
-    },
-  ];
+      refreshInterval: 0,
+      revalidateOnFocus: false,
+    }
+  );
+
+  const dataSource: Order[] = ordersResponse?.data?.items ?? [];
 
   const columns: Columns<Order> = [
     {
@@ -102,19 +72,25 @@ const CustomerOrder: FC<CustomerOrderProps> = () => {
       id: "status",
       title: lang.common.table.head.status,
       dataIndex: "status",
-      render: (data: EOrderStatus) => <>{useDisplayOrderStatus(data)}</>,
+      render: (status: EOrderStatus) => <>{useDisplayOrderStatus(status)}</>,
     },
     {
       id: "paymentMethod",
       title: lang.common.table.head.paymentMethod,
       dataIndex: "paymentMethod",
-      render: (data: EPaymentMethod) => <>{useDisplayPaymentMethod(data)}</>,
+      render: (method: EPaymentMethod) => <>{useDisplayPaymentMethod(method)}</>,
     },
     {
       id: "paymentStatus",
       title: lang.common.table.head.paymentStatus,
       dataIndex: "paymentStatus",
-      render: (data: EPaymentStatus) => <>{useDisplayPaymentStatus(data)}</>,
+      render: (status: EPaymentStatus) => <>{useDisplayPaymentStatus(status)}</>,
+    },
+    {
+      id: "recieviedType",
+      title: lang.common.table.head.recievedType,
+      dataIndex: "recievedType",
+      render: (type: ERecievedType) => <>{useDisplayRecievedType(type)}</>,
     },
     {
       id: "createdAt",
@@ -127,15 +103,16 @@ const CustomerOrder: FC<CustomerOrderProps> = () => {
   const expandRowTable = (order: Order) => {
     const columns: Columns<OrderItem> = [
       {
-        id: "productImage",
+        id: "image",
         title: lang.common.table.head.image,
-        dataIndex: "productImage",
+        dataIndex: "product",
         render: () => <Image imgWidth={60} imgHeight={60} />,
       },
       {
-        id: "productName",
+        id: "name",
         title: lang.common.table.head.productName,
-        dataIndex: "productName",
+        dataIndex: "product",
+        render: (product: Product) => <>{product?.name}</>,
       },
       {
         id: "quantity",
@@ -143,26 +120,40 @@ const CustomerOrder: FC<CustomerOrderProps> = () => {
         dataIndex: "quantity",
       },
       {
-        id: "productPrice",
+        id: "price",
         title: lang.common.table.head.price,
-        dataIndex: "productPrice",
-        render: (data: number) => <>{utils.formatPrice(locale, data)}</>,
+        dataIndex: "product",
+        render: (product: Product) => <>{utils.formatPrice(locale, product?.totalPrice)}</>,
       },
     ];
 
     return <Table<OrderItem> color="green" dataSource={order.items} columns={columns} />;
   };
 
+  const handleChangePage = (page: number) => setApiQuery((prev) => ({ ...prev, page }));
+
+  if (error) return <NoDataError />;
+
+  if (!dataSource.length) return <Empty text={lang.customer.order.empty} />;
+
   return (
     <Fragment>
       <Table<Order>
         color="green"
         hasRowExpand
+        loading={loading}
         dataSource={dataSource}
         columns={columns}
         expandRowTable={expandRowTable}
       />
-      <Pagination rootClassName="customer-table-pagination" color="green" shape="square" ghost />
+      <Pagination
+        ghost
+        color="green"
+        shape="square"
+        rootClassName="customer-table-pagination"
+        total={ordersResponse?.data?.totalItems ?? 0}
+        onChangePage={handleChangePage}
+      />
     </Fragment>
   );
 };

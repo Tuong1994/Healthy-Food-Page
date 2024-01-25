@@ -23,11 +23,22 @@
   }
 }
 
-.customer-modal {
-  .modal-showmore {
+.customer-form {
+  .form-showmore {
     margin: $m-1 0;
     border: unset;
     background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: $text-blue;
+    * {
+      color: $text-blue;
+    }
+  }
+  .form-showmore-close {
+    * {
+      color: $text-red;
+    }
   }
 }
