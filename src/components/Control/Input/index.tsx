@@ -14,6 +14,7 @@ import { HiXCircle } from "react-icons/hi2";
 import { useFormContext } from "react-hook-form";
 import { ControlColor, ControlShape, InputValue } from "../type";
 import { ComponentSize } from "@/common/type";
+import { useLang } from "@/hooks";
 import FormItemContext from "../Form/FormItemContext";
 import FormContext from "../Form/FormContext";
 import useLayout from "@/components/UI/Layout/useLayout";
@@ -51,7 +52,7 @@ const Input: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
     sizes = "md",
     color = "blue",
     shape = "square",
-    placeholder = "Enter information...",
+    placeholder,
     disabled,
     required,
     optional,
@@ -65,6 +66,8 @@ const Input: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
   const rhfMethods = useFormContext();
 
   const { layoutValue } = useLayout();
+
+  const { lang } = useLang();
 
   const { layoutTheme: theme } = layoutValue;
 
@@ -84,6 +87,8 @@ const Input: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
   const controlSize = isRhf ? rhfSizes : sizes;
 
   const controlShape = isRhf ? rhfShape : shape;
+
+  const controlPlaceHolder = placeholder ?? lang.common.form.placeholder.enter;
 
   const showClearIcon = hasClear && inputValue && !controlDisabled;
 
@@ -156,7 +161,7 @@ const Input: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
           <div style={labelStyle} className={controlLabelClassName}>
             {required && <span className="label-required">*</span>}
             <span>{label}</span>
-            {showOptional && <span className="label-optional">(Optional)</span>}
+            {showOptional && <span className="label-optional">({lang.common.form.others.optional})</span>}
           </div>
         )}
 
@@ -170,7 +175,7 @@ const Input: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
               type="text"
               value={inputValue}
               disabled={controlDisabled}
-              placeholder={placeholder}
+              placeholder={controlPlaceHolder}
               className={controlInputClassName}
               onChange={onChangeFn}
               onBlur={onBlurFn}

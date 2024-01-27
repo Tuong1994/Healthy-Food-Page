@@ -42,7 +42,7 @@ const Image: ForwardRefRenderFunction<HTMLImageElement, ImageProps> = (
     imgHeight,
     objectFit = "fill",
     lazyType = "lazy",
-    src = "/default-image.png",
+    src,
     onCheck,
     ...restProps
   },
@@ -63,17 +63,18 @@ const Image: ForwardRefRenderFunction<HTMLImageElement, ImageProps> = (
   const className = utils.formatClassName("image", fitClassName, rootCheckedClassName, rootClassName);
 
   useEffect(() => {
+    const path = src ? src : "/default-image.png";
     if (lazyType === "lazy") {
       if (window["IntersectionObserver"]) {
         const observer = new IntersectionObserver((entries) => {
           if (entries[0].isIntersecting) {
-            setView(src as string);
+            setView(path);
             if (elRef.current && elRef.current !== null) observer.unobserve(elRef.current);
           }
         });
         if (elRef.current && elRef.current !== null) observer.observe(elRef.current);
-      } else setView(src as string);
-    } else setView(src as string);
+      } else setView(path);
+    } else setView(path);
   }, [src]);
 
   const imageSize = (): CSSProperties => {

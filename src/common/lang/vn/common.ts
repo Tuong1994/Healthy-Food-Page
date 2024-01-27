@@ -40,9 +40,11 @@ const common_vn = {
       optional: "Không bắt buộc",
     },
     placeholder: {
-      type: "Nhập",
+      enter: "Nhập thông tin",
       select: "Chọn",
       search: "Tìm kiếm",
+      imagesUpload: "Chọn hoặc kéo thả hình ảnh vào khu vực này",
+      filesUpload: "Chọn tập tin",
     },
     rule: {
       required: "Trường này là bắt buộc",
@@ -53,6 +55,13 @@ const common_vn = {
       max: "{{max}} là tối đa",
       minLength: "Phải có ít nhất {{min}} ký tự",
       maxLength: "Độ dài tối đa là {{max}} ký tự",
+    },
+    others: {
+      emptyOptions: "Không có lựa chọn",
+      optional: "Không bắt buộc",
+      fileSize: "Kích thước tệp không được lớn hơn {{num}}MB",
+      fileType: "Chỉ chấp nhận loại tệp {{type}}",
+      fileMax: "Mỗi lần chỉ có thể tải lên {{num}} hình ảnh",
     },
   },
   unit: {
@@ -109,6 +118,8 @@ const common_vn = {
       addComment: "Cảm ơn bạn đã bình luận",
       updateComment: "Bình luận đã được cập nhật",
       removeComment: "Bình luận đã được xóa",
+      updateCustomer: "Cập nhật thành công",
+      changePassword: "Mật khẩu đã được thay đổi",
     },
     error: {
       authEmail: "Email không đúng. Vui lòng thử lại",

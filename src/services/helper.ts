@@ -21,8 +21,11 @@ export const getApiQuery = (query: ApiQuery) => {
     likeId,
     imageId,
     cityId,
+    cityCode,
     districtId,
+    districtCode,
     wardId,
+    wardCode,
     hasSub,
     role,
     gender,
@@ -59,8 +62,11 @@ export const getApiQuery = (query: ApiQuery) => {
   likeId && (rs += `&likeId=${likeId}`);
   imageId && (rs += `&imageId=${imageId}`);
   cityId && (rs += `&cityId=${cityId}`);
+  cityCode && (rs += `&cityCode=${cityCode}`);
   districtId && (rs += `&districtId=${districtId}`);
+  districtCode && (rs += `&districtCode=${districtCode}`);
   wardId && (rs += `&wardId=${wardId}`);
+  wardCode && (rs += `&wardCode=${wardCode}`);
   hasSub && (rs += `&hasSub=${hasSub}`);
   role && (rs += `&role=${role}`);
   gender && (rs += `&gender=${gender}`);

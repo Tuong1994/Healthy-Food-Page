@@ -1,8 +1,9 @@
 import {
+  FC,
   InputHTMLAttributes,
   CSSProperties,
   ReactNode,
-  ForwardRefRenderFunction,
+  ForwardedRef,
   ChangeEvent,
   useContext,
   useEffect,
@@ -10,12 +11,13 @@ import {
   useRef,
   useCallback,
   useMemo,
+  useImperativeHandle,
   forwardRef,
 } from "react";
-import { ControlColor, ControlShape, Option, SelectOptions } from "../type";
+import { ControlColor, ControlShape, Option, SelectOptions, SelectRef } from "../type";
 import { ComponentSize } from "@/common/type";
 import { useFormContext } from "react-hook-form";
-import { useRender, useClickOutside, useDetectBottom } from "@/hooks";
+import { useRender, useClickOutside, useDetectBottom, useLang } from "@/hooks";
 import SelectControl from "./Control";
 import FormContext from "../Form/FormContext";
 import FormItemContext from "../Form/FormItemContext";
@@ -32,6 +34,7 @@ export interface TreeSelectProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: ReactNode | ReactNode[];
   addonBefore?: ReactNode | ReactNode[];
   addonAfter?: ReactNode | ReactNode[];
+  emptyContent?: ReactNode | ReactNode[];
   options?: SelectOptions;
   defaultValue?: number | string;
   sizes?: ComponentSize;
@@ -51,7 +54,7 @@ export interface TreeSelectProps extends InputHTMLAttributes<HTMLInputElement> {
   dropdownRender?: (menu: ReactNode) => ReactNode | ReactNode[];
 }
 
-const TreeSelect: ForwardRefRenderFunction<HTMLInputElement, TreeSelectProps> = (
+const TreeSelect: FC<TreeSelectProps> = (
   {
     rootClassName = "",
     labelClassName = "",
@@ -76,17 +79,20 @@ const TreeSelect: ForwardRefRenderFunction<HTMLInputElement, TreeSelectProps> = 
     hasSearch = true,
     required,
     optional,
+    emptyContent,
     onChangeSearch,
     onChangeSelect,
     onChangePage,
     dropdownRender,
     ...restProps
   },
-  ref
+  ref: ForwardedRef<SelectRef>
 ) => {
   const rhfMethods = useFormContext();
 
   const { layoutValue } = useLayout();
+
+  const { lang } = useLang();
 
   const { layoutTheme: theme } = layoutValue;
 
@@ -106,11 +112,18 @@ const TreeSelect: ForwardRefRenderFunction<HTMLInputElement, TreeSelectProps> = 
 
   const selectRef = useRef<HTMLDivElement>(null);
 
+  const inputRef = useRef<HTMLInputElement>(null);
+
   const render = useRender(dropdown);
 
   const bottom = useDetectBottom(selectRef);
 
   useClickOutside(selectRef, setDropdown);
+
+  useImperativeHandle(ref, () => ({
+    el: inputRef.current as HTMLInputElement,
+    onResetInput: handleClearInput,
+  }));
 
   const totalPages = Math.ceil(total / limit);
 
@@ -136,8 +149,8 @@ const TreeSelect: ForwardRefRenderFunction<HTMLInputElement, TreeSelectProps> = 
 
   const controlPlaceHolder = useMemo(() => {
     if (placeholder) return placeholder;
-    if (dropdown && hasSearch) return "Search";
-    return "Select option";
+    if (dropdown && hasSearch) return lang.common.form.placeholder.search;
+    return lang.common.form.placeholder.select;
   }, [placeholder, dropdown]);
 
   const controlDisabled = rhfDisabled ? rhfDisabled : disabled;
@@ -238,14 +251,14 @@ const TreeSelect: ForwardRefRenderFunction<HTMLInputElement, TreeSelectProps> = 
         <label style={labelStyle} className={controlLabelClassName}>
           {required && <span className="label-required">*</span>}
           <span>{label}</span>
-          {showOptional && <span className="label-optional">(Optional)</span>}
+          {showOptional && <span className="label-optional">({lang.common.form.others.optional})</span>}
         </label>
       )}
 
       <div className="tree-select-wrap">
         <SelectControl
           {...restProps}
-          ref={ref}
+          ref={inputRef}
           inputClassName={inputClassName}
           addonAfter={addonAfter}
           addonBefore={addonBefore}
@@ -271,6 +284,7 @@ const TreeSelect: ForwardRefRenderFunction<HTMLInputElement, TreeSelectProps> = 
             selectedOption={selectedOption}
             currentPage={currentPage}
             totalPages={totalPages}
+            emptyContent={emptyContent}
             options={renderOptions()}
             iconSize={iconSize}
             handleSelect={handleSelect}

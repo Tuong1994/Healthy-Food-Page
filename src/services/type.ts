@@ -36,8 +36,11 @@ export type ApiQuery = {
   likeId?: string;
   imageId?: string;
   cityId?: string;
+  cityCode?: string;
   districtId?: string;
+  districtCode?: string;
   wardId?: string;
+  wardCode?: string;
 
   hasSub?: boolean;
   role?: ERole;
@@ -59,8 +62,8 @@ export type ApiConfig<T> = {
 
 export type ApiFetchState = {
   loading: boolean;
-  error: boolean
-}
+  error: boolean;
+};
 
 export type ResponseError = {
   status: number;

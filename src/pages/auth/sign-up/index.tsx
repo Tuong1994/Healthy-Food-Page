@@ -26,7 +26,7 @@ const SignUp: NextPage = () => {
 
   const { lang } = useLang();
 
-  const { email, phone, password } = useRule();
+  const { common, email, phone, password } = useRule();
 
   const { loading, call: onSubmit } = useAsync<AuthInfo>(signUp);
 
@@ -73,13 +73,13 @@ const SignUp: NextPage = () => {
         >
           <Form<AuthSignUp> color="green" sizes="lg" initialData={initialData} onFinish={handleSubmit}>
             <FormItem name="email" rules={email()}>
-              <Input label={lang.common.form.label.email} addonBefore={<HiMail />} />
+              <Input required label={lang.common.form.label.email} addonBefore={<HiMail />} />
             </FormItem>
             <FormItem name="password" rules={password()}>
-              <InputPassword label={lang.common.form.label.password} addonBefore={<HiLockClosed />} />
+              <InputPassword required label={lang.common.form.label.password} addonBefore={<HiLockClosed />} />
             </FormItem>
-            <FormItem name="phone" rules={phone()}>
-              <InputPhone label={lang.common.form.label.phone} addonBefore={<HiPhone />} />
+            <FormItem name="phone" rules={phone().concat(common())}>
+              <InputPhone required label={lang.common.form.label.phone} addonBefore={<HiPhone />} />
             </FormItem>
 
             <div className="form-actions">

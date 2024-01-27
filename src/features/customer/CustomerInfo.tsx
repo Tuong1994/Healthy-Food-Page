@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Card, Avatar, Space, Divider, InfoRow, Tooltip, Button, Typography } from "@/components/UI";
+import { Card, Avatar, Space, Divider, InfoRow, Tooltip, Button, Image, Typography } from "@/components/UI";
 import type { Lang } from "@/common/type";
 import type { InfoRowProps } from "@/components/UI/InfoRow";
 import type { Customer } from "@/services/customer/type";
@@ -31,10 +31,14 @@ const CustomerInfo: FC<CustomerInfoProps> = ({ lang, customer, handleOpenEdit })
 
   const hasAdmin = customer.role === ERole.ADMIN || customer.role === ERole.SUPER_ADMIN;
 
+  console.log(customer);
+
   return (
     <Card bodyClassName="customer-info">
       <Space align="middle">
-        <Avatar color="black" size={50} />
+        <Avatar color="black" size={50}>
+          <Image imgWidth="100%" imgHeight="100%" src={customer.image?.path} />
+        </Avatar>
         <div className="info-group">
           <Paragraph strong size={16}>
             {lang.customer.greeting}, {customer.fullName}

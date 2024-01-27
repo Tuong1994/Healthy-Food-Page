@@ -1,8 +1,9 @@
 import {
+  FC,
   InputHTMLAttributes,
   CSSProperties,
   ReactNode,
-  ForwardRefRenderFunction,
+  ForwardedRef,
   ChangeEvent,
   useContext,
   useEffect,
@@ -10,12 +11,13 @@ import {
   useRef,
   useCallback,
   useMemo,
+  useImperativeHandle,
   forwardRef,
 } from "react";
 import { useFormContext } from "react-hook-form";
-import { ControlColor, ControlShape, Option, SelectOptions } from "../type";
+import { ControlColor, ControlShape, Option, SelectOptions, SelectRef } from "../type";
 import { ComponentSize } from "@/common/type";
-import { useRender, useClickOutside, useDetectBottom } from "@/hooks";
+import { useRender, useClickOutside, useDetectBottom, useLang } from "@/hooks";
 import SelectTagControl from "./Control";
 import SelectOption from "./Option";
 import FormContext from "../Form/FormContext";
@@ -32,6 +34,7 @@ export interface SelectTagProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: ReactNode | ReactNode[];
   addonBefore?: ReactNode | ReactNode[];
   addonAfter?: ReactNode | ReactNode[];
+  emptyContent?: ReactNode | ReactNode[];
   options?: SelectOptions;
   defaultTags?: any[];
   sizes?: ComponentSize;
@@ -51,7 +54,7 @@ export interface SelectTagProps extends InputHTMLAttributes<HTMLInputElement> {
   dropdownRender?: (menu: ReactNode) => ReactNode | ReactNode[];
 }
 
-const SelectTag: ForwardRefRenderFunction<HTMLInputElement, SelectTagProps> = (
+const SelectTag: FC<SelectTagProps> = (
   {
     rootClassName = "",
     labelClassName = "",
@@ -76,17 +79,20 @@ const SelectTag: ForwardRefRenderFunction<HTMLInputElement, SelectTagProps> = (
     hasSearch = true,
     required,
     optional,
+    emptyContent,
     onChangeSearch,
     onChangeSelect,
     onChangePage,
     dropdownRender,
     ...restProps
   },
-  ref
+  ref: ForwardedRef<SelectRef>
 ) => {
   const rhfMethods = useFormContext();
 
   const { layoutValue } = useLayout();
+
+  const { lang } = useLang();
 
   const { layoutTheme: theme } = layoutValue;
 
@@ -106,11 +112,25 @@ const SelectTag: ForwardRefRenderFunction<HTMLInputElement, SelectTagProps> = (
 
   const selectRef = useRef<HTMLDivElement>(null);
 
+  const inputRef = useRef<HTMLInputElement>(null);
+
   const render = useRender(dropdown);
 
   const bottom = useDetectBottom(selectRef);
 
   useClickOutside(selectRef, setDropdown);
+
+  useImperativeHandle(ref, () => {
+    const handleResetInput = () => {
+      setTouched(true);
+      if (search) setSearch("");
+      if (selectedOptions.length > 0) setSelectedOptions([]);
+    };
+    return {
+      el: inputRef.current as HTMLInputElement,
+      onResetInput: handleResetInput,
+    };
+  });
 
   const totalPages = Math.ceil(total / limit);
 
@@ -134,8 +154,8 @@ const SelectTag: ForwardRefRenderFunction<HTMLInputElement, SelectTagProps> = (
 
   const controlPlaceHolder = useMemo(() => {
     if (placeholder) return placeholder;
-    if (dropdown && hasSearch) return "Search";
-    return "Select option";
+    if (dropdown && hasSearch) return lang.common.form.placeholder.search;
+    return lang.common.form.placeholder.select;
   }, [placeholder, dropdown]);
 
   const controlDisabled = rhfDisabled ? rhfDisabled : disabled;
@@ -246,14 +266,14 @@ const SelectTag: ForwardRefRenderFunction<HTMLInputElement, SelectTagProps> = (
         <label style={labelStyle} className={controlLabelClassName}>
           {required && <span className="label-required">*</span>}
           <span>{label}</span>
-          {showOptional && <span className="label-optional">(Optional)</span>}
+          {showOptional && <span className="label-optional">({lang.common.form.others.optional})</span>}
         </label>
       )}
 
       <div className="select-wrap">
         <SelectTagControl
           {...restProps}
-          ref={ref}
+          ref={inputRef}
           inputClassName={inputClassName}
           addonAfter={addonAfter}
           addonBefore={addonBefore}
@@ -280,6 +300,7 @@ const SelectTag: ForwardRefRenderFunction<HTMLInputElement, SelectTagProps> = (
             selectedOptions={selectedOptions}
             currentPage={currentPage}
             totalPages={totalPages}
+            emptyContent={emptyContent}
             options={renderOptions()}
             iconSize={iconSize}
             handleSelect={handleSelect}

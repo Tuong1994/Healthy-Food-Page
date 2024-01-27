@@ -4,6 +4,9 @@ import {
   HiOutlineChevronDoubleRight as ArrowRight,
 } from "react-icons/hi2";
 import { SelectOptions } from "../type";
+import { useLang } from "@/hooks";
+import { ELang } from "@/common/enum";
+import { monthsEn, monthsVn } from "./data";
 import HeaderSelect from "./HeaderSelect";
 
 interface CalendarHeaderProps {
@@ -21,20 +24,9 @@ const CalendarHeader: FC<CalendarHeaderProps> = ({
   handleSelectYear,
   handleSwitchMonth,
 }) => {
-  const months = [
-    "Janunary",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
+  const { locale } = useLang();
+
+  const months = locale === ELang.EN ? monthsEn : monthsVn;
 
   const years = useMemo(() => {
     let startYear = 1970;

@@ -48,6 +48,7 @@ const utils = {
   },
 
   mapDataToOptions: <M extends object>(list: M[], label: keyof M, value: keyof M) => {
+    if (!list) return [];
     if (!list.length) return [];
     const options: SelectOptions = list.map((item) => ({ label: item[label], value: item[value] }));
     return options;

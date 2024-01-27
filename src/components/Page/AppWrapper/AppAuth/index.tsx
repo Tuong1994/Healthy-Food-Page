@@ -62,7 +62,7 @@ const AppAuth: FC<AppAuthProps> = ({ children }) => {
     if (!isAuth) return;
 
     const expiredTime = expired ?? 0;
-    if (expiredTime < Date.now()) return setOpen(true);
+    if (expiredTime < Date.now()) return;
 
     let interval: any;
     const time = expiredTime - Date.now() - 500;
@@ -70,7 +70,7 @@ const AppAuth: FC<AppAuthProps> = ({ children }) => {
       if (!reLogin) onRefresh();
     }, time);
     return () => clearInterval(interval);
-  });
+  }, []);
 
   return (
     <Fragment>

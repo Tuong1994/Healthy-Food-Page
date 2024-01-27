@@ -1,6 +1,6 @@
 import { getApiQuery } from "../helper";
 import { ApiQuery, Paging } from "../type";
-import { Customer, CustomerFormData } from "./type";
+import { Customer } from "./type";
 import customerApiPaths from "./path";
 import Fetch from "..";
 
@@ -14,13 +14,13 @@ export const getCustomer = async (query: ApiQuery) => {
   return response;
 };
 
-export const createCustomer = async (data: CustomerFormData) => {
-  const response = await Fetch.Post<CustomerFormData, Customer>(customerApiPaths.create, data);
+export const createCustomer = async (data: FormData) => {
+  const response = await Fetch.Post<FormData, Customer>(customerApiPaths.create, data);
   return response;
 };
 
-export const updateCustomer = async (query: ApiQuery, data: CustomerFormData) => {
-  const response = await Fetch.Put<CustomerFormData, any>(customerApiPaths.update + getApiQuery(query), data);
+export const updateCustomer = async (query: ApiQuery, data: FormData) => {
+  const response = await Fetch.Put<FormData, any>(customerApiPaths.update + getApiQuery(query), data);
   return response;
 };
 

@@ -1,9 +1,14 @@
 import { FC } from "react";
+import { useLang } from "@/hooks";
+import { ELang } from "@/common/enum";
+import { daysEn, daysVn } from "./data";
 
 interface CalendarDayProps {}
 
 const CalendarDay: FC<CalendarDayProps> = () => {
-  const days = ["Sun", "Mon", "Tue", "Web", "Thur", "Fri", "Sat"];
+  const { locale } = useLang();
+
+  const days = locale === ELang.EN ? daysEn : daysVn;
 
   return (
     <div className="calendar-day">

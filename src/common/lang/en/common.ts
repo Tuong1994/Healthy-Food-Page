@@ -40,9 +40,11 @@ const common_en = {
       optional: "Optional",
     },
     placeholder: {
-      type: "Type",
+      enter: "Enter infomation",
       select: "Select",
       search: "Search",
+      imagesUpload: "Select or drag image here",
+      filesUpload: "Choose file",
     },
     rule: {
       required: "This field is required",
@@ -53,6 +55,13 @@ const common_en = {
       max: "{{max}} is maximum",
       minLength: "Must have at least {{min}} character",
       maxLength: "Maximum length {{max}} characters",
+    },
+    others: {
+      emptyOptions: "No options",
+      optional: "Optional",
+      fileSize: "File size must not greater than {{num}}MB",
+      fileType: "Only accept file type {{type}}",
+      fileMax: "Can only upload {{num}} image per time",
     },
   },
   unit: {
@@ -86,7 +95,7 @@ const common_en = {
       status: "Status",
       paymentStatus: "Payment status",
       paymentMethod: "Payment method",
-      recievedType: 'Recieved method',
+      recievedType: "Recieved method",
       comment: "Comment",
       rate: "Rate",
       createdAt: "Created date",
@@ -109,6 +118,8 @@ const common_en = {
       addComment: "Thank you for your comment",
       updateComment: "Comment has been updated",
       removeComment: "Comment has been removed",
+      updateCustomer: "Updated success",
+      changePassword: "Password has been changed"
     },
     error: {
       authEmail: "Email is not correct. Please try again",

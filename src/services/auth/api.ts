@@ -1,6 +1,6 @@
 import { getApiQuery } from "../helper";
 import { ApiQuery } from "../type";
-import { Auth, AuthInfo, AuthSignIn, AuthSignUp } from "./type";
+import { Auth, AuthInfo, AuthPassword, AuthSignIn, AuthSignUp } from "./type";
 import localStorageKey from "@/common/constant/storage";
 import authApiPaths from "./path";
 import Fetch from "..";
@@ -25,6 +25,14 @@ export const refresh = async (query: ApiQuery) => {
       localStorage.setItem(localStorageKey.AUTH, JSON.stringify(newAuth));
     }
   }
+  return response;
+};
+
+export const changePassword = async (query: ApiQuery, data: AuthPassword) => {
+  const response = await Fetch.Post<AuthPassword, any>(
+    authApiPaths.changePassword + getApiQuery(query),
+    data
+  );
   return response;
 };
 

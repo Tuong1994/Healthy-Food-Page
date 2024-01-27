@@ -1,5 +1,5 @@
 import { FC, Fragment } from "react";
-import { Space, Avatar, Button, Dropdown, Grid, Typography, Loading } from "@/components/UI";
+import { Space, Avatar, Button, Dropdown, Image, Grid, Typography, Loading } from "@/components/UI";
 import type { Lang } from "@/common/type";
 import type { DropdownItems } from "@/components/UI/Dropdown/type";
 import type { ApiQuery } from "@/services/type";
@@ -111,7 +111,9 @@ const HeaderAuth: FC<HeaderAuthProps> = ({ lang }) => {
         <Col>
           <Dropdown items={items} placement="right">
             <Space align="middle">
-              <Avatar color="green" />
+              <Avatar color="green">
+                <Image imgWidth="100%" imgHeight="100%" src={info.image?.path} />
+              </Avatar>
               <Paragraph strong>{info.fullName ?? "Customer"}</Paragraph>
             </Space>
           </Dropdown>

@@ -16,6 +16,7 @@ import { useFormContext } from "react-hook-form";
 import { ControlColor, ControlShape, InputValue } from "../type";
 import { ComponentSize } from "@/common/type";
 import { ONLY_DIGIT_REGEX } from "../regex";
+import { useLang } from "@/hooks";
 import FormItemContext from "../Form/FormItemContext";
 import FormContext from "../Form/FormContext";
 import formatPhoneNumber from "./formatPhoneNumber";
@@ -54,7 +55,7 @@ const InputPhone: ForwardRefRenderFunction<HTMLInputElement, InputPhoneProps> = 
     sizes = "md",
     color = "blue",
     shape = "square",
-    placeholder = "Enter information...",
+    placeholder,
     disabled,
     required,
     optional,
@@ -68,6 +69,8 @@ const InputPhone: ForwardRefRenderFunction<HTMLInputElement, InputPhoneProps> = 
   const rhfMethods = useFormContext();
 
   const { layoutValue } = useLayout();
+
+  const {lang} = useLang()
 
   const { layoutTheme: theme } = layoutValue;
 
@@ -88,6 +91,8 @@ const InputPhone: ForwardRefRenderFunction<HTMLInputElement, InputPhoneProps> = 
   const controlSize = isRhf ? rhfSizes : sizes;
 
   const controlShape = isRhf ? rhfShape : shape;
+
+  const controlPlaceHolder = placeholder ?? lang.common.form.placeholder.enter
 
   const showClearIcon = hasClear && inputValue && !controlDisabled;
 
@@ -178,7 +183,7 @@ const InputPhone: ForwardRefRenderFunction<HTMLInputElement, InputPhoneProps> = 
           <div style={labelStyle} className={controlLabelClassName}>
             {required && <span className="label-required">*</span>}
             <span>{label}</span>
-            {showOptional && <span className="label-optional">(Optional)</span>}
+            {showOptional && <span className="label-optional">({lang.common.form.others.optional})</span>}
           </div>
         )}
 
@@ -193,7 +198,7 @@ const InputPhone: ForwardRefRenderFunction<HTMLInputElement, InputPhoneProps> = 
               maxLength={14}
               value={inputValue}
               disabled={controlDisabled}
-              placeholder={placeholder}
+              placeholder={controlPlaceHolder}
               className={controlInputClassName}
               onChange={handleChange}
               onBlur={handleBlur}

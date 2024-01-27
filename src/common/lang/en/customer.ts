@@ -7,11 +7,11 @@ const customer_en = {
   },
   comment: {
     title: "Comments",
-    empty: 'You have no comments yet'
+    empty: "You have no comments yet",
   },
   rate: {
     title: "Rates",
-    empty: "You don't have any rates yet"
+    empty: "You don't have any rates yet",
   },
   form: {
     title: "Update customer",
@@ -21,6 +21,11 @@ const customer_en = {
     more: "More information",
     close: "Close",
     return: "Return",
+    confirm: 'Are you sure want to delete this image?',
+    select: {
+      districtsEmpty: "Please select city",
+      wardsEmpty: "Please select district",
+    },
   },
 };
 

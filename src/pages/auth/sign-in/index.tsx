@@ -71,10 +71,10 @@ const SignIn: NextPage = () => {
         >
           <Form<AuthSignIn> color="green" sizes="lg" initialData={initialData} onFinish={handleSubmit}>
             <FormItem name="email" rules={email()}>
-              <Input label={lang.common.form.label.email} addonBefore={<HiMail />} />
+              <Input required label={lang.common.form.label.email} addonBefore={<HiMail />} />
             </FormItem>
             <FormItem name="password" rules={password()}>
-              <InputPassword label={lang.common.form.label.password} addonBefore={<HiLockClosed />} />
+              <InputPassword required label={lang.common.form.label.password} addonBefore={<HiLockClosed />} />
             </FormItem>
 
             <Space justify="end">

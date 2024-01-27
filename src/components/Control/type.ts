@@ -37,6 +37,11 @@ export type Option = {
 
 export type SelectOptions = Option[];
 
+export type SelectRef = {
+  el: HTMLInputElement;
+  onResetInput: () => void;
+}
+
 // DatePicker
 export type SelectDate = {
   fullDate: Date;

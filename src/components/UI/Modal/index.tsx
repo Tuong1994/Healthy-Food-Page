@@ -118,6 +118,8 @@ const Modal: ForwardRefRenderFunction<HTMLDivElement, ModalProps> = (
 
   const okActionProps: ButtonProps = { ...okButtonProps, color: okButtonColor };
 
+  const cancelActionProps: ButtonProps = { type: "button", ...cancelButtonProps };
+
   useImperativeHandle(ref, () => modalRef.current as HTMLDivElement);
 
   useEffect(() => {
@@ -157,7 +159,7 @@ const Modal: ForwardRefRenderFunction<HTMLDivElement, ModalProps> = (
             {hasFoot && (
               <div style={footStyle} className={modalFootClassName}>
                 {hasCancelButton && (
-                  <Button {...cancelButtonProps} onClick={onCancel}>
+                  <Button {...cancelActionProps} onClick={onCancel}>
                     {cancelButtonTitle ?? lang.common.actions.cancel}
                   </Button>
                 )}

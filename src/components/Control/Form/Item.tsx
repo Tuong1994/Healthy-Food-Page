@@ -66,13 +66,11 @@ const FormItem: React.FC<FormItemProps> = ({
           rules={{ ...getRules() }}
           render={() => <React.Fragment>{children}</React.Fragment>}
         />
-        {errors[rhfName] && (
-          <ErrorMessage
-            name={name}
-            errors={errors}
-            render={(error) => <NoteMessage type="error" message={error.message} />}
-          />
-        )}
+        <ErrorMessage
+          name={rhfName}
+          errors={errors}
+          render={(error) => <NoteMessage type="error" message={error.message} />}
+        />
       </div>
     </FormItemContext.Provider>
   );

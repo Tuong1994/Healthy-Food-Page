@@ -14,6 +14,7 @@ export interface SelectTagOptionProps {
   selectedOptions: SelectOptions;
   currentPage: number;
   totalPages: number;
+  emptyContent?: ReactNode | ReactNode[]
   iconSize: () => number | undefined;
   handleSelect: (option: Option) => void;
   handleChangePage: (type: "prev" | "next") => void;
@@ -29,6 +30,7 @@ const SelectTagOption: ForwardRefRenderFunction<HTMLDivElement, SelectTagOptionP
     selectedOptions,
     currentPage,
     totalPages,
+    emptyContent,
     iconSize,
     handleSelect,
     handleChangePage,
@@ -48,7 +50,7 @@ const SelectTagOption: ForwardRefRenderFunction<HTMLDivElement, SelectTagOptionP
 
   const renderContent = () => {
     if (loading) return <OptionLoading />;
-    if (!options.length) return <OptionEmpty />;
+    if (!options.length) return <OptionEmpty emptyContent={emptyContent} />;
     const menu = options.map((option, idx) => (
       <OptionItem
         key={idx}

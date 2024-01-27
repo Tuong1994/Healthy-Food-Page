@@ -21,6 +21,11 @@ const customer_vn = {
     more: "Thông tin khác",
     close: "Đóng",
     return: "Quay lại",
+    confirm: "Bạn có chắc muốn xóa ảnh này?",
+    select: {
+      districtsEmpty: "Vui lòng chọn thành phố",
+      wardsEmpty: "Vui lòng chọn quận",
+    },
   },
 };
 

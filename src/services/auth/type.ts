@@ -19,3 +19,8 @@ export type AuthSignUp = {
   password: string;
   phone: string;
 };
+
+export type AuthPassword = {
+  oldPassword: string;
+  newPassword: string;
+};

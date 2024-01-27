@@ -24,12 +24,12 @@ export type Customer = {
   email: string;
   password?: string;
   phone: string;
-  role: ERole;
+  role: ERole | null;
 
   firstName?: string;
   lastName?: string;
   fullName?: string;
-  gender?: EGender;
+  gender?: EGender | null;
   birthday?: Date | string;
 
   address?: CustomerAddress;

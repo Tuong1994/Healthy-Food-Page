@@ -1,14 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GetServerSideProps, NextPage } from "next";
 import { Breadcrumb, Tabs, Grid } from "@/components/UI";
 import type { BreadcrumbItems } from "@/components/UI/Breadcrumb/type";
 import type { TabsItems } from "@/components/UI/Tabs/type";
-import type { ApiQuery, ApiResponse } from "@/services/type";
+import type { ApiQuery, ApiResponse, List } from "@/services/type";
 import type { Customer } from "@/services/customer/type";
-import { getCustomer } from "@/services/customer/api";
+import type { City } from "@/services/city/type";
+import type { District } from "@/services/district/type";
+import type { Ward } from "@/services/ward/type";
 import { ELang } from "@/common/enum";
+import { getCities } from "@/services/city/api";
+import { getCustomer } from "@/services/customer/api";
+import { getDistricts } from "@/services/district/api";
+import { getWards } from "@/services/ward/api";
 import { useAppGrid } from "@/components/UI/Grid/Provider";
 import { useLang, useMounted } from "@/hooks";
+import { defaultApiResponse } from "@/services";
 import Link from "next/link";
 import CustomerInfo from "@/features/customer/CustomerInfo";
 import CustomerOrder from "@/features/customer/CustomerOrder";
@@ -19,6 +26,8 @@ import CustomerEditMobile from "@/features/customer/Mobile/CustomerEditMobile";
 import CustomerForm from "@/features/customer/CustomerForm";
 import CustomerPasswordModal from "@/features/customer/CustomerPasswordModal";
 import NoDataError from "@/components/Page/Error/NoDataError";
+import useLocationStore from "@/store/LocationStore";
+import useMessage from "@/components/UI/ToastMessage/useMessage";
 import url from "@/common/constant/url";
 
 const { HOME } = url;
@@ -27,14 +36,34 @@ const { Row, Col } = Grid;
 
 interface CustomerProps {
   customerResponse: ApiResponse<Customer>;
+  citiesResponse: ApiResponse<List<City>>;
+  districtsResponse: ApiResponse<List<District>>;
+  wardsResponse: ApiResponse<List<Ward>>;
 }
 
-const Customer: NextPage<CustomerProps> = ({ customerResponse }) => {
-  const { lang } = useLang();
+const Customer: NextPage<CustomerProps> = ({
+  customerResponse,
+  citiesResponse,
+  districtsResponse,
+  wardsResponse,
+}) => {
+  const messageApi = useMessage();
+
+  const { locale, lang } = useLang();
 
   const { isPhone } = useAppGrid();
 
   const isMounted = useMounted();
+
+  const { success, data } = customerResponse;
+
+  const [setCities, setDistricts, setWards] = useLocationStore((state) => [
+    state.setCities,
+    state.setDistricts,
+    state.setWards,
+  ]);
+
+  const [customer, setCustomer] = useState<Customer>(data);
 
   const [selectedTab, setSelectedTab] = useState<string>("order");
 
@@ -43,8 +72,6 @@ const Customer: NextPage<CustomerProps> = ({ customerResponse }) => {
   const [isMobileEdit, setIsMobileEdit] = useState<boolean>(false);
 
   const [openPassword, setOpenPassword] = useState<boolean>(false);
-
-  const { success, data: customer } = customerResponse;
 
   const items: BreadcrumbItems = [
     { id: "1", label: <Link href={HOME}>{lang.common.menu.home}</Link> },
@@ -65,6 +92,28 @@ const Customer: NextPage<CustomerProps> = ({ customerResponse }) => {
     },
   ];
 
+  useEffect(() => {
+    if (!citiesResponse.success) return;
+    setCities(citiesResponse.data.items);
+  }, [citiesResponse]);
+
+  useEffect(() => {
+    if (!districtsResponse.success) return;
+    setDistricts(districtsResponse.data.items);
+  }, [districtsResponse]);
+
+  useEffect(() => {
+    if (!wardsResponse) return;
+    setWards(wardsResponse.data.items);
+  }, [wardsResponse]);
+
+  const onReFetchCustomer = async () => {
+    const apiQuery: ApiQuery = { customerId: customer.id, langCode: locale };
+    const response = await getCustomer(apiQuery);
+    if (!response.success) return messageApi.error(lang.common.message.error.api);
+    setCustomer(response.data);
+  };
+
   const handleSelectTab = (id: string) => setSelectedTab(id);
 
   const handleEdit = () => (!isPhone ? setIsEdit(!isEdit) : setIsMobileEdit(!isMobileEdit));
@@ -73,6 +122,12 @@ const Customer: NextPage<CustomerProps> = ({ customerResponse }) => {
 
   const renderContent = () => {
     if (!success) return <NoDataError />;
+    const formProps = {
+      lang,
+      customer,
+      onReFetchCustomer,
+      handleOpenPassword: handlePassword,
+    };
     return (
       <Row justify="between">
         <Col xs={24} md={24} lg={8} span={8}>
@@ -84,17 +139,14 @@ const Customer: NextPage<CustomerProps> = ({ customerResponse }) => {
           ) : (
             !isPhone && (
               <CustomerEdit lang={lang} handleCloseEdit={handleEdit}>
-                <CustomerForm customer={customer} lang={lang} handleOpenPassword={handlePassword} />
+                <CustomerForm {...formProps} />
               </CustomerEdit>
             )
           )}
           {isPhone && (
-            <CustomerEditMobile
-              open={isMobileEdit}
-              customer={customer}
-              handleOpenPassword={handlePassword}
-              onClose={handleEdit}
-            />
+            <CustomerEditMobile open={isMobileEdit} onClose={handleEdit}>
+              <CustomerForm {...formProps} />
+            </CustomerEditMobile>
           )}
         </Col>
       </Row>
@@ -116,11 +168,28 @@ export default Customer;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { query } = context;
-  const apiQuery: ApiQuery = { customerId: query.id as string, langCode: query.langCode as ELang };
-  const customerResponse = await getCustomer(apiQuery);
+
+  const apiCustomerQuery: ApiQuery = { customerId: query.id as string, langCode: query.langCode as ELang };
+  const apiLocationQuery: ApiQuery = { langCode: query.langCode as ELang };
+
+  const customerResponse = await getCustomer(apiCustomerQuery);
+  const citiesResponse = await getCities(apiLocationQuery);
+
+  let districtsResponse = defaultApiResponse<List<District>>();
+  let wardsResponse = defaultApiResponse<List<Ward>>();
+
+  if (customerResponse.success) {
+    const { data: customer } = customerResponse;
+    const { address } = customer;
+    districtsResponse = await getDistricts({ ...apiLocationQuery, cityCode: String(address?.cityCode) });
+    wardsResponse = await getWards({ ...apiLocationQuery, districtCode: String(address?.districtCode) });
+  }
   return {
     props: {
       customerResponse,
+      citiesResponse,
+      districtsResponse,
+      wardsResponse,
     },
   };
 };

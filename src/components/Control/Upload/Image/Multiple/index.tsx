@@ -12,7 +12,9 @@ import {
 } from "react";
 import { ControlColor, ControlShape, UploadError, UploadItem, UploadItems } from "@/components/Control/type";
 import { ACCEPT_IMAGE_FILE_TYPE, DEFAULT_FILE_SIZE } from "../../constant";
+import { REPLACE_NUM_REGEX, REPLACE_TYPE_REGEX } from "@/common/constant/regex";
 import { NoteMessage } from "@/components/UI";
+import { useLang } from "@/hooks";
 import Control from "./Control";
 import ViewArea from "./ViewArea";
 import FormContext from "@/components/Control/Form/FormContext";
@@ -54,6 +56,8 @@ const MultipleImageUpload: ForwardRefRenderFunction<HTMLInputElement, MultipleIm
   },
   ref
 ) => {
+  const { lang } = useLang();
+
   const { isForm, color: rhfColor, shape: rhfShape } = useContext(FormContext);
 
   const [images, setImages] = useState<UploadItems>([]);
@@ -116,11 +120,13 @@ const MultipleImageUpload: ForwardRefRenderFunction<HTMLInputElement, MultipleIm
 
   const errorMessage = () => {
     if (!error) return "";
-    if (error.type === "fileSize") return `File size must not greater than ${limit / (1024 * 1024)}MB`;
-    if (error.type === "fileMax") return `Can only upload ${maxUpload} image per time`;
+    if (error.type === "fileSize")
+      return lang.common.form.others.fileSize.replace(REPLACE_NUM_REGEX, `${limit / (1024 * 1024)}`);
+    if (error.type === "fileMax")
+      return lang.common.form.others.fileMax.replace(REPLACE_NUM_REGEX, `${maxUpload}`);
     if (error.type === "fileType") {
       const types = fileAccepted.split(",").map((type) => type.replace("image/", ""));
-      return `Only accept file type ${types.join(", ")}`;
+      return lang.common.form.others.fileType.replace(REPLACE_TYPE_REGEX, `${types.join(", ")}`);
     }
   };
 

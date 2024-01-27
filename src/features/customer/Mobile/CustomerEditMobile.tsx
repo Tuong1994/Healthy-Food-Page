@@ -1,24 +1,17 @@
-import { FC } from "react";
+import { FC, ReactNode } from "react";
 import { useLang } from "@/hooks";
-import type { Customer } from "@/services/customer/type";
 import Drawer, { DrawerProps } from "@/components/UI/Drawer";
-import CustomerForm from "../CustomerForm";
 
 interface CustomerFormMobileProps extends DrawerProps {
-  customer: Customer;
-  handleOpenPassword: () => void;
+  children?: ReactNode;
 }
 
-const CustomerFormMobile: FC<CustomerFormMobileProps> = ({ customer, handleOpenPassword, ...restProps }) => {
+const CustomerFormMobile: FC<CustomerFormMobileProps> = ({ children, ...restProps }) => {
   const { lang } = useLang();
 
   const drawerDefaultProps: DrawerProps = { head: lang.customer.form.title, full: true, ...restProps };
 
-  return (
-    <Drawer {...drawerDefaultProps}>
-      <CustomerForm customer={customer} lang={lang} handleOpenPassword={handleOpenPassword} />
-    </Drawer>
-  );
+  return <Drawer {...drawerDefaultProps}>{children}</Drawer>;
 };
 
 export default CustomerFormMobile;
