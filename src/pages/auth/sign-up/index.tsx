@@ -71,7 +71,7 @@ const SignUp: NextPage = () => {
           }
           bodyClassName="wrap-form"
         >
-          <Form<AuthSignUp> color="green" sizes="lg" initialData={initialData} onFinish={handleSubmit}>
+          <Form<AuthSignUp> disabled={loading} color="green" sizes="lg" initialData={initialData} onFinish={handleSubmit}>
             <FormItem name="email" rules={email()}>
               <Input required label={lang.common.form.label.email} addonBefore={<HiMail />} />
             </FormItem>

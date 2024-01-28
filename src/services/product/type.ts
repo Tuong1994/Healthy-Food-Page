@@ -1,6 +1,7 @@
 import { Category } from "../category/type";
 import { Comment } from "../comment/type";
 import { ImageUpload } from "../image/type";
+import { Like } from "../like/type";
 import { Rate } from "../rate/type";
 import { SubCategory } from "../subcategory/type";
 import { EInventoryStatus, EProductOrigin, EProductStatus, EProductUnit } from "./enum";
@@ -29,6 +30,7 @@ export type Product = {
   image?: ImageUpload[];
   comments?: Comment[];
   rates?: Rate[];
+  likes?: Like[];
 
   createdAt?: Date | string;
   updatedAt?: Date | string;

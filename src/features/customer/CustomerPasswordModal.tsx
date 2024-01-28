@@ -62,7 +62,7 @@ const CustomerPasswordModal: FC<CustomerPasswordModalProps> = ({ lang, onCancel,
 
   return (
     <Modal {...modalDefaultProps}>
-      <Form<AuthPassword> initialData={initialData} onFinish={handleSubmit}>
+      <Form<AuthPassword> disabled={loading} initialData={initialData} onFinish={handleSubmit}>
         <FormItem name="oldPassword" rules={password()}>
           <InputPassword required label={lang.common.form.label.oldPassword} />
         </FormItem>

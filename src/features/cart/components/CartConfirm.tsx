@@ -10,7 +10,7 @@ import { useAsync, useLang } from "@/hooks";
 import { cartSwrKey } from "@/components/Page/AppWrapper/AppData/swrkey";
 import { useRouter } from "next/router";
 import { mutate } from "swr";
-import QuantityControl from "@/components/Page/QuantityControl";
+import Quantity from "@/components/Page/Quantity";
 import ConfirmModal from "@/components/Page/ConfirmModal";
 import Link from "next/link";
 import useMessage from "@/components/UI/ToastMessage/useMessage";
@@ -74,7 +74,7 @@ const CartConfirm: FC<CartConfirmProps> = ({ loading, cart, handleConfirm }) => 
       title: lang.common.table.head.quantity,
       dataIndex: "quantity",
       render: (quantity: number, item: CartItem) => (
-        <QuantityControl defaultValue={quantity} min={1} productId={item.productId} />
+        <Quantity defaultValue={quantity} min={1} productId={item.productId} />
       ),
     },
     {

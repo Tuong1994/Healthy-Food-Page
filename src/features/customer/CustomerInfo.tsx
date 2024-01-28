@@ -31,8 +31,6 @@ const CustomerInfo: FC<CustomerInfoProps> = ({ lang, customer, handleOpenEdit })
 
   const hasAdmin = customer.role === ERole.ADMIN || customer.role === ERole.SUPER_ADMIN;
 
-  console.log(customer);
-
   return (
     <Card bodyClassName="customer-info">
       <Space align="middle">

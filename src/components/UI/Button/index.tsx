@@ -35,13 +35,18 @@ const Button: ForwardRefRenderFunction<HTMLButtonElement, ButtonProps> = (
   },
   ref
 ) => {
-  const { color: rhfColor, sizes: rhfSizes, shape: rhfShape } = useContext(FormContext);
+  const {
+    color: rhfColor,
+    sizes: rhfSizes,
+    shape: rhfShape,
+    disabled: rhfDisabled,
+  } = useContext(FormContext);
 
   const { layoutValue } = useLayout();
 
   const { layoutTheme: theme } = layoutValue;
 
-  const btnDisabled = disabled || loading;
+  const btnDisabled = rhfDisabled ? rhfDisabled : disabled || loading;
 
   const buttonColor = color ? color : rhfColor;
 

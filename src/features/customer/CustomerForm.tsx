@@ -154,7 +154,13 @@ const CustomerForm: FC<CustomerFormProps> = ({ lang, customer, onReFetchCustomer
   };
 
   return (
-    <Form<Customer> color="green" initialData={initialData} className="customer-form" onFinish={handleSubmit}>
+    <Form<Customer>
+      color="green"
+      className="customer-form"
+      disabled={updateLoading}
+      initialData={initialData}
+      onFinish={handleSubmit}
+    >
       <Row {...rowProps}>
         <Col xs={24} md={6} lg={6} span={6}>
           <Space justify="center">

@@ -1,5 +1,5 @@
-.search {
-  .search-wrap {
+.favorite {
+  .favorite-wrap {
     .wrap-list {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -18,8 +18,5 @@
       padding: 0;
       border: unset;
     }
-  }
-  .list-pagination {
-    margin-top: $m-2;
   }
 }

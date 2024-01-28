@@ -2,14 +2,15 @@ import { FC } from "react";
 import { Typography } from "@/components/UI";
 import type { Product } from "@/services/product/type";
 import type { Url } from "next/dist/shared/lib/router/router";
+import type { Like as LikeType } from "@/services/like/type";
 import { EProductUnit } from "@/services/product/enum";
 import { useLang } from "@/hooks";
 import { useRouter } from "next/router";
 import ProductCardImage from "./ProductCardImage";
-import ProductCardLike from "./ProductCardLike";
 import ProductCardLoading from "./ProductCardLoading";
-import QuantityControl from "../QuantityControl";
-import useQuantity from "../QuantityControl/useQuantity";
+import Quantity from "../Quantity";
+import useQuantity from "../Quantity/useQuantity";
+import Like from "../Like";
 import Link from "next/link";
 import utils from "@/utils";
 import url from "@/common/constant/url";
@@ -20,6 +21,7 @@ const { Paragraph } = Typography;
 
 interface ProductCardProps {
   product: Product;
+  like?: LikeType;
   rootClassName?: string;
   imgWidth?: number | string;
   imgHeight?: number | string;
@@ -30,6 +32,7 @@ interface ProductCardProps {
 
 const ProductCard: FC<ProductCardProps> = ({
   product,
+  like,
   rootClassName = "",
   imgWidth = "100%",
   imgHeight = "150px",
@@ -89,10 +92,10 @@ const ProductCard: FC<ProductCardProps> = ({
         <Paragraph rootClassName="group-price" strong size={15}>
           {utils.formatPrice(locale, product?.totalPrice ?? 0)}/{renderUnit()}
         </Paragraph>
-        <QuantityControl productId={product?.id as string} defaultValue={defaultQuantity} />
+        <Quantity productId={product?.id as string} defaultValue={defaultQuantity} />
       </div>
 
-      <ProductCardLike />
+      <Like product={product} like={like} />
     </div>
   );
 };

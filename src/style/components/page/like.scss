@@ -1,0 +1,37 @@
+.like {
+  border: unset;
+  background: transparent;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1;
+}
+
+.like-add {
+  &:hover .like-icon path {
+    color: $text-green;
+  }
+  .like-icon {
+    path {
+      color: $text-gray;
+      transition: all $transition-time-sm $transition-fn;
+    }
+  }
+  .like-icon-active {
+    path {
+      color: $text-green;
+    }
+  }
+}
+
+.like-remove {
+  &:hover .like-icon path {
+    opacity: 0.6;
+  }
+  .like-icon {
+    path {
+      color: $text-red;
+      transition: all $transition-time-sm $transition-fn;
+    }
+  }
+}

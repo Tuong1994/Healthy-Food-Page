@@ -69,12 +69,22 @@ const SignIn: NextPage = () => {
           }
           bodyClassName="wrap-form"
         >
-          <Form<AuthSignIn> color="green" sizes="lg" initialData={initialData} onFinish={handleSubmit}>
+          <Form<AuthSignIn>
+            sizes="lg"
+            color="green"
+            disabled={loading}
+            initialData={initialData}
+            onFinish={handleSubmit}
+          >
             <FormItem name="email" rules={email()}>
               <Input required label={lang.common.form.label.email} addonBefore={<HiMail />} />
             </FormItem>
             <FormItem name="password" rules={password()}>
-              <InputPassword required label={lang.common.form.label.password} addonBefore={<HiLockClosed />} />
+              <InputPassword
+                required
+                label={lang.common.form.label.password}
+                addonBefore={<HiLockClosed />}
+              />
             </FormItem>
 
             <Space justify="end">

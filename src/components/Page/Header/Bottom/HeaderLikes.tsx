@@ -17,7 +17,12 @@ const HeaderLikes: FC<HeaderLikesProps> = () => {
   if (!isMounted) return null;
 
   return (
-    <Link href={{ pathname: !auth.isAuth ? AUTH_SIGN_IN : FAVORITE }}>
+    <Link
+      href={{
+        pathname: !auth.isAuth ? AUTH_SIGN_IN : FAVORITE,
+        query: { page: 1, limit: 12, id: auth.info.id },
+      }}
+    >
       <button className="bottom-likes">
         <CgHeart size={25} />
       </button>

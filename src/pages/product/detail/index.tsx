@@ -5,8 +5,9 @@ import type { BreadcrumbItems } from "@/components/UI/Breadcrumb/type";
 import type { ApiQuery, ApiResponse, Paging } from "@/services/type";
 import type { Product as ProductType } from "@/services/product/type";
 import type { Comment } from "@/services/comment/type";
-import { getProduct, getProductsPaging } from "@/services/product/api";
+import { getProductsPaging } from "@/services/product/api";
 import { getComments } from "@/services/comment/api";
+import { getProductDetail } from "@/common/actions/getProduct";
 import { defaultApiResponse } from "@/services";
 import { ELang } from "@/common/enum";
 import { useLang } from "@/hooks";
@@ -72,10 +73,9 @@ export default ProductPage;
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { query } = context;
 
-  const apiProductQuery: ApiQuery = { productId: query.id as string, langCode: query.langCode as ELang };
   const apiCommentsQuery: ApiQuery = { limit: 15, productId: query.id as string };
 
-  const productResponse = await getProduct(apiProductQuery);
+  const productResponse = await getProductDetail(query);
   const commentsResponse = await getComments(apiCommentsQuery);
 
   let productsResponse: ApiResponse<Paging<ProductType>> = defaultApiResponse<Paging<ProductType>>();

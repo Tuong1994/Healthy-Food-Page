@@ -119,7 +119,9 @@ const common_en = {
       updateComment: "Comment has been updated",
       removeComment: "Comment has been removed",
       updateCustomer: "Updated success",
-      changePassword: "Password has been changed"
+      changePassword: "Password has been changed",
+      addLike: 'Added to favorites list',
+      removeLike: 'Removed from favorites list'
     },
     error: {
       authEmail: "Email is not correct. Please try again",

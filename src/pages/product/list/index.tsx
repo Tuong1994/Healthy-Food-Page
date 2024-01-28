@@ -1,4 +1,4 @@
-import { Fragment, useMemo } from "react";
+import { Fragment, useEffect, useMemo } from "react";
 import { GetServerSideProps, NextPage } from "next";
 import { Breadcrumb, Card, Pagination, Empty, Grid, Typography } from "@/components/UI";
 import type { BreadcrumbItems } from "@/components/UI/Breadcrumb/type";
@@ -8,8 +8,8 @@ import type { Category } from "@/services/category/type";
 import type { SubCategory } from "@/services/subcategory/type";
 import { defaultApiResponse } from "@/services";
 import { getSubCategory } from "@/services/subcategory/api";
-import { getProductsPaging } from "@/services/product/api";
 import { getCategory } from "@/services/category/api";
+import { getProductsByCateAndSubcate } from "@/common/actions/getProductsByCateAndSubcate";
 import { useLang } from "@/hooks";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -17,6 +17,7 @@ import ProductCard from "@/components/Page/ProductCard";
 import ProductsFilter from "@/features/product/list/ProductsFilter";
 import NoDataError from "@/components/Page/Error/NoDataError";
 import url from "@/common/constant/url";
+import useProductStore from "@/store/ProductStore";
 
 const { HOME, PRODUCT_LIST } = url;
 
@@ -35,6 +36,11 @@ const Products: NextPage<ProductsProps> = ({ categoryResponse, subCategoryRespon
 
   const { query, push: routerPush } = useRouter();
 
+  const [productsPaging, setProductsPaging] = useProductStore((state) => [
+    state.productsPaging,
+    state.setProductsPaging,
+  ]);
+
   const categoryName = useMemo(() => {
     if (categoryResponse && !categoryResponse.success) return "";
     return categoryResponse.data.name;
@@ -49,6 +55,10 @@ const Products: NextPage<ProductsProps> = ({ categoryResponse, subCategoryRespon
     if (!subCategoryName) return categoryName;
     return `${categoryName} - ${subCategoryName}`;
   }, [categoryName, subCategoryName]);
+
+  useEffect(() => {
+    if (productsResponse && productsResponse.success) setProductsPaging(productsResponse.data);
+  }, [productsResponse]);
 
   const breadCrumbItems = () => {
     let items: BreadcrumbItems = [{ id: "1", label: <Link href={HOME}>{lang.common.menu.home}</Link> }];
@@ -87,7 +97,7 @@ const Products: NextPage<ProductsProps> = ({ categoryResponse, subCategoryRespon
           <NoDataError />
         </div>
       );
-    const products: Product[] = productsResponse.data.items ? productsResponse.data.items : [];
+    const products: Product[] = productsPaging.items ? productsPaging.items : [];
     if (!products.length) return <Empty text={lang.common.description.empty} />;
     return (
       <Fragment>
@@ -102,7 +112,7 @@ const Products: NextPage<ProductsProps> = ({ categoryResponse, subCategoryRespon
           color="green"
           shape="square"
           rootClassName="list-pagination"
-          total={productsResponse.data.totalItems ?? 0}
+          total={productsPaging.totalItems ?? 0}
           limit={12}
           onChangePage={handleChangePage}
         />
@@ -146,7 +156,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       subCategoryId: apiQuery.subCategoryId,
       langCode: apiQuery.langCode,
     });
-  const productsResponse = await getProductsPaging({ ...apiQuery });
+
+  const productsResponse = await getProductsByCateAndSubcate(query);
 
   return {
     props: {

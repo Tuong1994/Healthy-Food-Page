@@ -27,14 +27,12 @@ const Search: NextPage = () => {
       <Title level={4} weight={600}>
         {lang.search.results} 'Product'
       </Title>
-      <Card rootClassName="search-wrap" bodyClassName="wrap-list">
-        <Row justify="between" gutters={[14]}>
+      <Card bodyClassName="search-wrap">
+        <div className="wrap-list">
           {[...Array(40)].map((_, idx) => (
-            <Col key={idx} xs={24} md={12} lg={8} span={6}>
-              <ProductCard product={{} as Product} imgHeight={200} responsive />
-            </Col>
+            <ProductCard key={idx} product={{} as Product} imgHeight={200} responsive />
           ))}
-        </Row>
+        </div>
 
         <Pagination ghost color="green" shape="square" rootClassName="list-pagination" />
       </Card>

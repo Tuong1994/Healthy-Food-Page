@@ -89,7 +89,7 @@ const RateModal: FC<RateModalProps> = ({
 
       <Divider />
 
-      <Form<RateData> initialData={initialData} onFinish={handleSubmit}>
+      <Form<RateData> disabled={loading} initialData={initialData} onFinish={handleSubmit}>
         <FormItem name="name" disabled>
           <Input label={lang.common.form.label.fullName} />
         </FormItem>

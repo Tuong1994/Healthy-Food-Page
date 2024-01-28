@@ -13,7 +13,7 @@ const { Spinner } = Loading;
 
 const ICON_SIZE = 20;
 
-interface QuantityControlProps {
+interface QuantityProps {
   productId: string;
   rootClassName?: string;
   defaultValue?: number;
@@ -21,7 +21,7 @@ interface QuantityControlProps {
   onChangeInput?: (value: number) => void;
 }
 
-const QuantityControl: FC<QuantityControlProps> = ({
+const Quantity: FC<QuantityProps> = ({
   rootClassName = "",
   productId = "",
   defaultValue = 0,
@@ -42,9 +42,9 @@ const QuantityControl: FC<QuantityControlProps> = ({
 
   const minusBtnDisabled = quantity === min;
 
-  const btnDisabledClassName = minusBtnDisabled ? "action-btn-disabled" : "";
+  const btnDisabledClassName = minusBtnDisabled ? "quantity-btn-disabled" : "";
 
-  const mainClassName = utils.formatClassName("product-card-action", rootClassName);
+  const mainClassName = utils.formatClassName("quantity", rootClassName);
 
   useEffect(() => setQuantity(defaultValue), [defaultValue]);
 
@@ -80,23 +80,23 @@ const QuantityControl: FC<QuantityControlProps> = ({
     <Space justify="end" rootClassName={mainClassName}>
       <button
         disabled={minusBtnDisabled}
-        className={`action-btn action-btn-minus ${btnDisabledClassName}`}
+        className={`quantity-btn quantity-btn-minus ${btnDisabledClassName}`}
         onClick={() => handleChangeClick("minus")}
       >
         {loading ? <Spinner /> : <HiMinus size={ICON_SIZE} />}
       </button>
       <input
-        className="action-input"
+        className="quantity-input"
         value={quantity}
         onChange={handleChangeInput}
         onFocus={handleFocus}
         onBlur={handleBlur}
       />
-      <button className="action-btn" onClick={() => handleChangeClick("plus")}>
+      <button className="quantity-btn" onClick={() => handleChangeClick("plus")}>
         {loading ? <Spinner /> : <HiPlus size={ICON_SIZE} />}
       </button>
     </Space>
   );
 };
 
-export default QuantityControl;
+export default Quantity;

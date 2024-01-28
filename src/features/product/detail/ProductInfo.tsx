@@ -4,9 +4,9 @@ import type { Lang } from "@/common/type";
 import type { Product } from "@/services/product/type";
 import { ELang } from "@/common/enum";
 import { useDisplayInventoryStatus, useDisplayProductOrigin, useDisplayProductUnit } from "@/hooks";
-import QuantityControl from "@/components/Page/QuantityControl";
-import ProductCardLike from "@/components/Page/ProductCard/ProductCardLike";
+import Quantity from "@/components/Page/Quantity";
 import Rate from "@/components/Page/Rate";
+import Like from "@/components/Page/Like";
 import utils from "@/utils";
 
 const { Title, Paragraph } = Typography;
@@ -30,7 +30,7 @@ const ProductInfo: FC<ProductInfoProps> = ({ locale, lang, product }) => {
               {lang.common.status.new}
             </Badge>
           )}
-          <ProductCardLike />
+          <Like product={product} />
         </div>
       </Col>
       <Col xs={24} md={12} lg={14} span={16}>
@@ -41,7 +41,7 @@ const ProductInfo: FC<ProductInfoProps> = ({ locale, lang, product }) => {
           <Paragraph strong size={25} rootClassName="info-price">
             {utils.formatPrice(locale, product.totalPrice)}
           </Paragraph>
-          <QuantityControl productId={product.id as string} />
+          <Quantity productId={product.id as string} />
         </Space>
 
         <Divider />

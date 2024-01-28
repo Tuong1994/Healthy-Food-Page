@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { ComponentSize } from "@/common/type";
@@ -9,6 +7,7 @@ import useFormStore from "./FormStore";
 
 export interface FormProps<M> extends React.FormHTMLAttributes<HTMLFormElement> {
   initialData: M;
+  disabled?: boolean;
   color?: ControlColor;
   shape?: ControlShape;
   sizes?: ComponentSize;
@@ -19,6 +18,7 @@ export interface FormProps<M> extends React.FormHTMLAttributes<HTMLFormElement> 
 const Form = <M extends object>(
   {
     initialData,
+    disabled,
     color = "blue",
     sizes = "md",
     shape = "square",
@@ -32,7 +32,7 @@ const Form = <M extends object>(
 
   const rhfMethods = useForm<M>({ values: initialData, mode: "all" });
 
-  const formContextState: FormContextState = { isForm: true, color, sizes, shape };
+  const formContextState: FormContextState = { isForm: true, color, sizes, shape, disabled };
 
   const onSubmit = (formData: M) => onFinish?.(formData);
 

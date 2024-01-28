@@ -1,0 +1,46 @@
+.quantity {
+  position: relative;
+  z-index: 1;
+  .quantity-btn {
+    width: $w-3;
+    height: $h-3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: $bg-green;
+    border: 1px solid $bg-green;
+    border-radius: $rounded;
+    transition: all $transition-time-sm $transition-fn;
+    &:hover {
+      opacity: 0.6;
+    }
+    * {
+      color: $text-white;
+    }
+  }
+  .quantity-btn-minus {
+    background: transparent;
+    border-color: transparent;
+    &:hover {
+      opacity: 1;
+      border-color: $bg-green;
+    }
+    * {
+      color: $text-black;
+    }
+  }
+  .quantity-btn-disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    &:hover {
+      border-color: transparent;
+    }
+  }
+  .quantity-input {
+    width: $w-3;
+    height: $h-3;
+    border: unset;
+    border-bottom: 1px solid $bg-slate;
+    text-align: center;
+  }
+}

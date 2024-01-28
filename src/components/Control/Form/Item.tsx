@@ -21,7 +21,9 @@ const FormItem: React.FC<FormItemProps> = ({
   rules = [],
   children,
 }) => {
-  const { sizes } = React.useContext(FormContext);
+  const { sizes, disabled: formDisabled } = React.useContext(FormContext);
+
+  const itemDisabled = formDisabled ? formDisabled : disabled;
 
   const {
     field: { name: rhfName, value: rhfValue, onChange: rhfOnChange, onBlur: rhfOnBlur },
@@ -35,14 +37,14 @@ const FormItem: React.FC<FormItemProps> = ({
     rhfError,
     rhfName,
     rhfValue,
-    rhfDisabled: disabled,
+    rhfDisabled: itemDisabled,
     rhfOnChange,
     rhfOnBlur,
   };
 
   const getRules = () => {
     const fieldError: FieldError = {};
-    if (disabled) return fieldError;
+    if (itemDisabled) return fieldError;
     if (!rules.length) return fieldError;
     rules.forEach((rule) => {
       if (rule.required) fieldError.required = { value: rule.required, message: rule.message };

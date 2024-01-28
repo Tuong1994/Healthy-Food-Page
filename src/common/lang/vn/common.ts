@@ -120,6 +120,8 @@ const common_vn = {
       removeComment: "Bình luận đã được xóa",
       updateCustomer: "Cập nhật thành công",
       changePassword: "Mật khẩu đã được thay đổi",
+      addLike: "Đã thêm vào danh sách yêu thích",
+      removeLike: "Đã xóa khỏi danh sách yêu thích",
     },
     error: {
       authEmail: "Email không đúng. Vui lòng thử lại",
