@@ -43,7 +43,7 @@ const HeaderBottom: FC<HeaderBottomProps> = ({ lang }) => {
         </Col>
 
         <Col xs={24} md={24} span={9}>
-          <HeaderSearch />
+          <HeaderSearch lang={lang} />
         </Col>
 
         <Col xs={0} md={0}>

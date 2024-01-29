@@ -37,12 +37,20 @@
     }
     .bottom-search {
       .search-icon {
+        border: 0;
+        background: unset;
         display: flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        * {
+        path {
           color: $text-green;
+          transition: all $transition-time-sm $transition-fn;
+        }
+      }
+      .search-icon-disabled {
+        path {
+          color: $text-gray;
         }
       }
     }
