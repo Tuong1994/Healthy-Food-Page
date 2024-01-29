@@ -32,7 +32,7 @@ interface ProductsProps {
 }
 
 const Products: NextPage<ProductsProps> = ({ categoryResponse, subCategoryResponse, productsResponse }) => {
-  const { lang } = useLang();
+  const { locale, lang } = useLang();
 
   const { query, push: routerPush } = useRouter();
 
@@ -61,7 +61,12 @@ const Products: NextPage<ProductsProps> = ({ categoryResponse, subCategoryRespon
   }, [productsResponse]);
 
   const breadCrumbItems = () => {
-    let items: BreadcrumbItems = [{ id: "1", label: <Link href={HOME}>{lang.common.menu.home}</Link> }];
+    let items: BreadcrumbItems = [
+      {
+        id: "1",
+        label: <Link href={{ pathname: HOME, query: { langCode: locale } }}>{lang.common.menu.home}</Link>,
+      },
+    ];
     if (categoryName && !subCategoryName) {
       items = [...items, { id: categoryName, label: categoryName, actived: true }];
     } else {

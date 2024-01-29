@@ -23,14 +23,17 @@ interface FavoriteProps {
 }
 
 const Favorite: NextPage<FavoriteProps> = ({ likesResponse }) => {
-  const { lang } = useLang();
+  const { locale, lang } = useLang();
 
   const { query, push: routerPush } = useRouter();
 
   const [likesPaging, setLikesPaging] = useLikeStore((state) => [state.likesPaging, state.setLikesPaging]);
 
   const items: BreadcrumbItems = [
-    { id: "1", label: <Link href={HOME}>{lang.common.menu.home}</Link> },
+    {
+      id: "1",
+      label: <Link href={{ pathname: HOME, query: { langCode: locale } }}>{lang.common.menu.home}</Link>,
+    },
     { id: "2", label: lang.favorite.title, actived: true },
   ];
 

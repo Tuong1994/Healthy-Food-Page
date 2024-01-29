@@ -40,7 +40,10 @@ const Cart: NextPage<CartProps> = () => {
   const [purchased, setPurchased] = useState<Purchased>({ open: false, data: {} as Order });
 
   const items: BreadcrumbItems = [
-    { id: "1", label: <Link href={HOME}>{lang.common.menu.home}</Link> },
+    {
+      id: "1",
+      label: <Link href={{ pathname: HOME, query: { langCode: locale } }}>{lang.common.menu.home}</Link>,
+    },
     { id: "2", label: lang.common.menu.cart, actived: true },
   ];
 

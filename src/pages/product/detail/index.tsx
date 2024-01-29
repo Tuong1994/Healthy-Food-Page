@@ -41,7 +41,10 @@ const ProductPage: NextPage<ProductPageProps> = ({ productResponse, productsResp
   const similarProducts = productsResponse.data.items;
 
   const items: BreadcrumbItems = [
-    { id: "1", label: <Link href={HOME}>{lang.common.menu.home}</Link> },
+    {
+      id: "1",
+      label: <Link href={{ pathname: HOME, query: { langCode: locale } }}>{lang.common.menu.home}</Link>,
+    },
     {
       id: "2",
       label: (

@@ -74,7 +74,10 @@ const Customer: NextPage<CustomerProps> = ({
   const [openPassword, setOpenPassword] = useState<boolean>(false);
 
   const items: BreadcrumbItems = [
-    { id: "1", label: <Link href={HOME}>{lang.common.menu.home}</Link> },
+    {
+      id: "1",
+      label: <Link href={{ pathname: HOME, query: { langCode: locale } }}>{lang.common.menu.home}</Link>,
+    },
     { id: "2", label: "User name", actived: true },
   ];
 

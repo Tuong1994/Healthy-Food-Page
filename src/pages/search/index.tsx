@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { GetServerSideProps, NextPage } from "next";
 import { Breadcrumb, Card, Empty, Pagination, Typography } from "@/components/UI";
 import type { BreadcrumbItems } from "@/components/UI/Breadcrumb/type";
@@ -10,7 +11,6 @@ import ProductCard from "@/components/Page/ProductCard";
 import Link from "next/link";
 import url from "@/common/constant/url";
 import NoDataError from "@/components/Page/Error/NoDataError";
-import { Fragment } from "react";
 
 const { HOME, SEARCH } = url;
 
@@ -21,14 +21,17 @@ interface SearchProps {
 }
 
 const Search: NextPage<SearchProps> = ({ productsResponse }) => {
-  const { lang } = useLang();
+  const { locale, lang } = useLang();
 
   const { query, push: routerPush } = useRouter();
 
   const searchResult = `“${query.keywords}”`;
 
   const items: BreadcrumbItems = [
-    { id: "1", label: <Link href={HOME}>{lang.common.menu.home}</Link> },
+    {
+      id: "1",
+      label: <Link href={{ pathname: HOME, query: { langCode: locale } }}>{lang.common.menu.home}</Link>,
+    },
     { id: "2", label: `${lang.search.results} ${searchResult}`, actived: true },
   ];
 

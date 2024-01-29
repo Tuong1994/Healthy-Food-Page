@@ -12,6 +12,7 @@ import { logout } from "@/services/auth/api";
 import { HttpStatus } from "@/services/axios";
 import useAuthStore from "@/store/AuthStore";
 import useMessage from "@/components/UI/ToastMessage/useMessage";
+import useProductStore from "@/store/ProductStore";
 import Link from "next/link";
 import url from "@/common/constant/url";
 
@@ -32,7 +33,7 @@ const HeaderAuth: FC<HeaderAuthProps> = ({ lang }) => {
 
   const isMounted = useMounted();
 
-  const router = useRouter();
+  const { query, pathname, push: routerPush, reload: routerReload } = useRouter();
 
   const [auth, resetAuth] = useAuthStore((state) => [state.auth, state.resetAuth]);
 
@@ -51,7 +52,8 @@ const HeaderAuth: FC<HeaderAuthProps> = ({ lang }) => {
     }
     messageApi.success(lang.common.message.success.logout);
     resetAuth();
-    setTimeout(() => router.push(HOME), 200);
+    if (pathname === HOME) routerReload();
+    setTimeout(() => routerPush({ pathname: HOME, query: { langCode: query.langCode } }), 200);
   };
 
   const items: DropdownItems = [
@@ -60,7 +62,7 @@ const HeaderAuth: FC<HeaderAuthProps> = ({ lang }) => {
       label: (
         <Space align="middle">
           <HiUser />
-          <Link href={{ pathname: CUSTOMER, query: { id: info.id, langCode: router.query.locale } }}>
+          <Link href={{ pathname: CUSTOMER, query: { id: info.id, langCode: query.langCode } }}>
             {lang.pageComponent.header.profile.customer}
           </Link>
         </Space>

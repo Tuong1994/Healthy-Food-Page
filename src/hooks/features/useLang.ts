@@ -9,7 +9,7 @@ const useLang = () => {
 
   const handleSwitchLang = (locale: ELang) => {
     switchLang(locale);
-    router.push({ pathname: router.pathname, query: { ...router.query, locale: locale } });
+    router.push({ pathname: router.pathname, query: { ...router.query, langCode: locale } });
   };
 
   return { lang, locale, handleSwitchLang };
