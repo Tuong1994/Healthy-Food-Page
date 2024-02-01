@@ -9,14 +9,12 @@ import { getOrders } from "@/services/order/api";
 import { EOrderStatus, EPaymentStatus, EPaymentMethod, ERecievedType } from "@/services/order/enum";
 import { ELang } from "@/common/enum";
 import { useRouter } from "next/router";
-import {
-  useLang,
-  useDisplayOrderStatus,
-  useDisplayPaymentMethod,
-  useDisplayPaymentStatus,
-  useDisplayRecievedType,
-} from "@/hooks";
+import { useLang } from "@/hooks";
 import NoDataError from "@/components/Page/Error/NoDataError";
+import getDisplayOrderStatus from "../data-display/getDisplayOrderStatus";
+import getDisplayPaymentMethod from "../data-display/getDisplayPaymentMethod";
+import getDisplayPaymentStatus from "../data-display/getDisplayPaymentStatus";
+import getDisplayRecievedType from "../data-display/getDisplayRecievedType";
 import useSWR from "swr";
 import utils from "@/utils";
 import moment from "moment";
@@ -72,25 +70,25 @@ const CustomerOrder: FC<CustomerOrderProps> = ({ selectedTab }) => {
       id: "status",
       title: lang.common.table.head.status,
       dataIndex: "status",
-      render: (status: EOrderStatus) => <>{useDisplayOrderStatus(status)}</>,
+      render: (status: EOrderStatus) => <>{getDisplayOrderStatus(lang, status)}</>,
     },
     {
       id: "paymentMethod",
       title: lang.common.table.head.paymentMethod,
       dataIndex: "paymentMethod",
-      render: (method: EPaymentMethod) => <>{useDisplayPaymentMethod(method)}</>,
+      render: (method: EPaymentMethod) => <>{getDisplayPaymentMethod(lang, method)}</>,
     },
     {
       id: "paymentStatus",
       title: lang.common.table.head.paymentStatus,
       dataIndex: "paymentStatus",
-      render: (status: EPaymentStatus) => <>{useDisplayPaymentStatus(status)}</>,
+      render: (status: EPaymentStatus) => <>{getDisplayPaymentStatus(lang, status)}</>,
     },
     {
       id: "recieviedType",
       title: lang.common.table.head.recievedType,
       dataIndex: "recievedType",
-      render: (type: ERecievedType) => <>{useDisplayRecievedType(type)}</>,
+      render: (type: ERecievedType) => <>{getDisplayRecievedType(lang, type)}</>,
     },
     {
       id: "createdAt",

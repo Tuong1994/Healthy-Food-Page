@@ -1,10 +1,8 @@
 import { Badge } from "@/components/UI";
 import { EPaymentMethod } from "@/services/order/enum";
-import { useLang } from "@/hooks";
+import { Lang } from "@/common/type";
 
-const useDisplayPaymentMethod = (method: EPaymentMethod) => {
-  const { lang } = useLang();
-
+const getDisplayPaymentMethod = (lang: Lang, method: EPaymentMethod) => {
   const paymentMethods: Record<number, string> = {
     [EPaymentMethod.TRANSFER]: lang.options.paymentMethod.transfer,
     [EPaymentMethod.COD]: lang.options.paymentMethod.cod,
@@ -24,4 +22,4 @@ const useDisplayPaymentMethod = (method: EPaymentMethod) => {
   );
 };
 
-export default useDisplayPaymentMethod;
+export default getDisplayPaymentMethod;

@@ -7,7 +7,7 @@ import { ERole } from "@/services/customer/enum";
 import { HiCalendar, HiPhone } from "react-icons/hi2";
 import { HiLocationMarker, HiMail, HiPencilAlt } from "react-icons/hi";
 import { FaTransgender } from "react-icons/fa";
-import { useDisplayGender } from "@/hooks";
+import getDisplayGender from "../data-display/getDisplayGender";
 import utils from "@/utils";
 import moment from "moment";
 
@@ -71,7 +71,7 @@ const CustomerInfo: FC<CustomerInfoProps> = ({ lang, customer, handleOpenEdit })
         <InfoRow
           {...commonProps}
           labelElement={<FaTransgender />}
-          textElement={useDisplayGender(customer.gender)}
+          textElement={getDisplayGender(lang, customer.gender)}
         />
       )}
       {customer.birthday && (

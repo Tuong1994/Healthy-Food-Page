@@ -236,6 +236,7 @@ const Select: FC<SelectProps> = (
     if (search) setSearch("");
     if (selectedOption) setSelectedOption(null);
     if (isRhf) rhfMethods.setValue(rhfName, null);
+    onChangeSelect?.("");
   };
 
   const handleChangePage = (type: "prev" | "next") => {

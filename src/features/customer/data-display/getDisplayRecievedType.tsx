@@ -1,10 +1,8 @@
 import { Badge } from "@/components/UI";
 import { ERecievedType } from "@/services/order/enum";
-import { useLang } from "@/hooks";
+import { Lang } from "@/common/type";
 
-const useDisplayRecievedType = (type: ERecievedType) => {
-  const { lang } = useLang();
-
+const getDisplayRecievedType = (lang: Lang, type: ERecievedType) => {
   const recievedTypes: Record<number, string> = {
     [ERecievedType.STORE]: lang.options.recievedType.store,
     [ERecievedType.DELIVERY]: lang.options.recievedType.delivery,
@@ -22,4 +20,4 @@ const useDisplayRecievedType = (type: ERecievedType) => {
   );
 };
 
-export default useDisplayRecievedType;
+export default getDisplayRecievedType;

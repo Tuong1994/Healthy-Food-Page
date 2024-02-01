@@ -1,10 +1,8 @@
 import { EProductOrigin } from "@/services/product/enum";
 import { Badge } from "@/components/UI";
-import { useLang } from "@/hooks";
+import { Lang } from "@/common/type";
 
-const useDisplayProductOrigin = (origin: EProductOrigin) => {
-  const { lang } = useLang();
-
+const getDisplayProductOrigin = (lang: Lang, origin: EProductOrigin) => {
   const productOrigins: Record<number, string> = {
     [EProductOrigin.VN]: lang.options.productOrigin.vn,
   };
@@ -20,4 +18,4 @@ const useDisplayProductOrigin = (origin: EProductOrigin) => {
   );
 };
 
-export default useDisplayProductOrigin;
+export default getDisplayProductOrigin;

@@ -1,10 +1,8 @@
 import { Badge } from "@/components/UI";
 import { EOrderStatus } from "@/services/order/enum";
-import { useLang } from "@/hooks";
+import { Lang } from "@/common/type";
 
-const useDisplayOrderStatus = (status: EOrderStatus) => {
-  const { lang } = useLang();
-
+const getDisplayOrderStatus = (lang: Lang, status: EOrderStatus) => {
   const orderStatuses: Record<number, string> = {
     [EOrderStatus.DELIVERING]: lang.options.orderStatus.delivering,
     [EOrderStatus.DELIVERED]: lang.options.orderStatus.delivered,
@@ -22,4 +20,4 @@ const useDisplayOrderStatus = (status: EOrderStatus) => {
   );
 };
 
-export default useDisplayOrderStatus;
+export default getDisplayOrderStatus;

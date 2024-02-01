@@ -3,10 +3,12 @@ import { Space, Divider, Badge, Image, InfoRow, Grid, Typography } from "@/compo
 import type { Lang } from "@/common/type";
 import type { Product } from "@/services/product/type";
 import { ELang } from "@/common/enum";
-import { useDisplayInventoryStatus, useDisplayProductOrigin, useDisplayProductUnit } from "@/hooks";
 import Quantity from "@/components/Page/Quantity";
 import Rate from "@/components/Page/Rate";
 import Like from "@/components/Page/Like";
+import getDisplayProductUnit from "../data-display/getDisplayProductUnit";
+import getDisplayInventoryStatus from "../data-display/getDisplayInventoryStatus";
+import getDisplayProductOrigin from "../data-display/getDisplayProductOrigin";
 import utils from "@/utils";
 
 const { Title, Paragraph } = Typography;
@@ -60,16 +62,16 @@ const ProductInfo: FC<ProductInfoProps> = ({ locale, lang, product }) => {
         <InfoRow
           rootClassName="info-group"
           label={lang.common.form.label.unit}
-          textElement={useDisplayProductUnit(product.unit)}
+          textElement={getDisplayProductUnit(lang, product.unit)}
         />
         <InfoRow
           rootClassName="info-group"
           label={lang.common.form.label.status}
-          textElement={useDisplayInventoryStatus(product.inventoryStatus)}
+          textElement={getDisplayInventoryStatus(lang, product.inventoryStatus)}
         />
         <InfoRow
           label={lang.common.form.label.origin}
-          textElement={useDisplayProductOrigin(product.origin)}
+          textElement={getDisplayProductOrigin(lang, product.origin)}
         />
 
         <Divider />

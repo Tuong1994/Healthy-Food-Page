@@ -6,14 +6,15 @@ import type { Columns } from "@/components/UI/Table/type";
 import type { Order, OrderItem } from "@/services/order/type";
 import type { Product } from "@/services/product/type";
 import { ELang } from "@/common/enum";
-import { useDisplayPaymentMethod, useDisplayRecievedType } from "@/hooks";
 import Link from "next/link";
 import useSumPrice from "../hooks/useSumPrice";
 import useSumQuantity from "../hooks/useSumQuanity";
 import ShipmentInfo from "./ShipmentInfo";
 import PaymentInfo from "./PaymentInfo";
-import utils from "@/utils";
+import getDisplayPaymentMethod from "@/features/customer/data-display/getDisplayPaymentMethod";
+import getDisplayRecievedType from "@/features/customer/data-display/getDisplayRecievedType";
 import url from "@/common/constant/url";
+import utils from "@/utils";
 
 const { PRODUCT_DETAIL } = url;
 
@@ -84,14 +85,14 @@ const OrderModal: FC<OrderModalProps> = ({ locale, lang, order, onCancel, ...res
       <Card>
         <Space align="middle">
           <Paragraph weight={600}>{lang.cart.methods.title}</Paragraph>
-          <Fragment>{useDisplayPaymentMethod(order.paymentMethod)}</Fragment>
+          <Fragment>{getDisplayPaymentMethod(lang, order.paymentMethod)}</Fragment>
         </Space>
       </Card>
       <Divider />
       <Card>
         <Space align="middle">
           <Paragraph weight={600}>{lang.cart.received.title}</Paragraph>
-          <Fragment>{useDisplayRecievedType(order.recievedType)}</Fragment>
+          <Fragment>{getDisplayRecievedType(lang, order.recievedType)}</Fragment>
         </Space>
         <ShipmentInfo lang={lang} hasEdit={false} shipment={order.shipment} />
       </Card>

@@ -9,15 +9,6 @@ import useLang from "./features/useLang";
 import useMounted from "./features/useMounted";
 import useAsync from "./features/useAsync";
 import useNotDisplay from "./features/useNotDisplay";
-import useDisplayGender from "./data-display/useDisplayGender";
-import useDisplayOrderStatus from "./data-display/useDisplayOrderStatus";
-import useDisplayPaymentStatus from "./data-display/useDisplayPaymentStatus";
-import useDisplayPaymentMethod from "./data-display/useDisplayPaymentMethod";
-import useDisplayInventoryStatus from "./data-display/useDisplayInventoryStatus";
-import useDisplayProductOrigin from "./data-display/useDisplayProductOrigin";
-import useDisplayProductStatus from "./data-display/useDisplayProductStatus";
-import useDisplayProductUnit from "./data-display/useDisplayProductUnit";
-import useDisplayRecievedType from "./data-display/useDisplayRecievedType";
 
 export {
   useClickOutside,
@@ -31,13 +22,4 @@ export {
   useMounted,
   useAsync,
   useNotDisplay,
-  useDisplayGender,
-  useDisplayOrderStatus,
-  useDisplayPaymentStatus,
-  useDisplayPaymentMethod,
-  useDisplayInventoryStatus,
-  useDisplayProductOrigin,
-  useDisplayProductStatus,
-  useDisplayProductUnit,
-  useDisplayRecievedType,
 };

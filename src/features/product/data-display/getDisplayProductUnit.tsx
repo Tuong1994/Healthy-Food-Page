@@ -1,10 +1,8 @@
 import { EProductUnit } from "@/services/product/enum";
 import { Badge } from "@/components/UI";
-import { useLang } from "@/hooks";
+import { Lang } from "@/common/type";
 
-const useDisplayProductUnit = (unit: EProductUnit) => {
-  const { lang } = useLang();
-
+const getDisplayProductUnit = (lang: Lang, unit: EProductUnit) => {
   const productUnits: Record<number, string> = {
     [EProductUnit.KG]: lang.options.productUnit.kg,
     [EProductUnit.BIN]: lang.options.productUnit.bin,
@@ -22,4 +20,4 @@ const useDisplayProductUnit = (unit: EProductUnit) => {
   );
 };
 
-export default useDisplayProductUnit;
+export default getDisplayProductUnit;

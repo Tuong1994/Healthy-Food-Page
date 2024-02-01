@@ -1,10 +1,8 @@
+import { Lang } from "@/common/type";
 import { Badge } from "@/components/UI";
-import { useLang } from "@/hooks";
 import { EGender } from "@/services/customer/enum";
 
-const useDisplayGender = (gender: EGender) => {
-  const { lang } = useLang();
-
+const getDisplayGender = (lang: Lang, gender: EGender) => {
   const genders: Record<number, string> = {
     [EGender.MALE]: lang.options.gender.male,
     [EGender.FEMALE]: lang.options.gender.female,
@@ -21,4 +19,4 @@ const useDisplayGender = (gender: EGender) => {
   );
 };
 
-export default useDisplayGender;
+export default getDisplayGender;

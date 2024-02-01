@@ -1,10 +1,8 @@
 import { EProductStatus } from "@/services/product/enum";
 import { Badge } from "@/components/UI";
-import { useLang } from "@/hooks";
+import { Lang } from "@/common/type";
 
-const useDisplayProductStatus = (status: EProductStatus) => {
-  const { lang } = useLang();
-
+const getDisplayProductStatus = (lang: Lang, status: EProductStatus) => {
   const productStatuses: Record<number, string> = {
     [EProductStatus.DRAFT]: lang.options.productStatus.draft,
     [EProductStatus.ACTIVE]: lang.options.productStatus.active,
@@ -22,4 +20,4 @@ const useDisplayProductStatus = (status: EProductStatus) => {
   );
 };
 
-export default useDisplayProductStatus;
+export default getDisplayProductStatus;
