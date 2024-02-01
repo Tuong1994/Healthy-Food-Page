@@ -5,8 +5,8 @@ export enum EOrderStatus {
 }
 
 export enum EPaymentStatus {
-  UNPAID = 2,
-  PAID = 3,
+  UNPAID = 1,
+  PAID = 2,
 }
 
 export enum EPaymentMethod {

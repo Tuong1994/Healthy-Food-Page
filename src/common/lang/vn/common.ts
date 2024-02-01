@@ -77,6 +77,8 @@ const common_vn = {
     save: "Lưu",
     edit: "Chỉnh sửa",
     update: "Cập nhật",
+    remove: "Xóa",
+    filter: "Lọc",
     cancel: "Hủy",
   },
   table: {

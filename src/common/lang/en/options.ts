@@ -35,6 +35,7 @@ const options_en = {
     can: "Can",
   },
   orderStatus: {
+    waitting: "Waitting",
     delivering: "Delivering",
     delivered: "Delivered",
   },
@@ -44,7 +45,6 @@ const options_en = {
     cod: "COD",
   },
   paymentStatus: {
-    waitting: "Waitting",
     unPaid: "Unpaid",
     paid: "Paid",
   },

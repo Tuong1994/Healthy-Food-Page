@@ -2,10 +2,12 @@ import { Key, ReactNode } from "react";
 import { Columns } from "./type";
 import { CheckBox } from "@/components/Control";
 import { HiMinus } from "react-icons/hi2";
+import { Lang } from "@/common/type";
 import Button, { ButtonProps } from "@/components/UI/Button";
 import TableCell from "./TableCell";
 
 interface TableHeadProps<M> {
+  lang: Lang;
   columns: Columns<M>;
   totalRows: number;
   hasRowSelection: boolean;
@@ -21,6 +23,7 @@ interface TableHeadProps<M> {
 }
 
 const TableHead = <M extends object>({
+  lang,
   columns,
   totalRows,
   rowSelectedKeys,
@@ -66,10 +69,10 @@ const TableHead = <M extends object>({
         <th colSpan={columns.length}>
           <div className="table-head-remove-actions">
             <Button {...removeActionProps} onClick={() => onSelectRow?.(rowSelectedKeys)}>
-              {removeButtonTitle}
+              {removeButtonTitle ?? lang.common.actions.remove}
             </Button>
             <Button {...cancelActionProps} onClick={handleCancelSelect}>
-              {cancelButtonTitle}
+              {cancelButtonTitle ?? lang.common.actions.cancel}
             </Button>
           </div>
         </th>

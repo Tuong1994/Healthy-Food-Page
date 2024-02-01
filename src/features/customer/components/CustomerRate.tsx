@@ -58,7 +58,7 @@ const CustomerRate: FC<CustomerRateProps> = ({ lang, selectedTab }) => {
       id: "image",
       title: lang.common.table.head.image,
       dataIndex: "product",
-      render: () => <Image imgWidth={60} imgHeight={60} />,
+      render: () => <Image imgWidth={40} imgHeight={40} />,
     },
     {
       id: "name",

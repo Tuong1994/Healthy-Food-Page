@@ -4,11 +4,13 @@ import { Lang } from "@/common/type";
 
 const getDisplayOrderStatus = (lang: Lang, status: EOrderStatus) => {
   const orderStatuses: Record<number, string> = {
+    [EOrderStatus.WAITTING]: lang.options.orderStatus.waitting,
     [EOrderStatus.DELIVERING]: lang.options.orderStatus.delivering,
     [EOrderStatus.DELIVERED]: lang.options.orderStatus.delivered,
   };
 
   const colors: Record<number, any> = {
+    [EOrderStatus.WAITTING]: "red",
     [EOrderStatus.DELIVERED]: "blue",
     [EOrderStatus.DELIVERING]: "orange",
   };

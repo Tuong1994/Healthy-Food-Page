@@ -54,7 +54,7 @@ const cart_en = {
     action: "Back to home",
   },
   removeModal: {
-    description: "Do you want to remove {{num}} selected row ?",
+    description: "Do you want to remove {{num}} selected rows ?",
   },
 };
 

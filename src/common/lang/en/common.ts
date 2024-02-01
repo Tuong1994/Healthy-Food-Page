@@ -77,6 +77,8 @@ const common_en = {
     save: "Save",
     edit: "Edit",
     update: "Update",
+    remove: "Remove",
+    filter: "Filter",
     cancel: "Cancel",
   },
   table: {
