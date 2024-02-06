@@ -145,7 +145,7 @@ const Select: FC<SelectProps> = (
     if (!isRhf) defaultOption = [...options].find((option) => option.value === defaultValue) as Option;
     else defaultOption = [...options].find((option) => option.value === rhfValue) as Option;
     setSelectedOption(defaultOption);
-  }, [defaultValue, rhfValue, isRhf]);
+  }, [options.length, defaultValue, rhfValue, isRhf]);
 
   const controlPlaceHolder = useMemo(() => {
     if (placeholder) return placeholder;

@@ -89,6 +89,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       limit: 12,
       langCode: query.langCode as ELang,
       categoryId: productResponse.data.categoryId,
+      hasLike: true,
     });
 
   return {

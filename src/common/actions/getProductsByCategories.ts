@@ -14,6 +14,8 @@ export const getProductsByCategories = async (query: ParsedUrlQuery) => {
         limit: 10,
         langCode: query.langCode as ELang,
         categoryId: category.id,
+        hasCate: true,
+        hasLike: true,
       };
       const response = await getProductsPaging(apiProductsQuery);
       return response;

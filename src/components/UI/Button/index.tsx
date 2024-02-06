@@ -54,6 +54,8 @@ const Button: ForwardRefRenderFunction<HTMLButtonElement, ButtonProps> = (
 
   const buttonShape = rhfShape ? rhfShape : shape;
 
+  const isLoading = loading && !text;
+
   const sizeClassName = `button-${buttonSize}`;
 
   const shapeClassName = `button-${buttonShape}`;
@@ -62,7 +64,7 @@ const Button: ForwardRefRenderFunction<HTMLButtonElement, ButtonProps> = (
 
   const disabledClassName = disabled ? "button-disabled" : "";
 
-  const loadingClassName = loading ? "button-loading" : "";
+  const loadingClassName = isLoading ? "button-loading" : "";
 
   const themeClassName = `button-${theme}`;
 

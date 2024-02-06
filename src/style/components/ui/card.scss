@@ -1,10 +1,10 @@
 .card {
   width: $w-full;
-  background: $bg-white;
   transition: all $transition-time-sm $transition-fn;
   .card-head,
   .card-body {
     padding: $p-2;
+    transition: all $transition-time-sm $transition-fn;
     @include respond(mdPhone) {
       padding: $p-2 $p-1;
     }
@@ -35,11 +35,17 @@
 }
 
 .card-light {
-  background: $bg-white;
+  .card-head,
+  .card-body {
+    background: $bg-white;
+  }
 }
 
 .card-dark {
-  background: $bg-deep-blue;
+  .card-head,
+  .card-body {
+    background: $bg-deep-blue;
+  }
 }
 
 .card-dark.card-hover {

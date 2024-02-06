@@ -45,7 +45,7 @@ const about_en = {
     chef: "Chef",
   },
   category: {
-    title: "Over 1,000 product varieties",
+    title: "Over 500 product varieties",
     content:
       "Including vegetables, fruits, meats, dried foods,… drinks and many more to cover basic needs of your purchasing",
   },

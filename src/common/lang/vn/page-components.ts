@@ -39,7 +39,7 @@ const page_components_vn = {
   },
   auth: {
     note: "Phiên của bạn đã hết hạn, vui lòng đăng nhập lại",
-    logout: "Đăng xuấ",
+    logout: "Đăng xuất",
     relogin: "Đăng nhập lại",
   },
 };

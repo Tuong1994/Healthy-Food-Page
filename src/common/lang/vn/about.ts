@@ -45,7 +45,7 @@ const about_vn = {
     chef: "Đầu bếp",
   },
   category: {
-    title: "Hơn 1,000 sản phẩm đa dạng",
+    title: "Hơn 500 sản phẩm đa dạng",
     content:
       "Gồm rau, trái cây, thịt, thực phẩm khô, đồ uống,… và nhiều sản phẩm khác để đáp ứng nhu cầu mua hàng cơ bản của bạn",
   },

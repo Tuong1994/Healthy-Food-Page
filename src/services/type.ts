@@ -43,6 +43,10 @@ export type ApiQuery = {
   wardCode?: string;
 
   hasSub?: boolean;
+  hasCate?: boolean;
+  hasLike?: boolean;
+  convertName?: boolean;
+  
   role?: ERole;
   gender?: EGender;
   productStatus?: EProductStatus;
