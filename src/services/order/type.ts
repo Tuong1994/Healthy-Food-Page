@@ -1,4 +1,4 @@
-import { EOrderStatus, EPaymentStatus, EPaymentMethod, ERecievedType } from "./enum";
+import { EOrderStatus, EPaymentStatus, EPaymentMethod, EReceivedType } from "./enum";
 import type { Shipment } from "@/services/shipment/type";
 import type { Product } from "../product/type";
 
@@ -19,7 +19,7 @@ export type Order = {
 
   status: EOrderStatus;
   paymentStatus: EPaymentStatus;
-  recievedType: ERecievedType; 
+  receivedType: EReceivedType; 
   paymentMethod: EPaymentMethod | number;
   customerId: string;
   note: string;

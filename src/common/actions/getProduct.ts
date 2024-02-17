@@ -9,6 +9,7 @@ export const getProductDetail = async (query: ParsedUrlQuery) => {
     langCode: query.langCode as ELang,
     hasCate: true,
     hasLike: true,
+    convertName: true,
   };
   const response = await getProduct(apiQuery);
   return response;

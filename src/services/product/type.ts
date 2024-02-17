@@ -27,7 +27,7 @@ export type Product = {
 
   category?: Category;
   subCategory?: SubCategory;
-  image?: ImageUpload[];
+  image?: ImageUpload;
   comments?: Comment[];
   rates?: Rate[];
   likes?: Like[];

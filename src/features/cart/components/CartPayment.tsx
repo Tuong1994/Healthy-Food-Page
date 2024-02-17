@@ -6,7 +6,7 @@ import type { Product } from "@/services/product/type";
 import type { OrderFormData } from "@/services/order/type";
 import type { ShipmentFormData } from "@/services/shipment/type";
 import type { Purchased } from "@/pages/cart";
-import { EOrderStatus, EPaymentMethod, EPaymentStatus, ERecievedType } from "@/services/order/enum";
+import { EOrderStatus, EPaymentMethod, EPaymentStatus, EReceivedType } from "@/services/order/enum";
 import { createOrder } from "@/services/order/api";
 import { removeCarts } from "@/services/cart/api";
 import { useAsync, useLang } from "@/hooks";
@@ -66,7 +66,7 @@ const CartPayment: FC<CartPaymentProps> = ({ cart, setPurchased, handleUnConfirm
     paymentMethod: -1,
     status: EOrderStatus.WAITTING,
     paymentStatus: EPaymentStatus.UNPAID,
-    recievedType: ERecievedType.STORE,
+    receivedType: EReceivedType.STORE,
     customerId: auth.info.id ?? "",
     note: "",
     shipmentFee: 0,
@@ -130,14 +130,14 @@ const CartPayment: FC<CartPaymentProps> = ({ cart, setPurchased, handleUnConfirm
   const handleCloseShipmenModal = () => {
     setOpenShipmentModal(false);
     setShipment(undefined);
-    setOrder((prev) => ({ ...prev, recievedType: ERecievedType.STORE, paymentMethod: -1 }));
+    setOrder((prev) => ({ ...prev, recievedType: EReceivedType.STORE, paymentMethod: -1 }));
   };
 
   const handleSelectMethod = (method: EPaymentMethod) => {
     if (order.paymentMethod === method) return setOrder((prev) => ({ ...prev, paymentMethod: -1 }));
     if (method === EPaymentMethod.COD) {
       setOpenShipmentModal(true);
-      setOrder((prev) => ({ ...prev, recievedType: ERecievedType.DELIVERY }));
+      setOrder((prev) => ({ ...prev, recievedType: EReceivedType.DELIVERY }));
     }
     setOrder((prev) => ({ ...prev, paymentMethod: method }));
   };

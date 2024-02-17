@@ -73,7 +73,7 @@ export const getApiQuery = (query: ApiQuery) => {
   hasSub && (rs += `&hasSub=${hasSub}`);
   hasCate && (rs += `&hasCate=${hasCate}`);
   hasLike && (rs += `&hasLike=${hasLike}`);
-  convertName && rs + `covertName=${convertName}`;
+  convertName && (rs += `&convertName=${convertName}`);
   role && (rs += `&role=${role}`);
   gender && (rs += `&gender=${gender}`);
   productStatus && (rs += `&productStatus=${productStatus}`);

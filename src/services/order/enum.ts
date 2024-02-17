@@ -15,7 +15,7 @@ export enum EPaymentMethod {
   COD = 3,
 }
 
-export enum ERecievedType {
+export enum EReceivedType {
   STORE = 1,
   DELIVERY = 2,
 }

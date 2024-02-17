@@ -63,7 +63,7 @@ const Image: ForwardRefRenderFunction<HTMLImageElement, ImageProps> = (
   const className = utils.formatClassName("image", fitClassName, rootCheckedClassName, rootClassName);
 
   useEffect(() => {
-    const path = src ? src : "/default-image.png";
+    const path = src ? src : "/default-image-resize.png";
     if (lazyType === "lazy") {
       if (window["IntersectionObserver"]) {
         const observer = new IntersectionObserver((entries) => {

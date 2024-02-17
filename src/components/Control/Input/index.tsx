@@ -145,9 +145,9 @@ const Input: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
   };
 
   const handleClearInput = () => {
+    onChangeInput?.("");
     if (isRhf) return rhfMethods.setValue(rhfName, "");
     setInputValue("");
-    onChangeInput?.("");
   };
 
   const onChangeFn = rhfOnChange ? rhfOnChange : handleChange;
