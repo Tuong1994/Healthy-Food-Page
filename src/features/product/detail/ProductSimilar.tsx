@@ -11,7 +11,7 @@ interface ProductSimilarProps {
   products: Product[];
 }
 
-const ProductSimilar: FC<ProductSimilarProps> = ({ lang, products }) => {
+const ProductSimilar: FC<ProductSimilarProps> = ({ lang, products = [] }) => {
   return (
     <Fragment>
       <Paragraph strong size={16}>

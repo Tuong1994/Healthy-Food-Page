@@ -250,6 +250,7 @@ const SelectTag: FC<SelectTagProps> = (
   const handleClearInput = () => {
     setTouched(true);
     if (search) setSearch("");
+    onChangeSearch?.("");
   };
 
   const handleChangePage = (type: "prev" | "next") => {

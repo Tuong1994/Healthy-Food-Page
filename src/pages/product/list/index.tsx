@@ -155,11 +155,16 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   let subCategoryResponse: ApiResponse<SubCategory> = defaultApiResponse<SubCategory>();
 
   if (apiQuery.categoryId)
-    categoryResponse = await getCategory({ categoryId: apiQuery.categoryId, langCode: apiQuery.langCode });
+    categoryResponse = await getCategory({
+      categoryId: apiQuery.categoryId,
+      langCode: apiQuery.langCode,
+      convertName: true,
+    });
   if (apiQuery.subCategoryId)
     subCategoryResponse = await getSubCategory({
       subCategoryId: apiQuery.subCategoryId,
       langCode: apiQuery.langCode,
+      convertName: true,
     });
 
   const productsResponse = await getProductsByCateAndSubcate(query);

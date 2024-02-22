@@ -236,6 +236,7 @@ const TreeSelect: FC<TreeSelectProps> = (
     if (selectedOption) setSelectedOption(null);
     if (isRhf) rhfMethods.setValue(rhfName, null);
     onChangeSelect?.("");
+    onChangeSearch?.("");
   };
 
   const handleChangePage = (type: "prev" | "next") => {

@@ -1,7 +1,7 @@
 import { useLang } from "@/hooks";
 import { useEffect, useState } from "react";
 import { getCategories } from "@/services/category/api";
-import type { ApiResponse, List, ResponseError } from "@/services/type";
+import type { ApiQuery, ApiResponse, List, ResponseError } from "@/services/type";
 import type { Category } from "@/services/category/type";
 import { categorySwrKey } from "../swrkey";
 import useSWR, { SWRConfiguration } from "swr";
@@ -16,7 +16,8 @@ const useGetCategories = () => {
 
   const getCategoriesWithSubs = async () => {
     if (error) setError(false);
-    const response = await getCategories({ hasSub: true, langCode: locale });
+    const apiQuery: ApiQuery = { hasSub: true, langCode: locale };
+    const response = await getCategories(apiQuery);
     if (!response.success) setError(true);
     return response;
   };

@@ -29,7 +29,7 @@ const FooterTop: FC<FooterTopProps> = () => {
     return (
       <Row justify="between">
         {categoriesWithSubs.map((category) => {
-          const items: BreadcrumbItems = [...category.subCategories].map((subcategory) => ({
+          const items: BreadcrumbItems = category.subCategories.map((subcategory) => ({
             id: subcategory.id as string,
             label: (
               <Link
