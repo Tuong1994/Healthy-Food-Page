@@ -58,7 +58,7 @@ const MultipleImageUpload: ForwardRefRenderFunction<HTMLInputElement, MultipleIm
 ) => {
   const { lang } = useLang();
 
-  const { isForm, color: rhfColor, shape: rhfShape } = useContext(FormContext);
+  const { isForm, color: rhfColor, shape: rhfShape, disabled: formDisabled } = useContext(FormContext);
 
   const [images, setImages] = useState<UploadItems>([]);
 
@@ -73,6 +73,8 @@ const MultipleImageUpload: ForwardRefRenderFunction<HTMLInputElement, MultipleIm
   const controlColor = isForm ? rhfColor : color;
 
   const controlShape = isForm ? rhfShape : shape;
+
+  const controlDisabled = formDisabled ? formDisabled : disabled;
 
   const shapeClassName = `multiple-image-upload-${controlShape}`;
 
@@ -206,7 +208,7 @@ const MultipleImageUpload: ForwardRefRenderFunction<HTMLInputElement, MultipleIm
           controlClassName={controlClassName}
           controlStyle={controlStyle}
           accept={fileAccepted}
-          disabled={disabled}
+          disabled={controlDisabled}
           onChange={handleChange}
         />
       </div>
@@ -214,11 +216,21 @@ const MultipleImageUpload: ForwardRefRenderFunction<HTMLInputElement, MultipleIm
       {error?.active && <NoteMessage type="error" message={errorMessage()} />}
 
       {defaultViewImages.length > 0 && (
-        <ViewArea title="Default images" items={defaultViewImages} handleRemove={onRemoveDefaultImages} />
+        <ViewArea
+          title="Default images"
+          items={defaultViewImages}
+          controlDisabled={controlDisabled}
+          handleRemove={onRemoveDefaultImages}
+        />
       )}
 
       {viewImages.length > 0 && (
-        <ViewArea title="New images" items={viewImages} handleRemove={handleRemove} />
+        <ViewArea
+          title="New images"
+          items={viewImages}
+          controlDisabled={controlDisabled}
+          handleRemove={handleRemove}
+        />
       )}
     </div>
   );

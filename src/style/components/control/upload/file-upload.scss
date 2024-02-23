@@ -68,6 +68,11 @@
         }
       }
     }
+    .item-inner-disabled {
+      opacity: 0.6;
+      user-select: none;
+      pointer-events: none;
+    }
   }
 }
 

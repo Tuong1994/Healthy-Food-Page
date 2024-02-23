@@ -5,10 +5,11 @@ import { UploadItem, UploadItems } from "@/components/Control/type";
 interface ViewAreaProps {
   title: string;
   items: UploadItems;
+  controlDisabled: boolean | undefined;
   handleRemove?: (image: UploadItem) => void;
 }
 
-const ViewArea: FC<ViewAreaProps> = ({ title = "", items = [], handleRemove }) => {
+const ViewArea: FC<ViewAreaProps> = ({ title = "", controlDisabled, items = [], handleRemove }) => {
   return (
     <div className="upload-view-area">
       <Divider>{title}</Divider>
@@ -19,8 +20,8 @@ const ViewArea: FC<ViewAreaProps> = ({ title = "", items = [], handleRemove }) =
             src={item.url}
             size="sm"
             objectFit="cover"
-            hasView
-            hasRemove
+            hasView={!controlDisabled}
+            hasRemove={!controlDisabled}
             onRemove={() => handleRemove?.(item)}
           />
         ))}
