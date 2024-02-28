@@ -20,7 +20,7 @@ const page_components_vn = {
     support: "Hỗ trợ",
     connect: "Kết nối với chúng tôi",
     content:
-      "Với hơn 1000 sản phẩm chất lượng từ rau củ quả tươi đến vật dụng nhà bếp, giá cả bình ổn, kèm theo dịch vụ giao hàng chuyên nghiệp, hỗ trợ xuất hóa đơn nhanh chóng, Healthy Food là nhà cung cấp uy tín tại Việt Nam dành cho Nhà Hàng, Cà Phê, Khách Sạn, Bar, Trường Học, Siêu Thị,...",
+      "Với hơn 500 sản phẩm chất lượng từ rau củ quả tươi đến vật dụng nhà bếp, giá cả bình ổn, kèm theo dịch vụ giao hàng chuyên nghiệp, hỗ trợ xuất hóa đơn nhanh chóng, Healthy Food là nhà cung cấp uy tín tại Việt Nam dành cho Nhà Hàng, Cà Phê, Khách Sạn, Bar, Trường Học, Siêu Thị,...",
     address: "42/2 Nguyễn Văn Trỗi, Phường 15, Quận Phú Nhuận, Thành phố Hồ Chí Minh, Việt Nam",
   },
   rate: {

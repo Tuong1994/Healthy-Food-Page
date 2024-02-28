@@ -117,8 +117,8 @@ const Products: NextPage<ProductsProps> = ({ categoryResponse, subCategoryRespon
           color="green"
           shape="square"
           rootClassName="list-pagination"
-          total={productsPaging.totalItems ?? 0}
           limit={12}
+          total={productsPaging.totalItems ?? 0}
           onChangePage={handleChangePage}
         />
       </Fragment>

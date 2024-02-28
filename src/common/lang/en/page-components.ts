@@ -20,7 +20,7 @@ const page_components_en = {
     support: "Support",
     connect: "Connect with Us",
     content:
-      "With more than 1,000 quality products from fresh fruits and vegetables to kitchen utensils, stable prices, accompanied by professional delivery services and quick invoice support, Healthy Food is a reputable supplier in Vietnam. Vietnam for Restaurants, Coffee, Hotels, Bars, Schools, Supermarkets,...",
+      "With more than 500 quality products from fresh fruits and vegetables to kitchen utensils, stable prices, accompanied by professional delivery services and quick invoice support, Healthy Food is a reputable supplier in Vietnam. Vietnam for Restaurants, Coffee, Hotels, Bars, Schools, Supermarkets,...",
     address: "42/2 Nguyen Van Troi, Ward 15, Phu Nhuan District, Ho Chi Minh City, Vietnam",
   },
   rate: {

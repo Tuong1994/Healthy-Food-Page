@@ -2,8 +2,15 @@ import { FC } from "react";
 import { Section, Image, Carousel, Grid, Typography } from "@/components/UI";
 import type { Lang } from "@/common/type";
 import type { CarouselItems } from "@/components/UI/Carousel/type";
-import useSubCategoryStore from "@/store/SubCategoryStore";
+import type { ApiResponse, List } from "@/services/type";
+import type { SubCategory } from "@/services/subcategory/type";
+import { ESort } from "@/common/enum";
+import { useRouter } from "next/router";
+import NoDataError from "@/components/Page/Error/NoDataError";
 import Link from "next/link";
+import url from "@/common/constant/url";
+
+const { PRODUCT_LIST } = url;
 
 const { Row, Col } = Grid;
 
@@ -13,17 +20,35 @@ const { Horizontal } = Carousel;
 
 interface AboutCategoryProps {
   lang: Lang;
+  subCategoriesResponse: ApiResponse<List<SubCategory>>;
 }
 
-const AboutCategory: FC<AboutCategoryProps> = ({ lang }) => {
-  const subcategories = useSubCategoryStore((state) => state.subcategories);
+const AboutCategory: FC<AboutCategoryProps> = ({ lang, subCategoriesResponse }) => {
+  const response = subCategoriesResponse;
+
+  const { query } = useRouter();
 
   const renderCategory = (start: number, end: number) => {
-    return subcategories.slice(start, end).map((subcategory) => (
-      <Col key={subcategory.id} xs={12} md={8} lg={6} span={4}>
-        <Link href="/about" className="item-inner">
-          <Image src={subcategory.path} imgWidth={150} />
-          <Paragraph rootClassName="inner-name">{subcategory.name}</Paragraph>
+    if (!response.success) return <NoDataError />;
+    const subCategories = response.data ? response.data.items : [];
+    return subCategories.slice(start, end).map((subCategory) => (
+      <Col key={subCategory.id} xs={12} md={8} lg={6} span={4}>
+        <Link
+          href={{
+            pathname: PRODUCT_LIST,
+            query: {
+              page: 1,
+              limit: 12,
+              categoryId: subCategory.categoryId,
+              subCategoryId: subCategory.id,
+              sortBy: ESort.PRICE_GO_UP,
+              ...query,
+            },
+          }}
+          className="item-inner"
+        >
+          <Image imgWidth={150} />
+          <Paragraph rootClassName="inner-name">{subCategory.name}</Paragraph>
         </Link>
       </Col>
     ));
@@ -42,7 +67,23 @@ const AboutCategory: FC<AboutCategoryProps> = ({ lang }) => {
       id: "2",
       content: (
         <div className="carousel-item">
-          <Row justify="center">{renderCategory(12, subcategories.length)}</Row>
+          <Row justify="center">{renderCategory(12, 24)}</Row>
+        </div>
+      ),
+    },
+    {
+      id: "3",
+      content: (
+        <div className="carousel-item">
+          <Row justify="center">{renderCategory(24, 36)}</Row>
+        </div>
+      ),
+    },
+    {
+      id: "4",
+      content: (
+        <div className="carousel-item">
+          <Row justify="center">{renderCategory(36, response.data?.items?.length)}</Row>
         </div>
       ),
     },

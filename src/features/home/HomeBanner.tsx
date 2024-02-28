@@ -1,5 +1,7 @@
 import { FC } from "react";
 import { Grid, Carousel } from "@/components/UI";
+import { ELang } from "@/common/enum";
+import { useLang } from "@/hooks";
 import type { CarouselItems } from "@/components/UI/Carousel/type";
 import Categories from "@/components/Page/Categories";
 import useCategoryStore from "@/store/CategoryStore";
@@ -11,12 +13,56 @@ const { Horizontal } = Carousel;
 interface HomeBannerProps {}
 
 const HomeBanner: FC<HomeBannerProps> = () => {
+  const { locale } = useLang();
+
   const show = useCategoryStore((state) => state.show);
 
   const slides: CarouselItems = [
-    { id: "1", content: <div style={{ width: "100%", height: "100%", background: "lightcoral" }}></div> },
-    { id: "2", content: <div style={{ width: "100%", height: "100%", background: "lightblue" }}></div> },
-    { id: "3", content: <div style={{ width: "100%", height: "100%", background: "lightgreen" }}></div> },
+    {
+      id: "1",
+      content:
+        locale === ELang.EN ? (
+          <div className="slide-item slide-en-1" />
+        ) : (
+          <div className="slide-item slide-vn-1" />
+        ),
+    },
+    {
+      id: "2",
+      content:
+        locale === ELang.EN ? (
+          <div className="slide-item slide-en-2" />
+        ) : (
+          <div className="slide-item slide-vn-2" />
+        ),
+    },
+    {
+      id: "3",
+      content:
+        locale === ELang.EN ? (
+          <div className="slide-item slide-en-3" />
+        ) : (
+          <div className="slide-item slide-vn-3" />
+        ),
+    },
+    {
+      id: "4",
+      content:
+        locale === ELang.EN ? (
+          <div className="slide-item slide-en-4" />
+        ) : (
+          <div className="slide-item slide-vn-4" />
+        ),
+    },
+    {
+      id: "5",
+      content:
+        locale === ELang.EN ? (
+          <div className="slide-item slide-en-5" />
+        ) : (
+          <div className="slide-item slide-vn-5" />
+        ),
+    },
   ];
 
   return (

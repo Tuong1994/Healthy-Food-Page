@@ -5,5 +5,56 @@
     &:last-child {
       margin: 0;
     }
+    .group-image {
+      width: $w-full;
+      position: relative;
+      &::after {
+        content: "";
+        width: $w-full - 50;
+        height: calc($h-full + 6rem);
+        background: $bg-green-rgba-xs;
+        border-radius: $rounded-lg;
+        position: absolute;
+        top: -30px;
+        left: 20px;
+      }
+      .image-inner {
+        position: relative;
+        z-index: 1;
+      }
+    }
+    .group-device {
+      width: $w-full;
+      height: $h-10 * 3;
+      position: relative;
+      z-index: 1;
+      .device-monitor {
+        position: absolute;
+        z-index: 2;
+        @include respond(laptop) {
+          width: $w-full;
+        }
+        @include respond(mdTablet) {
+          width: $w-10 * 4;
+          left: 50%;
+          transform: translateX(-50%);
+        }
+        @include respond(mdPhone) {
+          width: $w-full;
+        }
+      }
+      .device-phone {
+        position: absolute;
+        bottom: -30px;
+        right: 20px;
+        z-index: 3;
+        @include respond(mdTablet) {
+          right: 200px;
+        }
+        @include respond(smTablet) {
+          right: 20px;
+        }
+      }
+    }
   }
 }

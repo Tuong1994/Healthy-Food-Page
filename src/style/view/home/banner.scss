@@ -26,6 +26,42 @@
       overflow: hidden;
       position: relative;
       z-index: 1;
+      .slide-item {
+        width: $w-full;
+        height: $h-full;
+        background-size: cover !important;
+        background-repeat: no-repeat !important;
+      }
+      .slide-en-1 {
+        background: url("/banner/banner_en_1.png");
+      }
+      .slide-en-2 {
+        background: url("/banner/banner_en_2.png");
+      }
+      .slide-en-3 {
+        background: url("/banner/banner_en_3.png");
+      }
+      .slide-en-4 {
+        background: url("/banner/banner_en_4.png");
+      }
+      .slide-en-5 {
+        background: url("/banner/banner_en_5.jpg");
+      }
+      .slide-vn-1 {
+        background: url("/banner/banner_vn_1.png");
+      }
+      .slide-vn-2 {
+        background: url("/banner/banner_vn_2.png");
+      }
+      .slide-vn-3 {
+        background: url("/banner/banner_vn_3.png");
+      }
+      .slide-vn-4 {
+        background: url("/banner/banner_vn_4.png");
+      }
+      .slide-vn-5 {
+        background: url("/banner/banner_vn_5.jpg");
+      }
     }
     @include respond(mdTablet) {
       padding: 0 $p-1;

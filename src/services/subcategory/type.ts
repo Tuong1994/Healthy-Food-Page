@@ -1,3 +1,4 @@
+import { Category } from "../category/type";
 import { ImageUpload } from "../image/type";
 
 export type SubCategory = {
@@ -5,7 +6,7 @@ export type SubCategory = {
 
   name: string;
   categoryId: string;
-  path?: string;
+  category?: Category;
   image?: ImageUpload;
 
   createdAt?: Date | string;
@@ -16,5 +17,4 @@ export type SubCategoryFormData = {
   nameEn: string;
   nameVn: string;
   categoryId: string;
-  image?: ImageUpload;
 };
