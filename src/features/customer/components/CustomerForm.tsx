@@ -1,5 +1,5 @@
 import { FC, Fragment, useState, useRef } from "react";
-import { Space, Button, Divider, Grid } from "@/components/UI";
+import { Space, Button, Divider, Grid, Tooltip } from "@/components/UI";
 import { Form, FormItem, Upload, Input, InputPhone, Select, DatePicker } from "@/components/Control";
 import { HiOutlineXCircle } from "react-icons/hi";
 import type { Lang } from "@/common/type";
@@ -43,6 +43,8 @@ const CustomerForm: FC<CustomerFormProps> = ({ lang, customer, onReFetchCustomer
 
   const { common, phone } = useRule();
 
+  const hasAddress = Boolean(customer.address);
+
   const [cities, districts, wards, setDistricts, setWards] = useLocationStore((state) => [
     state.cities,
     state.districts,
@@ -51,7 +53,7 @@ const CustomerForm: FC<CustomerFormProps> = ({ lang, customer, onReFetchCustomer
     state.setWards,
   ]);
 
-  const [showMore, setShowMore] = useState<boolean>(false);
+  const [showMore, setShowMore] = useState<boolean>(hasAddress);
 
   const [image, setImage] = useState<File | null>(null);
 
@@ -224,9 +226,13 @@ const CustomerForm: FC<CustomerFormProps> = ({ lang, customer, onReFetchCustomer
           <Divider>
             <Space align="middle">
               <span>{lang.customer.form.location}</span>
-              <button className="form-showmore form-showmore-close" onClick={handleShowMore}>
-                <HiOutlineXCircle size={16} />
-              </button>
+              {!hasAddress && (
+                <Tooltip label={lang.customer.form.close} color="green" placement="right">
+                  <button className="form-showmore form-showmore-close" onClick={handleShowMore}>
+                    <HiOutlineXCircle size={18} />
+                  </button>
+                </Tooltip>
+              )}
             </Space>
           </Divider>
 

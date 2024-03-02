@@ -48,7 +48,7 @@ const options_en = {
     unPaid: "Unpaid",
     paid: "Paid",
   },
-  recievedType: {
+  receivedType: {
     store: "Store",
     delivery: "Delivery",
   },

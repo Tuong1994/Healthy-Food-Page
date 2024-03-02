@@ -6,7 +6,7 @@ import type { OrderItem } from "@/services/order/type";
 import type { ApiQuery } from "@/services/type";
 import type { Product } from "@/services/product/type";
 import { getOrders } from "@/services/order/api";
-import { EOrderStatus, EPaymentStatus, EPaymentMethod, ERecievedType } from "@/services/order/enum";
+import { EOrderStatus, EPaymentStatus, EPaymentMethod, EReceivedType } from "@/services/order/enum";
 import { ELang } from "@/common/enum";
 import { useRouter } from "next/router";
 import { useLang } from "@/hooks";
@@ -14,7 +14,7 @@ import NoDataError from "@/components/Page/Error/NoDataError";
 import getDisplayOrderStatus from "../data-display/getDisplayOrderStatus";
 import getDisplayPaymentMethod from "../data-display/getDisplayPaymentMethod";
 import getDisplayPaymentStatus from "../data-display/getDisplayPaymentStatus";
-import getDisplayRecievedType from "../data-display/getDisplayRecievedType";
+import getDisplayReceivedType from "../data-display/getDisplayReceivedType";
 import useSWR from "swr";
 import utils from "@/utils";
 import moment from "moment";
@@ -87,8 +87,8 @@ const CustomerOrder: FC<CustomerOrderProps> = ({ selectedTab }) => {
     {
       id: "recieviedType",
       title: lang.common.table.head.recievedType,
-      dataIndex: "recievedType",
-      render: (type: ERecievedType) => <>{getDisplayRecievedType(lang, type)}</>,
+      dataIndex: "receivedType",
+      render: (type: EReceivedType) => <>{getDisplayReceivedType(lang, type)}</>,
     },
     {
       id: "createdAt",

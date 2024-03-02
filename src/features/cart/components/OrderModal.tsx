@@ -12,7 +12,7 @@ import useSumQuantity from "../hooks/useSumQuanity";
 import ShipmentInfo from "./ShipmentInfo";
 import PaymentInfo from "./PaymentInfo";
 import getDisplayPaymentMethod from "@/features/customer/data-display/getDisplayPaymentMethod";
-import getDisplayRecievedType from "@/features/customer/data-display/getDisplayRecievedType";
+import getDisplayRecievedType from "@/features/customer/data-display/getDisplayReceivedType";
 import url from "@/common/constant/url";
 import utils from "@/utils";
 
