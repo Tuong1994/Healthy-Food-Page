@@ -35,12 +35,16 @@ const page_components_en = {
   },
   comment: {
     note: "Sign in and leave your comment",
-    more: 'See more',
+    more: "See more",
   },
   auth: {
     note: "Your session expired, please re-login",
     logout: "Logout",
     relogin: "Re-login",
+  },
+  formLayout: {
+    return: "Back to home",
+    note: "Order anytime, anywhere with the app",
   },
 };
 

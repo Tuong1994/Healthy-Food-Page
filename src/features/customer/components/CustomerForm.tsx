@@ -9,7 +9,7 @@ import type { Customer, CustomerFormData } from "@/services/customer/type";
 import type { City } from "@/services/city/type";
 import type { District } from "@/services/district/type";
 import type { Ward } from "@/services/ward/type";
-import type { ApiQuery } from "@/services/type";
+import type { ApiQuery, List } from "@/services/type";
 import type { SelectRef } from "@/components/Control/type";
 import { ELang } from "@/common/enum";
 import { getWards } from "@/services/ward/api";
@@ -63,9 +63,9 @@ const CustomerForm: FC<CustomerFormProps> = ({ lang, customer, onReFetchCustomer
 
   const selectWardsRef = useRef<SelectRef>(null);
 
-  const { loading: districtsLoading, call: onGetDistricts } = useAsync(getDistricts);
+  const { loading: districtsLoading, call: onGetDistricts } = useAsync<List<District>>(getDistricts);
 
-  const { loading: wardsLoading, call: onGetWards } = useAsync(getWards);
+  const { loading: wardsLoading, call: onGetWards } = useAsync<List<Ward>>(getWards);
 
   const { loading: updateLoading, call: onUpdate } = useAsync(updateCustomer);
 

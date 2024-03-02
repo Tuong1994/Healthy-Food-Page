@@ -12,6 +12,7 @@ import customer_vn from "./customer";
 import options_vn from "./options";
 import search_vn from "./search";
 import favorite_vn from "./favorite";
+import contact_vn from "./contact";
 
 const vn = {
   common: common_vn,
@@ -28,6 +29,7 @@ const vn = {
   customer: customer_vn,
   search: search_vn,
   favorite: favorite_vn,
+  contact: contact_vn,
 };
 
 export type VN = typeof vn;

@@ -10,20 +10,20 @@ const { HOME } = url;
 
 const { Paragraph } = Typography;
 
-interface AuthBackProps {
+interface FormLayoutBackProps {
   lang: Lang;
 }
 
-const AuthBack: FC<AuthBackProps> = ({ lang }) => {
+const FormLayoutBack: FC<FormLayoutBackProps> = ({ lang }) => {
   const { query } = useRouter();
 
   return (
-    <div className="auth-back">
+    <div className="form-layout-back">
       <Link href={{ pathname: HOME, query: { langCode: query.langCode } }}>
         <Space size="md" align="middle">
           <HiChevronLeft size={25} className="back-icon" />
           <Paragraph rootClassName="back-text" size={16}>
-            {lang.auth.common.return}
+            {lang.pageComponent.formLayout.return}
           </Paragraph>
         </Space>
       </Link>
@@ -31,4 +31,4 @@ const AuthBack: FC<AuthBackProps> = ({ lang }) => {
   );
 };
 
-export default AuthBack;
+export default FormLayoutBack;

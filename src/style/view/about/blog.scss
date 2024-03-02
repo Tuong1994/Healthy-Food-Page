@@ -28,6 +28,26 @@
       height: $h-10 * 3;
       position: relative;
       z-index: 1;
+      &::after {
+        content: "";
+        width: $w-10 * 2.5;
+        height: $h-10 * 4;
+        border-radius: $rounded-full;
+        background: $bg-green-rgba-xs;
+        position: absolute;
+        top: 50%;
+        left: 30px;
+        transform: skewX(-10deg) translateY(-50%);
+        @include respond(mdTablet) {
+          top: 50%;
+          left: 50%;
+          transform: skewX(-10deg) translate(-50%, -50%);
+        }
+        @include respond(lgPhone) {
+          left: 10px;
+          transform: skewX(-5deg) translateY(-50%);
+        }
+      }
       .device-monitor {
         position: absolute;
         z-index: 2;

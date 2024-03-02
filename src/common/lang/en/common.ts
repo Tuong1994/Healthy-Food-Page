@@ -74,6 +74,7 @@ const common_en = {
   },
   actions: {
     ok: "Ok",
+    send: "Send",
     save: "Save",
     edit: "Edit",
     update: "Update",
@@ -122,8 +123,8 @@ const common_en = {
       removeComment: "Comment has been removed",
       updateCustomer: "Updated success",
       changePassword: "Password has been changed",
-      addLike: 'Added to favorites list',
-      removeLike: 'Removed from favorites list'
+      addLike: "Added to favorites list",
+      removeLike: "Removed from favorites list",
     },
     error: {
       authEmail: "Email is not correct. Please try again",

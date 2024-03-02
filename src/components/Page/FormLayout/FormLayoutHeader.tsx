@@ -4,9 +4,9 @@ import { ELang } from "@/common/enum";
 import { useLang } from "@/hooks";
 import type { SelectOptions } from "@/components/Control/type";
 
-interface AuthHeaderProps {}
+interface FormLayoutHeaderProps {}
 
-const AuthHeader: FC<AuthHeaderProps> = () => {
+const FormLayoutHeader: FC<FormLayoutHeaderProps> = () => {
   const { locale, handleSwitchLang } = useLang();
 
   const options: SelectOptions = [
@@ -17,7 +17,7 @@ const AuthHeader: FC<AuthHeaderProps> = () => {
   const handleSelect = (value: any) => handleSwitchLang(value);
 
   return (
-    <div className="auth-header">
+    <div className="form-layout-header">
       <Select
         color="green"
         hasSearch={false}
@@ -30,4 +30,4 @@ const AuthHeader: FC<AuthHeaderProps> = () => {
   );
 };
 
-export default AuthHeader;
+export default FormLayoutHeader;

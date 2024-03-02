@@ -1,0 +1,82 @@
+.form-layout {
+  padding: $p-5 + 5 0;
+  min-height: $h-screen;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url("/background/food-bg.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: top;
+  background-attachment: fixed;
+  .form-layout-header {
+    width: $w-8;
+    position: absolute;
+    top: 5rem;
+    right: 5rem;
+    z-index: 20;
+    @include respond(smTablet) {
+      right: 3rem;
+    }
+    @include respond(mdPhone) {
+      right: 1rem;
+    }
+  }
+  .form-layout-back {
+    margin: $m-2 0;
+    &:hover .back-text {
+      color: $text-green;
+    }
+    .back-icon {
+      path {
+        color: $text-green;
+      }
+    }
+    .back-text {
+      color: $text-white;
+      transition: all $transition-time-sm $transition-fn;
+    }
+  }
+  .form-layout-note {
+    margin-top: $m-2;
+    .note-text {
+      color: $text-white;
+    }
+  }
+  .form-layout-wrap {
+    width: $w-10 * 7;
+    .wrap-title {
+      margin: 0;
+    }
+    .wrap-form {
+      padding: $p-5 $p-5 + 2;
+      .form-link {
+        color: $text-blue;
+        cursor: pointer;
+      }
+      .form-actions {
+        margin-top: $m-3;
+        .actions-btn {
+          width: $w-full;
+          margin-bottom: $m-1;
+          &:last-child {
+            margin: 0;
+          }
+        }
+      }
+      @include respond(mdPhone) {
+        padding: $p-2;
+      }
+    }
+    @include respond(smTablet) {
+      width: $w-10 * 6;
+    }
+    @include respond(mdPhone) {
+      width: $w-10 * 3.6;
+    }
+    @include respond(smPhone) {
+      width: $w-10 * 3;
+    }
+  }
+}

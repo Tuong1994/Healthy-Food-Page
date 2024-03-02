@@ -8,9 +8,9 @@ import { useLang } from "@/hooks";
 import { useRouter } from "next/router";
 import { getProductsPaging } from "@/services/product/api";
 import ProductCard from "@/components/Page/ProductCard";
+import NoDataError from "@/components/Page/Error/NoDataError";
 import Link from "next/link";
 import url from "@/common/constant/url";
-import NoDataError from "@/components/Page/Error/NoDataError";
 
 const { HOME, SEARCH } = url;
 

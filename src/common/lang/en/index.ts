@@ -2,6 +2,7 @@ import about_en from "./about";
 import auth_en from "./auth";
 import cart_en from "./cart";
 import common_en from "./common";
+import contact_en from "./contact";
 import customer_en from "./customer";
 import delivery_en from "./delivery";
 import exchange_en from "./exchange";
@@ -27,7 +28,8 @@ const en = {
   exchange: exchange_en,
   customer: customer_en,
   search: search_en,
-  favorite: favorite_en
+  favorite: favorite_en,
+  contact: contact_en,
 };
 
 export type EN = typeof en;

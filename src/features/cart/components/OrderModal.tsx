@@ -92,7 +92,7 @@ const OrderModal: FC<OrderModalProps> = ({ locale, lang, order, onCancel, ...res
       <Card>
         <Space align="middle">
           <Paragraph weight={600}>{lang.cart.received.title}</Paragraph>
-          <Fragment>{getDisplayRecievedType(lang, order.recievedType)}</Fragment>
+          <Fragment>{getDisplayRecievedType(lang, order.receivedType)}</Fragment>
         </Space>
         <ShipmentInfo lang={lang} hasEdit={false} shipment={order.shipment} />
       </Card>

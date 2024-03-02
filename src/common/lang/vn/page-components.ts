@@ -42,6 +42,10 @@ const page_components_vn = {
     logout: "Đăng xuất",
     relogin: "Đăng nhập lại",
   },
+  formLayout: {
+    return: "Trờ về trang chủ",
+    note: "Đặt hàng mọi lúc, mọi nơi thông qua ứng dụng của chúng tôi",
+  },
 };
 
 export default page_components_vn;

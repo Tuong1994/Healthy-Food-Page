@@ -74,6 +74,7 @@ const common_vn = {
   },
   actions: {
     ok: "Ok",
+    send: "Gửi",
     save: "Lưu",
     edit: "Chỉnh sửa",
     update: "Cập nhật",

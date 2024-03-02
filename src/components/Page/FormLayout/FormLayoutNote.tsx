@@ -4,18 +4,18 @@ import type { Lang } from "@/common/type";
 
 const { Paragraph } = Typography;
 
-interface AuthNoteProps {
+interface FormLayoutNoteProps {
   lang: Lang;
 }
 
-const AuthNote: FC<AuthNoteProps> = ({ lang }) => {
+const FormLayoutNote: FC<FormLayoutNoteProps> = ({ lang }) => {
   return (
-    <div className="auth-note">
+    <div className="form-layout-note">
       <Paragraph rootClassName="note-text" align="center">
-        {lang.auth.common.note}
+        {lang.pageComponent.formLayout.note}
       </Paragraph>
     </div>
   );
 };
 
-export default AuthNote;
+export default FormLayoutNote;

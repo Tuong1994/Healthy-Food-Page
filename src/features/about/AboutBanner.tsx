@@ -1,6 +1,10 @@
 import { FC } from "react";
 import { Section, Button, Image, Space, UList, Grid, Typography } from "@/components/UI";
 import type { Lang } from "@/common/type";
+import Link from "next/link";
+import url from "@/common/constant/url";
+
+const { CONTACT } = url;
 
 const { Row, Col } = Grid;
 
@@ -23,9 +27,11 @@ const AboutBanner: FC<AboutBannerProps> = ({ lang }) => {
           <Paragraph size={17} weight={300} align="justify">
             {lang.about.banner.content}
           </Paragraph>
-          <Button color="green" sizes="lg" rootClassName="banner-btn">
-            {lang.about.banner.action}
-          </Button>
+          <Link href={CONTACT}>
+            <Button color="green" sizes="lg" rootClassName="banner-btn">
+              {lang.about.banner.action}
+            </Button>
+          </Link>
           <List>
             <ListItem>
               <Space>
