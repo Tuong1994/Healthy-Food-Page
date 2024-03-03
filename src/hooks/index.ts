@@ -9,6 +9,7 @@ import useLang from "./features/useLang";
 import useMounted from "./features/useMounted";
 import useAsync from "./features/useAsync";
 import useNotDisplay from "./features/useNotDisplay";
+import useLogout from "./actions/useLogout";
 
 export {
   useClickOutside,
@@ -22,4 +23,5 @@ export {
   useMounted,
   useAsync,
   useNotDisplay,
+  useLogout,
 };

@@ -15,4 +15,6 @@ const url = {
   SEARCH: "/search",
 };
 
+export const ADMIN_PATH = "http://localhost:5173";
+
 export default url;

@@ -4,13 +4,13 @@ import { useClickOutside, useLang, useRender } from "@/hooks";
 import { CgShoppingCart } from "react-icons/cg";
 import { useRouter } from "next/router";
 import type { Lang } from "@/common/type";
+import Link from "next/link";
 import useSumQuantity from "@/features/cart/hooks/useSumQuanity";
 import useSumPrice from "@/features/cart/hooks/useSumPrice";
 import useAuthStore from "@/store/AuthStore";
 import useCartStore from "@/store/CartStore";
-import Link from "next/link";
-import utils from "@/utils";
 import url from "@/common/constant/url";
+import utils from "@/utils";
 
 const { CART, AUTH_SIGN_IN, PRODUCT_DETAIL } = url;
 

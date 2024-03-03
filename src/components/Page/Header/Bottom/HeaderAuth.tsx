@@ -2,21 +2,16 @@ import { FC, Fragment } from "react";
 import { Space, Avatar, Button, Dropdown, Image, Grid, Typography, Loading } from "@/components/UI";
 import type { Lang } from "@/common/type";
 import type { DropdownItems } from "@/components/UI/Dropdown/type";
-import type { ApiQuery } from "@/services/type";
 import { BsGear } from "react-icons/bs";
 import { HiUser } from "react-icons/hi2";
 import { HiLogout } from "react-icons/hi";
-import { useAsync, useMounted } from "@/hooks";
+import { useLogout, useMounted } from "@/hooks";
 import { useRouter } from "next/router";
-import { logout } from "@/services/auth/api";
-import { HttpStatus } from "@/services/axios";
-import useAuthStore from "@/store/AuthStore";
-import useMessage from "@/components/UI/ToastMessage/useMessage";
-import useProductStore from "@/store/ProductStore";
 import Link from "next/link";
-import url from "@/common/constant/url";
+import url, { ADMIN_PATH } from "@/common/constant/url";
+import useAuthStore from "@/store/AuthStore";
 
-const { HOME, AUTH_SIGN_IN, AUTH_SIGN_UP, CUSTOMER } = url;
+const { AUTH_SIGN_IN, AUTH_SIGN_UP, CUSTOMER } = url;
 
 const { Row, Col } = Grid;
 
@@ -29,31 +24,18 @@ interface HeaderAuthProps {
 }
 
 const HeaderAuth: FC<HeaderAuthProps> = ({ lang }) => {
-  const messageApi = useMessage();
-
   const isMounted = useMounted();
 
-  const { query, pathname, push: routerPush, reload: routerReload } = useRouter();
-
-  const [auth, resetAuth] = useAuthStore((state) => [state.auth, state.resetAuth]);
-
-  const { loading, call: onLogout } = useAsync<any>(logout);
+  const auth = useAuthStore((state) => state.auth);
 
   const { isAuth, info } = auth;
 
+  const { query } = useRouter();
+
+  const { loading, onLogout } = useLogout(info.id as string);
+
   const handleLogout = async () => {
-    const apiQuery: ApiQuery = { customerId: info.id };
-    const response = await onLogout(apiQuery);
-    if (!response.success) {
-      let message = lang.common.message.error.api;
-      const status = response.error?.status;
-      if (status === HttpStatus.FORBIDDEN) message = lang.common.message.error.logout;
-      return messageApi.error(message);
-    }
-    messageApi.success(lang.common.message.success.logout);
-    resetAuth();
-    if (pathname === HOME) routerReload();
-    setTimeout(() => routerPush({ pathname: HOME, query: { langCode: query.langCode } }), 200);
+    await onLogout();
   };
 
   const items: DropdownItems = [
@@ -73,7 +55,9 @@ const HeaderAuth: FC<HeaderAuthProps> = ({ lang }) => {
       label: (
         <Space align="middle">
           <BsGear />
-          <a href="#">{lang.pageComponent.header.profile.admin}</a>
+          <a href={ADMIN_PATH} target="_blank">
+            {lang.pageComponent.header.profile.admin}
+          </a>
         </Space>
       ),
     },

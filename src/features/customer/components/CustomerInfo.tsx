@@ -7,6 +7,8 @@ import { ERole } from "@/services/customer/enum";
 import { HiCalendar, HiPhone } from "react-icons/hi2";
 import { HiLocationMarker, HiMail, HiPencilAlt } from "react-icons/hi";
 import { FaTransgender } from "react-icons/fa";
+import { ADMIN_PATH } from "@/common/constant/url";
+import { useLogout } from "@/hooks";
 import getDisplayGender from "../data-display/getDisplayGender";
 import utils from "@/utils";
 import moment from "moment";
@@ -20,6 +22,8 @@ interface CustomerInfoProps {
 }
 
 const CustomerInfo: FC<CustomerInfoProps> = ({ lang, customer, handleOpenEdit }) => {
+  const { loading, onLogout } = useLogout(customer.id as string);
+
   const commonProps: InfoRowProps = {
     rootClassName: "info-item",
     hasColon: false,
@@ -30,6 +34,10 @@ const CustomerInfo: FC<CustomerInfoProps> = ({ lang, customer, handleOpenEdit })
   };
 
   const hasAdmin = customer.role === ERole.ADMIN || customer.role === ERole.SUPER_ADMIN;
+
+  const handleLogout = async () => {
+    await onLogout();
+  };
 
   return (
     <Card bodyClassName="customer-info">
@@ -42,7 +50,7 @@ const CustomerInfo: FC<CustomerInfoProps> = ({ lang, customer, handleOpenEdit })
             {lang.customer.greeting}, {customer.fullName}
           </Paragraph>
           {hasAdmin && (
-            <a href="#">
+            <a href={ADMIN_PATH} target="_blank">
               <Button sizes="sm" color="black">
                 {lang.customer.admin}
               </Button>
@@ -84,6 +92,9 @@ const CustomerInfo: FC<CustomerInfoProps> = ({ lang, customer, handleOpenEdit })
       {customer.address?.fullAddress && (
         <InfoRow {...commonProps} labelElement={<HiLocationMarker />} text={customer.address?.fullAddress} />
       )}
+      <Button ghost loading={loading} color="green" onClick={handleLogout}>
+        {lang.pageComponent.auth.logout}
+      </Button>
     </Card>
   );
 };

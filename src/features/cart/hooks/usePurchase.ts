@@ -38,9 +38,9 @@ const usePurchase = () => {
   const onUpdateCart = async (cartDetail: Cart, cartData: CartFormData) => {
     if (!cart.data) return;
     const { totalItems } = cart.data;
-    let updateCartItems: CartItem[] = [...cartDetail.items];
     const apiQuery: ApiQuery = { cartId: cartDetail.id };
-    const hasItems = updateCartItems && updateCartItems && updateCartItems.length > 0;
+    const updateCartItems: CartItem[] = [...cartDetail.items];
+    const hasItems = updateCartItems && updateCartItems.length > 0;
     if (hasItems) {
       const newItems = [...cartData.items];
       for (let i = 0; i < newItems.length; i++) {
