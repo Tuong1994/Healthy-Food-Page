@@ -3,11 +3,12 @@ import { Poppins } from "next/font/google";
 import { ToastMessage } from "@/components/UI";
 import { useNotDisplay } from "@/hooks";
 import { useRouter } from "next/router";
+import usePathnameStore from "@/store/PathnameStore";
 import Header from "../Header";
 import Footer from "../Footer";
 import FooterMobile from "@/components/Mobile/FooterMobile";
 import GridProvider from "@/components/UI/Grid/Provider";
-import usePathnameStore from "@/store/PathnameStore";
+import ScrollUpButton from "../ScrollUpButton";
 import AppLang from "./AppLang";
 import AppData from "./AppData";
 import AppAuth from "./AppAuth";
@@ -52,6 +53,7 @@ const AppWarpper: FC<AppWarpperProps> = ({ children }) => {
             <Footer />
             <FooterMobile />
             <ToastMessage />
+            <ScrollUpButton />
             <div id="portal"></div>
           </AppData>
         </AppAuth>

@@ -55,7 +55,7 @@ const Customer: NextPage<CustomerProps> = ({
 
   const isMounted = useMounted();
 
-  const { success, data } = customerResponse;
+  const { success: customerResponseSuccess, data: customerData } = customerResponse;
 
   const [setCities, setDistricts, setWards] = useLocationStore((state) => [
     state.setCities,
@@ -63,7 +63,7 @@ const Customer: NextPage<CustomerProps> = ({
     state.setWards,
   ]);
 
-  const [customer, setCustomer] = useState<Customer>(data);
+  const [customer, setCustomer] = useState<Customer>(customerData);
 
   const [selectedTab, setSelectedTab] = useState<string>("order");
 
@@ -106,7 +106,7 @@ const Customer: NextPage<CustomerProps> = ({
   }, [districtsResponse]);
 
   useEffect(() => {
-    if (!wardsResponse) return;
+    if (!wardsResponse.success) return;
     setWards(wardsResponse.data.items);
   }, [wardsResponse]);
 
@@ -124,7 +124,7 @@ const Customer: NextPage<CustomerProps> = ({
   const handlePassword = () => setOpenPassword(!openPassword);
 
   const renderContent = () => {
-    if (!success) return <NoDataError />;
+    if (!customerResponseSuccess) return <NoDataError />;
     const formProps = {
       lang,
       customer,
@@ -184,8 +184,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   if (customerResponse.success) {
     const { data: customer } = customerResponse;
     const { address } = customer;
-    districtsResponse = await getDistricts({ ...apiLocationQuery, cityCode: String(address?.cityCode) });
-    wardsResponse = await getWards({ ...apiLocationQuery, districtCode: String(address?.districtCode) });
+    if (address) {
+      districtsResponse = await getDistricts({ ...apiLocationQuery, cityCode: String(address.cityCode) });
+      wardsResponse = await getWards({ ...apiLocationQuery, districtCode: String(address.districtCode) });
+    }
   }
   return {
     props: {

@@ -68,7 +68,7 @@ const HeaderCart: FC<HeaderCartProps> = ({ lang }) => {
               onClick={handleOpen}
             >
               <Space>
-                <Image imgWidth={60} imgHeight={60} src="/default-image.jpg" alt="product" />
+                <Image src={item.product?.image?.path} imgWidth={60} imgHeight={60} alt="product" />
                 <div>
                   <Paragraph rootClassName="item-name">{item.product?.name}</Paragraph>
                   <Space size={65}>

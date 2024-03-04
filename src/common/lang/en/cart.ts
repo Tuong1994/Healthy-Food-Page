@@ -36,18 +36,20 @@ const cart_en = {
   info: {
     title: "General infomation",
     product: "Total products",
-    totalPrice: "Total price",
+    totalPrice: "Total products price",
+    totalPricePreTax: "Total pre-tax price",
     deliveryFee: "Delivery fee",
-    tax: "VAT",
+    tax: "VAT (10%)",
     totalPayment: "Total payment",
   },
   shipment: {
     title: "Shipment infomation",
     editLabel: "Edit",
-    removeLabel: 'Remove',
+    removeLabel: "Remove",
   },
   purchased: {
     title: "Purchased success",
+    message: "Thank you for buying our products. Please check your email for order information",
   },
   empty: {
     note: "You have no product in your cart",

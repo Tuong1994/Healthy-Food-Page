@@ -1,8 +1,7 @@
 import { FC, useMemo } from "react";
 import { HiShoppingBag, HiShoppingCart, HiHeart, HiUser } from "react-icons/hi";
 import { usePathname } from "next/navigation";
-import { useLang, useNotDisplay } from "@/hooks";
-import { useRouter } from "next/router";
+import { useLang, useMounted, useNotDisplay } from "@/hooks";
 import Link from "next/link";
 import useAuthStore from "@/store/AuthStore";
 import url from "@/common/constant/url";
@@ -15,11 +14,13 @@ const ICON_SIZE = 22;
 interface FooterMobileProps {}
 
 const FooterMobile: FC<FooterMobileProps> = () => {
-  const { lang } = useLang();
+  const { locale, lang } = useLang();
 
-  const { query: routerQuery } = useRouter();
+  const isMounted = useMounted();
 
-  const { isAuth, info } = useAuthStore((state) => state.auth);
+  const auth = useAuthStore((state) => state.auth);
+
+  const { isAuth, info } = auth;
 
   const pathname = usePathname();
 
@@ -27,24 +28,33 @@ const FooterMobile: FC<FooterMobileProps> = () => {
 
   const items = useMemo(
     () => [
-      { id: "1", label: lang.common.menu.mart, icon: <HiShoppingBag size={ICON_SIZE} />, path: HOME },
+      {
+        id: "1",
+        label: lang.common.menu.mart,
+        icon: <HiShoppingBag size={ICON_SIZE} />,
+        path: HOME,
+        query: { langCode: locale },
+      },
       {
         id: "2",
         label: lang.common.menu.cart,
         icon: <HiShoppingCart size={ICON_SIZE} />,
         path: isAuth ? CART : AUTH_SIGN_IN,
+        query: isAuth ? { page: 1, limit: 10, id: info.id, langCode: locale } : { langCode: locale },
       },
       {
         id: "3",
         label: lang.common.menu.favorite,
         icon: <HiHeart size={ICON_SIZE} />,
         path: isAuth ? FAVORITE : AUTH_SIGN_IN,
+        query: isAuth ? { page: 1, limit: 10, id: info.id, langCode: locale } : { langCode: locale },
       },
       {
         id: "4",
         label: lang.common.menu.account,
         icon: <HiUser size={ICON_SIZE} />,
         path: isAuth ? CUSTOMER : AUTH_SIGN_IN,
+        query: isAuth ? { id: info.id, langCode: locale } : { langCode: locale },
       },
     ],
     [lang]
@@ -55,12 +65,10 @@ const FooterMobile: FC<FooterMobileProps> = () => {
     return items.map((item) => {
       const activeClassName = item.path === pathname ? "mobile-item-active" : "";
       const itemClassName = utils.formatClassName("mobile-item", activeClassName);
-      const query =
-        item.path === FAVORITE ? { ...routerQuery, page: 1, limit: 10, id: info.id } : { ...routerQuery };
       return (
         <Link
           key={item.id}
-          href={{ pathname: item.path, query }}
+          href={{ pathname: item.path, query: item.query }}
           style={{ width: itemWidth }}
           className={itemClassName}
         >
@@ -70,6 +78,8 @@ const FooterMobile: FC<FooterMobileProps> = () => {
       );
     });
   };
+
+  if (!isMounted) return null;
 
   if (notDisplay) return null;
 

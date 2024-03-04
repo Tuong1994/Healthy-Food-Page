@@ -15,6 +15,7 @@ import getDisplayPaymentMethod from "@/features/customer/data-display/getDisplay
 import getDisplayRecievedType from "@/features/customer/data-display/getDisplayReceivedType";
 import url from "@/common/constant/url";
 import utils from "@/utils";
+import getTotalPayment from "../helper/getTotalPayment";
 
 const { PRODUCT_DETAIL } = url;
 
@@ -29,13 +30,13 @@ interface OrderModalProps extends ModalProps {
 const OrderModal: FC<OrderModalProps> = ({ locale, lang, order, onCancel, ...restProps }) => {
   const totalPrice = useSumPrice({ type: "order", data: order });
 
-  const totalQuatity = useSumQuantity({ type: "order", data: order });
+  const totalQuantity = useSumQuantity({ type: "order", data: order });
 
-  const hasShipmentFee = totalPrice < 100000 && order.shipment !== undefined;
+  const hasShipmentFee = totalPrice < 100000 && Boolean(order.shipment);
 
   const shipmentFee = hasShipmentFee ? 50000 : 0;
 
-  const totalPayment = totalPrice + shipmentFee + (totalPrice * 10) / 100;
+  const { paymentBeforeTax, taxFee, totalPayment } = getTotalPayment(totalPrice, shipmentFee);
 
   const dataSource = (): OrderItem[] => order?.items?.map((item) => ({ ...item })) || [];
 
@@ -80,6 +81,8 @@ const OrderModal: FC<OrderModalProps> = ({ locale, lang, order, onCancel, ...res
       onOk={onCancel}
       {...restProps}
     >
+      <Paragraph>{lang.cart.purchased.message}</Paragraph>
+      <Divider />
       <Table<OrderItem> color="green" dataSource={dataSource()} columns={columns} />
       <Divider />
       <Card>
@@ -110,8 +113,10 @@ const OrderModal: FC<OrderModalProps> = ({ locale, lang, order, onCancel, ...res
         hasHead={false}
         locale={locale}
         lang={lang}
+        totalQuantity={totalQuantity}
         totalPrice={totalPrice}
-        totalQuatity={totalQuatity}
+        paymentBeforeTax={paymentBeforeTax}
+        taxFee={taxFee}
         totalPayment={totalPayment}
         shipmentFee={shipmentFee}
       />

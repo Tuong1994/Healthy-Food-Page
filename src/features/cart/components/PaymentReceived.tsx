@@ -5,7 +5,7 @@ import type { Lang } from "@/common/type";
 import type { SelectOptions } from "@/components/Control/type";
 import type { ShipmentFormData } from "@/services/shipment/type";
 import type { OrderFormData } from "@/services/order/type";
-import { ERecievedType } from "@/services/order/enum";
+import { EReceivedType } from "@/services/order/enum";
 import ShipmentInfo from "./ShipmentInfo";
 
 const { Paragraph } = Typography;
@@ -32,14 +32,14 @@ const PaymentReceived: FC<PaymentReceivedProps> = ({
   onRemove,
 }) => {
   const options: SelectOptions = [
-    { label: lang.cart.received.store, value: ERecievedType.STORE },
-    { label: lang.cart.received.delivery, value: ERecievedType.DELIVERY },
+    { label: lang.cart.received.store, value: EReceivedType.STORE },
+    { label: lang.cart.received.delivery, value: EReceivedType.DELIVERY },
   ];
 
   const handleSelect = (value: any) => {
-    if (value === ERecievedType.DELIVERY) setOpenShipmentModal(true);
-    if (value === ERecievedType.STORE) onShipmentFinish(undefined);
-    setOrder((prev) => ({ ...prev, recievedType: value }));
+    if (value === EReceivedType.DELIVERY) setOpenShipmentModal(true);
+    if (value === EReceivedType.STORE) onShipmentFinish(undefined);
+    setOrder((prev) => ({ ...prev, receivedType: value }));
   };
 
   const handleInput = (value: string) => setOrder((prev) => ({ ...prev, note: value }));
@@ -59,12 +59,12 @@ const PaymentReceived: FC<PaymentReceivedProps> = ({
       rootClassName="payment-received"
     >
       <Select
-        rootClassName="received-select"
         color="green"
+        rootClassName="received-select"
         hasClear={false}
         hasSearch={false}
         options={options}
-        defaultValue={order.recievedType}
+        defaultValue={order.receivedType}
         onChangeSelect={handleSelect}
       />
 

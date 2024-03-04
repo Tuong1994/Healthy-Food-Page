@@ -104,13 +104,13 @@ const CustomerOrder: FC<CustomerOrderProps> = ({ selectedTab }) => {
         id: "image",
         title: lang.common.table.head.image,
         dataIndex: "product",
-        render: () => <Image imgWidth={40} imgHeight={40} />,
+        render: (product: Product) => <Image src={product.image?.path} imgWidth={40} imgHeight={40} />,
       },
       {
         id: "name",
         title: lang.common.table.head.productName,
         dataIndex: "product",
-        render: (product: Product) => <>{product?.name}</>,
+        render: (product: Product) => <>{product.name}</>,
       },
       {
         id: "quantity",

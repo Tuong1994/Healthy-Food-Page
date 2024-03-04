@@ -11,8 +11,10 @@ interface PaymentInfoProps {
   locale: ELang;
   lang: Lang;
   totalPrice: number;
-  totalQuatity: number;
+  totalQuantity: number;
   shipmentFee: number;
+  paymentBeforeTax: number;
+  taxFee: number;
   totalPayment: number;
   hasHead?: boolean;
 }
@@ -20,8 +22,10 @@ interface PaymentInfoProps {
 const PaymentInfo: FC<PaymentInfoProps> = ({
   locale,
   totalPrice,
-  totalQuatity,
+  totalQuantity,
   shipmentFee,
+  paymentBeforeTax,
+  taxFee,
   totalPayment,
   hasHead = true,
   lang,
@@ -41,7 +45,7 @@ const PaymentInfo: FC<PaymentInfoProps> = ({
         ) : undefined
       }
     >
-      <InfoRow label={lang.cart.info.product} text={String(totalQuatity)} {...commonProps} />
+      <InfoRow label={lang.cart.info.product} text={String(totalQuantity)} {...commonProps} />
       <InfoRow
         label={lang.cart.info.totalPrice}
         text={utils.formatPrice(locale, totalPrice)}
@@ -52,7 +56,12 @@ const PaymentInfo: FC<PaymentInfoProps> = ({
         text={utils.formatPrice(locale, shipmentFee)}
         {...commonProps}
       />
-      <InfoRow label={lang.cart.info.tax} text="10%" {...commonProps} />
+      <InfoRow
+        label={lang.cart.info.totalPricePreTax}
+        text={utils.formatPrice(locale, paymentBeforeTax)}
+        {...commonProps}
+      />
+      <InfoRow label={lang.cart.info.tax} text={utils.formatPrice(locale, taxFee)} {...commonProps} />
       <Divider />
       <InfoRow
         {...commonProps}

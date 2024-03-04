@@ -57,9 +57,9 @@ const CustomerForm: FC<CustomerFormProps> = ({ lang, customer, onReFetchCustomer
 
   const [image, setImage] = useState<File | null>(null);
 
-  const [districtsEmpty, setDistrictsEmpty] = useState<string>("");
+  const [districtsEmpty, setDistrictsEmpty] = useState<string>(lang.customer.form.select.districtsEmpty);
 
-  const [wardsEmpty, setWardsEmpty] = useState<string>("");
+  const [wardsEmpty, setWardsEmpty] = useState<string>(lang.customer.form.select.wardsEmpty);
 
   const selectDistrictsRef = useRef<SelectRef>(null);
 
@@ -126,9 +126,10 @@ const CustomerForm: FC<CustomerFormProps> = ({ lang, customer, onReFetchCustomer
   };
 
   const handleSelectDistrict = async (districtCode: any) => {
-    setWards([]);
-    setWardsEmpty(lang.customer.form.select.wardsEmpty);
     selectWardsRef.current?.onResetInput();
+
+    setWardsEmpty(lang.customer.form.select.wardsEmpty);
+    setWards([]);
 
     const apiQuery: ApiQuery = { districtCode, langCode: query.langCode as ELang };
     const response = await onGetWards(apiQuery);

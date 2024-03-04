@@ -36,9 +36,10 @@ const cart_vn = {
   info: {
     title: "Thông tin chung",
     product: "Tổng số sản phẩm",
-    totalPrice: "Tổng giá tiền",
+    totalPrice: "Tổng giá sản phẩm",
+    totalPricePreTax: "Tổng tiền trước thuế",
     deliveryFee: "Phí vận chuyển",
-    tax: "VAT",
+    tax: "VAT (10%)",
     totalPayment: "Tổng tiền thanh toán",
   },
   shipment: {
@@ -48,6 +49,8 @@ const cart_vn = {
   },
   purchased: {
     title: "Mua hàng thành công",
+    message:
+      "Cảm ơn bạn đã mua sản phẩm của chúng tôi. Vui lòng kiểm tra email của bạn để biết thông tin đặt hàng",
   },
   empty: {
     note: "Bạn không có sản phẩm nào trong giỏ hàng",

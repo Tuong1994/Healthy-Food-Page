@@ -5,8 +5,7 @@ import type { DropdownItems } from "@/components/UI/Dropdown/type";
 import { BsGear } from "react-icons/bs";
 import { HiUser } from "react-icons/hi2";
 import { HiLogout } from "react-icons/hi";
-import { useLogout, useMounted } from "@/hooks";
-import { useRouter } from "next/router";
+import { useLang, useLogout, useMounted } from "@/hooks";
 import Link from "next/link";
 import url, { ADMIN_PATH } from "@/common/constant/url";
 import useAuthStore from "@/store/AuthStore";
@@ -30,7 +29,7 @@ const HeaderAuth: FC<HeaderAuthProps> = ({ lang }) => {
 
   const { isAuth, info } = auth;
 
-  const { query } = useRouter();
+  const { locale } = useLang();
 
   const { loading, onLogout } = useLogout(info.id as string);
 
@@ -44,7 +43,7 @@ const HeaderAuth: FC<HeaderAuthProps> = ({ lang }) => {
       label: (
         <Space align="middle">
           <HiUser />
-          <Link href={{ pathname: CUSTOMER, query: { id: info.id, langCode: query.langCode } }}>
+          <Link href={{ pathname: CUSTOMER, query: { id: info.id, langCode: locale } }}>
             {lang.pageComponent.header.profile.customer}
           </Link>
         </Space>

@@ -54,7 +54,7 @@ const CartConfirm: FC<CartConfirmProps> = ({ loading, cart, handleConfirm }) => 
       id: "image",
       title: lang.common.table.head.image,
       dataIndex: "product",
-      render: (product: Product) => <Image imgWidth={50} imgHeight={50} />,
+      render: (product: Product) => <Image src={product.image?.path} imgWidth={50} imgHeight={50} />,
     },
     {
       id: "name",

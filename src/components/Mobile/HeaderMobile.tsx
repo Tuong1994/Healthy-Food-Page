@@ -30,19 +30,22 @@ const HeaderMobile: FC<HeaderMobileProps> = () => {
     [lang]
   );
 
+  const activeClassName = (currentLocale: ELang) => (locale === currentLocale ? "side-lang-active" : "");
+
+  const handleActiveDrawer = () => setOpen(!open);
+
   const renderMenu = () => {
     return menu.map((item) => (
-      <Link key={item.id} href={item.path} className="side-link">
+      <Link
+        key={item.id}
+        className="side-link"
+        href={{ pathname: item.path, query: { langCode: locale } }}
+        onClick={handleActiveDrawer}
+      >
         {item.label}
       </Link>
     ));
   };
-
-  const activeClassName = (currentLocale: ELang) => (locale === currentLocale ? "side-lang-active" : "");
-
-  const handleOpen = () => setOpen(true);
-
-  const handleClose = () => setOpen(false);
 
   return (
     <Fragment>
@@ -52,12 +55,12 @@ const HeaderMobile: FC<HeaderMobileProps> = () => {
             {lang.auth.signUp.title}
           </Button>
         </Link>
-        <button className="mobile-open-btn" onClick={handleOpen}>
+        <button className="mobile-open-btn" onClick={handleActiveDrawer}>
           <FaBars size={18} />
         </button>
       </Space>
 
-      <Drawer open={open} head={<Logo />} onClose={handleClose} bodyClassName="header-mobile-side">
+      <Drawer open={open} head={<Logo />} onClose={handleActiveDrawer} bodyClassName="header-mobile-side">
         {renderMenu()}
 
         <Divider />

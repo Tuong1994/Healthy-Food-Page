@@ -38,6 +38,7 @@ const CustomerPasswordModal: FC<CustomerPasswordModalProps> = ({ lang, onCancel,
     head: lang.customer.form.action,
     okButtonTitle: lang.common.actions.save,
     okButtonProps: { loading },
+    cancelButtonProps: { color: "green", ghost: true },
     onOk: form?.handleSubmit,
     onCancel,
     ...restProps,
@@ -62,7 +63,7 @@ const CustomerPasswordModal: FC<CustomerPasswordModalProps> = ({ lang, onCancel,
 
   return (
     <Modal {...modalDefaultProps}>
-      <Form<AuthPassword> disabled={loading} initialData={initialData} onFinish={handleSubmit}>
+      <Form<AuthPassword> color="green" disabled={loading} initialData={initialData} onFinish={handleSubmit}>
         <FormItem name="oldPassword" rules={password()}>
           <InputPassword required label={lang.common.form.label.oldPassword} />
         </FormItem>

@@ -2,17 +2,17 @@ import { FC, KeyboardEvent, useState } from "react";
 import { Input } from "@/components/Control";
 import { FaSearch } from "react-icons/fa";
 import { useRouter } from "next/router";
-import type { Lang } from "@/common/type";
+import { useLang } from "@/hooks";
 import url from "@/common/constant/url";
 import utils from "@/utils";
 
 const { SEARCH } = url;
 
-interface HeaderSearchProps {
-  lang: Lang;
-}
+interface HeaderSearchProps {}
 
-const HeaderSearch: FC<HeaderSearchProps> = ({ lang }) => {
+const HeaderSearch: FC<HeaderSearchProps> = () => {
+  const { locale, lang } = useLang();
+
   const [keywords, setKeywords] = useState<string>("");
 
   const router = useRouter();
@@ -20,7 +20,7 @@ const HeaderSearch: FC<HeaderSearchProps> = ({ lang }) => {
   const disabledClassName = !keywords ? "search-icon-disabled" : "";
 
   const handleNavigate = () => {
-    router.push({ pathname: SEARCH, query: { page: 1, limit: 12, keywords } });
+    router.push({ pathname: SEARCH, query: { page: 1, limit: 12, keywords, langCode: locale } });
     setKeywords("");
   };
 

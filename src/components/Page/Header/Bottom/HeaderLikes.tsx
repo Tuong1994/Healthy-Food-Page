@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { CgHeart } from "react-icons/cg";
-import { useMounted } from "@/hooks";
-import useAuthStore from "@/store/AuthStore";
+import { useLang, useMounted } from "@/hooks";
 import Link from "next/link";
+import useAuthStore from "@/store/AuthStore";
 import url from "@/common/constant/url";
 
 const { AUTH_SIGN_IN, FAVORITE } = url;
@@ -10,6 +10,8 @@ const { AUTH_SIGN_IN, FAVORITE } = url;
 interface HeaderLikesProps {}
 
 const HeaderLikes: FC<HeaderLikesProps> = () => {
+  const { locale } = useLang();
+
   const auth = useAuthStore((state) => state.auth);
 
   const isMounted = useMounted();
@@ -20,7 +22,7 @@ const HeaderLikes: FC<HeaderLikesProps> = () => {
     <Link
       href={{
         pathname: !auth.isAuth ? AUTH_SIGN_IN : FAVORITE,
-        query: { page: 1, limit: 12, id: auth.info.id },
+        query: { page: 1, limit: 12, id: auth.info.id, langCode: locale },
       }}
     >
       <button className="bottom-likes">
