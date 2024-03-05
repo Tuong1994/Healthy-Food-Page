@@ -10,6 +10,7 @@ import { useLang } from "@/hooks";
 import { useRouter } from "next/router";
 import NoDataError from "@/components/Page/Error/NoDataError";
 import ProductCard from "@/components/Page/ProductCard";
+import ProtectedRoute from "@/components/Page/ProtectedRoute";
 import Link from "next/link";
 import useLikeStore from "@/store/LikeStore";
 import url from "@/common/constant/url";
@@ -77,13 +78,15 @@ const Favorite: NextPage<FavoriteProps> = ({ likesResponse }) => {
   };
 
   return (
-    <div className="page favorite">
-      <Breadcrumb items={items} />
-      <Title level={4} weight={600}>
-        {lang.favorite.title}
-      </Title>
-      <Card bodyClassName="favorite-wrap">{renderContent()}</Card>
-    </div>
+    <ProtectedRoute>
+      <div className="page favorite">
+        <Breadcrumb items={items} />
+        <Title level={4} weight={600}>
+          {lang.favorite.title}
+        </Title>
+        <Card bodyClassName="favorite-wrap">{renderContent()}</Card>
+      </div>
+    </ProtectedRoute>
   );
 };
 
@@ -91,8 +94,19 @@ export default Favorite;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { query } = context;
+
   const apiQuery: ApiQuery = { customerId: query.id as string, ...query };
   const likesResponse = await getLikesPaging(apiQuery);
+
+  if (!Boolean(query.id)) {
+    return {
+      redirect: {
+        destination: "/auth/sign-in",
+        permanent: false,
+      },
+    };
+  }
+
   return {
     props: {
       likesResponse,

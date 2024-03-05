@@ -5,7 +5,7 @@ import Link from "next/link";
 import useAuthStore from "@/store/AuthStore";
 import url from "@/common/constant/url";
 
-const { AUTH_SIGN_IN, FAVORITE } = url;
+const { FAVORITE } = url;
 
 interface HeaderLikesProps {}
 
@@ -14,6 +14,8 @@ const HeaderLikes: FC<HeaderLikesProps> = () => {
 
   const auth = useAuthStore((state) => state.auth);
 
+  const { info } = auth;
+
   const isMounted = useMounted();
 
   if (!isMounted) return null;
@@ -21,8 +23,8 @@ const HeaderLikes: FC<HeaderLikesProps> = () => {
   return (
     <Link
       href={{
-        pathname: !auth.isAuth ? AUTH_SIGN_IN : FAVORITE,
-        query: { page: 1, limit: 12, id: auth.info.id, langCode: locale },
+        pathname: FAVORITE,
+        query: { page: 1, limit: 12, id: info.id, langCode: locale },
       }}
     >
       <button className="bottom-likes">

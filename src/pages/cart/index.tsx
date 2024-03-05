@@ -11,6 +11,7 @@ import CartPayment from "@/features/cart/components/CartPayment";
 import CartEmpty from "@/features/cart/components/CartEmpty";
 import CartLoading from "@/features/cart/components/CartLoading";
 import OrderModal from "@/features/cart/components/OrderModal";
+import ProtectedRoute from "@/components/Page/ProtectedRoute";
 import useAuthStore from "@/store/AuthStore";
 import useCartStore from "@/store/CartStore";
 import url from "@/common/constant/url";
@@ -72,17 +73,19 @@ const Cart: NextPage<CartProps> = () => {
   };
 
   return (
-    <div className="page cart">
-      <Breadcrumb items={items} />
-      {renderContent()}
-      <OrderModal
-        lang={lang}
-        locale={locale}
-        open={purchased.open}
-        order={purchased.data}
-        onCancel={handleClosePurchaseModal}
-      />
-    </div>
+    <ProtectedRoute>
+      <div className="page cart">
+        <Breadcrumb items={items} />
+        {renderContent()}
+        <OrderModal
+          lang={lang}
+          locale={locale}
+          open={purchased.open}
+          order={purchased.data}
+          onCancel={handleClosePurchaseModal}
+        />
+      </div>
+    </ProtectedRoute>
   );
 };
 

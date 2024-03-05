@@ -29,6 +29,7 @@ import NoDataError from "@/components/Page/Error/NoDataError";
 import useLocationStore from "@/store/LocationStore";
 import useMessage from "@/components/UI/ToastMessage/useMessage";
 import url from "@/common/constant/url";
+import ProtectedRoute from "@/components/Page/ProtectedRoute";
 
 const { HOME } = url;
 
@@ -159,11 +160,13 @@ const Customer: NextPage<CustomerProps> = ({
   if (!isMounted) return null;
 
   return (
-    <div className="page customer">
-      <Breadcrumb items={items} />
-      {renderContent()}
-      <CustomerPasswordModal lang={lang} open={openPassword} onCancel={handlePassword} />
-    </div>
+    <ProtectedRoute>
+      <div className="page customer">
+        <Breadcrumb items={items} />
+        {renderContent()}
+        <CustomerPasswordModal lang={lang} open={openPassword} onCancel={handlePassword} />
+      </div>
+    </ProtectedRoute>
   );
 };
 
@@ -189,6 +192,16 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       wardsResponse = await getWards({ ...apiLocationQuery, districtCode: String(address.districtCode) });
     }
   }
+
+  if (!Boolean(query.id)) {
+    return {
+      redirect: {
+        destination: "/auth/sign-in",
+        permanent: false,
+      },
+    };
+  }
+
   return {
     props: {
       customerResponse,
