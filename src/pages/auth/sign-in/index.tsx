@@ -15,12 +15,12 @@ import usePathnameStore from "@/store/PathnameStore";
 import useMessage from "@/components/UI/ToastMessage/useMessage";
 import url from "@/common/constant/url";
 
-const { AUTH_SIGN_UP } = url;
+const { AUTH_SIGN_UP, AUTH_FORGOT_PASSWORD } = url;
 
 const SignIn: NextPage = () => {
   const messageApi = useMessage();
 
-  const { lang } = useLang();
+  const { locale, lang } = useLang();
 
   const { loading, call: submit } = useAsync<Auth>(signIn);
 
@@ -67,7 +67,9 @@ const SignIn: NextPage = () => {
       </FormItem>
 
       <Space justify="end">
-        <span className="sign-in-link">{lang.auth.signIn.forgot}?</span>
+        <Link href={{ pathname: AUTH_FORGOT_PASSWORD, query: { langCode: locale } }} className="sign-in-link">
+          {lang.auth.signIn.forgot}?
+        </Link>
       </Space>
 
       <div className="sign-in-actions">

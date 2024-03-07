@@ -13,9 +13,6 @@ import AppLang from "./AppLang";
 import AppData from "./AppData";
 import AppAuth from "./AppAuth";
 import utils from "@/utils";
-import url from "@/common/constant/url";
-
-const { AUTH_SIGN_IN, AUTH_SIGN_UP } = url;
 
 const poppins = Poppins({
   weight: ["100", "300", "400", "500", "600", "700"],
@@ -37,10 +34,9 @@ const AppWarpper: FC<AppWarpperProps> = ({ children }) => {
 
   const className = utils.formatClassName("main", fullScreenClassName, poppins.className);
 
+  // Persist previous visted page
   useEffect(() => {
-    const isSignInPage = router.pathname === AUTH_SIGN_IN;
-    const isSignUpPage = router.pathname === AUTH_SIGN_UP;
-    if (!isSignInPage && !isSignUpPage) setPreviousPath(router.asPath);
+    if (!router.pathname?.includes("auth")) setPreviousPath(router.asPath);
   }, [router.asPath, router.pathname]);
 
   return (

@@ -1,6 +1,14 @@
 import { getApiQuery } from "../helper";
 import { ApiQuery } from "../type";
-import { Auth, AuthInfo, AuthPassword, AuthSignIn, AuthSignUp } from "./type";
+import {
+  Auth,
+  AuthInfo,
+  AuthChangePassword,
+  AuthSignIn,
+  AuthSignUp,
+  AuthForgotPassword,
+  AuthResetPassword,
+} from "./type";
 import localStorageKey from "@/common/constant/storage";
 import authApiPaths from "./path";
 import Fetch from "..";
@@ -28,11 +36,24 @@ export const refresh = async (query: ApiQuery) => {
   return response;
 };
 
-export const changePassword = async (query: ApiQuery, data: AuthPassword) => {
-  const response = await Fetch.Post<AuthPassword, any>(
+export const changePassword = async (query: ApiQuery, data: AuthChangePassword) => {
+  const response = await Fetch.Post<AuthChangePassword, any>(
     authApiPaths.changePassword + getApiQuery(query),
     data
   );
+  return response;
+};
+
+export const forgotPassword = async (query: ApiQuery, data: AuthForgotPassword) => {
+  const response = await Fetch.Post<AuthForgotPassword, any>(
+    authApiPaths.forgotPassword + getApiQuery(query),
+    data
+  );
+  return response;
+};
+
+export const resetPassword = async (data: AuthResetPassword) => {
+  const response = await Fetch.Put<AuthResetPassword, any>(authApiPaths.resetPassword, data);
   return response;
 };
 

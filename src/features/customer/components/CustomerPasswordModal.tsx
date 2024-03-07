@@ -3,7 +3,7 @@ import { Modal } from "@/components/UI";
 import { Form, FormItem, InputPassword } from "@/components/Control";
 import type { ModalProps } from "@/components/UI/Modal";
 import type { Lang } from "@/common/type";
-import type { AuthPassword } from "@/services/auth/type";
+import type { AuthChangePassword } from "@/services/auth/type";
 import type { ApiQuery } from "@/services/type";
 import { changePassword, logout } from "@/services/auth/api";
 import { useAsync, useRule } from "@/hooks";
@@ -44,12 +44,12 @@ const CustomerPasswordModal: FC<CustomerPasswordModalProps> = ({ lang, onCancel,
     ...restProps,
   };
 
-  const initialData: AuthPassword = {
+  const initialData: AuthChangePassword = {
     oldPassword: "",
     newPassword: "",
   };
 
-  const handleSubmit = async (formData: AuthPassword) => {
+  const handleSubmit = async (formData: AuthChangePassword) => {
     const apiQuery: ApiQuery = { customerId: query.id as string };
     const response = await onChangePassword(apiQuery, formData);
     if (!response.success) return messageApi.error(lang.common.message.error.api);
@@ -63,7 +63,7 @@ const CustomerPasswordModal: FC<CustomerPasswordModalProps> = ({ lang, onCancel,
 
   return (
     <Modal {...modalDefaultProps}>
-      <Form<AuthPassword> color="green" disabled={loading} initialData={initialData} onFinish={handleSubmit}>
+      <Form<AuthChangePassword> color="green" disabled={loading} initialData={initialData} onFinish={handleSubmit}>
         <FormItem name="oldPassword" rules={password()}>
           <InputPassword required label={lang.common.form.label.oldPassword} />
         </FormItem>

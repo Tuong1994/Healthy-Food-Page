@@ -44,6 +44,10 @@
       color: $text-white;
     }
   }
+  .form-layout-link {
+    color: $text-blue;
+    cursor: pointer;
+  }
   .form-layout-wrap {
     width: $w-10 * 7;
     .wrap-title {
@@ -51,20 +55,6 @@
     }
     .wrap-form {
       padding: $p-5 $p-5 + 2;
-      .form-link {
-        color: $text-blue;
-        cursor: pointer;
-      }
-      .form-actions {
-        margin-top: $m-3;
-        .actions-btn {
-          width: $w-full;
-          margin-bottom: $m-1;
-          &:last-child {
-            margin: 0;
-          }
-        }
-      }
       @include respond(mdPhone) {
         padding: $p-2;
       }

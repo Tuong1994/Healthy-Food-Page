@@ -7,6 +7,8 @@ const url = {
   PRODUCT_DETAIL: "/product/detail",
   AUTH_SIGN_IN: "/auth/sign-in",
   AUTH_SIGN_UP: "/auth/sign-up",
+  AUTH_FORGOT_PASSWORD: "/auth/forgotPassword",
+  AUTH_RESET_PASSWORD: "/auth/resetPassword",
   CONTACT: "/contact",
   PAYMENT: "/payment",
   DELIVERY: "/delivery",

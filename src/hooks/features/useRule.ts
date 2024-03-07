@@ -45,7 +45,16 @@ const useRule = () => {
     ];
   };
 
-  return { common, email, password, phone };
+  const match = (match: string): FormRule[] => {
+    return [
+      { required: true, message: lang.common.form.rule.required },
+      {
+        validate: (value) => value === match || "The passwords do not match",
+      },
+    ];
+  };
+
+  return { common, email, password, phone, match };
 };
 
 export default useRule;

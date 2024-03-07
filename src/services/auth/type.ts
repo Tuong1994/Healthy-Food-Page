@@ -20,7 +20,17 @@ export type AuthSignUp = {
   phone: string;
 };
 
-export type AuthPassword = {
+export type AuthChangePassword = {
   oldPassword: string;
   newPassword: string;
+};
+
+export type AuthForgotPassword = {
+  email: string;
+};
+
+export type AuthResetPassword = {
+  resetPassword: string;
+  confirmPassword?: string;
+  token: string;
 };
