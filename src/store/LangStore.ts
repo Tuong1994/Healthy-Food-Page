@@ -13,7 +13,6 @@ interface LangState {
 const store: StateCreator<LangState> = (set) => ({
   lang: en,
   locale: ELang.EN,
-
   switchLang: (locale: ELang) => {
     if (locale === ELang.EN) return set((state) => ({ ...state, locale, lang: en }));
     set((state) => ({ ...state, locale, lang: vn }));

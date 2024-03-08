@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { Dropdown, Space } from "@/components/UI";
-import type { DropdownItems } from "@/components/UI/Dropdown/type";
 import { useLang } from "@/hooks";
 import { ELang } from "@/common/enum";
+import type { DropdownItems } from "@/components/UI/Dropdown/type";
 import Image from "next/image";
 
 interface HeaderTranslateProps {}

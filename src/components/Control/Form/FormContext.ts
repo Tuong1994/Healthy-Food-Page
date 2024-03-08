@@ -1,4 +1,4 @@
-import React from "react";
+import { createContext } from "react";
 import { ComponentColor, ComponentSize } from "@/common/type";
 import { ControlShape } from "../type";
 
@@ -10,7 +10,7 @@ export type FormContextState = {
   color?: Exclude<ComponentColor, "black" | "white" | "gray">;
 };
 
-const FormContext = React.createContext<FormContextState>({
+const FormContext = createContext<FormContextState>({
   isForm: false,
 });
 

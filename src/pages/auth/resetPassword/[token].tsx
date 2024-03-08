@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { NextPage } from "next";
 import { useParams } from "next/navigation";
 import { FormItem, InputPassword } from "@/components/Control";
@@ -25,11 +26,15 @@ const ResetPassword: NextPage = () => {
 
   const { loading, call: submit } = useAsync(resetPassword);
 
+  const [newPassword, setNewPassword] = useState<string>("");
+
   const initialData: AuthResetPassword = {
     resetPassword: "",
     confirmPassword: "",
     token: params ? (params.token as string) : "",
   };
+
+  const handleChangeInput = (text: string) => setNewPassword(text);
 
   const handleSubmit = async (data: AuthResetPassword) => {
     const prepareData: AuthResetPassword = {
@@ -53,9 +58,13 @@ const ResetPassword: NextPage = () => {
       onFinish={handleSubmit}
     >
       <FormItem name="resetPassword" rules={common()}>
-        <InputPassword required label={lang.common.form.label.newPassword} />
+        <InputPassword
+          required
+          label={lang.common.form.label.newPassword}
+          onChangeInput={handleChangeInput}
+        />
       </FormItem>
-      <FormItem name="confirmPassword">
+      <FormItem name="confirmPassword" rules={match(newPassword)}>
         <InputPassword required label={lang.common.form.label.confirmPassword} />
       </FormItem>
       <Button loading={loading}>{lang.auth.resetPassword.action}</Button>

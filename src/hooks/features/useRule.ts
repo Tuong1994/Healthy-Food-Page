@@ -48,9 +48,7 @@ const useRule = () => {
   const match = (match: string): FormRule[] => {
     return [
       { required: true, message: lang.common.form.rule.required },
-      {
-        validate: (value) => value === match || "The passwords do not match",
-      },
+      { validate: (value) => value === match || lang.common.form.rule.confirmPassword },
     ];
   };
 

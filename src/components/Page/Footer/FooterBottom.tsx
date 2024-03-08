@@ -18,7 +18,9 @@ interface FooterBottomProps {}
 const ICON_SIZE = 20;
 
 const FooterBottom: FC<FooterBottomProps> = () => {
-  const { lang } = useLang();
+  const { lang, locale } = useLang();
+
+  const query = { langCode: locale };
 
   return (
     <div className="footer-bottom">
@@ -26,10 +28,10 @@ const FooterBottom: FC<FooterBottomProps> = () => {
         <Col span={4}>
           <List head="HeaFood.vn" icon={""}>
             <ListItem rootClassName="list-link">
-              <Link href={HOME}>{lang.common.menu.home}</Link>
+              <Link href={{ pathname: HOME, query }}>{lang.common.menu.home}</Link>
             </ListItem>
             <ListItem rootClassName="list-link">
-              <Link href={ABOUT}>{lang.common.menu.about}</Link>
+              <Link href={{ pathname: ABOUT, query }}>{lang.common.menu.about}</Link>
             </ListItem>
           </List>
         </Col>
@@ -48,13 +50,13 @@ const FooterBottom: FC<FooterBottomProps> = () => {
               </Space>
             </ListItem>
             <ListItem rootClassName="list-link">
-              <Link href={PAYMENT}>{lang.common.menu.payment}</Link>
+              <Link href={{ pathname: PAYMENT, query }}>{lang.common.menu.payment}</Link>
             </ListItem>
             <ListItem rootClassName="list-link">
-              <Link href={DELIVERY}>{lang.common.menu.delivery}</Link>
+              <Link href={{ pathname: DELIVERY, query }}>{lang.common.menu.delivery}</Link>
             </ListItem>
             <ListItem rootClassName="list-link">
-              <Link href={EXCHANGE}>{lang.common.menu.exchange}</Link>
+              <Link href={{ pathname: EXCHANGE, query }}>{lang.common.menu.exchange}</Link>
             </ListItem>
           </List>
         </Col>

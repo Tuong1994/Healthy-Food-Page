@@ -51,6 +51,7 @@ const common_en = {
       required: "This field is required",
       phone: "Phone invalid",
       email: "Email invalid",
+      confirmPassword: "The passwords do not match",
       whiteSpace: "White space are not allowed",
       min: "{{min}} is minimum",
       max: "{{max}} is maximum",

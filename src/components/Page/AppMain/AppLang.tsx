@@ -11,12 +11,13 @@ const AppLang: FC<AppLangProps> = ({ children }) => {
 
   const router = useRouter();
 
+  const { pathname, query, replace: routerReplace } = router;
+
   useEffect(() => {
-    const { pathname, query } = router;
     const updatedQuery = { ...query, langCode: locale };
     const isDynamicRoute = /\[.+\]/.test(pathname);
-    if (!query.langCode && !isDynamicRoute) router.replace({ pathname, query: updatedQuery });
-  }, [locale, router.pathname, router.query.langCode]);
+    if (!query.langCode && !isDynamicRoute) routerReplace({ pathname, query: updatedQuery });
+  }, [locale, pathname, query.langCode]);
 
   return <Fragment>{children}</Fragment>;
 };

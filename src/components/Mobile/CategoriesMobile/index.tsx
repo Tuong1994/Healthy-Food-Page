@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Image } from "@/components/UI";
 import { ESort } from "@/common/enum";
-import { useRouter } from "next/router";
+import { useLang } from "@/hooks";
 import useCategoryStore from "@/store/CategoryStore";
 import CategoriesMobileLoading from "./Loading";
 import NoDataError from "@/components/Page/Error/NoDataError";
@@ -13,18 +13,24 @@ const { PRODUCT_LIST } = url;
 interface CategoriesMobileProps {}
 
 const CategoriesMobile: FC<CategoriesMobileProps> = () => {
+  const { locale } = useLang();
+
   const categories = useCategoryStore((state) => state.categories);
 
   const { data: categoriesWithSubs, loading, error } = categories;
-
-  const { query } = useRouter();
 
   const renderCategories = (start: number, end: number) => {
     return categoriesWithSubs.slice(start, end).map((category) => (
       <Link
         href={{
           pathname: PRODUCT_LIST,
-          query: { page: 1, limit: 12, sortBy: ESort.PRICE_GO_UP, categoryId: category.id, ...query },
+          query: {
+            page: 1,
+            limit: 12,
+            sortBy: ESort.PRICE_GO_UP,
+            categoryId: category.id,
+            langCode: locale,
+          },
         }}
         key={category.id}
         className="inner-item"

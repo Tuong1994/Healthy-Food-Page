@@ -4,7 +4,7 @@ import type { ApiQuery } from "@/services/type";
 import { createCart, updateCart } from "@/services/cart/api";
 import { useLang } from "@/hooks";
 import { useRouter } from "next/router";
-import { cartSwrKey } from "@/components/Page/AppWrapper/AppData/swrkey";
+import { cartSwrKey } from "@/components/Page/AppMain/AppData/swrkey";
 import { mutate } from "swr";
 import useCartStore from "@/store/CartStore";
 import useMessage from "@/components/UI/ToastMessage/useMessage";

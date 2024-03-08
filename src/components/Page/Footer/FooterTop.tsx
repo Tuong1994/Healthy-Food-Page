@@ -1,12 +1,12 @@
 import { FC } from "react";
 import { Breadcrumb, Typography, Grid } from "@/components/UI";
-import type { BreadcrumbItems } from "@/components/UI/Breadcrumb/type";
 import { ESort } from "@/common/enum";
-import { useRouter } from "next/router";
-import useCategoryStore from "@/store/CategoryStore";
+import { useLang } from "@/hooks";
+import type { BreadcrumbItems } from "@/components/UI/Breadcrumb/type";
+import Link from "next/link";
 import FooterLoading from "./FooterLoading";
 import NoDataError from "../Error/NoDataError";
-import Link from "next/link";
+import useCategoryStore from "@/store/CategoryStore";
 import url from "@/common/constant/url";
 
 const { PRODUCT_LIST } = url;
@@ -18,14 +18,14 @@ const { Paragraph } = Typography;
 interface FooterTopProps {}
 
 const FooterTop: FC<FooterTopProps> = () => {
+  const { locale } = useLang();
+
   const categories = useCategoryStore((state) => state.categories);
 
   const { data: categoriesWithSubs, loading, error } = categories;
 
-  const { query } = useRouter();
-
   const renderCategories = () => {
-    const commonQuery = { page: 1, limit: 12, sortBy: ESort.PRICE_GO_UP, ...query };
+    const commonQuery = { page: 1, limit: 12, sortBy: ESort.PRICE_GO_UP, langCode: locale };
     return (
       <Row justify="between">
         {categoriesWithSubs.map((category) => {

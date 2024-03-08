@@ -14,7 +14,7 @@ const Header: FC<HeaderProps> = () => {
 
   return (
     <div className="header">
-      <HeaderTop lang={lang} />
+      <HeaderTop />
       <HeaderBottom lang={lang} />
     </div>
   );

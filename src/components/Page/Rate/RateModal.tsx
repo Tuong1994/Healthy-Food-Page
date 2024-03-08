@@ -81,9 +81,9 @@ const RateModal: FC<RateModalProps> = ({
       sizes={sizes}
       color={color}
       head={lang.pageComponent.rate.modalTitle}
+      okButtonProps={{ type: "submit", loading }}
       onOk={form?.handleSubmit}
       onCancel={onCancel}
-      okButtonProps={{ type: "submit", loading }}
     >
       <RateRange onSelectPoint={handleSelectPoint} />
 

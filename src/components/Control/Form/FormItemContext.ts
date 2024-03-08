@@ -1,6 +1,4 @@
-"use client";
-
-import React from "react";
+import { createContext } from "react";
 
 export type FormItemType = "default" | "checkgroup";
 
@@ -15,7 +13,7 @@ export type FormItemContextState = {
   rhfOnBlur?: (...event: any) => void;
 };
 
-const FormItemContext = React.createContext<FormItemContextState>({
+const FormItemContext = createContext<FormItemContextState>({
   type: "default",
   isRhf: false,
   rhfName: "",

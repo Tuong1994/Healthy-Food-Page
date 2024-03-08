@@ -1,17 +1,18 @@
 import { create, StateCreator } from "zustand";
 
-type FormMethod = {
-  handleSubmit: any;
+export type FormMethods = {
+  watchField: (...args: any) => any;
+  handleSubmit: (...args: any) => void;
 };
 
 interface FormState {
-  form: FormMethod | null;
-  setSubmit: (submit: any) => void;
+  form: FormMethods | null;
+  setForm: (method: FormMethods) => void;
 }
 
 const store: StateCreator<FormState> = (set) => ({
   form: null,
-  setSubmit: (submit) => set((state) => ({ ...state, form: { ...state.form, handleSubmit: submit } })),
+  setForm: (method) => set((state) => ({ ...state, form: { ...state.form, ...method } })),
 });
 
 const useFormStore = create(store);

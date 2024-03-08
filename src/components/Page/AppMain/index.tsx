@@ -19,16 +19,18 @@ const poppins = Poppins({
   subsets: ["latin"],
 });
 
-interface AppWarpperProps {
+interface AppMainProps {
   children: ReactNode;
 }
 
-const AppWarpper: FC<AppWarpperProps> = ({ children }) => {
+const AppMain: FC<AppMainProps> = ({ children }) => {
   const setPreviousPath = usePathnameStore((state) => state.setPreviousPath);
 
   const router = useRouter();
 
   const notDisplay = useNotDisplay();
+
+  const { asPath, pathname } = router;
 
   const fullScreenClassName = notDisplay ? "main-full" : "";
 
@@ -36,8 +38,8 @@ const AppWarpper: FC<AppWarpperProps> = ({ children }) => {
 
   // Persist previous visted page
   useEffect(() => {
-    if (!router.pathname?.includes("auth")) setPreviousPath(router.asPath);
-  }, [router.asPath, router.pathname]);
+    if (!pathname?.includes("auth")) setPreviousPath(asPath);
+  }, [asPath, pathname]);
 
   return (
     <GridProvider>
@@ -58,4 +60,4 @@ const AppWarpper: FC<AppWarpperProps> = ({ children }) => {
   );
 };
 
-export default AppWarpper;
+export default AppMain;

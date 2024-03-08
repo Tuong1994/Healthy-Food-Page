@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Grid, Space } from "@/components/UI";
 import { FaPhone } from "react-icons/fa";
-import type { Lang } from "@/common/type";
+import { useLang } from "@/hooks";
 import Link from "next/link";
 import HeaderTranslate from "./HeaderTranslate";
 import url from "@/common/constant/url";
@@ -10,15 +10,15 @@ const { ABOUT } = url;
 
 const { Row, Col } = Grid;
 
-interface HeaderTopProps {
-  lang: Lang;
-}
+interface HeaderTopProps {}
 
-const HeaderTop: FC<HeaderTopProps> = ({ lang }) => {
+const HeaderTop: FC<HeaderTopProps> = () => {
+  const { locale, lang } = useLang();
+
   return (
     <Row rootClassName="header-top" justify="between" align="middle">
       <Col>
-        <Link href={ABOUT} className="top-about">
+        <Link href={{ pathname: ABOUT, query: { langCode: locale } }} className="top-about">
           {lang.common.menu.about}
         </Link>
       </Col>

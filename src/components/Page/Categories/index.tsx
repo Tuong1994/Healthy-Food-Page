@@ -1,8 +1,8 @@
 import { FC, Fragment } from "react";
 import { Image } from "@/components/UI";
 import { HiChevronRight } from "react-icons/hi2";
-import { useRouter } from "next/router";
 import { ESort } from "@/common/enum";
+import { useLang } from "@/hooks";
 import CategoriesLoading from "./Loading";
 import NoDataError from "../Error/NoDataError";
 import useCategoryStore from "@/store/CategoryStore";
@@ -19,9 +19,9 @@ interface CategoriesProps {
 const Categories: FC<CategoriesProps> = ({ highlight = false }) => {
   const categories = useCategoryStore((state) => state.categories);
 
-  const { data: categoriesWithSubs, loading, error } = categories;
+  const { locale } = useLang();
 
-  const { query } = useRouter();
+  const { data: categoriesWithSubs, loading, error } = categories;
 
   const [show, showCategories] = useCategoryStore((state) => [state.show, state.showCategories]);
 
@@ -36,7 +36,7 @@ const Categories: FC<CategoriesProps> = ({ highlight = false }) => {
   const backdropClassName = utils.formatClassName("categories-backdrop", backdropActiveClassName);
 
   const renderCategories = () => {
-    const commonQuery = { page: 1, limit: 12, sortBy: ESort.PRICE_GO_UP, ...query };
+    const commonQuery = { page: 1, limit: 12, sortBy: ESort.PRICE_GO_UP, langCode: locale };
     return categoriesWithSubs.map((category) => (
       <div key={category.id} className="categories-item">
         <Link
