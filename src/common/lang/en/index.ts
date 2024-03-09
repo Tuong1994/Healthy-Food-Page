@@ -3,7 +3,7 @@ import auth_en from "./auth";
 import cart_en from "./cart";
 import common_en from "./common";
 import contact_en from "./contact";
-import customer_en from "./customer";
+import user_en from "./user";
 import delivery_en from "./delivery";
 import exchange_en from "./exchange";
 import favorite_en from "./favorite";
@@ -26,7 +26,7 @@ const en = {
   payment: payment_en,
   delivery: delivery_en,
   exchange: exchange_en,
-  customer: customer_en,
+  user: user_en,
   search: search_en,
   favorite: favorite_en,
   contact: contact_en,

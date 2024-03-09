@@ -10,9 +10,10 @@ const options_vn = {
     female: "Nữ",
   },
   role: {
-    superAdmin: "Quản trị cấp cao",
-    admin: "Quản trị",
-    customer: "Khách hàng",
+    manager: "Quản lý",
+    leader: "Trưởng bộ phận",
+    staff: "Staff",
+    customer: "Nhân viên",
   },
   productStatus: {
     draft: "Bản nháp",

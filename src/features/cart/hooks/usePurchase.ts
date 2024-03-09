@@ -77,7 +77,7 @@ const usePurchase = () => {
     setLoading(true);
     const { detail: cartDetail } = cart.data;
     const item = { productId, quantity, cartId: "" };
-    const cartData: CartFormData = { customerId: auth.info.id ?? "", items: [item] };
+    const cartData: CartFormData = { userId: auth.info.id ?? "", items: [item] };
     if (!cartDetail || !cartDetail.items || !cartDetail.items.length) await onCreateCart(cartData);
     else await onUpdateCart(cartDetail, cartData);
     setLoading(false);

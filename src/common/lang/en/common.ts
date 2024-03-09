@@ -123,7 +123,7 @@ const common_en = {
       addComment: "Thank you for your comment",
       updateComment: "Comment has been updated",
       removeComment: "Comment has been removed",
-      updateCustomer: "Updated success",
+      updateUser: "Updated success",
       changePassword: "Password has been changed",
       resetPassword: "Password has been reset",
       addLike: "Added to favorites list",

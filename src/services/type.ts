@@ -1,5 +1,5 @@
 import { ELang, ESort } from "@/common/enum";
-import { EGender, ERole } from "./customer/enum";
+import { EGender, ERole } from "./user/enum";
 import { EInventoryStatus, EProductOrigin, EProductStatus } from "./product/enum";
 import { EOrderStatus, EPaymentMethod, EPaymentStatus } from "./order/enum";
 import { AxiosRequestConfig } from "axios";
@@ -24,7 +24,7 @@ export type ApiQuery = {
   sortBy?: ESort;
 
   ids?: string;
-  customerId?: string;
+  userId?: string;
   categoryId?: string;
   subCategoryId?: string;
   productId?: string;

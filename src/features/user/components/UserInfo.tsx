@@ -2,8 +2,8 @@ import { FC } from "react";
 import { Card, Avatar, Space, Divider, InfoRow, Tooltip, Button, Image, Typography } from "@/components/UI";
 import type { Lang } from "@/common/type";
 import type { InfoRowProps } from "@/components/UI/InfoRow";
-import type { Customer } from "@/services/customer/type";
-import { ERole } from "@/services/customer/enum";
+import type { User } from "@/services/user/type";
+import { ERole } from "@/services/user/enum";
 import { HiCalendar, HiPhone } from "react-icons/hi2";
 import { HiLocationMarker, HiMail, HiPencilAlt } from "react-icons/hi";
 import { FaTransgender } from "react-icons/fa";
@@ -15,14 +15,14 @@ import moment from "moment";
 
 const { Paragraph } = Typography;
 
-interface CustomerInfoProps {
+interface UserInfoProps {
   lang: Lang;
-  customer: Customer;
+  user: User;
   handleOpenEdit: () => void;
 }
 
-const CustomerInfo: FC<CustomerInfoProps> = ({ lang, customer, handleOpenEdit }) => {
-  const { loading, onLogout } = useLogout(customer.id as string);
+const UserInfo: FC<UserInfoProps> = ({ lang, user, handleOpenEdit }) => {
+  const { loading, onLogout } = useLogout(user.id as string);
 
   const commonProps: InfoRowProps = {
     rootClassName: "info-item",
@@ -33,26 +33,26 @@ const CustomerInfo: FC<CustomerInfoProps> = ({ lang, customer, handleOpenEdit })
     textSpanProps: { xs: 20, md: 20, lg: 20, span: 20 },
   };
 
-  const hasAdmin = customer.role === ERole.ADMIN || customer.role === ERole.SUPER_ADMIN;
+  const hasAdmin = user.role === ERole.MANAGER || user.role === ERole.LEADER || user.role === ERole.STAFF;
 
   const handleLogout = async () => {
     await onLogout();
   };
 
   return (
-    <Card bodyClassName="customer-info">
+    <Card bodyClassName="user-info">
       <Space align="middle">
         <Avatar color="black" size={50}>
-          <Image imgWidth="100%" imgHeight="100%" src={customer.image?.path} />
+          <Image imgWidth="100%" imgHeight="100%" src={user.image?.path} />
         </Avatar>
         <div className="info-group">
           <Paragraph strong size={16}>
-            {lang.customer.greeting}, {customer.fullName}
+            {lang.user.greeting}, {user.fullName}
           </Paragraph>
           {hasAdmin && (
             <a href={ADMIN_PATH} target="_blank">
               <Button sizes="sm" color="black">
-                {lang.customer.admin}
+                {lang.user.admin}
               </Button>
             </a>
           )}
@@ -67,30 +67,30 @@ const CustomerInfo: FC<CustomerInfoProps> = ({ lang, customer, handleOpenEdit })
         </Tooltip>
       </Space>
 
-      <InfoRow {...commonProps} labelElement={<HiMail />} text={customer.email} />
-      {customer.phone && (
+      <InfoRow {...commonProps} labelElement={<HiMail />} text={user.email} />
+      {user.phone && (
         <InfoRow
           {...commonProps}
           labelElement={<HiPhone />}
-          text={utils.formatPhoneNumber(customer.phone ?? "")}
+          text={utils.formatPhoneNumber(user.phone ?? "")}
         />
       )}
-      {customer.gender && (
+      {user.gender && (
         <InfoRow
           {...commonProps}
           labelElement={<FaTransgender />}
-          textElement={getDisplayGender(lang, customer.gender)}
+          textElement={getDisplayGender(lang, user.gender)}
         />
       )}
-      {customer.birthday && (
+      {user.birthday && (
         <InfoRow
           {...commonProps}
           labelElement={<HiCalendar />}
-          text={moment(customer.birthday).format("DD/MM/YYYY")}
+          text={moment(user.birthday).format("DD/MM/YYYY")}
         />
       )}
-      {customer.address?.fullAddress && (
-        <InfoRow {...commonProps} labelElement={<HiLocationMarker />} text={customer.address?.fullAddress} />
+      {user.address?.fullAddress && (
+        <InfoRow {...commonProps} labelElement={<HiLocationMarker />} text={user.address?.fullAddress} />
       )}
       <Button ghost loading={loading} color="green" onClick={handleLogout}>
         {lang.pageComponent.auth.logout}
@@ -99,4 +99,4 @@ const CustomerInfo: FC<CustomerInfoProps> = ({ lang, customer, handleOpenEdit })
   );
 };
 
-export default CustomerInfo;
+export default UserInfo;

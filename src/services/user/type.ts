@@ -5,7 +5,7 @@ import { Order } from "../order/type";
 import { Rate } from "../rate/type";
 import { EGender, ERole } from "./enum";
 
-export type CustomerAddress = {
+export type UserAddress = {
   id?: string;
   address?: string;
   addressEn?: string;
@@ -18,7 +18,7 @@ export type CustomerAddress = {
   updatedAt?: Date | string;
 };
 
-export type Customer = {
+export type User = {
   id?: string;
 
   email: string;
@@ -32,7 +32,7 @@ export type Customer = {
   gender?: EGender | null;
   birthday?: Date | string;
 
-  address?: CustomerAddress;
+  address?: UserAddress;
   image?: ImageUpload;
   cart?: Cart;
   orders?: Order[];
@@ -43,7 +43,7 @@ export type Customer = {
   updatedAt?: Date | string;
 };
 
-export type CustomerFormData = Omit<
-  Customer,
+export type UserFormData = Omit<
+  User,
   "id" | "fullName" | "cart" | "orders" | "comments" | "rates" | "createdAt" | "updatedAt"
 >;

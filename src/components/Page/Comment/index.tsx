@@ -56,7 +56,7 @@ const Comment: FC<CommentProps> = () => {
     content: "",
     parentId: null,
     productId: product.id ?? "",
-    customerId: auth.info.id ?? "",
+    userId: auth.info.id ?? "",
   });
 
   const [limit, setLimit] = useState<number>(15);

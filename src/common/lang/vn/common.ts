@@ -123,7 +123,7 @@ const common_vn = {
       addComment: "Cảm ơn bạn đã bình luận",
       updateComment: "Bình luận đã được cập nhật",
       removeComment: "Bình luận đã được xóa",
-      updateCustomer: "Cập nhật thành công",
+      updateUser: "Cập nhật thành công",
       changePassword: "Mật khẩu đã được thay đổi",
       resetPassword: "Mật khẩu đã được đặt lại",
       addLike: "Đã thêm vào danh sách yêu thích",

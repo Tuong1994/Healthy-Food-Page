@@ -9,8 +9,8 @@ export const getComments = async (query: ApiQuery) => {
   return response;
 };
 
-export const getCommentsByCustomer = async (query: ApiQuery) => {
-  const response = await Fetch.Get<Paging<Comment>>(commentApiPaths.getListByCustomer + getApiQuery(query));
+export const getCommentsByUser = async (query: ApiQuery) => {
+  const response = await Fetch.Get<Paging<Comment>>(commentApiPaths.getListByUser + getApiQuery(query));
   return response;
 };
 

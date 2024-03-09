@@ -1,6 +1,6 @@
 import { Lang } from "@/common/type";
 import { Badge } from "@/components/UI";
-import { EGender } from "@/services/customer/enum";
+import { EGender } from "@/services/user/enum";
 
 const getDisplayGender = (lang: Lang, gender: EGender) => {
   const genders: Record<number, string> = {

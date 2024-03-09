@@ -8,7 +8,7 @@ import cart_vn from "./cart";
 import payment_vn from "./payment";
 import delivery_vn from "./delivery";
 import exchange_vn from "./exchange";
-import customer_vn from "./customer";
+import user_vn from "./user";
 import options_vn from "./options";
 import search_vn from "./search";
 import favorite_vn from "./favorite";
@@ -26,7 +26,7 @@ const vn = {
   payment: payment_vn,
   delivery: delivery_vn,
   exchange: exchange_vn,
-  customer: customer_vn,
+  user: user_vn,
   search: search_vn,
   favorite: favorite_vn,
   contact: contact_vn,

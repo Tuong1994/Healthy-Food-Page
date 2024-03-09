@@ -1,4 +1,4 @@
-import type { Customer } from "../customer/type";
+import type { User } from "../user/type";
 import type { Product } from "../product/type";
 
 export type Comment = {
@@ -6,13 +6,13 @@ export type Comment = {
 
   content: string;
   parentId: string | null;
-  customerId: string;
+  userId: string;
   productId: string;
   product?: Pick<Product, "id" | "name" | "image">;
-  customer?: Pick<Customer, "fullName" | "image">;
+  user?: Pick<User, "fullName" | "image">;
 
   createdAt?: Date | string;
   updatedAt?: Date | string;
 };
 
-export type CommentFormData = Pick<Comment, "id" | "parentId" | "content" | "customerId" | "productId">;
+export type CommentFormData = Pick<Comment, "id" | "parentId" | "content" | "userId" | "productId">;

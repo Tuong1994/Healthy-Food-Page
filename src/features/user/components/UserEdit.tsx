@@ -3,19 +3,19 @@ import { Space, Button, Card } from "@/components/UI";
 import { BiArrowBack } from "react-icons/bi";
 import type { Lang } from "@/common/type";
 
-interface CustomerEditProps {
+interface UserEditProps {
   lang: Lang;
   children?: ReactNode;
   handleCloseEdit: () => void;
 }
 
-const CustomerEdit: FC<CustomerEditProps> = ({ lang, children, handleCloseEdit }) => {
+const UserEdit: FC<UserEditProps> = ({ lang, children, handleCloseEdit }) => {
   return (
     <Fragment>
       <Button text onClick={handleCloseEdit}>
         <Space align="middle">
           <BiArrowBack />
-          <span>{lang.customer.form.return}</span>
+          <span>{lang.user.form.return}</span>
         </Space>
       </Button>
       <Card>{children}</Card>
@@ -23,4 +23,4 @@ const CustomerEdit: FC<CustomerEditProps> = ({ lang, children, handleCloseEdit }
   );
 };
 
-export default CustomerEdit;
+export default UserEdit;

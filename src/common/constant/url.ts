@@ -13,7 +13,7 @@ const url = {
   PAYMENT: "/payment",
   DELIVERY: "/delivery",
   EXCHANGE: "/exchange",
-  CUSTOMER: "/customer",
+  USER: "/user",
   SEARCH: "/search",
 };
 

@@ -56,7 +56,7 @@ const RateModal: FC<RateModalProps> = ({
     name: info?.fullName ?? "",
     phone: info?.phone ?? "",
     email: info?.email ?? "",
-    customerId: info?.id ?? "",
+    userId: info?.id ?? "",
     productId,
     point,
     note: "",
@@ -65,8 +65,8 @@ const RateModal: FC<RateModalProps> = ({
   const handleSelectPoint = (point: number) => setPoint(point);
 
   const handleSubmit = async (formData: RateData) => {
-    const { point, customerId, productId, note } = formData;
-    const requestData: RateFormData = { point, customerId, productId, note };
+    const { point, userId, productId, note } = formData;
+    const requestData: RateFormData = { point, userId, productId, note };
     const rateResponse = await onRate(requestData);
     if (!rateResponse.success) return messageApi.error(lang.common.message.error.api);
     const productRespone = await getProduct({ productId, langCode: query.langCode as ELang });

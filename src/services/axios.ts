@@ -49,7 +49,7 @@ Axios.interceptors.response.use(
         config._retry = true;
         try {
           const response = await axios.post(
-            BASE_URL + authApiPaths.refresh + getApiQuery({ customerId: auth.info.id })
+            BASE_URL + authApiPaths.refresh + getApiQuery({ userId: auth.info.id })
           );
           const data = response.data as Auth;
           const newAuth: Auth = { ...auth, accessToken: data.accessToken, expired: data.expired };

@@ -67,7 +67,7 @@ const CartPayment: FC<CartPaymentProps> = ({ cart, setPurchased, handleUnConfirm
     status: EOrderStatus.WAITTING,
     paymentStatus: EPaymentStatus.UNPAID,
     receivedType: EReceivedType.STORE,
-    customerId: info.id ?? "",
+    userId: info.id ?? "",
     note: "",
     shipmentFee: 0,
     totalPayment: 0,

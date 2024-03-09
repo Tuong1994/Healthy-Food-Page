@@ -5,7 +5,7 @@ import { HiOutlineXCircle } from "react-icons/hi";
 import type { Lang } from "@/common/type";
 import type { GridRowProps } from "@/components/UI/Grid/Row";
 import type { GridColProps } from "@/components/UI/Grid/Col";
-import type { Customer, CustomerFormData } from "@/services/customer/type";
+import type { User, UserFormData } from "@/services/user/type";
 import type { City } from "@/services/city/type";
 import type { District } from "@/services/district/type";
 import type { Ward } from "@/services/ward/type";
@@ -14,7 +14,7 @@ import type { SelectRef } from "@/components/Control/type";
 import { ELang } from "@/common/enum";
 import { getWards } from "@/services/ward/api";
 import { getDistricts } from "@/services/district/api";
-import { updateCustomer } from "@/services/customer/api";
+import { updateUser } from "@/services/user/api";
 import { useRouter } from "next/router";
 import { useAsync, useRule, useSelectOption } from "@/hooks";
 import useLocationStore from "@/store/LocationStore";
@@ -27,14 +27,14 @@ const { ImageUpload } = Upload;
 
 const { SingleImageUpload } = ImageUpload;
 
-interface CustomerFormProps {
+interface UserFormProps {
   lang: Lang;
-  customer: Customer;
-  onReFetchCustomer: () => void;
+  user: User;
+  onReFetchUser: () => void;
   handleOpenPassword: () => void;
 }
 
-const CustomerForm: FC<CustomerFormProps> = ({ lang, customer, onReFetchCustomer, handleOpenPassword }) => {
+const UserForm: FC<UserFormProps> = ({ lang, user, onReFetchUser, handleOpenPassword }) => {
   const messageApi = useMessage();
 
   const { gender } = useSelectOption();
@@ -43,7 +43,7 @@ const CustomerForm: FC<CustomerFormProps> = ({ lang, customer, onReFetchCustomer
 
   const { common, phone } = useRule();
 
-  const hasAddress = Boolean(customer.address);
+  const hasAddress = Boolean(user.address);
 
   const [cities, districts, wards, setDistricts, setWards] = useLocationStore((state) => [
     state.cities,
@@ -57,9 +57,9 @@ const CustomerForm: FC<CustomerFormProps> = ({ lang, customer, onReFetchCustomer
 
   const [image, setImage] = useState<File | null>(null);
 
-  const [districtsEmpty, setDistrictsEmpty] = useState<string>(lang.customer.form.select.districtsEmpty);
+  const [districtsEmpty, setDistrictsEmpty] = useState<string>(lang.user.form.select.districtsEmpty);
 
-  const [wardsEmpty, setWardsEmpty] = useState<string>(lang.customer.form.select.wardsEmpty);
+  const [wardsEmpty, setWardsEmpty] = useState<string>(lang.user.form.select.wardsEmpty);
 
   const selectDistrictsRef = useRef<SelectRef>(null);
 
@@ -69,7 +69,7 @@ const CustomerForm: FC<CustomerFormProps> = ({ lang, customer, onReFetchCustomer
 
   const { loading: wardsLoading, call: onGetWards } = useAsync<List<Ward>>(getWards);
 
-  const { loading: updateLoading, call: onUpdate } = useAsync(updateCustomer);
+  const { loading: updateLoading, call: onUpdate } = useAsync(updateUser);
 
   const citiesOptions = utils.mapDataToOptions<City>(cities, "name", "code");
 
@@ -89,20 +89,20 @@ const CustomerForm: FC<CustomerFormProps> = ({ lang, customer, onReFetchCustomer
     span: 12,
   };
 
-  const initialData: CustomerFormData = {
-    email: customer.email ?? "",
-    firstName: customer.firstName ?? "",
-    lastName: customer.lastName ?? "",
-    phone: customer.phone ?? "",
-    gender: customer.gender ?? null,
-    birthday: new Date(customer.birthday ?? ""),
-    role: customer.role ?? null,
+  const initialData: UserFormData = {
+    email: user.email ?? "",
+    firstName: user.firstName ?? "",
+    lastName: user.lastName ?? "",
+    phone: user.phone ?? "",
+    gender: user.gender ?? null,
+    birthday: new Date(user.birthday ?? ""),
+    role: user.role ?? null,
     address: {
-      addressEn: customer.address?.addressVn ?? "",
-      addressVn: customer.address?.addressEn ?? "",
-      cityCode: customer.address?.cityCode ?? 0,
-      districtCode: customer.address?.districtCode ?? 0,
-      wardCode: customer.address?.wardCode ?? 0,
+      addressEn: user.address?.addressVn ?? "",
+      addressVn: user.address?.addressEn ?? "",
+      cityCode: user.address?.cityCode ?? 0,
+      districtCode: user.address?.districtCode ?? 0,
+      wardCode: user.address?.wardCode ?? 0,
     },
   };
 
@@ -112,8 +112,8 @@ const CustomerForm: FC<CustomerFormProps> = ({ lang, customer, onReFetchCustomer
     selectDistrictsRef.current?.onResetInput();
     selectWardsRef.current?.onResetInput();
 
-    setDistrictsEmpty(lang.customer.form.select.districtsEmpty);
-    setWardsEmpty(lang.customer.form.select.wardsEmpty);
+    setDistrictsEmpty(lang.user.form.select.districtsEmpty);
+    setWardsEmpty(lang.user.form.select.wardsEmpty);
     setDistricts([]);
     setWards([]);
 
@@ -128,7 +128,7 @@ const CustomerForm: FC<CustomerFormProps> = ({ lang, customer, onReFetchCustomer
   const handleSelectDistrict = async (districtCode: any) => {
     selectWardsRef.current?.onResetInput();
 
-    setWardsEmpty(lang.customer.form.select.wardsEmpty);
+    setWardsEmpty(lang.user.form.select.wardsEmpty);
     setWards([]);
 
     const apiQuery: ApiQuery = { districtCode, langCode: query.langCode as ELang };
@@ -141,25 +141,25 @@ const CustomerForm: FC<CustomerFormProps> = ({ lang, customer, onReFetchCustomer
 
   const handleUpload = (file: File | null) => setImage(file);
 
-  const handleSubmit = async (data: CustomerFormData) => {
+  const handleSubmit = async (data: UserFormData) => {
     const formData = new FormData();
-    let key: keyof CustomerFormData;
+    let key: keyof UserFormData;
     for (key in data) {
       if (key === "address") formData.append(key, JSON.stringify(data[key]));
       else formData.append(key, data[key] as string);
     }
     if (image) formData.append("image", image);
-    const apiQuery: ApiQuery = { customerId: customer.id };
+    const apiQuery: ApiQuery = { userId: user.id };
     const response = await onUpdate(apiQuery, formData);
     if (!response.success) return messageApi.error(lang.common.message.error.api);
-    onReFetchCustomer();
-    messageApi.success(lang.common.message.success.updateCustomer);
+    onReFetchUser();
+    messageApi.success(lang.common.message.success.updateUser);
   };
 
   return (
-    <Form<Customer>
+    <Form<UserFormData>
       color="green"
-      className="customer-form"
+      className="user-form"
       disabled={updateLoading}
       initialData={initialData}
       onFinish={handleSubmit}
@@ -167,7 +167,7 @@ const CustomerForm: FC<CustomerFormProps> = ({ lang, customer, onReFetchCustomer
       <Row {...rowProps}>
         <Col xs={24} md={6} lg={6} span={6}>
           <Space justify="center">
-            <SingleImageUpload defaultImageUrl={customer.image?.path} onUpload={handleUpload} />
+            <SingleImageUpload defaultImageUrl={user.image?.path} onUpload={handleUpload} />
           </Space>
         </Col>
         <Col xs={24} md={18} lg={18} span={18}>
@@ -175,12 +175,12 @@ const CustomerForm: FC<CustomerFormProps> = ({ lang, customer, onReFetchCustomer
             <Input label={lang.common.form.label.email} />
           </FormItem>
           <Button ghost color="red" type="button" onClick={handleOpenPassword}>
-            {lang.customer.form.action}
+            {lang.user.form.action}
           </Button>
         </Col>
       </Row>
 
-      <Divider>{lang.customer.form.personal}</Divider>
+      <Divider>{lang.user.form.personal}</Divider>
 
       <Row {...rowProps}>
         <Col {...colProps}>
@@ -218,7 +218,7 @@ const CustomerForm: FC<CustomerFormProps> = ({ lang, customer, onReFetchCustomer
 
       {!showMore && (
         <button className="form-showmore" onClick={handleShowMore}>
-          {lang.customer.form.more}
+          {lang.user.form.more}
         </button>
       )}
 
@@ -226,9 +226,9 @@ const CustomerForm: FC<CustomerFormProps> = ({ lang, customer, onReFetchCustomer
         <Fragment>
           <Divider>
             <Space align="middle">
-              <span>{lang.customer.form.location}</span>
+              <span>{lang.user.form.location}</span>
               {!hasAddress && (
-                <Tooltip label={lang.customer.form.close} color="green" placement="right">
+                <Tooltip label={lang.user.form.close} color="green" placement="right">
                   <button className="form-showmore form-showmore-close" onClick={handleShowMore}>
                     <HiOutlineXCircle size={18} />
                   </button>
@@ -299,4 +299,4 @@ const CustomerForm: FC<CustomerFormProps> = ({ lang, customer, onReFetchCustomer
   );
 };
 
-export default CustomerForm;
+export default UserForm;

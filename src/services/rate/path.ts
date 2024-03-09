@@ -1,6 +1,6 @@
 const rateApiPaths = {
   getList: "api/rate/list",
-  getListByCustomer: 'api/rate/listByCustomer',
+  getListByUser: 'api/rate/listByUser',
   getDetail: "api/rate/detail",
   create: "api/rate/create",
   update: "api/rate/update",

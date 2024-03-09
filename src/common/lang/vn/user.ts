@@ -1,4 +1,4 @@
-const customer_vn = {
+const user_vn = {
   greeting: "Xin chào",
   admin: "Đi tới quản trị viên",
   order: {
@@ -14,7 +14,7 @@ const customer_vn = {
     empty: "Bạn chưa có đánh giá nào",
   },
   form: {
-    title: "Cập nhật khách hàng",
+    title: "Cập nhật người dùng",
     action: "Đổi mật khẩu",
     personal: "Thông tin cá nhân",
     location: "Thông tin địa điểm",
@@ -29,4 +29,4 @@ const customer_vn = {
   },
 };
 
-export default customer_vn;
+export default user_vn;

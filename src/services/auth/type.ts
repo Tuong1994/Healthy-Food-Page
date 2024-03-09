@@ -1,6 +1,6 @@
-import { Customer } from "../customer/type";
+import { User } from "../user/type";
 
-export type AuthInfo = Omit<Customer, "password" | "createdAt" | "updatedAt">;
+export type AuthInfo = Omit<User, "password" | "createdAt" | "updatedAt">;
 
 export type Auth = {
   accessToken: string;

@@ -4,7 +4,8 @@ export enum EGender {
 }
 
 export enum ERole {
-  SUPER_ADMIN = 1,
-  ADMIN = 2,
-  CUSTOMER = 3,
+  MANAGER = 1,
+  LEADER = 2,
+  STAFF = 3,
+  CUSTOMER = 4,
 }

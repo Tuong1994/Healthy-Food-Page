@@ -21,7 +21,7 @@ export type Order = {
   paymentStatus: EPaymentStatus;
   receivedType: EReceivedType; 
   paymentMethod: EPaymentMethod | number;
-  customerId: string;
+  userId: string;
   note: string;
   shipmentFee: number;
   totalPayment: number;

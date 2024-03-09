@@ -7,7 +7,7 @@ import useAuthStore from "@/store/AuthStore";
 import url from "@/common/constant/url";
 import utils from "@/utils";
 
-const { HOME, CART, FAVORITE, CUSTOMER, AUTH_SIGN_IN } = url;
+const { HOME, CART, FAVORITE, USER, AUTH_SIGN_IN } = url;
 
 const ICON_SIZE = 22;
 
@@ -53,7 +53,7 @@ const FooterMobile: FC<FooterMobileProps> = () => {
         id: "4",
         label: lang.common.menu.account,
         icon: <HiUser size={ICON_SIZE} />,
-        path: isAuth ? CUSTOMER : AUTH_SIGN_IN,
+        path: isAuth ? USER : AUTH_SIGN_IN,
         query: isAuth ? { id: info.id, langCode: locale } : { langCode: locale },
       },
     ],

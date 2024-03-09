@@ -20,12 +20,12 @@ const useGetCart = () => {
 
   const [error, setError] = useState<boolean>(false);
 
-  const getCartByCustomer = async () => {
+  const getCartByUser = async () => {
     const { page, limit } = query;
     const apiQuery: ApiQuery = {
       page: page ? Number(page) : 1,
       limit: limit ? Number(limit) : 10,
-      customerId: auth.info.id,
+      userId: auth.info.id,
       langCode: locale,
     };
     if (error) setError(false);
@@ -39,22 +39,18 @@ const useGetCart = () => {
     revalidateOnFocus: false,
   };
 
-  const { data: cartByCustomerData, isValidating: loading } = useSWR<
+  const { data: cartByUserData, isValidating: loading } = useSWR<
     ApiResponse<CartWithItemsPaging>,
     ResponseError
-  >(
-    auth.isAuth ? cartSwrKey(auth.info?.id, query.page, query.limit, locale) : null,
-    getCartByCustomer,
-    config
-  );
+  >(auth.isAuth ? cartSwrKey(auth.info?.id, query.page, query.limit, locale) : null, getCartByUser, config);
 
   useEffect(() => {
     setCart({
       loading,
       error,
-      data: cartByCustomerData?.data,
+      data: cartByUserData?.data,
     });
-  }, [loading, error, cartByCustomerData]);
+  }, [loading, error, cartByUserData]);
 };
 
 export default useGetCart;

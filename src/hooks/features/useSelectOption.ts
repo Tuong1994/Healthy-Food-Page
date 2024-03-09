@@ -1,5 +1,5 @@
 import useLang from "./useLang";
-import { EGender } from "@/services/customer/enum";
+import { EGender } from "@/services/user/enum";
 import type { SelectOptions } from "@/components/Control/type";
 
 const useSelectOption = () => {

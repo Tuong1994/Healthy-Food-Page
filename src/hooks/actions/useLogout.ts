@@ -9,7 +9,7 @@ import url from "@/common/constant/url";
 
 const { HOME } = url;
 
-const useLogout = (customerId: string) => {
+const useLogout = (userId: string) => {
   const messageApi = useMessage();
 
   const { lang } = useLang();
@@ -21,7 +21,7 @@ const useLogout = (customerId: string) => {
   const resetAuth = useAuthStore((state) => state.resetAuth);
 
   const onLogout = async () => {
-    const apiQuery: ApiQuery = { customerId };
+    const apiQuery: ApiQuery = { userId };
     const response = await onLogoutApi(apiQuery);
     if (!response.success) {
       let message = lang.common.message.error.api;

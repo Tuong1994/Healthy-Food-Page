@@ -5,7 +5,7 @@ import type { Comment } from "@/services/comment/type";
 import type { Columns } from "@/components/UI/Table/type";
 import type { ApiQuery } from "@/services/type";
 import type { Product } from "@/services/product/type";
-import { getCommentsByCustomer } from "@/services/comment/api";
+import { getCommentsByUser } from "@/services/comment/api";
 import { ELang } from "@/common/enum";
 import { useRouter } from "next/router";
 import NoDataError from "@/components/Page/Error/NoDataError";
@@ -14,31 +14,31 @@ import moment from "moment";
 
 const { Paragraph } = Typography;
 
-interface CustomerCommentProps {
+interface UserCommentProps {
   lang: Lang;
   selectedTab: string;
 }
 
-const CustomerComment: FC<CustomerCommentProps> = ({ lang, selectedTab }) => {
+const UserComment: FC<UserCommentProps> = ({ lang, selectedTab }) => {
   const { query } = useRouter();
 
   const [error, setError] = useState<boolean>(false);
 
-  const customerId = query.id as string;
+  const userId = query.id as string;
 
   const langCode = query.langCode as ELang;
 
   const [apiQuery, setApiQuery] = useState<ApiQuery>({
     page: 1,
     limit: 10,
-    customerId,
+    userId,
     langCode,
   });
 
-  const swrKey = `getComments?page=${apiQuery.page}&customerId=${customerId}&langCode=${langCode}`;
+  const swrKey = `getComments?page=${apiQuery.page}&userId=${userId}&langCode=${langCode}`;
 
   const getComments = async () => {
-    const response = await getCommentsByCustomer(apiQuery);
+    const response = await getCommentsByUser(apiQuery);
     if (!response.success) setError(true);
     return response;
   };
@@ -85,7 +85,7 @@ const CustomerComment: FC<CustomerCommentProps> = ({ lang, selectedTab }) => {
 
   if (error) return <NoDataError />;
 
-  if (!dataSource.length) return <Empty text={lang.customer.comment.empty} />;
+  if (!dataSource.length) return <Empty text={lang.user.comment.empty} />;
 
   return (
     <Fragment>
@@ -94,7 +94,7 @@ const CustomerComment: FC<CustomerCommentProps> = ({ lang, selectedTab }) => {
         ghost
         color="green"
         shape="square"
-        rootClassName="customer-table-pagination"
+        rootClassName="user-table-pagination"
         total={commentsResponse?.data?.totalItems ?? 0}
         onChangePage={handleChangePage}
       />
@@ -102,4 +102,4 @@ const CustomerComment: FC<CustomerCommentProps> = ({ lang, selectedTab }) => {
   );
 };
 
-export default CustomerComment;
+export default UserComment;

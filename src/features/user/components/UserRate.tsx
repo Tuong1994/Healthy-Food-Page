@@ -13,15 +13,15 @@ import NoDataError from "@/components/Page/Error/NoDataError";
 import useSWR from "swr";
 import moment from "moment";
 
-interface CustomerRateProps {
+interface UserRateProps {
   lang: Lang;
   selectedTab: string;
 }
 
-const CustomerRate: FC<CustomerRateProps> = ({ lang, selectedTab }) => {
+const UserRate: FC<UserRateProps> = ({ lang, selectedTab }) => {
   const { query } = useRouter();
 
-  const customerId = query.id as string;
+  const userId = query.id as string;
 
   const langCode = query.langCode as ELang;
 
@@ -30,13 +30,13 @@ const CustomerRate: FC<CustomerRateProps> = ({ lang, selectedTab }) => {
   const [apiQuery, setApiQuery] = useState<ApiQuery>({
     page: 1,
     limit: 10,
-    customerId,
+    userId,
     langCode,
   });
 
-  const swrKey = `getRates?page=${apiQuery.page}&customerId=${customerId}&langCode=${langCode}`;
+  const swrKey = `getRates?page=${apiQuery.page}&userId=${userId}&langCode=${langCode}`;
 
-  const getRatesByCustomer = async () => {
+  const getRatesByUser = async () => {
     const response = await getRates(apiQuery);
     if (!response.success) setError(true);
     return response;
@@ -44,7 +44,7 @@ const CustomerRate: FC<CustomerRateProps> = ({ lang, selectedTab }) => {
 
   const { data: ratesResponse, isValidating: loading } = useSWR(
     selectedTab === "rate" ? swrKey : null,
-    getRatesByCustomer,
+    getRatesByUser,
     {
       refreshInterval: 0,
       revalidateOnFocus: false,
@@ -84,7 +84,7 @@ const CustomerRate: FC<CustomerRateProps> = ({ lang, selectedTab }) => {
 
   if (error) return <NoDataError />;
 
-  if (!dataSource.length) return <Empty text={lang.customer.rate.empty} />;
+  if (!dataSource.length) return <Empty text={lang.user.rate.empty} />;
 
   return (
     <Fragment>
@@ -93,7 +93,7 @@ const CustomerRate: FC<CustomerRateProps> = ({ lang, selectedTab }) => {
         ghost
         color="green"
         shape="square"
-        rootClassName="customer-table-pagination"
+        rootClassName="user-table-pagination"
         total={ratesResponse?.data?.totalItems ?? 0}
         onChangePage={handleChangePage}
       />
@@ -101,4 +101,4 @@ const CustomerRate: FC<CustomerRateProps> = ({ lang, selectedTab }) => {
   );
 };
 
-export default CustomerRate;
+export default UserRate;

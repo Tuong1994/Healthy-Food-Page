@@ -7,7 +7,7 @@ import { PiWarning } from "react-icons/pi";
 import { removeCartItems } from "@/services/cart/api";
 import { REPLACE_NUM_REGEX } from "@/common/constant/regex";
 import { useAsync, useLang } from "@/hooks";
-import { cartSwrKey } from "@/components/Page/AppWrapper/AppData/swrkey";
+import { cartSwrKey } from "@/components/Page/AppMain/AppData/swrkey";
 import { useRouter } from "next/router";
 import { mutate } from "swr";
 import Quantity from "@/components/Page/Quantity";
@@ -103,7 +103,7 @@ const CartConfirm: FC<CartConfirmProps> = ({ loading, cart, handleConfirm }) => 
     setOpenModal(false);
     if (!response.success) return messageApi.error(lang.common.message.error.remove);
     if (cartItemsLength === 0) resetCart();
-    if (cartItemsLength >= 1) mutate(cartSwrKey(cart?.detail?.customerId, query.page, query.limit, locale));
+    if (cartItemsLength >= 1) mutate(cartSwrKey(cart?.detail?.userId, query.page, query.limit, locale));
     messageApi.success(lang.common.message.success.updateCart);
   };
 

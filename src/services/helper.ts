@@ -9,7 +9,7 @@ export const getApiQuery = (query: ApiQuery) => {
     keywords,
     sortBy,
     ids,
-    customerId,
+    userId,
     categoryId,
     subCategoryId,
     productId,
@@ -53,7 +53,7 @@ export const getApiQuery = (query: ApiQuery) => {
   sortBy && (rs += `&sortBy=${sortBy}`);
 
   ids && (rs += `&ids=${ids}`);
-  customerId && (rs += `&customerId=${customerId}`);
+  userId && (rs += `&userId=${userId}`);
   categoryId && (rs += `&categoryId=${categoryId}`);
   subCategoryId && (rs += `&subCategoryId=${subCategoryId}`);
   productId && (rs += `&productId=${productId}`);

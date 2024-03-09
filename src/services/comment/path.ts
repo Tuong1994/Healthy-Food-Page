@@ -1,6 +1,6 @@
 const commentApiPaths = {
   getList: "api/comment/list",
-  getListByCustomer: "api/comment/listByCustomer",
+  getListByUser: "api/comment/listByUser",
   getDetail: "api/comment/detail",
   create: "api/comment/create",
   update: "api/comment/update",

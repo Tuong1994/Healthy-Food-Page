@@ -9,8 +9,8 @@ export const getOrders = async (query: ApiQuery) => {
   return response;
 };
 
-export const getOrdersByCustomer = async (query: ApiQuery) => {
-  const response = await Fetch.Get<Paging<Order>>(orderApiPaths.getListByCustomer + getApiQuery(query));
+export const getOrdersByUser = async (query: ApiQuery) => {
+  const response = await Fetch.Get<Paging<Order>>(orderApiPaths.getListByUser + getApiQuery(query));
   return response;
 };
 

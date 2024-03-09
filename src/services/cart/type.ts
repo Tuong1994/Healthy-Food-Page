@@ -15,7 +15,7 @@ export type CartItem = {
 export type Cart = {
   id?: string;
 
-  customerId: string;
+  userId: string;
   items: CartItem[];
 
   createdAt?: Date | string;
@@ -28,6 +28,6 @@ export type CartWithItemsPaging = {
 };
 
 export type CartFormData = {
-  customerId: string;
+  userId: string;
   items: Pick<CartItem, "productId" | "cartId" | "quantity">[];
 };

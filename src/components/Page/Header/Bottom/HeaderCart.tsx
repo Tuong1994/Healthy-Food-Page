@@ -89,7 +89,7 @@ const HeaderCart: FC<HeaderCartProps> = ({ lang }) => {
           <Link
             href={{
               pathname: CART,
-              query: { id: cartDetail?.customerId, page: 1, limit: 10, langCode: locale },
+              query: { id: cartDetail?.userId, page: 1, limit: 10, langCode: locale },
             }}
             onClick={handleOpen}
           >

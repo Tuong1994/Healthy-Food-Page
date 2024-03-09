@@ -19,16 +19,16 @@ import useSWR from "swr";
 import utils from "@/utils";
 import moment from "moment";
 
-interface CustomerOrderProps {
+interface UserOrderProps {
   selectedTab: string;
 }
 
-const CustomerOrder: FC<CustomerOrderProps> = ({ selectedTab }) => {
+const UserOrder: FC<UserOrderProps> = ({ selectedTab }) => {
   const { lang, locale } = useLang();
 
   const { query } = useRouter();
 
-  const customerId = query.id as string;
+  const userId = query.id as string;
 
   const langCode = query.langCode as ELang;
 
@@ -37,13 +37,13 @@ const CustomerOrder: FC<CustomerOrderProps> = ({ selectedTab }) => {
   const [apiQuery, setApiQuery] = useState<ApiQuery>({
     page: 1,
     limit: 10,
-    customerId,
+    userId,
     langCode,
   });
 
-  const swrKey = `getOrders?page=${apiQuery.page}&customerId=${customerId}&langCode=${langCode}`;
+  const swrKey = `getOrders?page=${apiQuery.page}&userId=${userId}&langCode=${langCode}`;
 
-  const getOrdersByCustomer = async () => {
+  const getOrdersByUser = async () => {
     const response = await getOrders(apiQuery);
     if (!response.success) setError(true);
     return response;
@@ -51,7 +51,7 @@ const CustomerOrder: FC<CustomerOrderProps> = ({ selectedTab }) => {
 
   const { data: ordersResponse, isValidating: loading } = useSWR(
     selectedTab === "order" ? swrKey : null,
-    getOrdersByCustomer,
+    getOrdersByUser,
     {
       refreshInterval: 0,
       revalidateOnFocus: false,
@@ -132,7 +132,7 @@ const CustomerOrder: FC<CustomerOrderProps> = ({ selectedTab }) => {
 
   if (error) return <NoDataError />;
 
-  if (!dataSource.length) return <Empty text={lang.customer.order.empty} />;
+  if (!dataSource.length) return <Empty text={lang.user.order.empty} />;
 
   return (
     <Fragment>
@@ -148,7 +148,7 @@ const CustomerOrder: FC<CustomerOrderProps> = ({ selectedTab }) => {
         ghost
         color="green"
         shape="square"
-        rootClassName="customer-table-pagination"
+        rootClassName="user-table-pagination"
         total={ordersResponse?.data?.totalItems ?? 0}
         onChangePage={handleChangePage}
       />
@@ -156,4 +156,4 @@ const CustomerOrder: FC<CustomerOrderProps> = ({ selectedTab }) => {
   );
 };
 
-export default CustomerOrder;
+export default UserOrder;

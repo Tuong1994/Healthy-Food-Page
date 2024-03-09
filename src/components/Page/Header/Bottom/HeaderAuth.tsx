@@ -10,7 +10,7 @@ import Link from "next/link";
 import url, { ADMIN_PATH } from "@/common/constant/url";
 import useAuthStore from "@/store/AuthStore";
 
-const { AUTH_SIGN_IN, AUTH_SIGN_UP, CUSTOMER } = url;
+const { AUTH_SIGN_IN, AUTH_SIGN_UP, USER } = url;
 
 const { Row, Col } = Grid;
 
@@ -43,7 +43,7 @@ const HeaderAuth: FC<HeaderAuthProps> = ({ lang }) => {
       label: (
         <Space align="middle">
           <HiUser />
-          <Link href={{ pathname: CUSTOMER, query: { id: info.id, langCode: locale } }}>
+          <Link href={{ pathname: USER, query: { id: info.id, langCode: locale } }}>
             {lang.pageComponent.header.profile.customer}
           </Link>
         </Space>

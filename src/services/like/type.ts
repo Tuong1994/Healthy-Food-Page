@@ -1,14 +1,14 @@
-import { Customer } from "../customer/type";
+import { User } from "../user/type";
 import { Product } from "../product/type";
 
 export type Like = {
   id?: string;
   productId: string;
-  customerId: string;
+  userId: string;
   product?: Pick<Product, "id" | "name" | "image" | "totalPrice" | "unit">;
-  customer?: Pick<Customer, "id" | "fullName" | "image">;
+  user?: Pick<User, "id" | "fullName" | "image">;
   createdAt?: Date | string;
   updatedAt?: Date | string;
 };
 
-export type LikeData = Pick<Like, "id" | "productId" | "customerId">;
+export type LikeData = Pick<Like, "id" | "productId" | "userId">;

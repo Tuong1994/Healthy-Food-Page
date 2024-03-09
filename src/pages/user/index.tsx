@@ -4,50 +4,45 @@ import { Breadcrumb, Tabs, Grid } from "@/components/UI";
 import type { BreadcrumbItems } from "@/components/UI/Breadcrumb/type";
 import type { TabsItems } from "@/components/UI/Tabs/type";
 import type { ApiQuery, ApiResponse, List } from "@/services/type";
-import type { Customer } from "@/services/customer/type";
+import type { User } from "@/services/user/type";
 import type { City } from "@/services/city/type";
 import type { District } from "@/services/district/type";
 import type { Ward } from "@/services/ward/type";
 import { ELang } from "@/common/enum";
 import { getCities } from "@/services/city/api";
-import { getCustomer } from "@/services/customer/api";
+import { getUser } from "@/services/user/api";
 import { getDistricts } from "@/services/district/api";
 import { getWards } from "@/services/ward/api";
 import { useAppGrid } from "@/components/UI/Grid/Provider";
 import { useLang, useMounted } from "@/hooks";
 import { defaultApiResponse } from "@/services";
 import Link from "next/link";
-import CustomerInfo from "@/features/customer/components/CustomerInfo";
-import CustomerOrder from "@/features/customer/components/CustomerOrder";
-import CustomerComment from "@/features/customer/components/CustomerComment";
-import CustomerRate from "@/features/customer/components/CustomerRate";
-import CustomerEdit from "@/features/customer/components/CustomerEdit";
-import CustomerEditMobile from "@/features/customer/components/Mobile/CustomerEditMobile";
-import CustomerForm from "@/features/customer/components/CustomerForm";
-import CustomerPasswordModal from "@/features/customer/components/CustomerPasswordModal";
+import UserInfo from "@/features/user/components/UserInfo";
+import UserOrder from "@/features/user/components/UserOrder";
+import UserComment from "@/features/user/components/UserComment";
+import UserRate from "@/features/user/components/UserRate";
+import UserEdit from "@/features/user/components/UserEdit";
+import UserEditMobile from "@/features/user/components/Mobile/UserEditMobile";
+import UserForm from "@/features/user/components/UserForm";
+import UserPasswordModal from "@/features/user/components/UserPasswordModal";
+import ProtectedRoute from "@/components/Page/ProtectedRoute";
 import NoDataError from "@/components/Page/Error/NoDataError";
 import useLocationStore from "@/store/LocationStore";
 import useMessage from "@/components/UI/ToastMessage/useMessage";
 import url from "@/common/constant/url";
-import ProtectedRoute from "@/components/Page/ProtectedRoute";
 
 const { HOME } = url;
 
 const { Row, Col } = Grid;
 
-interface CustomerProps {
-  customerResponse: ApiResponse<Customer>;
+interface UserProps {
+  userResponse: ApiResponse<User>;
   citiesResponse: ApiResponse<List<City>>;
   districtsResponse: ApiResponse<List<District>>;
   wardsResponse: ApiResponse<List<Ward>>;
 }
 
-const Customer: NextPage<CustomerProps> = ({
-  customerResponse,
-  citiesResponse,
-  districtsResponse,
-  wardsResponse,
-}) => {
+const User: NextPage<UserProps> = ({ userResponse, citiesResponse, districtsResponse, wardsResponse }) => {
   const messageApi = useMessage();
 
   const { locale, lang } = useLang();
@@ -56,7 +51,7 @@ const Customer: NextPage<CustomerProps> = ({
 
   const isMounted = useMounted();
 
-  const { success: customerResponseSuccess, data: customerData } = customerResponse;
+  const { success: userResponseSuccess, data: userData } = userResponse;
 
   const [setCities, setDistricts, setWards] = useLocationStore((state) => [
     state.setCities,
@@ -64,7 +59,7 @@ const Customer: NextPage<CustomerProps> = ({
     state.setWards,
   ]);
 
-  const [customer, setCustomer] = useState<Customer>(customerData);
+  const [user, setUser] = useState<User>(userData);
 
   const [selectedTab, setSelectedTab] = useState<string>("order");
 
@@ -79,20 +74,20 @@ const Customer: NextPage<CustomerProps> = ({
       id: "1",
       label: <Link href={{ pathname: HOME, query: { langCode: locale } }}>{lang.common.menu.home}</Link>,
     },
-    { id: "2", label: "User name", actived: true },
+    { id: "2", label: user.fullName, actived: true },
   ];
 
   const tabs: TabsItems = [
-    { id: "order", title: lang.customer.order.title, content: <CustomerOrder selectedTab={selectedTab} /> },
+    { id: "order", title: lang.user.order.title, content: <UserOrder selectedTab={selectedTab} /> },
     {
       id: "comment",
-      title: lang.customer.comment.title,
-      content: <CustomerComment lang={lang} selectedTab={selectedTab} />,
+      title: lang.user.comment.title,
+      content: <UserComment lang={lang} selectedTab={selectedTab} />,
     },
     {
       id: "rate",
-      title: lang.customer.rate.title,
-      content: <CustomerRate lang={lang} selectedTab={selectedTab} />,
+      title: lang.user.rate.title,
+      content: <UserRate lang={lang} selectedTab={selectedTab} />,
     },
   ];
 
@@ -111,11 +106,11 @@ const Customer: NextPage<CustomerProps> = ({
     setWards(wardsResponse.data.items);
   }, [wardsResponse]);
 
-  const onReFetchCustomer = async () => {
-    const apiQuery: ApiQuery = { customerId: customer.id, langCode: locale };
-    const response = await getCustomer(apiQuery);
+  const onReFetchUser = async () => {
+    const apiQuery: ApiQuery = { userId: user.id, langCode: locale };
+    const response = await getUser(apiQuery);
     if (!response.success) return messageApi.error(lang.common.message.error.api);
-    setCustomer(response.data);
+    setUser(response.data);
   };
 
   const handleSelectTab = (id: string) => setSelectedTab(id);
@@ -125,32 +120,32 @@ const Customer: NextPage<CustomerProps> = ({
   const handlePassword = () => setOpenPassword(!openPassword);
 
   const renderContent = () => {
-    if (!customerResponseSuccess) return <NoDataError />;
+    if (!userResponseSuccess) return <NoDataError />;
     const formProps = {
       lang,
-      customer,
-      onReFetchCustomer,
+      user,
+      onReFetchUser,
       handleOpenPassword: handlePassword,
     };
     return (
       <Row justify="between">
         <Col xs={24} md={24} lg={8} span={8}>
-          <CustomerInfo lang={lang} customer={customer} handleOpenEdit={handleEdit} />
+          <UserInfo lang={lang} user={user} handleOpenEdit={handleEdit} />
         </Col>
         <Col xs={24} md={24} lg={16} span={16}>
           {!isEdit ? (
             <Tabs color="green" items={tabs} onSelectTab={handleSelectTab} />
           ) : (
             !isPhone && (
-              <CustomerEdit lang={lang} handleCloseEdit={handleEdit}>
-                <CustomerForm {...formProps} />
-              </CustomerEdit>
+              <UserEdit lang={lang} handleCloseEdit={handleEdit}>
+                <UserForm {...formProps} />
+              </UserEdit>
             )
           )}
           {isPhone && (
-            <CustomerEditMobile open={isMobileEdit} onClose={handleEdit}>
-              <CustomerForm {...formProps} />
-            </CustomerEditMobile>
+            <UserEditMobile open={isMobileEdit} onClose={handleEdit}>
+              <UserForm {...formProps} />
+            </UserEditMobile>
           )}
         </Col>
       </Row>
@@ -161,32 +156,32 @@ const Customer: NextPage<CustomerProps> = ({
 
   return (
     <ProtectedRoute>
-      <div className="page customer">
+      <div className="page user">
         <Breadcrumb items={items} />
         {renderContent()}
-        <CustomerPasswordModal lang={lang} open={openPassword} onCancel={handlePassword} />
+        <UserPasswordModal lang={lang} open={openPassword} onCancel={handlePassword} />
       </div>
     </ProtectedRoute>
   );
 };
 
-export default Customer;
+export default User;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { query } = context;
 
-  const apiCustomerQuery: ApiQuery = { customerId: query.id as string, langCode: query.langCode as ELang };
+  const apiUserQuery: ApiQuery = { userId: query.id as string, langCode: query.langCode as ELang };
   const apiLocationQuery: ApiQuery = { langCode: query.langCode as ELang };
 
-  const customerResponse = await getCustomer(apiCustomerQuery);
+  const userResponse = await getUser(apiUserQuery);
   const citiesResponse = await getCities(apiLocationQuery);
 
   let districtsResponse = defaultApiResponse<List<District>>();
   let wardsResponse = defaultApiResponse<List<Ward>>();
 
-  if (customerResponse.success) {
-    const { data: customer } = customerResponse;
-    const { address } = customer;
+  if (userResponse.success) {
+    const { data: user } = userResponse;
+    const { address } = user;
     if (address) {
       districtsResponse = await getDistricts({ ...apiLocationQuery, cityCode: String(address.cityCode) });
       wardsResponse = await getWards({ ...apiLocationQuery, districtCode: String(address.districtCode) });
@@ -204,7 +199,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   return {
     props: {
-      customerResponse,
+      userResponse,
       citiesResponse,
       districtsResponse,
       wardsResponse,

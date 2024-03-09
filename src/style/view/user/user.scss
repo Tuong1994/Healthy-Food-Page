@@ -1,5 +1,5 @@
-.customer {
-  .customer-info {
+.user {
+  .user-info {
     background: $bg-green;
     * {
       color: $text-white;
@@ -18,12 +18,12 @@
       }
     }
   }
-  .customer-table-pagination {
+  .user-table-pagination {
     margin: $m-1;
   }
 }
 
-.customer-form {
+.user-form {
   .form-showmore {
     margin: $m-1 0;
     border: unset;

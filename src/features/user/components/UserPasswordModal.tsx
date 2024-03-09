@@ -15,11 +15,11 @@ import url from "@/common/constant/url";
 
 const { AUTH_SIGN_IN } = url;
 
-interface CustomerPasswordModalProps extends ModalProps {
+interface UserPasswordModalProps extends ModalProps {
   lang: Lang;
 }
 
-const CustomerPasswordModal: FC<CustomerPasswordModalProps> = ({ lang, onCancel, ...restProps }) => {
+const UserPasswordModal: FC<UserPasswordModalProps> = ({ lang, onCancel, ...restProps }) => {
   const form = useFormStore((state) => state.form);
 
   const resetAuth = useAuthStore((state) => state.resetAuth);
@@ -35,7 +35,7 @@ const CustomerPasswordModal: FC<CustomerPasswordModalProps> = ({ lang, onCancel,
   const modalDefaultProps: ModalProps = {
     color: "green",
     sizes: "sm",
-    head: lang.customer.form.action,
+    head: lang.user.form.action,
     okButtonTitle: lang.common.actions.save,
     okButtonProps: { loading },
     cancelButtonProps: { color: "green", ghost: true },
@@ -50,7 +50,7 @@ const CustomerPasswordModal: FC<CustomerPasswordModalProps> = ({ lang, onCancel,
   };
 
   const handleSubmit = async (formData: AuthChangePassword) => {
-    const apiQuery: ApiQuery = { customerId: query.id as string };
+    const apiQuery: ApiQuery = { userId: query.id as string };
     const response = await onChangePassword(apiQuery, formData);
     if (!response.success) return messageApi.error(lang.common.message.error.api);
     const logoutResponse = await logout(apiQuery);
@@ -63,7 +63,12 @@ const CustomerPasswordModal: FC<CustomerPasswordModalProps> = ({ lang, onCancel,
 
   return (
     <Modal {...modalDefaultProps}>
-      <Form<AuthChangePassword> color="green" disabled={loading} initialData={initialData} onFinish={handleSubmit}>
+      <Form<AuthChangePassword>
+        color="green"
+        disabled={loading}
+        initialData={initialData}
+        onFinish={handleSubmit}
+      >
         <FormItem name="oldPassword" rules={password()}>
           <InputPassword required label={lang.common.form.label.oldPassword} />
         </FormItem>
@@ -75,4 +80,4 @@ const CustomerPasswordModal: FC<CustomerPasswordModalProps> = ({ lang, onCancel,
   );
 };
 
-export default CustomerPasswordModal;
+export default UserPasswordModal;

@@ -4,8 +4,8 @@ import type { Lang } from "@/common/type";
 import type { InfoRowProps } from "@/components/UI/InfoRow";
 import type { ShipmentFormData } from "@/services/shipment/type";
 import { HiPencilAlt } from "react-icons/hi";
-import utils from "@/utils";
 import { HiTrash } from "react-icons/hi2";
+import utils from "@/utils";
 
 interface ShipmentInfoProps {
   lang: Lang;

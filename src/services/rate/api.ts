@@ -9,8 +9,8 @@ export const getRates = async (query: ApiQuery) => {
   return response;
 };
 
-export const getRatesByCustomer = async (query: ApiQuery) => {
-  const response = await Fetch.Get<Paging<Rate>>(rateApiPaths.getListByCustomer + getApiQuery(query));
+export const getRatesByUser = async (query: ApiQuery) => {
+  const response = await Fetch.Get<Paging<Rate>>(rateApiPaths.getListByUser + getApiQuery(query));
   return response;
 };
 

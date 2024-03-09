@@ -1,4 +1,4 @@
-const customer_en = {
+const user_en = {
   greeting: "Hello",
   admin: "Go to admin",
   order: {
@@ -14,7 +14,7 @@ const customer_en = {
     empty: "You don't have any rates yet",
   },
   form: {
-    title: "Update customer",
+    title: "Update user",
     action: "Change password",
     personal: "Personal information",
     location: "Location information",
@@ -29,4 +29,4 @@ const customer_en = {
   },
 };
 
-export default customer_en;
+export default user_en;
