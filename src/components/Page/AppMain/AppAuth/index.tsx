@@ -1,10 +1,11 @@
-import { FC, ReactNode, Fragment, useState, useCallback, useEffect } from "react";
+import { FC, ReactNode, Fragment, useCallback } from "react";
 import { useRouter } from "next/router";
-import { logout, refresh } from "@/services/auth/api";
+import { logout } from "@/services/auth/api";
 import RedirectModal from "./RedirectModal";
 import useAuthStore from "@/store/AuthStore";
 import useCartStore from "@/store/CartStore";
 import url from "@/common/constant/url";
+import useRefreshToken from "./hooks/useRefreshToken";
 
 const { HOME, AUTH_SIGN_IN } = url;
 
@@ -19,17 +20,9 @@ const AppAuth: FC<AppAuthProps> = ({ children }) => {
 
   const router = useRouter();
 
-  const [open, setOpen] = useState<boolean>(false);
+  const { isAuth, info } = auth;
 
-  const [reLogin, setReLogin] = useState<boolean>(false);
-
-  const { isAuth, info, expired } = auth;
-
-  const onRefresh = useCallback(async () => {
-    setOpen(false);
-    const response = await refresh({ userId: info.id });
-    if (!response.success) setOpen(true);
-  }, [isAuth]);
+  const { open, setOpen, setReLogin } = useRefreshToken();
 
   const onLogout = useCallback(async () => {
     if (!isAuth) return;
@@ -51,26 +44,6 @@ const AppAuth: FC<AppAuthProps> = ({ children }) => {
     await onLogout();
     router.push(HOME);
   };
-
-  // Refresh token when first access page
-  useEffect(() => {
-    if (isAuth) onRefresh();
-  }, []);
-
-  // Refresh token interval
-  useEffect(() => {
-    if (!isAuth) return;
-
-    const expiredTime = expired ?? 0;
-    if (expiredTime < Date.now()) return;
-
-    let interval: any;
-    const time = expiredTime - Date.now() - 500;
-    interval = setInterval(() => {
-      if (!reLogin) onRefresh();
-    }, time);
-    return () => clearInterval(interval);
-  }, []);
 
   return (
     <Fragment>
