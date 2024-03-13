@@ -19,6 +19,9 @@
   &:hover {
     opacity: 0.6;
   }
+  @include respond(smTablet) {
+    bottom: 80px;
+  }
 }
 
 .scroll-up-button-show {

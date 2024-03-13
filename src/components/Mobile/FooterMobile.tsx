@@ -57,7 +57,7 @@ const FooterMobile: FC<FooterMobileProps> = () => {
         query: isAuth ? { id: info.id, langCode: locale } : { langCode: locale },
       },
     ],
-    [lang]
+    [lang, isAuth]
   );
 
   const renderItems = () => {
