@@ -1,18 +1,20 @@
-import { RefObject, useState, useEffect } from "react";
+import { RefObject, useState, useEffect, useCallback } from "react";
 
 const useDetectBottom = (ref: RefObject<HTMLElement>, distance = 250) => {
-  if (typeof window === "undefined") return false;
-
   const [bottom, setBottom] = useState<boolean>(false);
 
-  let elBottom = 0;
+  const handleScroll = useCallback(() => {
+    if (typeof window === "undefined") return;
+    if (!ref.current) return;
+    const elBottom = ref.current.getBoundingClientRect().bottom;
+    if (window.innerHeight - elBottom < distance) setBottom(true);
+    else setBottom(false);
+  }, [ref.current, distance, window, window.innerHeight]);
 
   useEffect(() => {
-    if (!ref.current) return setBottom(false);
-    elBottom = ref.current.getBoundingClientRect().bottom;
-    if (window.innerHeight - elBottom < distance) return setBottom(true);
-    setBottom(false);
-  }, [elBottom, window.innerHeight]);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  });
 
   return bottom;
 };
