@@ -46,13 +46,13 @@ const CommentItem: FC<CommentItemProps> = ({
 
   const { isAuth, info } = auth;
 
-  const customerId = info.id ?? "";
+  const userId = info.id ?? "";
 
   const canReply = isAuth;
 
-  const canEdit = comment.customerId === customerId;
+  const canEdit = comment.userId === userId;
 
-  const canRemove = comment.customerId === customerId;
+  const canRemove = comment.userId === userId;
 
   const isReply = activeComment.id === comment.id && activeComment.type === "reply";
 

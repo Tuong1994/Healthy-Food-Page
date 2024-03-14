@@ -57,7 +57,7 @@ const Like: FC<LikeProps> = ({ product, like }) => {
   const isLiked = useMemo(() => {
     if (!product) return false;
     if (!product.likes || !product.likes.length) return false;
-    return product.likes.findIndex((like) => like.customerId === info.id) > -1;
+    return product.likes.findIndex((like) => like.userId === info.id) > -1;
   }, [JSON.stringify(product.likes)]);
 
   const likedClassName = isLiked ? "like-icon-active" : "";
@@ -96,7 +96,7 @@ const Like: FC<LikeProps> = ({ product, like }) => {
     if (isLiked) return;
     const likeData: LikeData = {
       productId: product?.id ?? "",
-      customerId: info.id ?? "",
+      userId: info.id ?? "",
     };
     const response = await onCreate(likeData);
     if (!response.success) return messageApi.error(lang.common.message.error.api);

@@ -46,12 +46,16 @@ const TableBody = <M extends object>({
       {dataSource.map((data, idx) => {
         const key = rowKey ? data[rowKey as keyof M] : `row-${idx}`;
         return (
-          <Fragment key={key}>
-            <tr className={isSeleted(key) ? "table-row-selected" : ""}>
+          <Fragment key={key as Key}>
+            <tr className={isSeleted(key as string) ? "table-row-selected" : ""}>
               {hasRowSelection && (
                 <td>
                   <TableCell>
-                    <CheckBox color={color} checked={isSeleted(key)} onClick={() => handleSelectRow(key)} />
+                    <CheckBox
+                      color={color}
+                      checked={isSeleted(key as string)}
+                      onClick={() => handleSelectRow(key as string)}
+                    />
                   </TableCell>
                 </td>
               )}
@@ -60,8 +64,8 @@ const TableBody = <M extends object>({
                 <td>
                   <TableCell>
                     <div
-                      className={`cell-expand-action ${expandClassName(key)}`}
-                      onClick={() => handleExpand(key)}
+                      className={`cell-expand-action ${expandClassName(key as string)}`}
+                      onClick={() => handleExpand(key as string)}
                     >
                       <div className="action-icon" />
                     </div>

@@ -95,7 +95,7 @@ export default Favorite;
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { query } = context;
 
-  const apiQuery: ApiQuery = { customerId: query.id as string, ...query };
+  const apiQuery: ApiQuery = { userId: query.id as string, ...query };
   const likesResponse = await getLikesPaging(apiQuery);
 
   if (!Boolean(query.id)) {

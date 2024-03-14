@@ -20,7 +20,7 @@ const CommentAuthor: FC<CommentAuthorProps> = ({ isRoot, comment }) => {
 
   const renderName = () => {
     if (isRoot) return info.fullName ?? "Customer";
-    if (comment) return comment.customer?.fullName ?? "Customer";
+    if (comment) return comment.user?.fullName ?? "Customer";
     return "Customer";
   };
 

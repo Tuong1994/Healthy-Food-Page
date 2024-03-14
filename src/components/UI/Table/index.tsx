@@ -113,7 +113,9 @@ const Table = <M extends object>(
 
   const handleSelectAllRow = () => {
     if (rowSelectedKeys.length === dataSource.length) return setRowSelectedKeys([]);
-    setRowSelectedKeys([...dataSource.map((data, idx) => (rowKey ? data[rowKey as keyof M] : `row-${idx}`))]);
+    setRowSelectedKeys([
+      ...dataSource.map((data, idx) => (rowKey ? data[rowKey as keyof M] : `row-${idx}`) as Key),
+    ]);
   };
 
   const handleSelectRow = (key: Key) => {
