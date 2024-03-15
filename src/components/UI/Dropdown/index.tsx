@@ -6,6 +6,7 @@ import {
   useRef,
   useImperativeHandle,
   forwardRef,
+  useEffect,
 } from "react";
 import { DropdownItems } from "./type";
 import { ComponentPlacement } from "@/common/type";
@@ -60,6 +61,8 @@ const Dropdown: ForwardRefRenderFunction<HTMLDivElement, DropdownProps> = (
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useClickOutside(dropdownRef, setOpen);
+
+  useEffect(() => setSelectedId(defaultSelectedId), [defaultSelectedId])
 
   const placementClassName = `dropdown-${placement}`;
 
