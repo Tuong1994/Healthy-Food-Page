@@ -7,11 +7,18 @@ interface AppLangProps {
 }
 
 const AppLang: FC<AppLangProps> = ({ children }) => {
-  const { locale } = useLang();
+  const { locale, handleSwitchLang } = useLang();
 
   const router = useRouter();
 
   const { pathname, query, replace: routerReplace } = router;
+
+  useEffect(() => {
+    if (sessionStorage && sessionStorage.getItem("locale")) {
+      const defaultLocale = JSON.parse(sessionStorage.getItem("locale") ?? "");
+      handleSwitchLang(defaultLocale);
+    }
+  }, []);
 
   useEffect(() => {
     const updatedQuery = { ...query, langCode: locale };

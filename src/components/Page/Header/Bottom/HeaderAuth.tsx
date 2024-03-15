@@ -78,14 +78,14 @@ const HeaderAuth: FC<HeaderAuthProps> = ({ lang }) => {
       {!isAuth ? (
         <Fragment>
           <Col span={12}>
-            <Link href={AUTH_SIGN_IN}>
+            <Link href={{ pathname: AUTH_SIGN_IN, query: { langCode: locale } }}>
               <Button sizes="lg" ghost rootClassName="auth-btn">
                 {lang.auth.signIn.title}
               </Button>
             </Link>
           </Col>
           <Col span={12}>
-            <Link href={AUTH_SIGN_UP}>
+            <Link href={{ pathname: AUTH_SIGN_UP, query: { langCode: locale } }}>
               <Button sizes="lg" color="green" rootClassName="auth-btn">
                 {lang.auth.signUp.title}
               </Button>

@@ -4,8 +4,8 @@ import { logout } from "@/services/auth/api";
 import RedirectModal from "./RedirectModal";
 import useAuthStore from "@/store/AuthStore";
 import useCartStore from "@/store/CartStore";
-import url from "@/common/constant/url";
 import useRefreshToken from "./hooks/useRefreshToken";
+import url from "@/common/constant/url";
 
 const { HOME, AUTH_SIGN_IN } = url;
 

@@ -9,7 +9,7 @@ const useDetectBottom = (ref: RefObject<HTMLElement>, distance = 250) => {
     const elBottom = ref.current.getBoundingClientRect().bottom;
     if (window.innerHeight - elBottom < distance) setBottom(true);
     else setBottom(false);
-  }, [ref.current, distance, window, window.innerHeight]);
+  }, [ref.current, distance]);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);

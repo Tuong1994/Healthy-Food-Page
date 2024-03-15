@@ -191,7 +191,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   if (!Boolean(query.id)) {
     return {
       redirect: {
-        destination: "/auth/sign-in",
+        destination: "/auth/signIn",
         permanent: false,
       },
     };
