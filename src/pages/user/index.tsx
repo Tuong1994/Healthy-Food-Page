@@ -8,6 +8,7 @@ import type { User } from "@/services/user/type";
 import type { City } from "@/services/city/type";
 import type { District } from "@/services/district/type";
 import type { Ward } from "@/services/ward/type";
+import type { Auth } from "@/services/auth/type";
 import { ELang } from "@/common/enum";
 import { getCities } from "@/services/city/api";
 import { getUser } from "@/services/user/api";
@@ -27,8 +28,10 @@ import UserForm from "@/features/user/components/UserForm";
 import UserPasswordModal from "@/features/user/components/UserPasswordModal";
 import ProtectedRoute from "@/components/Page/ProtectedRoute";
 import NoDataError from "@/components/Page/Error/NoDataError";
+import localStorageKey from "@/common/constant/storage";
 import useLocationStore from "@/store/LocationStore";
 import useMessage from "@/components/UI/ToastMessage/useMessage";
+import useAuthStore from "@/store/AuthStore";
 import url from "@/common/constant/url";
 
 const { HOME } = url;
@@ -59,6 +62,8 @@ const User: NextPage<UserProps> = ({ userResponse, citiesResponse, districtsResp
     state.setWards,
   ]);
 
+  const [auth, setAuth] = useAuthStore((state) => [state.auth, state.setAuth]);
+
   const [user, setUser] = useState<User>(userData);
 
   const [selectedTab, setSelectedTab] = useState<string>("order");
@@ -74,7 +79,7 @@ const User: NextPage<UserProps> = ({ userResponse, citiesResponse, districtsResp
       id: "1",
       label: <Link href={{ pathname: HOME, query: { langCode: locale } }}>{lang.common.menu.home}</Link>,
     },
-    { id: "2", label: user.fullName, actived: true },
+    { id: "2", label: user.fullName ?? 'Customer', actived: true },
   ];
 
   const tabs: TabsItems = [
@@ -110,6 +115,9 @@ const User: NextPage<UserProps> = ({ userResponse, citiesResponse, districtsResp
     const apiQuery: ApiQuery = { userId: user.id, langCode: locale };
     const response = await getUser(apiQuery);
     if (!response.success) return messageApi.error(lang.common.message.error.api);
+    const updateAuth: Auth = { ...auth, info: response.data };
+    localStorage.setItem(localStorageKey.AUTH, JSON.stringify(updateAuth));
+    setAuth(updateAuth);
     setUser(response.data);
   };
 

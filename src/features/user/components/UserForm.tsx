@@ -95,7 +95,7 @@ const UserForm: FC<UserFormProps> = ({ lang, user, onReFetchUser, handleOpenPass
     lastName: user.lastName ?? "",
     phone: user.phone ?? "",
     gender: user.gender ?? null,
-    birthday: new Date(user.birthday ?? ""),
+    birthday: user.birthday ? new Date(user.birthday) : new Date(),
     role: user.role ?? null,
     address: {
       addressEn: user.address?.addressVn ?? "",
@@ -142,6 +142,7 @@ const UserForm: FC<UserFormProps> = ({ lang, user, onReFetchUser, handleOpenPass
   const handleUpload = (file: File | null) => setImage(file);
 
   const handleSubmit = async (data: UserFormData) => {
+    if (!showMore) delete data.address;
     const formData = new FormData();
     let key: keyof UserFormData;
     for (key in data) {
@@ -149,6 +150,7 @@ const UserForm: FC<UserFormProps> = ({ lang, user, onReFetchUser, handleOpenPass
       else formData.append(key, data[key] as string);
     }
     if (image) formData.append("image", image);
+    formData.forEach((value, key) => console.log(key, value));
     const apiQuery: ApiQuery = { userId: user.id };
     const response = await onUpdate(apiQuery, formData);
     if (!response.success) return messageApi.error(lang.common.message.error.api);

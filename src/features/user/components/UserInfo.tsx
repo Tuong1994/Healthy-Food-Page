@@ -47,7 +47,7 @@ const UserInfo: FC<UserInfoProps> = ({ lang, user, handleOpenEdit }) => {
         </Avatar>
         <div className="info-group">
           <Paragraph strong size={16}>
-            {lang.user.greeting}, {user.fullName}
+            {lang.user.greeting}, {user.fullName ?? 'Customer'}
           </Paragraph>
           {hasAdmin && (
             <a href={ADMIN_PATH} target="_blank">

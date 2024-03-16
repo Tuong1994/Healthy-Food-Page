@@ -2,4 +2,4 @@ const localStorageKey = {
   AUTH: "auth",
 };
 
-export default localStorageKey
+export default localStorageKey;

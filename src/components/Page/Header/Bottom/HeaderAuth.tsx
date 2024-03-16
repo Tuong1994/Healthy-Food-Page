@@ -9,6 +9,7 @@ import { useLang, useLogout, useMounted } from "@/hooks";
 import Link from "next/link";
 import url, { ADMIN_PATH } from "@/common/constant/url";
 import useAuthStore from "@/store/AuthStore";
+import { ERole } from "@/services/user/enum";
 
 const { AUTH_SIGN_IN, AUTH_SIGN_UP, USER } = url;
 
@@ -39,7 +40,7 @@ const HeaderAuth: FC<HeaderAuthProps> = ({ lang }) => {
 
   const items: DropdownItems = [
     {
-      id: "1",
+      id: "customer",
       label: (
         <Space align="middle">
           <HiUser />
@@ -50,18 +51,7 @@ const HeaderAuth: FC<HeaderAuthProps> = ({ lang }) => {
       ),
     },
     {
-      id: "2",
-      label: (
-        <Space align="middle">
-          <BsGear />
-          <a href={ADMIN_PATH} target="_blank">
-            {lang.pageComponent.header.profile.admin}
-          </a>
-        </Space>
-      ),
-    },
-    {
-      id: "3",
+      id: "logout",
       label: (
         <Space align="middle" onClick={handleLogout}>
           {loading ? <Spinner /> : <HiLogout />}
@@ -70,6 +60,24 @@ const HeaderAuth: FC<HeaderAuthProps> = ({ lang }) => {
       ),
     },
   ];
+
+  const dropdownItems =
+    info.role !== ERole.CUSTOMER
+      ? [
+          ...items,
+          {
+            id: "admin",
+            label: (
+              <Space align="middle">
+                <BsGear />
+                <a href={ADMIN_PATH} target="_blank">
+                  {lang.pageComponent.header.profile.admin}
+                </a>
+              </Space>
+            ),
+          },
+        ]
+      : items;
 
   if (!isMounted) return null;
 
@@ -94,7 +102,7 @@ const HeaderAuth: FC<HeaderAuthProps> = ({ lang }) => {
         </Fragment>
       ) : (
         <Col>
-          <Dropdown items={items} placement="right">
+          <Dropdown items={dropdownItems} placement="right">
             <Space align="middle">
               <Avatar color="green">
                 <Image imgWidth="100%" imgHeight="100%" src={info.image?.path} />
