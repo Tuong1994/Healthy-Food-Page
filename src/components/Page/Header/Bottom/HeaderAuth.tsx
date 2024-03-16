@@ -64,7 +64,6 @@ const HeaderAuth: FC<HeaderAuthProps> = ({ lang }) => {
   const dropdownItems =
     info.role !== ERole.CUSTOMER
       ? [
-          ...items,
           {
             id: "admin",
             label: (
@@ -76,6 +75,7 @@ const HeaderAuth: FC<HeaderAuthProps> = ({ lang }) => {
               </Space>
             ),
           },
+          ...items,
         ]
       : items;
 
