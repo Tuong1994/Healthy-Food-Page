@@ -67,10 +67,12 @@ const Favorite: NextPage<FavoriteProps> = ({ likesResponse }) => {
         </div>
         <Pagination
           ghost
+          limit={12}
           color="green"
           shape="square"
           rootClassName="list-pagination"
           total={data.totalItems ?? 0}
+          page={Number(query.page)}
           onChangePage={handleChangePage}
         />
       </Fragment>

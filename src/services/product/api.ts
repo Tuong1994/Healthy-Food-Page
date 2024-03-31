@@ -4,7 +4,7 @@ import { Product, ProductFormData } from "./type";
 import productApiPaths from "./path";
 import Fetch from "..";
 
-export const getProducts = async (query: ApiQuery) => {
+export const getProductsWithCategories = async (query: ApiQuery) => {
   const response = await Fetch.Get<List<Product>>(productApiPaths.getList + getApiQuery(query));
   return response;
 };

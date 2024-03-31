@@ -25,9 +25,11 @@ export type PageType = "first" | "prev" | "page" | "next" | "last";
 export interface PaginationProps {
   rootClassName?: string;
   style?: CSSProperties;
+  page?: number;
   total?: number;
   limit?: number;
   simple?: boolean;
+  control?: boolean;
   showContent?: boolean;
   ghost?: boolean;
   shape?: Exclude<ComponentShape, "circle">;
@@ -44,8 +46,10 @@ const Pagination: ForwardRefRenderFunction<HTMLDivElement, PaginationProps> = (
     rootClassName = "",
     style,
     simple,
+    control,
     showContent,
     ghost,
+    page = 1,
     total = 100,
     limit = 10,
     color = "blue",
@@ -66,7 +70,7 @@ const Pagination: ForwardRefRenderFunction<HTMLDivElement, PaginationProps> = (
 
   const isMounted = useMounted();
 
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [currentPage, setCurrentPage] = useState<number>(page);
 
   const { paginationRange: range, totalPages } = usePagination({
     total,
@@ -106,7 +110,11 @@ const Pagination: ForwardRefRenderFunction<HTMLDivElement, PaginationProps> = (
 
   const rightActionsClassName = utils.formatClassName("actions-button", rightArrowDisabledClassName);
 
-  useEffect(() => onChangePage?.(currentPage), [currentPage]);
+  useEffect(() => setCurrentPage(page), [page]);
+
+  useEffect(() => {
+    if (!control) onChangePage?.(currentPage);
+  }, [control, currentPage]);
 
   const renderPageButtons = () => {
     if (simple || isPhone)
@@ -148,25 +156,32 @@ const Pagination: ForwardRefRenderFunction<HTMLDivElement, PaginationProps> = (
   };
 
   const handleChangePage = (type: PageType, page?: number) => {
+    let activePage = currentPage;
     switch (type) {
       case "first": {
-        setCurrentPage(1);
+        if (control) onChangePage?.(1);
+        else setCurrentPage(1);
         break;
       }
       case "prev": {
-        setCurrentPage((prev) => prev - 1);
+        if (control) onChangePage?.(activePage - 1);
+        else setCurrentPage((prev) => prev - 1);
         break;
       }
       case "page": {
-        if (page) setCurrentPage(page);
+        if (!page) return;
+        if (control) onChangePage?.(page);
+        else setCurrentPage(page);
         break;
       }
       case "next": {
-        setCurrentPage((prev) => prev + 1);
+        if (control) onChangePage?.(activePage + 1);
+        else setCurrentPage((prev) => prev + 1);
         break;
       }
       case "last": {
-        setCurrentPage(totalPages);
+        if (control) onChangePage?.(totalPages);
+        else setCurrentPage(totalPages);
         break;
       }
     }

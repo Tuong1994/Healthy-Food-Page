@@ -3,6 +3,7 @@ import type { Order } from "@/services/order/type";
 
 type CartSumType = {
   type: "cart";
+  isPaging?: boolean;
 };
 
 type OrderSumType = {
@@ -13,13 +14,15 @@ type OrderSumType = {
 type RecordType = CartSumType | OrderSumType;
 
 const useSumQuantity = (record: RecordType) => {
-  const cart = useCartStore((state) => state.cart);
+  const [cart, quickCart] = useCartStore((state) => [state.cart, state.quickCart]);
 
   let totalQuantity = 0;
 
-  const cartSumQuantity = () => {
-    if (!cart.data) return 0;
-    const { detail: cartDetail } = cart.data;
+  const cartSumQuantity = (isPaging: boolean) => {
+    if (!cart.data || !quickCart.data) return 0;
+    const { detail: cartData } = cart.data;
+    const { detail: quickCartData } = quickCart.data;
+    const cartDetail = isPaging ? cartData : quickCartData;
     if (cartDetail?.items && !cartDetail?.items.length) return 0;
     const quantity =
       cartDetail?.items?.reduce((total, item) => {
@@ -38,7 +41,7 @@ const useSumQuantity = (record: RecordType) => {
     return quantity;
   };
 
-  if (record.type === "cart") totalQuantity = cartSumQuantity();
+  if (record.type === "cart") totalQuantity = cartSumQuantity(record.isPaging as boolean);
 
   if (record.type === "order") totalQuantity = orderSumQuantity(record.data);
 

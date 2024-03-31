@@ -33,7 +33,7 @@ const CartConfirm: FC<CartConfirmProps> = ({ loading, cart, handleConfirm }) => 
 
   const { locale, lang } = useLang();
 
-  const { query, push: routerPush } = useRouter();
+  const { query, push: routerPush, reload: routerReload } = useRouter();
 
   const resetCart = useCartStore((state) => state.resetCart);
 
@@ -103,7 +103,10 @@ const CartConfirm: FC<CartConfirmProps> = ({ loading, cart, handleConfirm }) => 
     setOpenModal(false);
     if (!response.success) return messageApi.error(lang.common.message.error.remove);
     if (cartItemsLength === 0) resetCart();
-    if (cartItemsLength >= 1) mutate(cartSwrKey(cart?.detail?.userId, query.page, query.limit, locale));
+    if (cartItemsLength >= 1) {
+      routerReload()
+      // mutate(cartSwrKey(cart?.detail?.userId, query.page, query.limit, locale))
+    };
     messageApi.success(lang.common.message.success.updateCart);
   };
 
@@ -123,9 +126,11 @@ const CartConfirm: FC<CartConfirmProps> = ({ loading, cart, handleConfirm }) => 
       />
 
       <Pagination
+        ghost
+        control
         color="green"
         shape="square"
-        ghost
+        page={Number(query.page)}
         total={cart?.totalItems}
         rootClassName="confirm-pagination"
         onChangePage={handleChangePage}

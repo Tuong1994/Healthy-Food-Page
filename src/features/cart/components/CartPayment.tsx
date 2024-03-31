@@ -179,8 +179,10 @@ const CartPayment: FC<CartPaymentProps> = ({ cart, setPurchased, handleUnConfirm
           <Table<CartItem> color="green" dataSource={dataSource()} columns={columns} />
           <Pagination
             ghost
+            control
             color="green"
             shape="square"
+            page={Number(query.page)}
             total={cart?.totalItems}
             rootClassName="payment-pagination"
             onChangePage={handleChangePage}

@@ -114,10 +114,12 @@ const Products: NextPage<ProductsProps> = ({ categoryResponse, subCategoryRespon
 
         <Pagination
           ghost
+          control
+          limit={12}
           color="green"
           shape="square"
           rootClassName="list-pagination"
-          limit={12}
+          page={Number(query.page)}
           total={productsPaging.totalItems ?? 0}
           onChangePage={handleChangePage}
         />

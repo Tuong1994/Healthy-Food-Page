@@ -16,15 +16,20 @@ const useGetCart = () => {
 
   const auth = useAuthStore((state) => state.auth);
 
-  const setCart = useCartStore((state) => state.setCart);
+  const [setCart, setQuickCart] = useCartStore((state) => [state.setCart, state.setQuickCart]);
 
   const [error, setError] = useState<boolean>(false);
 
+  const { page, limit } = query;
+
+  const queryPage = page ? Number(page) : undefined;
+
+  const queryLimit = limit ? Number(limit) : undefined;
+
   const getCartByUser = async () => {
-    const { page, limit } = query;
     const apiQuery: ApiQuery = {
-      page: page ? Number(page) : 1,
-      limit: limit ? Number(limit) : 10,
+      page: queryPage,
+      limit: queryLimit,
       userId: auth.info.id,
       langCode: locale,
     };
@@ -45,12 +50,10 @@ const useGetCart = () => {
   >(auth.isAuth ? cartSwrKey(auth.info?.id, query.page, query.limit, locale) : null, getCartByUser, config);
 
   useEffect(() => {
-    setCart({
-      loading,
-      error,
-      data: cartByUserData?.data,
-    });
-  }, [loading, error, cartByUserData]);
+    const data = { loading, error, data: cartByUserData?.data };
+    if (!queryPage && !queryLimit) setQuickCart(data);
+    setCart(data);
+  }, [queryPage, queryLimit, loading, error, cartByUserData]);
 };
 
 export default useGetCart;

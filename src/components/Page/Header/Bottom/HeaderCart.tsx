@@ -25,7 +25,7 @@ const HeaderCart: FC<HeaderCartProps> = ({ lang }) => {
 
   const auth = useAuthStore((state) => state.auth);
 
-  const cart = useCartStore((state) => state.cart);
+  const cart = useCartStore((state) => state.quickCart);
 
   const router = useRouter();
 
