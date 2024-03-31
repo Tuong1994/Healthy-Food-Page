@@ -8,7 +8,7 @@ export const getProductsByCategories = async (query: ParsedUrlQuery) => {
   const apiCategoryQuery: ApiQuery = { langCode: query.langCode as ELang };
   const categories = await getCategories(apiCategoryQuery);
   const products =
-    categories.data.items?.map(async (category) => {
+    categories.data.items?.slice(0, 5).map(async (category) => {
       const apiProductsQuery: ApiQuery = {
         page: 1,
         limit: 10,
