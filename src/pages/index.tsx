@@ -20,7 +20,7 @@ const Home: NextPage<HomeProps> = ({ items = [] }) => {
 
   useEffect(() => {
     if (items.length > 0) setProductsByCategories(items);
-  }, [items]);
+  }, [items, items.length]);
 
   const renderProducts = () => {
     return productsByCategories.map((item, idx) => {
