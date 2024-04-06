@@ -2,7 +2,8 @@ import { ReactNode, FC, useEffect } from "react";
 import { Poppins } from "next/font/google";
 import { ToastMessage } from "@/components/UI";
 import { useNotDisplay } from "@/hooks";
-import { useRouter } from "next/router";
+import Router, { useRouter } from "next/router";
+import NProgress from "nprogress"
 import usePathnameStore from "@/store/PathnameStore";
 import Header from "../Header";
 import Footer from "../Footer";
@@ -40,6 +41,21 @@ const AppMain: FC<AppMainProps> = ({ children }) => {
   useEffect(() => {
     if (!pathname?.includes("auth")) setPreviousPath(asPath);
   }, [asPath, pathname]);
+
+  useEffect(() => {
+    const start = () => NProgress.start();
+    const done = () => NProgress.done();
+
+    Router.events.on('routeChangeStart', start);
+    Router.events.on('routeChangeComplete', done);
+    Router.events.on('routeChangeError', done);
+
+    return () => {
+      Router.events.off('routeChangeStart', start);
+      Router.events.off('routeChangeComplete', done);
+      Router.events.off('routeChangeError', done);
+    };
+  }, []);
 
   return (
     <GridProvider>
