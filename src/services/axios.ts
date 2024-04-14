@@ -4,12 +4,12 @@ import { getApiQuery } from "./helper";
 import authApiPaths from "./auth/path";
 import localStorageKey from "@/common/constant/storage";
 
-// const BASE_URL =
-//   process.env.NODE_ENV === "development"
-//     ? "http://localhost:5000/"
-//     : "https://healthy-food-api-g4t7.onrender.com/";
+const BASE_URL =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:5000/"
+    : "https://healthy-food-api-g4t7.onrender.com/";
 
-const BASE_URL = "https://healthy-food-api-g4t7.onrender.com/";
+// const BASE_URL = "https://healthy-food-api-g4t7.onrender.com/";
 
 export const HttpStatus = {
   BAD_REQUEST: 400,

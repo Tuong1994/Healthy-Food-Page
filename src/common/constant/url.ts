@@ -17,6 +17,7 @@ const url = {
   SEARCH: "/search",
 };
 
-export const ADMIN_PATH = "http://localhost:5173";
+export const ADMIN_PATH =
+  process.env.NODE_ENV === "development" ? "http://localhost:5173" : "https://healthy-food-admin.vercel.app";
 
 export default url;

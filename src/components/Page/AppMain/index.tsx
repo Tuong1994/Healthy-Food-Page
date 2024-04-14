@@ -3,7 +3,7 @@ import { Poppins } from "next/font/google";
 import { ToastMessage } from "@/components/UI";
 import { useNotDisplay } from "@/hooks";
 import Router, { useRouter } from "next/router";
-import NProgress from "nprogress"
+import NProgress from "nprogress";
 import usePathnameStore from "@/store/PathnameStore";
 import Header from "../Header";
 import Footer from "../Footer";
@@ -42,18 +42,19 @@ const AppMain: FC<AppMainProps> = ({ children }) => {
     if (!pathname?.includes("auth")) setPreviousPath(asPath);
   }, [asPath, pathname]);
 
+  // Show progress bar when navigate through router
   useEffect(() => {
     const start = () => NProgress.start();
     const done = () => NProgress.done();
 
-    Router.events.on('routeChangeStart', start);
-    Router.events.on('routeChangeComplete', done);
-    Router.events.on('routeChangeError', done);
+    Router.events.on("routeChangeStart", start);
+    Router.events.on("routeChangeComplete", done);
+    Router.events.on("routeChangeError", done);
 
     return () => {
-      Router.events.off('routeChangeStart', start);
-      Router.events.off('routeChangeComplete', done);
-      Router.events.off('routeChangeError', done);
+      Router.events.off("routeChangeStart", start);
+      Router.events.off("routeChangeComplete", done);
+      Router.events.off("routeChangeError", done);
     };
   }, []);
 
