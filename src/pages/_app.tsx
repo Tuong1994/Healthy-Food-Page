@@ -3,6 +3,7 @@ import Head from "next/head";
 import AppMain from "@/components/Page/AppMain";
 import type { AppProps } from "next/app";
 import 'nprogress/nprogress.css';
+import "react-quill/dist/quill.snow.css";
 import "@/style/main.scss";
 
 export default function App({ Component, pageProps }: AppProps) {

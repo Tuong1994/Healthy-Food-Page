@@ -33,6 +33,23 @@
   }
   .detail-tabs {
     margin-bottom: $m-5;
+    .tabs-description {
+      ul {
+        margin-block-start: $m-1;
+        margin-block-end: $m-1;
+        margin-inline-start: 0;
+        margin-inline-end: 0;
+        padding-inline-start: 40px;
+      }
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-size: initial;
+      }
+    }
   }
   .detail-list {
     display: grid;

@@ -45,7 +45,7 @@ export type ApiQuery = {
   hasSub?: boolean;
   hasCate?: boolean;
   hasLike?: boolean;
-  convertName?: boolean;
+  convertLang?: boolean;
   
   role?: ERole;
   gender?: EGender;

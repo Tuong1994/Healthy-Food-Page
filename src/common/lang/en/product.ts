@@ -1,13 +1,16 @@
 const product_en = {
   list: {
-    all: 'All products'
+    all: "All products",
   },
   detail: {
-    category: 'Category',
+    category: "Category",
     purchase: "Purchase",
     similar: "Similar products",
-    description: "Description",
     comment: "Comment",
+    description: {
+      title: "Description",
+      note: 'Product has no description yet'
+    },
   },
 };
 

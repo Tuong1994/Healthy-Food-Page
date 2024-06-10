@@ -24,6 +24,7 @@ export type Product = {
   isNew?: boolean;
   point?: number;
   totalVoted?: number;
+  description?: string;
 
   category?: Category;
   subCategory?: SubCategory;

@@ -29,7 +29,7 @@ export const getApiQuery = (query: ApiQuery) => {
     hasSub,
     hasCate,
     hasLike,
-    convertName,
+    convertLang,
     role,
     gender,
     productStatus,
@@ -73,7 +73,7 @@ export const getApiQuery = (query: ApiQuery) => {
   hasSub && (rs += `&hasSub=${hasSub}`);
   hasCate && (rs += `&hasCate=${hasCate}`);
   hasLike && (rs += `&hasLike=${hasLike}`);
-  convertName && (rs += `&convertName=${convertName}`);
+  convertLang && (rs += `&convertLang=${convertLang}`);
   role && (rs += `&role=${role}`);
   gender && (rs += `&gender=${gender}`);
   productStatus && (rs += `&productStatus=${productStatus}`);

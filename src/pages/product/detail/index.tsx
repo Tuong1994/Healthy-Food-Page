@@ -65,7 +65,7 @@ const ProductPage: NextPage<ProductPageProps> = ({ productResponse, productsResp
     <div className="page product-detail">
       <Breadcrumb items={items} />
       <ProductInfo locale={locale} lang={lang} product={product} />
-      <ProductTabs lang={lang} />
+      <ProductTabs lang={lang} product={product} />
       <ProductSimilar lang={lang} products={similarProducts} />
     </div>
   );

@@ -160,13 +160,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     categoryResponse = await getCategory({
       categoryId: apiQuery.categoryId,
       langCode: apiQuery.langCode,
-      convertName: true,
+      convertLang: true,
     });
   if (apiQuery.subCategoryId)
     subCategoryResponse = await getSubCategory({
       subCategoryId: apiQuery.subCategoryId,
       langCode: apiQuery.langCode,
-      convertName: true,
+      convertLang: true,
     });
 
   const productsResponse = await getProductsByCateAndSubcate(query);

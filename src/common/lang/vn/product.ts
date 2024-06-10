@@ -6,8 +6,11 @@ const product_vn = {
     category: "Danh mục",
     purchase: "Mua hàng",
     similar: "Sản phẩm tương tự",
-    description: "Mô tả",
     comment: "Bình luận",
+    description: {
+      title: "Mô tả",
+      note: "Sản phẩm chưa có mô tả",
+    },
   },
 };
 
