@@ -150,7 +150,6 @@ const UserForm: FC<UserFormProps> = ({ lang, user, onReFetchUser, handleOpenPass
       else formData.append(key, data[key] as string);
     }
     if (image) formData.append("image", image);
-    formData.forEach((value, key) => console.log(key, value));
     const apiQuery: ApiQuery = { userId: user.id };
     const response = await onUpdate(apiQuery, formData);
     if (!response.success) return messageApi.error(lang.common.message.error.api);
