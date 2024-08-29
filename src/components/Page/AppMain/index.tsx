@@ -5,6 +5,7 @@ import { useNotDisplay } from "@/hooks";
 import Router, { useRouter } from "next/router";
 import NProgress from "nprogress";
 import usePathnameStore from "@/store/PathnameStore";
+import useCheckConnection from "./hooks/useCheckConnection";
 import Header from "../Header";
 import Footer from "../Footer";
 import FooterMobile from "@/components/Mobile/FooterMobile";
@@ -13,6 +14,7 @@ import ScrollUpButton from "../ScrollUpButton";
 import AppLang from "./AppLang";
 import AppData from "./AppData";
 import AppAuth from "./AppAuth";
+import AppError from "./AppError";
 import utils from "@/utils";
 
 const poppins = Poppins({
@@ -36,6 +38,8 @@ const AppMain: FC<AppMainProps> = ({ children }) => {
   const fullScreenClassName = notDisplay ? "main-full" : "";
 
   const className = utils.formatClassName("main", fullScreenClassName, poppins.className);
+
+  const connected = useCheckConnection();
 
   // Persist previous visted page
   useEffect(() => {
@@ -64,7 +68,7 @@ const AppMain: FC<AppMainProps> = ({ children }) => {
         <AppAuth>
           <AppData>
             <Header />
-            <main className={className}>{children}</main>
+            <main className={className}>{connected ? children : <AppError />}</main>
             <Footer />
             <FooterMobile />
             <ToastMessage />

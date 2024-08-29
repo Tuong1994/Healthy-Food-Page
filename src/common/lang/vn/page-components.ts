@@ -46,6 +46,10 @@ const page_components_vn = {
     return: "Trờ về trang chủ",
     note: "Đặt hàng mọi lúc, mọi nơi thông qua ứng dụng của chúng tôi",
   },
+  appError: {
+    message:
+      "Chúng tôi rất tiếc nhưng máy chủ mất nhiều thời gian hơn dự kiến ​​để phản hồi. Vui lòng làm mới trang hoặc thử lại sau giây lát.",
+  },
 };
 
 export default page_components_vn;

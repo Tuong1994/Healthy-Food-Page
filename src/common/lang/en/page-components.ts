@@ -46,6 +46,10 @@ const page_components_en = {
     return: "Back to home",
     note: "Order anytime, anywhere with the app",
   },
+  appError: {
+    message:
+      "We're sorry, but the server is taking longer than expected to respond. Please refresh the page or try again in a few moments.",
+  },
 };
 
 export default page_components_en;

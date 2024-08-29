@@ -16,6 +16,18 @@
   }
 }
 
+.app-error {
+  width: $w-full;
+  height: $h-screen;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .error-card {
+    width: $w-10 * 7;
+  }
+}
+
 .error-wrapper {
   width: $w-full;
   padding: $p-5;

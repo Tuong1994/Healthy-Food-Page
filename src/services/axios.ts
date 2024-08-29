@@ -16,6 +16,7 @@ export const HttpStatus = {
   UNAUTHORIZED: 401,
   FORBIDDEN: 403,
   NOT_FOUND: 404,
+  GATEWAY_TIME_OUT: 504,
   INTERNAL_SERVER: 500,
 };
 
@@ -41,6 +42,7 @@ Axios.interceptors.response.use(
   (response) => response,
   async (error) => {
     if (typeof window === "undefined") return Promise.reject(error);
+    if (error?.code === HttpStatus.GATEWAY_TIME_OUT) return Promise.reject(error);
     const config = error?.config;
     const response = error?.response;
     if (localStorage.getItem(localStorageKey.AUTH)) {

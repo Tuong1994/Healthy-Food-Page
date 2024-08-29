@@ -27,6 +27,7 @@ const call = async <T = unknown, D = any>(apiConfig: ApiConfig<T>) => {
   const initConfig: AxiosRequestConfig<T> = {
     method,
     url: apiPath,
+    timeout: 3000,
     ...config,
   };
   if (method !== Method.GET && body !== undefined) initConfig.data = body;
@@ -42,6 +43,13 @@ const call = async <T = unknown, D = any>(apiConfig: ApiConfig<T>) => {
     else apiResponse = { ...apiResponse, success: true, data: response.data };
   } catch (err: any) {
     if (!err.response) {
+      if (err.code === "ECONNABORTED") {
+        return (apiResponse = {
+          ...apiResponse,
+          success: false,
+          error: { status: 504, message: "Request timeout" },
+        });
+      }
       apiResponse = {
         ...apiResponse,
         success: false,
