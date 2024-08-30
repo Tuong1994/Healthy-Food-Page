@@ -25,6 +25,12 @@
   align-items: center;
   .error-card {
     width: $w-10 * 7;
+    @include respond(mdTablet) {
+      width: $w-10 * 5;
+    }
+    @include respond(mdPhone) {
+      width: $w-10 * 3;
+    }
   }
 }
 
