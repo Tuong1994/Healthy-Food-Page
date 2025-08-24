@@ -23,7 +23,7 @@ const AboutBlog: FC<AboutBlogProps> = ({ lang }) => {
         </Col>
         <Col xs={24} md={24} lg={13} span={13}>
           <Title weight={600}>{lang.about.blogs.title_1}</Title>
-          <Paragraph size={16} align="justify" lineHeight={30}>
+          <Paragraph size={18} align="justify" lineHeight={30}>
             {lang.about.blogs.content_1}
           </Paragraph>
         </Col>
@@ -32,14 +32,16 @@ const AboutBlog: FC<AboutBlogProps> = ({ lang }) => {
       <Row gutters={[30, 10]} justify="between" rootClassName="blog-group">
         <Col xs={24} md={24} lg={13} span={13}>
           <Title weight={600}>{lang.about.blogs.title_2}</Title>
-          <Paragraph size={16} align="justify" lineHeight={30}>
+          <Paragraph size={18} align="justify" lineHeight={30}>
             {lang.about.blogs.content_2}
           </Paragraph>
         </Col>
         <Col xs={24} md={24} lg={11} span={10}>
-          <div className="group-device">
-            <Monitor rootClassName="device-monitor" />
-            <Phone rootClassName="device-phone" />
+          <div className="group-wrapper">
+            <div className="wrapper-device">
+              <Monitor rootClassName="device-monitor" />
+              <Phone rootClassName="device-phone" />
+            </div>
           </div>
         </Col>
       </Row>
@@ -50,7 +52,7 @@ const AboutBlog: FC<AboutBlogProps> = ({ lang }) => {
         </Col>
         <Col xs={24} md={24} lg={13} span={13}>
           <Title weight={600}>{lang.about.blogs.title_3}</Title>
-          <Paragraph size={16} align="justify" lineHeight={30}>
+          <Paragraph size={18} align="justify" lineHeight={30}>
             {lang.about.blogs.content_3}
           </Paragraph>
         </Col>

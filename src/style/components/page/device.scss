@@ -4,7 +4,8 @@
     width: $w-full;
     height: $h-10 * 2.3;
     padding: $p-1 - 0.2;
-    background: $bg-black;
+    background: $bg-dark;
+    box-shadow:  0 0 10px $bg-black-rgba-xs;
     border: 1px solid $bg-gray;
     border-radius: $rounded-lg;
     .body-screen {
@@ -23,6 +24,7 @@
     justify-content: center;
     align-items: center;
     .foot-part {
+      box-shadow:  0 0 10px $bg-black-rgba-xs;
       &:nth-child(1) {
         width: $w-6;
         height: $h-5;
@@ -58,16 +60,17 @@
   width: $w-10 + 2;
   height: $h-10 * 2.2;
   padding: $p-1 - 0.7;
-  background: $bg-black;
+  background: $bg-dark;
   border: 2px solid $bg-slate;
   border-radius: $rounded-lg;
+  box-shadow:  0 0 10px $bg-black-rgba-xs;
   position: relative;
   &::after,
   &::before {
     content: "";
     width: $w-1 - 0.2;
     height: $h-1 - 0.2;
-    background: $bg-black;
+    background: $bg-dark;
     position: absolute;
     top: 20px;
     right: -1px;
@@ -86,7 +89,7 @@
       content: "";
       width: $w-6;
       height: $h-1 - 0.7;
-      background: $bg-black;
+      background: $bg-dark;
       border-radius: $rounded;
       position: absolute;
       bottom: 5px;
@@ -107,7 +110,7 @@
       .head-camera {
         width: $w-4;
         height: $h-1;
-        background: $bg-black;
+        background: $bg-dark;
         border-radius: $rounded-lg;
       }
     }

@@ -24,7 +24,7 @@ const AboutBanner: FC<AboutBannerProps> = ({ lang }) => {
           <Title weight={700} rootClassName="banner-title">
             {lang.about.banner.title}
           </Title>
-          <Paragraph size={17} weight={300} align="justify">
+          <Paragraph size={25} weight={300} align="justify" lineHeight={30}>
             {lang.about.banner.content}
           </Paragraph>
           <Link href={CONTACT}>
@@ -35,19 +35,19 @@ const AboutBanner: FC<AboutBannerProps> = ({ lang }) => {
           <List>
             <ListItem>
               <Space>
-                <Paragraph strong size={18}>
+                <Paragraph strong size={20}>
                   {lang.about.banner.delivery}
                 </Paragraph>
                 <Paragraph italic>({lang.about.banner.term})</Paragraph>
               </Space>
             </ListItem>
             <ListItem>
-              <Paragraph strong size={18}>
+              <Paragraph strong size={20}>
                 {lang.about.banner.fresh}
               </Paragraph>
             </ListItem>
             <ListItem>
-              <Paragraph strong size={18}>
+              <Paragraph strong size={20}>
                 {lang.about.banner.deal}
               </Paragraph>
             </ListItem>

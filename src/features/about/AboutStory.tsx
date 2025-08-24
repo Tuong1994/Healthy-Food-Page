@@ -59,7 +59,7 @@ const AboutStory: FC<AboutStoryProps> = ({ lang }) => {
   const renderStory = () => {
     return stories.map((story) => (
       <Col key={story.id} xs={24} md={12} lg={12} span={8}>
-        <Paragraph size={16} align="justify" rootClassName="story-content">
+        <Paragraph size={18} align="justify" rootClassName="story-content">
           {story.content}
         </Paragraph>
         <Space align="middle">
