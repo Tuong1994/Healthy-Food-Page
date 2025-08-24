@@ -27,35 +27,31 @@
   }
 }
 
-@keyframes fadeInRight {
+@keyframes slideRight {
   from {
     opacity: 0;
-    right: -100%;
+    transform: translateX(100%);
   }
   to {
     opacity: 1;
-    right: 0;
+    transform: translateX(0);
   }
 }
 
 @keyframes dropdown {
   from {
-    top: 110%;
+    transform: scaleY(0);
     opacity: 0;
   }
   to {
-    top: 120%;
+    transform: scaleY(1);
     opacity: 1;
   }
 }
 
-@keyframes dropup {
-  from {
-    bottom: 100%;
-    opacity: 0;
-  }
+@keyframes rise {
   to {
-    bottom: 120%;
-    opacity: 1;
+    transform: translateY(-110vh) rotate(360deg);
+    opacity: 0;
   }
 }

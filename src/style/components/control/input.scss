@@ -1,6 +1,7 @@
 .input {
   .input-label {
     margin-bottom: $m-1 - 0.5;
+    transition: color $transition-time-xs $transition-fn;
     .label-required {
       margin-right: $m-1 - 0.5;
       color: $text-red;
@@ -16,7 +17,8 @@
     align-items: center;
     border: 0.5px solid $bg-gray;
     background: $bg-white;
-    transition: all $transition-time-md $transition-fn;
+    transition: background-color $transition-time-sm $transition-fn,
+      box-shadow $transition-time-xs $transition-fn;
     .group-addon {
       display: flex;
       align-items: center;
@@ -67,13 +69,16 @@
     }
   }
   .input-group {
-    background: $bg-slate;
+    background: $bg-slate !important;
     &:hover {
       border-color: $bg-gray !important;
     }
     .control-box {
       color: $text-gray;
       cursor: not-allowed;
+      &::placeholder {
+        color: $text-gray;
+      }
     }
   }
 }
@@ -152,7 +157,7 @@
       border-color: $bg-blue;
     }
     &:focus-within {
-      border-color: $bg-blue;
+      box-shadow: 0 0 0 3px $bg-blue-rgba-sm;
     }
   }
 }
@@ -163,7 +168,7 @@
       border-color: $bg-red;
     }
     &:focus-within {
-      border-color: $bg-red;
+      box-shadow: 0 0 0 3px $bg-red-rgba-sm;
     }
   }
 }
@@ -174,7 +179,7 @@
       border-color: $bg-green;
     }
     &:focus-within {
-      border-color: $bg-green;
+      box-shadow: 0 0 0 3px $bg-green-rgba-sm;
     }
   }
 }
@@ -185,7 +190,7 @@
       border-color: $bg-orange;
     }
     &:focus-within {
-      border-color: $bg-orange;
+      box-shadow: 0 0 0 3px $bg-orange-rgba-sm;
     }
   }
 }
@@ -196,7 +201,7 @@
       border-color: $bg-yellow;
     }
     &:focus-within {
-      border-color: $bg-yellow;
+      box-shadow: 0 0 0 3px $bg-yellow-rgba-sm;
     }
   }
 }
@@ -207,7 +212,7 @@
       border-color: $bg-purple;
     }
     &:focus-within {
-      border-color: $bg-purple;
+      box-shadow: 0 0 0 3px $bg-purple-rgba-sm;
     }
   }
 }
@@ -218,7 +223,7 @@
       border-color: $bg-pink;
     }
     &:focus-within {
-      border-color: $bg-pink;
+      box-shadow: 0 0 0 3px $bg-pink-rgba-sm;
     }
   }
 }
@@ -231,8 +236,16 @@
 }
 
 .input-dark {
+  .input-label {
+    span {
+      color: $text-white;
+    }
+  }
   .input-group {
-    background: $bg-deep-blue;
+    background: $bg-dark;
+    .control-box {
+      color: $text-white;
+    }
     .control-action {
       &:hover path {
         color: $text-white !important;

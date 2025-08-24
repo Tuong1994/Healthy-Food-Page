@@ -12,10 +12,27 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      transition: all $transition-time-sm $transition-fn;
+      transition: border-color $transition-time-xs $transition-fn,
+        background-color $transition-time-xs $transition-fn, box-shadow $transition-time-sm $transition-fn;
+      .checked-icon {
+        transform: scale(0);
+        transition: transform $transition-time-xs $transition-fn;
+      }
     }
     .group-label {
       margin-left: $m-1;
+      span {
+        transition: color $transition-time-xs $transition-fn;
+      }
+      .label-required {
+        margin-right: $m-1 - 0.5;
+        color: $text-red;
+      }
+      .label-optional {
+        margin-left: $m-1 - 0.5;
+        color: $text-gray;
+        font-size: $text-xs;
+      }
     }
   }
   .checkbox-group-error {
@@ -162,20 +179,26 @@
 }
 
 // Checked color
-.checkbox-checked-red {
-  .group-checked {
-    background: $bg-red;
-    border-color: $bg-red !important;
-    * {
-      color: $text-white;
-    }
+.checkbox-checked {
+  .checked-icon {
+    transform: scale(1) !important;
   }
 }
 
 .checkbox-checked-blue {
   .group-checked {
     background: $bg-blue;
-    border-color: $bg-blue !important;
+    box-shadow: 0 0 0 3px $bg-blue-rgba-sm !important;
+    * {
+      color: $text-white;
+    }
+  }
+}
+
+.checkbox-checked-red {
+  .group-checked {
+    background: $bg-red;
+    box-shadow: 0 0 0 3px $bg-red-rgba-sm !important;
     * {
       color: $text-white;
     }
@@ -185,7 +208,7 @@
 .checkbox-checked-green {
   .group-checked {
     background: $bg-green;
-    border-color: $bg-green !important;
+    box-shadow: 0 0 0 3px $bg-green-rgba-sm !important;
     * {
       color: $text-white;
     }
@@ -195,7 +218,7 @@
 .checkbox-checked-orange {
   .group-checked {
     background: $bg-orange;
-    border-color: $bg-orange !important;
+    box-shadow: 0 0 0 3px $bg-orange-rgba-sm !important;
     * {
       color: $text-white;
     }
@@ -205,7 +228,7 @@
 .checkbox-checked-yellow {
   .group-checked {
     background: $bg-yellow;
-    border-color: $bg-yellow !important;
+    box-shadow: 0 0 0 3px $bg-yellow-rgba-sm !important;
     * {
       color: $text-white;
     }
@@ -215,7 +238,7 @@
 .checkbox-checked-purple {
   .group-checked {
     background: $bg-purple;
-    border-color: $bg-purple !important;
+    box-shadow: 0 0 0 3px $bg-purple-rgba-sm !important;
     * {
       color: $text-white;
     }
@@ -225,7 +248,7 @@
 .checkbox-checked-pink {
   .group-checked {
     background: $bg-pink;
-    border-color: $bg-pink !important;
+    box-shadow: 0 0 0 3px $bg-pink-rgba-sm !important;
     * {
       color: $text-white;
     }
@@ -235,7 +258,7 @@
 .checkbox-checked-black {
   .group-checked {
     background: $bg-black;
-    border-color: $bg-black !important;
+    box-shadow: 0 0 0 3px $bg-black-rgba-sm !important;
     * {
       color: $text-white;
     }
@@ -245,9 +268,18 @@
 .checkbox-checked-white {
   .group-checked {
     background: $bg-white;
-    border-color: $bg-white !important;
+    box-shadow: 0 0 0 3px $bg-white-rgba-sm !important;
     * {
       color: $text-black !important;
+    }
+  }
+}
+
+// Theme
+.checkbox-dark {
+  .group-label {
+    span {
+      color: $text-white;
     }
   }
 }

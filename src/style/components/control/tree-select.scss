@@ -2,6 +2,7 @@
   .tree-select-label {
     display: block;
     margin-bottom: $m-1 - 0.5;
+    transition: color $transition-time-xs $transition-fn;
     .label-required {
       margin-right: $m-1 - 0.5;
       color: $text-red;
@@ -20,7 +21,8 @@
       border: 0.5px solid $bg-gray;
       background: $bg-white;
       position: relative;
-      transition: all $transition-time-md $transition-fn;
+      transition: border-color $transition-time-sm $transition-fn,
+        background-color $transition-time-sm $transition-fn, box-shadow $transition-time-sm $transition-fn;
       .group-addon {
         display: flex;
         align-items: center;
@@ -93,15 +95,18 @@
     .wrap-option {
       min-width: max-content;
       width: $w-full;
+      padding: $p-1;
       box-shadow: 0 0 10px $bg-gray;
       background: $bg-white;
       overflow: hidden;
       position: absolute;
-      top: 110%;
+      transform: scaleY(0);
+      transform-origin: top;
+      top: 120%;
       left: 0;
       z-index: 10;
       opacity: 0;
-      transition: all $transition-time-sm $transition-fn;
+      transition: opacity $transition-time-xs $transition-fn, transform $transition-time-xs $transition-fn;
       .option-list {
         width: $w-full;
         .list-item {
@@ -117,6 +122,7 @@
             transition: all $transition-time-sm $transition-fn;
           }
           .item-inner {
+            margin: $m-1 - 0.5 0;
             padding: $p-1 - 0.6 $p-1;
             display: flex;
             align-items: center;
@@ -192,8 +198,8 @@
         overflow-y: auto;
       }
       .option-pagination {
-        padding: $p-1;
-        border-top: 0.5px solid $bg-gray;
+        margin-top: $m-1;
+        padding: $p-1 - 0.5 $p-2;
         display: flex;
         align-items: center;
         justify-content: flex-end;
@@ -232,14 +238,10 @@
         }
       }
     }
-    .wrap-option-bottom {
-      top: unset;
-      bottom: 120%;
-    }
     .wrap-option-active {
-      top: 120%;
+      transform: scaleY(1);
       opacity: 1;
-      animation: dropdown $transition-time-sm $transition-fn;
+      animation: dropdown $transition-time-xs $transition-fn;
     }
   }
 }
@@ -250,31 +252,12 @@
     .wrap-option {
       top: unset !important;
       bottom: 100%;
+      transform-origin: bottom;
     }
     .wrap-option-active {
-      bottom: calc(100% + 5px);
+      bottom: 120%;
       opacity: 1;
-      animation: dropup $transition-time-xs $transition-fn;
-    }
-  }
-}
-
-// Disabled
-.tree-select-disabled {
-  .tree-select-label {
-    color: $text-gray;
-    * {
-      color: $text-gray;
-    }
-  }
-  .wrap-group {
-    background: $bg-slate;
-    &:hover {
-      border-color: $bg-gray !important;
-    }
-    .control-box {
-      color: $text-gray;
-      cursor: not-allowed;
+      animation: dropdown $transition-time-xs $transition-fn;
     }
   }
 }
@@ -367,6 +350,12 @@
     .wrap-option {
       border-radius: $rounded;
     }
+    .item-inner {
+      border-radius: $rounded;
+    }
+    .option-pagination {
+      border-radius: $rounded;
+    }
   }
 }
 
@@ -378,6 +367,60 @@
     .wrap-option {
       border-radius: $rounded-lg;
     }
+    .item-inner {
+      border-radius: $rounded-xxl;
+    }
+    .option-pagination {
+      border-radius: $rounded-xxl;
+    }
+  }
+}
+
+// Theme
+.tree-select-light {
+  .wrap-group {
+    background: $bg-white;
+  }
+  .wrap-option {
+    background: $bg-white;
+    .item-inner {
+      background: $bg-slate;
+    }
+    .option-pagination {
+      box-shadow: 0 0 5px $bg-slate;
+    }
+  }
+}
+
+.tree-select-dark {
+  .tree-select-label {
+    span {
+      color: $text-white;
+    }
+  }
+  .wrap-group {
+    background: $bg-dark !important;
+    .control-box {
+      color: $text-white;
+    }
+    .control-action {
+      &:hover path {
+        color: $text-white !important;
+      }
+    }
+  }
+  .wrap-option {
+    background: $bg-dark !important;
+    box-shadow: 0 0 10px $bg-black !important;
+    & * {
+      color: $text-white;
+    }
+    .item-inner {
+      background: $bg-black;
+    }
+    .option-pagination {
+      box-shadow: 0 0 5px $bg-black;
+    }
   }
 }
 
@@ -388,7 +431,7 @@
       border-color: $bg-blue;
     }
     &:focus-within {
-      border-color: $bg-blue;
+      box-shadow: 0 0 0 3px $bg-blue-rgba-sm;
     }
     .control-tags {
       background: $bg-blue;
@@ -412,7 +455,7 @@
       border-color: $bg-red;
     }
     &:focus-within {
-      border-color: $bg-red;
+      box-shadow: 0 0 0 3px $bg-red-rgba-sm;
     }
     .control-tags {
       background: $bg-red;
@@ -436,7 +479,7 @@
       border-color: $bg-green;
     }
     &:focus-within {
-      border-color: $bg-green;
+      box-shadow: 0 0 0 3px $bg-green-rgba-sm;
     }
     .control-tags {
       background: $bg-green;
@@ -460,7 +503,7 @@
       border-color: $bg-orange;
     }
     &:focus-within {
-      border-color: $bg-orange;
+      box-shadow: 0 0 0 3px $bg-orange-rgba-sm;
     }
     .control-tags {
       background: $bg-orange;
@@ -484,7 +527,7 @@
       border-color: $bg-yellow;
     }
     &:focus-within {
-      border-color: $bg-yellow;
+      box-shadow: 0 0 0 3px $bg-yellow-rgba-sm;
     }
     .control-tags {
       background: $bg-yellow;
@@ -508,7 +551,7 @@
       border-color: $bg-purple;
     }
     &:focus-within {
-      border-color: $bg-purple;
+      box-shadow: 0 0 0 3px $bg-purple-rgba-sm;
     }
     .control-tags {
       background: $bg-purple;
@@ -532,7 +575,7 @@
       border-color: $bg-pink;
     }
     &:focus-within {
-      border-color: $bg-pink;
+      box-shadow: 0 0 0 3px $bg-pink-rgba-sm;
     }
     .control-tags {
       background: $bg-pink;
@@ -550,27 +593,29 @@
   }
 }
 
-// Theme
-.tree-select-white {
-  .wrap-group {
-    background: $bg-white;
-  }
-  .wrap-option {
-    background: $bg-white;
-  }
-}
-
-.tree-select-dark {
-  .wrap-group {
-    background: $bg-deep-blue !important;
-    .control-action {
-      &:hover path {
-        color: $text-white !important;
-      }
+// Disabled
+.tree-select-disabled {
+  .tree-select-label {
+    color: $text-gray;
+    * {
+      color: $text-gray;
     }
   }
-  .wrap-option {
-    background: $bg-deep-blue !important;
-    box-shadow: 0 0 10px $bg-black !important;
+  .wrap-group {
+    background: $bg-slate !important;
+    cursor: not-allowed;
+    &:hover {
+      border-color: $bg-gray !important;
+    }
+    .control-box {
+      cursor: not-allowed;
+      &::placeholder {
+        color: $text-gray;
+      }
+    }
+    .control-action {
+      pointer-events: none;
+      user-select: none;
+    }
   }
 }

@@ -7,7 +7,7 @@
   z-index: 15;
   .header-top {
     background: $bg-green;
-    padding: 0 $p-1 * 8;
+    padding: $p-1 - 0.7 $p-1 * 8;
     .top-about,
     .top-contact {
       color: $text-white;
@@ -16,7 +16,8 @@
       }
     }
     .top-translate {
-      .dropdown-title {
+      cursor: pointer;
+      .dropdown-label {
         display: flex;
         align-items: center;
         justify-content: center;
