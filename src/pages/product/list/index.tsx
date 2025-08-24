@@ -6,6 +6,7 @@ import type { ApiQuery, ApiResponse, Paging } from "@/services/type";
 import type { Product } from "@/services/product/type";
 import type { Category } from "@/services/category/type";
 import type { SubCategory } from "@/services/subcategory/type";
+import { LIST_LIMIT_ITEMS } from "@/services/helper";
 import { defaultApiResponse } from "@/services";
 import { getSubCategory } from "@/services/subcategory/api";
 import { getCategory } from "@/services/category/api";
@@ -108,14 +109,14 @@ const Products: NextPage<ProductsProps> = ({ categoryResponse, subCategoryRespon
       <Fragment>
         <div className="body-list">
           {products.map((product) => (
-            <ProductCard key={product.id} product={product} imgHeight={200} responsive />
+            <ProductCard key={product.id} product={product} responsive />
           ))}
         </div>
 
         <Pagination
           ghost
           control
-          limit={12}
+          limit={LIST_LIMIT_ITEMS}
           color="green"
           shape="square"
           rootClassName="list-pagination"

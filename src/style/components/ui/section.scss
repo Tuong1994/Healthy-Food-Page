@@ -1,5 +1,8 @@
 .section {
-  padding: $p-5 $p-1 * 8;
+  padding: $p-5 $p-5 * 3;
+  @include respond(laptop) {
+    padding: $p-5 $p-2;
+  }
   @include respond(lgTablet) {
     padding: $p-5 $p-1;
   }

@@ -2,6 +2,7 @@ import { FC } from "react";
 import { Empty, Typography, Grid } from "@/components/UI";
 import type { Product } from "@/services/product/type";
 import type { Category } from "@/services/category/type";
+import { LIST_LIMIT_ITEMS } from "@/services/helper";
 import { ESort } from "@/common/enum";
 import { useLang } from "@/hooks";
 import { useRouter } from "next/router";
@@ -42,7 +43,7 @@ const HomeCategory: FC<HomeCategoryProps> = ({ loading, error, products = [] }) 
         key={product.id}
         product={product}
         loading={loading}
-        cardWidth={200}
+        cardWidth={230}
         rootClassName="products-item"
       />
     ));
@@ -60,7 +61,7 @@ const HomeCategory: FC<HomeCategoryProps> = ({ loading, error, products = [] }) 
           <Link
             href={{
               pathname: PRODUCT_LIST,
-              query: { page: 1, limit: 12, categoryId: category?.id, sortBy: ESort.PRICE_GO_UP, ...query },
+              query: { page: 1, limit: LIST_LIMIT_ITEMS, categoryId: category?.id, sortBy: ESort.PRICE_GO_UP, ...query },
             }}
             className="category-link"
           >

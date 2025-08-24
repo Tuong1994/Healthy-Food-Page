@@ -10,7 +10,10 @@
 }
 
 .page {
-  padding: 0 $p-1 * 8;
+  padding: 0 $p-5 * 3;
+  @include respond(laptop) {
+    padding: 0 $p-2;
+  }
   @include respond(lgTablet) {
     padding: 0 $p-1;
   }

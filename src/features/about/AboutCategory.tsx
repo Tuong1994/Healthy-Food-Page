@@ -5,6 +5,7 @@ import type { CarouselItems } from "@/components/UI/Carousel/type";
 import type { ApiResponse, List } from "@/services/type";
 import type { SubCategory } from "@/services/subcategory/type";
 import { ESort } from "@/common/enum";
+import { LIST_LIMIT_ITEMS } from "@/services/helper";
 import { useRouter } from "next/router";
 import NoDataError from "@/components/Page/Error/NoDataError";
 import Link from "next/link";
@@ -38,7 +39,7 @@ const AboutCategory: FC<AboutCategoryProps> = ({ lang, subCategoriesResponse }) 
             pathname: PRODUCT_LIST,
             query: {
               page: 1,
-              limit: 12,
+              limit: LIST_LIMIT_ITEMS,
               categoryId: subCategory.categoryId,
               subCategoryId: subCategory.id,
               sortBy: ESort.PRICE_GO_UP,

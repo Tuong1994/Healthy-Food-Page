@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { CgHeart } from "react-icons/cg";
 import { useLang, useMounted } from "@/hooks";
+import { LIST_LIMIT_ITEMS } from "@/services/helper";
 import Link from "next/link";
 import useAuthStore from "@/store/AuthStore";
 import url from "@/common/constant/url";
@@ -24,7 +25,7 @@ const HeaderLikes: FC<HeaderLikesProps> = () => {
     <Link
       href={{
         pathname: FAVORITE,
-        query: { page: 1, limit: 12, id: info.id, langCode: locale },
+        query: { page: 1, limit: LIST_LIMIT_ITEMS, id: info.id, langCode: locale },
       }}
     >
       <button className="bottom-likes">

@@ -35,7 +35,7 @@ const ProductCard: FC<ProductCardProps> = ({
   like,
   rootClassName = "",
   imgWidth = "100%",
-  imgHeight = "150px",
+  imgHeight = "",
   cardWidth,
   loading,
   responsive = false,

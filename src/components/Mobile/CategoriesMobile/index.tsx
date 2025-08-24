@@ -2,10 +2,11 @@ import { FC } from "react";
 import { Image } from "@/components/UI";
 import { ESort } from "@/common/enum";
 import { useLang } from "@/hooks";
-import useCategoryStore from "@/store/CategoryStore";
+import { LIST_LIMIT_ITEMS } from "@/services/helper";
+import Link from "next/link";
 import CategoriesMobileLoading from "./Loading";
 import NoDataError from "@/components/Page/Error/NoDataError";
-import Link from "next/link";
+import useCategoryStore from "@/store/CategoryStore";
 import url from "@/common/constant/url";
 
 const { PRODUCT_LIST } = url;
@@ -26,7 +27,7 @@ const CategoriesMobile: FC<CategoriesMobileProps> = () => {
           pathname: PRODUCT_LIST,
           query: {
             page: 1,
-            limit: 12,
+            limit: LIST_LIMIT_ITEMS,
             sortBy: ESort.PRICE_GO_UP,
             categoryId: category.id,
             langCode: locale,

@@ -2,13 +2,14 @@ import { FC, Fragment } from "react";
 import { Image } from "@/components/UI";
 import { HiChevronRight } from "react-icons/hi2";
 import { ESort } from "@/common/enum";
+import { LIST_LIMIT_ITEMS } from "@/services/helper";
 import { useLang } from "@/hooks";
+import Link from "next/link";
 import CategoriesLoading from "./Loading";
 import NoDataError from "../Error/NoDataError";
 import useCategoryStore from "@/store/CategoryStore";
-import Link from "next/link";
-import utils from "@/utils";
 import url from "@/common/constant/url";
+import utils from "@/utils";
 
 const { PRODUCT_LIST } = url;
 
@@ -36,7 +37,7 @@ const Categories: FC<CategoriesProps> = ({ highlight = false }) => {
   const backdropClassName = utils.formatClassName("categories-backdrop", backdropActiveClassName);
 
   const renderCategories = () => {
-    const commonQuery = { page: 1, limit: 12, sortBy: ESort.PRICE_GO_UP, langCode: locale };
+    const commonQuery = { page: 1, limit: LIST_LIMIT_ITEMS, sortBy: ESort.PRICE_GO_UP, langCode: locale };
     return categoriesWithSubs.map((category) => (
       <div key={category.id} className="categories-item">
         <Link

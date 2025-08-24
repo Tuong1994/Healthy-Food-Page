@@ -1,6 +1,8 @@
 import { ELang } from "@/common/enum";
 import { ApiQuery } from "./type";
 
+export const LIST_LIMIT_ITEMS = 20;
+
 export const getApiQuery = (query: ApiQuery) => {
   let {
     langCode = ELang.EN,
@@ -43,8 +45,8 @@ export const getApiQuery = (query: ApiQuery) => {
   let rs = "?";
 
   page && page < 1 && (page = 1);
-  limit && limit < 10 && (limit = 12);
-  limit && limit > 100 && (limit = 12);
+  limit && limit < 10 && (limit = LIST_LIMIT_ITEMS);
+  limit && limit > 100 && (limit = LIST_LIMIT_ITEMS);
 
   langCode && (rs += `langCode=${langCode}`);
   page && (rs += `&page=${page}`);

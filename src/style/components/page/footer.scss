@@ -1,5 +1,5 @@
 .footer {
-  padding: $p-1 * 5 $p-1 * 8;
+  padding: $p-1 * 5 $p-5 * 3;
   .footer-top {
     margin-bottom: $m-5;
     .top-category {
@@ -33,6 +33,9 @@
         }
       }
     }
+  }
+   @include respond(laptop) {
+    padding: $p-1 * 5 $p-2;
   }
   @include respond(lgTablet) {
     padding: $p-1 * 5 $p-1;

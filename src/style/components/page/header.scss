@@ -7,7 +7,7 @@
   z-index: 15;
   .header-top {
     background: $bg-green;
-    padding: $p-1 - 0.7 $p-1 * 8;
+    padding: $p-1 - 0.7 $p-5 * 3;
     .top-about,
     .top-contact {
       color: $text-white;
@@ -23,12 +23,15 @@
         justify-content: center;
       }
     }
+    @include respond(laptop) {
+      padding: $p-1 - 0.7 $p-2;
+    }
     @include respond(mdTablet) {
       display: none;
     }
   }
   .header-bottom {
-    padding: $p-1 $p-1 * 8;
+    padding: $p-1 $p-5 * 3;
     border-bottom: unset;
     .bottom-category {
       width: $w-full;
@@ -150,6 +153,9 @@
           color: $text-white;
         }
       }
+    }
+    @include respond(laptop) {
+      padding: $p-1 $p-2;
     }
     @include respond(lgTablet) {
       padding: $p-1;

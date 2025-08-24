@@ -2,6 +2,7 @@ import { FC } from "react";
 import { Breadcrumb, Typography, Grid } from "@/components/UI";
 import { ESort } from "@/common/enum";
 import { useLang } from "@/hooks";
+import { LIST_LIMIT_ITEMS } from "@/services/helper";
 import type { BreadcrumbItems } from "@/components/UI/Breadcrumb/type";
 import Link from "next/link";
 import FooterLoading from "./FooterLoading";
@@ -25,7 +26,7 @@ const FooterTop: FC<FooterTopProps> = () => {
   const { data: categoriesWithSubs, loading, error } = categories;
 
   const renderCategories = () => {
-    const commonQuery = { page: 1, limit: 12, sortBy: ESort.PRICE_GO_UP, langCode: locale };
+    const commonQuery = { page: 1, limit: LIST_LIMIT_ITEMS, sortBy: ESort.PRICE_GO_UP, langCode: locale };
     return (
       <Row justify="between">
         {categoriesWithSubs.map((category) => {

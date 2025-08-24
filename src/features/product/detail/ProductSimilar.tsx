@@ -20,7 +20,7 @@ const ProductSimilar: FC<ProductSimilarProps> = ({ lang, products = [] }) => {
       <Divider />
       <div className="detail-list">
         {products.map((product) => (
-          <ProductCard key={product.id} product={product} imgHeight={200} responsive />
+          <ProductCard key={product.id} product={product} responsive />
         ))}
       </div>
     </Fragment>

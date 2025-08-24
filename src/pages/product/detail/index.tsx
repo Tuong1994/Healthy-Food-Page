@@ -5,6 +5,7 @@ import type { BreadcrumbItems } from "@/components/UI/Breadcrumb/type";
 import type { ApiQuery, ApiResponse, Paging } from "@/services/type";
 import type { Product as ProductType } from "@/services/product/type";
 import type { Comment } from "@/services/comment/type";
+import { LIST_LIMIT_ITEMS } from "@/services/helper";
 import { getProductsPaging } from "@/services/product/api";
 import { getComments } from "@/services/comment/api";
 import { getProductDetail } from "@/common/actions/getProduct";
@@ -51,7 +52,7 @@ const ProductPage: NextPage<ProductPageProps> = ({ productResponse, productsResp
         <Link
           href={{
             pathname: PRODUCT_LIST,
-            query: { page: 1, limit: 12, categoryId: product.categoryId, langCode: locale },
+            query: { page: 1, limit: LIST_LIMIT_ITEMS, categoryId: product.categoryId, langCode: locale },
           }}
         >
           {product.category?.name}
@@ -86,7 +87,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   if (productResponse && productResponse.success)
     productsResponse = await getProductsPaging({
       page: 1,
-      limit: 12,
+      limit: LIST_LIMIT_ITEMS,
       langCode: query.langCode as ELang,
       categoryId: productResponse.data.categoryId,
       hasLike: true,

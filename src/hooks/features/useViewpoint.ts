@@ -1,8 +1,30 @@
 import { useState, useEffect } from "react";
 
+export const breakpoint = {
+  SM_PHONE: 320,
+  MD_PHONE: 480,
+  LG_PHONE: 576,
+  SM_TABLET: 667,
+  MD_TABLET: 768,
+  LG_TABLET: 992,
+  LAPTOP: 1100,
+} as const;
+
 const useViewpoint = () => {
   if (typeof window === "undefined")
-    return { screenWidth: 0, isPhone: false, isTablet: false, isLaptop: false, isDesktop: false };
+    return {
+      screenWidth: 0,
+      isSmPhone: false,
+      isPhone: false,
+      isLgPhone: false,
+      isSmTablet: false,
+      isTablet: false,
+      isLgTablet: false,
+      isLaptop: false,
+      isDesktop: false,
+    };
+
+  const { SM_PHONE, MD_PHONE, LG_PHONE, SM_TABLET, MD_TABLET, LG_TABLET, LAPTOP } = breakpoint;
 
   const [screenWidth, setScreenWidth] = useState<number>(window.innerWidth);
 
@@ -12,15 +34,33 @@ const useViewpoint = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const isPhone = screenWidth >= 320 && screenWidth <= 480;
+  const isSmPhone = screenWidth >= SM_PHONE && screenWidth < MD_PHONE;
 
-  const isTablet = screenWidth > 480 && screenWidth <= 768;
+  const isPhone = screenWidth >= SM_PHONE && screenWidth <= MD_PHONE;
 
-  const isLaptop = screenWidth > 768 && screenWidth <= 1100;
+  const isLgPhone = screenWidth > MD_PHONE && screenWidth <= LG_PHONE;
 
-  const isDesktop = screenWidth > 1100;
+  const isSmTablet = screenWidth > LG_PHONE && screenWidth <= SM_TABLET;
 
-  return { screenWidth, isPhone, isTablet, isLaptop, isDesktop };
+  const isTablet = screenWidth > MD_PHONE && screenWidth <= MD_TABLET;
+
+  const isLgTablet = screenWidth > MD_TABLET && screenWidth <= LG_TABLET;
+
+  const isLaptop = screenWidth > MD_TABLET && screenWidth <= LAPTOP;
+
+  const isDesktop = screenWidth > LAPTOP;
+
+  return {
+    screenWidth,
+    isSmPhone,
+    isPhone,
+    isLgPhone,
+    isSmTablet,
+    isTablet,
+    isLgTablet,
+    isLaptop,
+    isDesktop,
+  };
 };
 
 export default useViewpoint;
