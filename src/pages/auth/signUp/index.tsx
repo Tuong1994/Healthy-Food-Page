@@ -58,6 +58,7 @@ const SignUp: NextPage = () => {
   return (
     <FormLayout<AuthSignUp>
       rootClassName="sign-up"
+      sizes="lg"
       submitting={loading}
       initialData={initialData}
       formTitle={lang.auth.signUp.title}

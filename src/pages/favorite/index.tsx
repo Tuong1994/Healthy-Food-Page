@@ -59,7 +59,6 @@ const Favorite: NextPage<FavoriteProps> = ({ likesResponse }) => {
             <ProductCard
               responsive
               key={like.id}
-              imgHeight={200}
               like={like}
               product={like.product as Product}
             />

@@ -85,6 +85,8 @@
         overflow: hidden;
         position: absolute;
         opacity: 0;
+        transform: scaleY(0);
+        transform-origin: top;
         top: 120%;
         right: 0;
         z-index: 15;
@@ -125,7 +127,7 @@
         }
       }
       .cart-dropdown-active {
-        top: 120%;
+        transform: scaleY(1);
         opacity: 1;
         animation: dropdown $transition-time-xs $transition-fn;
       }

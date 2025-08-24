@@ -24,11 +24,13 @@ interface UserInfoProps {
 const UserInfo: FC<UserInfoProps> = ({ lang, user, handleOpenEdit }) => {
   const { loading, onLogout } = useLogout(user.id as string);
 
+  const iconSize = 20
+
   const commonProps: InfoRowProps = {
     rootClassName: "info-item",
     hasColon: false,
     labelProps: { style: { width: "auto" } },
-    textProps: { weight: 400, strong: false },
+    textProps: { size: 16, weight: 400, strong: false },
     labelSpanProps: { xs: 2, md: 2, lg: 2, span: 2 },
     textSpanProps: { xs: 20, md: 20, lg: 20, span: 20 },
   };
@@ -63,35 +65,36 @@ const UserInfo: FC<UserInfoProps> = ({ lang, user, handleOpenEdit }) => {
 
       <Space justify="end">
         <Tooltip label={lang.common.actions.edit} placement="left" onClick={handleOpenEdit}>
-          <HiPencilAlt className="info-edit-icon" size={18} />
+          <HiPencilAlt className="info-edit-icon" size={iconSize} />
         </Tooltip>
       </Space>
 
-      <InfoRow {...commonProps} labelElement={<HiMail />} text={user.email} />
+      <InfoRow {...commonProps} labelElement={<HiMail size={iconSize} />} text={user.email} />
       {user.phone && (
         <InfoRow
           {...commonProps}
-          labelElement={<HiPhone />}
+          labelElement={<HiPhone size={iconSize} />}
           text={utils.formatPhoneNumber(user.phone ?? "")}
         />
       )}
       {user.gender && (
         <InfoRow
           {...commonProps}
-          labelElement={<FaTransgender />}
+          labelElement={<FaTransgender size={iconSize} />}
           textElement={getDisplayGender(lang, user.gender)}
         />
       )}
       {user.birthday && (
         <InfoRow
           {...commonProps}
-          labelElement={<HiCalendar />}
+          labelElement={<HiCalendar size={iconSize} />}
           text={moment(user.birthday).format("DD/MM/YYYY")}
         />
       )}
       {user.address?.fullAddress && (
-        <InfoRow {...commonProps} labelElement={<HiLocationMarker />} text={user.address?.fullAddress} />
+        <InfoRow {...commonProps} labelElement={<HiLocationMarker size={iconSize} />} text={user.address?.fullAddress} />
       )}
+      
       <Button ghost loading={loading} color="green" onClick={handleLogout}>
         {lang.pageComponent.auth.logout}
       </Button>

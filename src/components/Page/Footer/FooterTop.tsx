@@ -39,7 +39,7 @@ const FooterTop: FC<FooterTopProps> = () => {
                   query: { categoryId: category.id, subCategoryId: subcategory.id, ...commonQuery },
                 }}
               >
-                {subcategory.name}
+                <Paragraph>{subcategory.name}</Paragraph>
               </Link>
             ),
           }));
@@ -51,7 +51,7 @@ const FooterTop: FC<FooterTopProps> = () => {
                   query: { categoryId: category.id, ...commonQuery },
                 }}
               >
-                <Paragraph strong rootClassName="top-category">
+                <Paragraph strong size={18} rootClassName="top-category">
                   {category.name}
                 </Paragraph>
               </Link>
