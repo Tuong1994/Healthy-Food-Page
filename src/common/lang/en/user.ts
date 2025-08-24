@@ -1,4 +1,5 @@
 const user_en = {
+  title: 'Customer',
   greeting: "Hello",
   admin: "Go to admin",
   order: {

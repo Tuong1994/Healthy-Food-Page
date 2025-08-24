@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { GetServerSideProps, NextPage } from "next";
-import { Breadcrumb, Tabs, Grid } from "@/components/UI";
+import { Breadcrumb, Tabs, Grid, Typography } from "@/components/UI";
 import type { BreadcrumbItems } from "@/components/UI/Breadcrumb/type";
 import type { TabsItems } from "@/components/UI/Tabs/type";
 import type { ApiQuery, ApiResponse, List } from "@/services/type";
@@ -37,6 +37,8 @@ import url from "@/common/constant/url";
 const { HOME } = url;
 
 const { Row, Col } = Grid;
+
+const { Title } = Typography;
 
 interface UserProps {
   userResponse: ApiResponse<User>;
@@ -79,7 +81,7 @@ const User: NextPage<UserProps> = ({ userResponse, citiesResponse, districtsResp
       id: "1",
       label: <Link href={{ pathname: HOME, query: { langCode: locale } }}>{lang.common.menu.home}</Link>,
     },
-    { id: "2", label: user.fullName ?? 'Customer', actived: true },
+    { id: "2", label: user.fullName ?? "Customer", actived: true },
   ];
 
   const tabs: TabsItems = [
@@ -166,6 +168,7 @@ const User: NextPage<UserProps> = ({ userResponse, citiesResponse, districtsResp
     <ProtectedRoute>
       <div className="page user">
         <Breadcrumb items={items} />
+        <Title>{lang.user.title}</Title>
         {renderContent()}
         <UserPasswordModal lang={lang} open={openPassword} onCancel={handlePassword} />
       </div>

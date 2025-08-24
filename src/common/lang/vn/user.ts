@@ -1,4 +1,5 @@
 const user_vn = {
+  title: 'Khách hàng', 
   greeting: "Xin chào",
   admin: "Đi tới quản trị viên",
   order: {

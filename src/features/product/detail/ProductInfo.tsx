@@ -2,6 +2,7 @@ import { FC } from "react";
 import { Space, Divider, Badge, Image, InfoRow, Grid, Typography } from "@/components/UI";
 import type { Lang } from "@/common/type";
 import type { Product } from "@/services/product/type";
+import { InfoRowProps } from "@/components/UI/InfoRow";
 import { ELang } from "@/common/enum";
 import Quantity from "@/components/Page/Quantity";
 import Rate from "@/components/Page/Rate";
@@ -22,9 +23,15 @@ interface ProductInfoProps {
 }
 
 const ProductInfo: FC<ProductInfoProps> = ({ locale, lang, product }) => {
+  const infoRowDefaultProps: InfoRowProps = {
+    labelProps: { size: 16 },
+    labelSpanProps: { xs: 8, md: 8, lg: 8, span: 4 },
+    textProps: { size: 16 },
+  };
+
   return (
     <Row justify="between" rootClassName="detail-info">
-      <Col xs={24} md={12} lg={10} span={8}>
+      <Col xs={24} md={12} lg={10} span={6}>
         <div className="info-image">
           <Image imgWidth="100%" />
           {product.isNew && (
@@ -35,7 +42,7 @@ const ProductInfo: FC<ProductInfoProps> = ({ locale, lang, product }) => {
           <Like product={product} />
         </div>
       </Col>
-      <Col xs={24} md={12} lg={14} span={16}>
+      <Col xs={24} md={12} lg={14} span={18}>
         <Title level={6} rootClassName="info-name">
           {product.name}
         </Title>
@@ -49,27 +56,32 @@ const ProductInfo: FC<ProductInfoProps> = ({ locale, lang, product }) => {
         <Divider />
 
         <InfoRow
+          {...infoRowDefaultProps}
           rootClassName="info-group"
           label={lang.product.detail.category}
           text={product.category?.name}
         />
         <InfoRow
+          {...infoRowDefaultProps}
           rootClassName="info-group"
           label={lang.common.form.label.supplier}
           text={product.supplier}
           textProps={{ variant: "success" }}
         />
         <InfoRow
+          {...infoRowDefaultProps}
           rootClassName="info-group"
           label={lang.common.form.label.unit}
           textElement={getDisplayProductUnit(lang, product.unit)}
         />
         <InfoRow
+          {...infoRowDefaultProps}
           rootClassName="info-group"
           label={lang.common.form.label.status}
           textElement={getDisplayInventoryStatus(lang, product.inventoryStatus)}
         />
         <InfoRow
+          {...infoRowDefaultProps}
           label={lang.common.form.label.origin}
           textElement={getDisplayProductOrigin(lang, product.origin)}
         />
