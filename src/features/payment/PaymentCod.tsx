@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Divider, Image, Grid, Typography } from "@/components/UI";
+import { Divider, Image, Grid, Typography, Card } from "@/components/UI";
 import type { Lang } from "@/common/type";
 
 const { Row, Col } = Grid;
@@ -18,13 +18,15 @@ const PaymentCod: FC<PaymentCodProps> = ({ lang }) => {
           <Image src="/payment/delivery.png" imgWidth="100%" />
         </Col>
         <Col xs={24} md={14} lg={16} span={18}>
-          <Paragraph size={22} weight={600} variant="success">
-            {lang.payment.cod.title}
-          </Paragraph>
-          <Divider />
-          <Paragraph size={16} align="justify">
-            {lang.payment.cod.content}
-          </Paragraph>
+          <Card rootClassName="card-container">
+            <Paragraph size={22} weight={600} variant="success">
+              {lang.payment.cod.title}
+            </Paragraph>
+            <Divider />
+            <Paragraph size={16} align="justify">
+              {lang.payment.cod.content}
+            </Paragraph>
+          </Card>
         </Col>
       </Row>
     </div>

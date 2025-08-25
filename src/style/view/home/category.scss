@@ -19,11 +19,13 @@
     position: relative;
     .products-button {
       position: absolute;
-      top: 0;
-      left: 0;
+      top: 50%;
+      left: 1rem;
       z-index: 1;
+      transform: translateY(-50%);
       &:last-child {
-        right: 0;
+        left: unset;
+        right: 1rem;
       }
     }
   }

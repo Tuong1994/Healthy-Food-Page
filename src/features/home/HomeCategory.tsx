@@ -1,13 +1,13 @@
 import { FC, useState } from "react";
 import { Empty, Typography, Grid, Button } from "@/components/UI";
-import { HiArrowCircleLeft, HiArrowCircleRight } from "react-icons/hi";
-import type { Product } from "@/services/product/type";
-import type { Category } from "@/services/category/type";
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import { LIST_LIMIT_ITEMS } from "@/services/helper";
 import { ESort } from "@/common/enum";
 import { useLang } from "@/hooks";
 import { useRouter } from "next/router";
 import { useKeenSlider } from "keen-slider/react";
+import type { Product } from "@/services/product/type";
+import type { Category } from "@/services/category/type";
 import Link from "next/link";
 import ProductCard from "@/components/Page/ProductCard";
 import NoDataError from "@/components/Page/Error/NoDataError";
@@ -116,20 +116,28 @@ const HomeCategory: FC<HomeCategoryProps> = ({ loading, error, products = [] }) 
 
       <div ref={sliderRef} className="category-products keen-slider">
         {renderProducts()}
-        {/* {loaded && instanceRef.current && (
+        {loaded && instanceRef.current && (
           <>
-            <Button color="green" disabled={currentSlide === 0} rootClassName="products-button">
-              <HiArrowCircleLeft onClick={(e: any) => e.stopPropagation() || instanceRef.current?.prev()} />
+            <Button
+              shape="round"
+              color="green"
+              rootClassName="products-button"
+              disabled={currentSlide === 0}
+              onClick={(e: any) => e.stopPropagation() || instanceRef.current?.prev()}
+            >
+              <FaAngleLeft size={18} />
             </Button>
             <Button
+              shape="round"
               color="green"
-              disabled={currentSlide === instanceRef.current.track.details.slides.length - 1}
               rootClassName="products-button"
+              disabled={currentSlide === instanceRef.current.track.details.slides.length - 1}
+              onClick={(e: any) => e.stopPropagation() || instanceRef.current?.next()}
             >
-              <HiArrowCircleRight onClick={(e: any) => e.stopPropagation() || instanceRef.current?.next()} />
+              <FaAngleRight size={18} />
             </Button>
           </>
-        )} */}
+        )}
       </div>
     </div>
   );
