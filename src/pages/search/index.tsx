@@ -48,7 +48,7 @@ const Search: NextPage<SearchProps> = ({ productsResponse }) => {
       <Fragment>
         <div className="wrap-list">
           {data.items.map((product) => (
-            <ProductCard key={product.id} product={product} imgHeight={200} responsive />
+            <ProductCard key={product.id} product={product} responsive />
           ))}
         </div>
         <Pagination
@@ -70,7 +70,7 @@ const Search: NextPage<SearchProps> = ({ productsResponse }) => {
       <Title level={4} weight={600}>
         {lang.search.results} {searchResult}
       </Title>
-      <Card bodyClassName="search-wrap">{renderContent()}</Card>
+      <div className="search-wrap">{renderContent()}</div>
     </div>
   );
 };

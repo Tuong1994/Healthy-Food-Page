@@ -85,7 +85,7 @@ const Favorite: NextPage<FavoriteProps> = ({ likesResponse }) => {
         <Title level={4} weight={600}>
           {lang.favorite.title}
         </Title>
-        <Card bodyClassName="favorite-wrap">{renderContent()}</Card>
+        <div className="favorite-wrap">{renderContent()}</div>
       </div>
     </ProtectedRoute>
   );

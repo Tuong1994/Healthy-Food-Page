@@ -18,7 +18,7 @@ const UserEdit: FC<UserEditProps> = ({ lang, children, handleCloseEdit }) => {
           <span>{lang.user.form.return}</span>
         </Space>
       </Button>
-      <Card>{children}</Card>
+      <Card rootClassName="card-container">{children}</Card>
     </Fragment>
   );
 };

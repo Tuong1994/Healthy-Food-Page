@@ -1,4 +1,9 @@
 .user {
+  .user-tabs {
+    padding: $p-2;
+    background: $bg-white;
+    border-radius: $rounded-md;
+  }
   .user-info {
     background: $bg-green;
     * {

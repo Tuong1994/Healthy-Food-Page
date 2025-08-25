@@ -2,7 +2,7 @@
   width: $w-full;
   .banner-carousel {
     height: $h-10 * 3.5;
-    padding: $p-1 + 0.5;
+    padding: 0 $p-1 + 0.5;
     padding-right: 0;
     position: relative;
     &::after {

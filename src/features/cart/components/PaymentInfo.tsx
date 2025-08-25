@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { Card, InfoRow, Divider, Typography } from "@/components/UI";
+import { ELang } from "@/common/enum";
 import type { Lang } from "@/common/type";
 import type { InfoRowProps } from "@/components/UI/InfoRow";
-import { ELang } from "@/common/enum";
 import utils from "@/utils";
 
 const { Paragraph } = Typography;
@@ -37,6 +37,7 @@ const PaymentInfo: FC<PaymentInfoProps> = ({
 
   return (
     <Card
+      rootClassName="card-container"
       head={
         hasHead ? (
           <Paragraph weight={600} size={16}>

@@ -144,7 +144,9 @@ const User: NextPage<UserProps> = ({ userResponse, citiesResponse, districtsResp
         </Col>
         <Col xs={24} md={24} lg={16} span={16}>
           {!isEdit ? (
-            <Tabs color="green" items={tabs} onSelectTab={handleSelectTab} />
+            <div className="user-tabs">
+              <Tabs color="green" items={tabs} onSelectTab={handleSelectTab} />
+            </div>
           ) : (
             !isPhone && (
               <UserEdit lang={lang} handleCloseEdit={handleEdit}>

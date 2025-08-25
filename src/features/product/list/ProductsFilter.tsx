@@ -46,7 +46,7 @@ const ProductsFilter: FC<ProductsFilterProps> = ({ lang }) => {
 
   return (
     <Dropdown items={items} placement="right">
-      <Space align="middle" rootClassName="list-filter">
+      <Space align="middle" rootClassName="head-filter">
         <span>{title}</span>
         <HiChevronDown />
       </Space>

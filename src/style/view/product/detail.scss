@@ -1,6 +1,9 @@
 .product-detail {
   .detail-info {
-    margin-bottom: $m-5;
+    margin-bottom: $m-3;
+    padding: $p-2;
+    background: $bg-white;
+    border-radius: $rounded-md;
     .info-image {
       margin-bottom: $m-1;
       border-radius: $rounded;
@@ -30,9 +33,15 @@
     .info-group {
       margin-bottom: $m-1 - 0.5;
     }
+    @include respond(mdPhone) {
+      padding: $p-1;
+    }
   }
   .detail-tabs {
-    margin-bottom: $m-5;
+    margin-bottom: $m-3;
+    padding: $p-2;
+    background: $bg-white;
+    border-radius: $rounded-md;
     .tabs-description {
       ul {
         margin-block-start: $m-1;
@@ -50,19 +59,31 @@
         font-size: initial;
       }
     }
-  }
-  .detail-list {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-gap: 1.5rem;
-    @include respond(laptop) {
-      grid-template-columns: repeat(3, 1fr);
+    @include respond(mdPhone) {
+      padding: $p-1;
     }
-    @include respond(smTablet) {
-      grid-template-columns: repeat(2, 1fr);
+  }
+  .detail-similar {
+    margin-bottom: $m-3;
+    padding: $p-2;
+    background: $bg-white;
+    border-radius: $rounded-md;
+    .similar-list {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      grid-gap: 1.5rem;
+      @include respond(laptop) {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      @include respond(smTablet) {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      @include respond(mdPhone) {
+        grid-template-columns: auto;
+      }
     }
     @include respond(mdPhone) {
-      grid-template-columns: auto;
+      padding: $p-1;
     }
   }
 }

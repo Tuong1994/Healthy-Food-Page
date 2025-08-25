@@ -12,6 +12,7 @@
   min-width: $w-10 * 2;
   width: $w-full;
   height: $h-10 * 3.5;
+  border-radius: $rounded-md;
   background: $bg-white;
   display: flex;
   align-items: center;
@@ -27,6 +28,8 @@
     width: $w-10 * 2.5;
     height: $h-full;
     background: $bg-white;
+    border-top-right-radius: $rounded-md;
+    border-bottom-right-radius: $rounded-md;
     opacity: 0;
     visibility: hidden;
     position: absolute;
@@ -47,7 +50,7 @@
     width: $w-full;
     padding: $p-1 - 0.2 $p-1;
     cursor: pointer;
-    border-bottom: 1px solid $bg-slate;
+    border-bottom: 1px dashed $bg-slate;
     &:hover .item-wrap .wrap-content span {
       color: $text-green;
     }

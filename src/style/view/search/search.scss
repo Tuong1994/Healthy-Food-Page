@@ -1,5 +1,9 @@
 .search {
   .search-wrap {
+    padding: $p-2;
+    margin-bottom: $m-2;
+    border-radius: $rounded-md;
+    background: $bg-white;
     .wrap-list {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
@@ -14,9 +18,8 @@
         grid-template-columns: auto;
       }
     }
-    @include respond(lgTablet) {
-      padding: 0;
-      border: unset;
+    @include respond(mdPhone) {
+      padding: $p-1;
     }
   }
   .list-pagination {

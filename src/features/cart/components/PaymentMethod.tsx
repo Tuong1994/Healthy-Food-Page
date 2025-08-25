@@ -64,7 +64,7 @@ const PaymentMethod: FC<PaymentMethodProps> = ({ lang, order, onSelectedMethod }
 
   return (
     <Card
-      rootClassName="payment-method"
+      rootClassName="card-container payment-method"
       head={
         <Paragraph weight={600} size={16}>
           {lang.cart.methods.title}

@@ -1,5 +1,6 @@
 .main {
   padding-top: $p-1 * 9;
+  background: $bg-white-rgba-sm;
   @include respond(mdTablet) {
     padding: $p-1 * 10 0;
   }
@@ -10,12 +11,19 @@
 }
 
 .page {
-  padding: 0 $p-5 * 3;
+  padding: $p-1 $p-5 * 3;
   @include respond(laptop) {
     padding: 0 $p-2;
   }
   @include respond(lgTablet) {
     padding: 0 $p-1;
+  }
+}
+
+.card-container {
+  .card-head,
+  .card-body {
+    border: unset !important;
   }
 }
 

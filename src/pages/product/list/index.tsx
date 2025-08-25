@@ -107,14 +107,12 @@ const Products: NextPage<ProductsProps> = ({ categoryResponse, subCategoryRespon
     if (!products.length) return <Empty text={lang.common.description.empty} />;
     return (
       <Fragment>
-        <div className="body-list">
+        <div className="wrap-list">
           {products.map((product) => (
             <ProductCard key={product.id} product={product} responsive />
           ))}
         </div>
-
         <Pagination
-          ghost
           control
           limit={LIST_LIMIT_ITEMS}
           color="green"
@@ -131,9 +129,9 @@ const Products: NextPage<ProductsProps> = ({ categoryResponse, subCategoryRespon
   return (
     <div className="page product-list">
       <Breadcrumb items={breadCrumbItems()} />
-      <Row justify="between">
+      <Row justify="between" rootClassName="list-head">
         <Col>
-          <Title level={4} weight={600}>
+          <Title rootClassName="head-title" level={4} weight={600}>
             {pageTitle}
           </Title>
         </Col>
@@ -141,9 +139,9 @@ const Products: NextPage<ProductsProps> = ({ categoryResponse, subCategoryRespon
           <ProductsFilter lang={lang} />
         </Col>
       </Row>
-      <Card rootClassName="list-wrap" bodyClassName="wrap-body">
+      <div className="list-wrap">
         {renderContent()}
-      </Card>
+      </div>
     </div>
   );
 };

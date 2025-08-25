@@ -1,6 +1,8 @@
 .categories-mobile {
   display: none;
+  background: $bg-white;
   padding: $p-1;
+  margin-top: $m-2;
   .mobile-wrap,
   .mobile-loading {
     overflow-y: hidden;

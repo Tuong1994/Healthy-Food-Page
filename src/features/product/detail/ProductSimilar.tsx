@@ -13,17 +13,17 @@ interface ProductSimilarProps {
 
 const ProductSimilar: FC<ProductSimilarProps> = ({ lang, products = [] }) => {
   return (
-    <Fragment>
+    <div className="detail-similar">
       <Paragraph strong size={16}>
         {lang.product.detail.similar}
       </Paragraph>
       <Divider />
-      <div className="detail-list">
+      <div className="similar-list">
         {products.map((product) => (
           <ProductCard key={product.id} product={product} responsive />
         ))}
       </div>
-    </Fragment>
+    </div>
   );
 };
 

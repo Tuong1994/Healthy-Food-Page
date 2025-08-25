@@ -56,7 +56,7 @@ const PaymentReceived: FC<PaymentReceivedProps> = ({
           {lang.cart.received.title}
         </Paragraph>
       }
-      rootClassName="payment-received"
+      rootClassName="card-container payment-received"
     >
       <Select
         color="green"
