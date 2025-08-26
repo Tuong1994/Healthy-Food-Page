@@ -23,7 +23,7 @@ const PaymentCod: FC<PaymentCodProps> = ({ lang }) => {
               {lang.payment.cod.title}
             </Paragraph>
             <Divider />
-            <Paragraph size={16} align="justify">
+            <Paragraph size={18} align="justify">
               {lang.payment.cod.content}
             </Paragraph>
           </Card>

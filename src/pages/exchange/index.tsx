@@ -14,34 +14,34 @@ const Exchange: NextPage = () => {
       <Title weight={600}>{lang.exchange.title}</Title>
       <Card rootClassName="card-container">
         <div className="exchange-content">
-          <Paragraph strong size={18} variant="success" rootClassName="content-title">
+          <Paragraph strong size={20} variant="success" rootClassName="content-title">
             {lang.exchange.request.title}
           </Paragraph>
           <div className="content-group">
-            <Paragraph strong size={16} rootClassName="group-title">
+            <Paragraph strong size={18} rootClassName="group-title">
               {lang.exchange.request.notDelivery.title}
             </Paragraph>
-            <Paragraph size={16}>{lang.exchange.request.notDelivery.content}</Paragraph>
+            <Paragraph size={18}>{lang.exchange.request.notDelivery.content}</Paragraph>
           </div>
           <div className="content-group">
-            <Paragraph strong size={16} rootClassName="group-title">
+            <Paragraph strong size={18} rootClassName="group-title">
               {lang.exchange.request.deliveried.title}
             </Paragraph>
-            <Paragraph size={16}>{lang.exchange.request.deliveried.content}</Paragraph>
+            <Paragraph size={18}>{lang.exchange.request.deliveried.content}</Paragraph>
           </div>
         </div>
         <List
           head={
-            <Paragraph strong size={18} variant="success" rootClassName="content-title">
+            <Paragraph strong size={20} variant="success" rootClassName="content-title">
               {lang.exchange.condition.title}
             </Paragraph>
           }
         >
           <ListItem>
-            <Paragraph size={16}>{lang.exchange.condition.content_1}</Paragraph>
+            <Paragraph size={18}>{lang.exchange.condition.content_1}</Paragraph>
           </ListItem>
           <ListItem>
-            <Paragraph size={16}>{lang.exchange.condition.content_2}</Paragraph>
+            <Paragraph size={18}>{lang.exchange.condition.content_2}</Paragraph>
           </ListItem>
         </List>
       </Card>

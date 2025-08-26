@@ -15,7 +15,7 @@ const PaymentCash: FC<PaymentCashProps> = ({ lang }) => {
         {lang.payment.cash.title}
       </Paragraph>
       <Divider />
-      <Paragraph size={16} rootClassName="cash-content">
+      <Paragraph size={18} rootClassName="cash-content">
         {lang.payment.cash.content}
       </Paragraph>
       <InfoRow

@@ -50,7 +50,7 @@ const PaymentMethods: FC<PaymentMethodsProps> = ({ lang }) => {
           headClassName="item-head"
           bodyClassName="item-body"
           head={
-            <Paragraph size={16} weight={600}>
+            <Paragraph size={18} weight={600}>
               {method.title}
             </Paragraph>
           }
@@ -60,7 +60,7 @@ const PaymentMethods: FC<PaymentMethodsProps> = ({ lang }) => {
               {method.icon}
             </Col>
             <Col xs={18} md={18} lg={18} span={18}>
-              <Paragraph>{method.content}</Paragraph>
+              <Paragraph size={16}>{method.content}</Paragraph>
             </Col>
           </Row>
         </Card>

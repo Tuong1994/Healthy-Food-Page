@@ -12,33 +12,33 @@ const Delivery: NextPage = () => {
       <Title weight={600}>{lang.delivery.title}</Title>
       <Card rootClassName="card-container">
         <div className="delivery-content">
-          <Paragraph size={18} strong variant="success" rootClassName="content-title">
+          <Paragraph size={20} strong variant="success" rootClassName="content-title">
             {lang.delivery.area.title}
           </Paragraph>
-          <Paragraph size={16} align="justify">
+          <Paragraph size={18} align="justify">
             {lang.delivery.area.content}
           </Paragraph>
         </div>
 
         <div className="delivery-content">
-          <Paragraph size={18} strong variant="success" rootClassName="content-title">
+          <Paragraph size={20} strong variant="success" rootClassName="content-title">
             {lang.delivery.fee.title}
           </Paragraph>
-          <Paragraph size={16} align="justify">
+          <Paragraph size={18} align="justify">
             {lang.delivery.fee.content}
           </Paragraph>
         </div>
 
         <div className="delivery-content">
-          <Paragraph size={18} strong variant="success" rootClassName="content-title">
+          <Paragraph size={20} strong variant="success" rootClassName="content-title">
             {lang.delivery.time.title}
           </Paragraph>
-          <Paragraph size={16} align="justify">
+          <Paragraph size={18} align="justify">
             {lang.delivery.time.content}
           </Paragraph>
         </div>
 
-        <Paragraph size={16}>{lang.delivery.note}</Paragraph>
+        <Paragraph italic size={18}>{lang.delivery.note}</Paragraph>
       </Card>
     </div>
   );
