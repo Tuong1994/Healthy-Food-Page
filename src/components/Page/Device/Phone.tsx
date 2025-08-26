@@ -8,7 +8,7 @@ interface PhoneProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const Phone: ForwardRefRenderFunction<HTMLDivElement, PhoneProps> = (
-  { rootClassName = "", screenImg = "/about/about-phone-screen.png", ...restProps },
+  { rootClassName = "", screenImg = "/about/about-mobile-screen.png", ...restProps },
   ref
 ) => {
   const mainClassName = utils.formatClassName("phone", rootClassName);
