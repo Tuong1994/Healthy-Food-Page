@@ -12,11 +12,11 @@ const AppError: FC<AppErrorProps> = () => {
 
   return (
     <div className="app-error">
-      <Card hoverable rootClassName="error-card">
+      <Card hoverable rootClassName="error-card card-container">
         <Space justify="center">
           <CiFaceFrown size={100} />
         </Space>
-        <Paragraph align="center" size={18}>
+        <Paragraph align="center" variant="success" size={18}>
           {lang.pageComponent.appError.message}
         </Paragraph>
       </Card>

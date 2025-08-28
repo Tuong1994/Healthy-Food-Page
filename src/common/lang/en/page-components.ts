@@ -48,7 +48,7 @@ const page_components_en = {
   },
   appError: {
     message:
-      "We're sorry, but the server is taking longer than expected to respond. Please refresh the page or try again in a few moments.",
+      "This app is hosted on a free server plan. After some inactivity, the server goes to sleep and may take a little time to wake up. Please wait a moment and refresh the page if needed. Thank you for your patience!",
   },
 };
 

@@ -48,7 +48,7 @@ const page_components_vn = {
   },
   appError: {
     message:
-      "Chúng tôi rất tiếc nhưng máy chủ mất nhiều thời gian hơn dự kiến ​​để phản hồi. Vui lòng làm mới trang hoặc thử lại sau giây lát.",
+      "Ứng dụng này đang chạy trên gói máy chủ miễn phí. Sau một thời gian không hoạt động, máy chủ sẽ “ngủ” và cần vài giây để khởi động lại. Vui lòng chờ trong giây lát và thử tải lại trang. Cảm ơn bạn đã kiên nhẫn!",
   },
 };
 

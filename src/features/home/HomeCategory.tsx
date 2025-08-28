@@ -55,7 +55,7 @@ const HomeCategory: FC<HomeCategoryProps> = ({ loading, error, products = [] }) 
         slides: { perView: 2, spacing: 5 },
       },
       "(max-width: 480px)": {
-        slides: { perView: 2, spacing: 5 },
+        slides: { perView: 1, spacing: 5 },
       },
       "(max-width: 375px)": {
         slides: { perView: 1, spacing: 5 },

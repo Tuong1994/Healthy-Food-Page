@@ -9,8 +9,6 @@ const BASE_URL =
     ? "http://localhost:5000/"
     : "https://healthy-food-api-g4t7.onrender.com/";
 
-// const BASE_URL = "https://healthy-food-api-g4t7.onrender.com/";
-
 export const HttpStatus = {
   BAD_REQUEST: 400,
   UNAUTHORIZED: 401,
