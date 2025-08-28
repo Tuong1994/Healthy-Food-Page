@@ -135,6 +135,7 @@ const common_en = {
       emailExist: "Email is already exist",
       logout: "Logout failed",
       remove: "Remove failed",
+      cart: "Can't update cart, please try again",
       payment: "Payment failed",
       api: "Api network failed",
     },

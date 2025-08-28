@@ -135,6 +135,7 @@ const common_vn = {
       emailExist: "Email này đã tồn tại",
       logout: "Lỗi đăng xuất",
       remove: "Lỗi không thể xóa",
+      cart: 'Không thể cập nhật giỏ hàng. Vui lòng thử lại',
       payment: "Lỗi không thể thanh toán",
       api: "Đã xảy ra lỗi",
     },

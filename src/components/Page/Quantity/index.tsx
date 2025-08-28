@@ -78,7 +78,6 @@ const Quantity: FC<QuantityProps> = ({
       await handlePurchase(productId, newQuantity);
     } catch (error) {
       setQuantity(prevQuantity);
-      console.log("Can't update cart");
     }
   };
 

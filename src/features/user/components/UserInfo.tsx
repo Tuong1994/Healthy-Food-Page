@@ -95,7 +95,7 @@ const UserInfo: FC<UserInfoProps> = ({ lang, user, handleOpenEdit }) => {
         <InfoRow {...commonProps} labelElement={<HiLocationMarker size={iconSize} />} text={user.address?.fullAddress} />
       )}
       
-      <Button ghost loading={loading} color="green" onClick={handleLogout}>
+      <Button ghost loading={loading} disabled={loading} color="green" onClick={handleLogout}>
         {lang.pageComponent.auth.logout}
       </Button>
     </Card>
