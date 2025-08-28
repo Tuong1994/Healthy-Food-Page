@@ -1,6 +1,7 @@
 import { ApiConfig, ApiResponse, ResponseError } from "./type";
-import { AxiosRequestConfig, AxiosResponse } from "axios";
-import Axios, { HttpStatus } from "./axios";
+import { requestManager } from "./manager";
+import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
+import AxiosInstance, { HttpStatus } from "./axios";
 
 const Method = {
   GET: "GET",
@@ -23,17 +24,22 @@ export const ApiResponseError = (error: any) => {
 };
 
 const call = async <T = unknown, D = any>(apiConfig: ApiConfig<T>) => {
-  const { method, apiPath, body, config } = apiConfig;
+  const { method, apiPath, body, config, abortKey = "" } = apiConfig;
   const initConfig: AxiosRequestConfig<T> = {
     method,
     url: apiPath,
     timeout: 3000,
     ...config,
   };
+  let controller: AbortController | null = null;
+  if (abortKey) {
+    controller = requestManager.create(abortKey);
+    initConfig.signal = controller.signal;
+  }
   if (method !== Method.GET && body !== undefined) initConfig.data = body;
   let apiResponse: ApiResponse<D> = defaultApiResponse<D>();
   try {
-    const response = (await Axios<T, D>(initConfig)) as AxiosResponse<any, D>;
+    const response = (await AxiosInstance<T, D>(initConfig)) as AxiosResponse<any, D>;
     if (response.status === HttpStatus.NOT_FOUND)
       apiResponse = {
         ...apiResponse,
@@ -42,7 +48,14 @@ const call = async <T = unknown, D = any>(apiConfig: ApiConfig<T>) => {
       };
     else apiResponse = { ...apiResponse, success: true, data: response.data };
   } catch (err: any) {
-    if (!err.response) {
+    if (err?.name === "CanceledError" || axios.isCancel(err)) {
+      apiResponse = {
+        ...apiResponse,
+        success: false,
+        error: { status: 0, message: "Request canceled" },
+      };
+      if (abortKey) requestManager.abort(abortKey);
+    } else if (!err.response) {
       if (err.code === "ECONNABORTED") {
         return (apiResponse = {
           ...apiResponse,
@@ -62,17 +75,17 @@ const call = async <T = unknown, D = any>(apiConfig: ApiConfig<T>) => {
   return apiResponse;
 };
 
-const Get = <D>(apiPath: string, config?: AxiosRequestConfig) => {
-  return call<any, D>({ method: Method.GET, apiPath, config });
+const Get = <D>(apiPath: string, abortKey?: string, config?: AxiosRequestConfig) => {
+  return call<any, D>({ method: Method.GET, apiPath, abortKey, config });
 };
-const Post = <T, D = any>(apiPath: string, body: T, config?: AxiosRequestConfig<T>) => {
-  return call<T, D>({ method: Method.POST, apiPath, body, config });
+const Post = <T, D = any>(apiPath: string, body: T, abortKey?: string, config?: AxiosRequestConfig<T>) => {
+  return call<T, D>({ method: Method.POST, apiPath, body, abortKey, config });
 };
-const Put = <T, D = any>(apiPath: string, body: T, config?: AxiosRequestConfig<T>) => {
-  return call<T, D>({ method: Method.PUT, apiPath, body, config });
+const Put = <T, D = any>(apiPath: string, body: T, abortKey?: string, config?: AxiosRequestConfig<T>) => {
+  return call<T, D>({ method: Method.PUT, apiPath, body, abortKey, config });
 };
-const Delete = <D>(apiPath: string, config?: AxiosRequestConfig) => {
-  return call<any, D>({ method: Method.DELETE, apiPath, config });
+const Delete = <D>(apiPath: string, abortKey?: string, config?: AxiosRequestConfig) => {
+  return call<any, D>({ method: Method.DELETE, apiPath, abortKey, config });
 };
 
 const Fetch = { Get, Post, Put, Delete };

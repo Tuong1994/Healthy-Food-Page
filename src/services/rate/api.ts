@@ -20,16 +20,16 @@ export const getRate = async (query: ApiQuery) => {
 };
 
 export const createRate = async (data: RateFormData) => {
-  const response = await Fetch.Post<RateFormData, Rate>(rateApiPaths.create, data);
+  const response = await Fetch.Post<RateFormData, Rate>(rateApiPaths.create, data, 'createRate');
   return response;
 };
 
 export const updateRate = async (query: ApiQuery, data: RateFormData) => {
-  const response = await Fetch.Put<RateFormData, any>(rateApiPaths.update + getApiQuery(query), data);
+  const response = await Fetch.Put<RateFormData, any>(rateApiPaths.update + getApiQuery(query), data, 'updateRate');
   return response;
 };
 
 export const removeRates = async (query: ApiQuery) => {
-  const response = await Fetch.Delete<any>(rateApiPaths.remove + getApiQuery(query));
+  const response = await Fetch.Delete<any>(rateApiPaths.remove + getApiQuery(query), 'removeRates');
   return response;
 };

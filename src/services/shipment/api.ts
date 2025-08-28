@@ -15,16 +15,16 @@ export const getShipment = async (query: ApiQuery) => {
 };
 
 export const createShipment = async (data: ShipmentFormData) => {
-  const response = await Fetch.Post<ShipmentFormData, Shipment>(shipmentApiPaths.create, data);
+  const response = await Fetch.Post<ShipmentFormData, Shipment>(shipmentApiPaths.create, data, 'createShipment');
   return response;
 };
 
 export const updateShipment = async (query: ApiQuery, data: ShipmentFormData) => {
-  const response = await Fetch.Put<ShipmentFormData, any>(shipmentApiPaths.update + getApiQuery(query), data);
+  const response = await Fetch.Put<ShipmentFormData, any>(shipmentApiPaths.update + getApiQuery(query), data, 'updateShipment');
   return response;
 };
 
 export const removeShipments = async (query: ApiQuery) => {
-  const response = await Fetch.Delete<any>(shipmentApiPaths.remove + getApiQuery(query));
+  const response = await Fetch.Delete<any>(shipmentApiPaths.remove + getApiQuery(query), 'removeShipments');
   return response;
 };

@@ -28,6 +28,10 @@ const usePurchase = () => {
   const onCreateCart = async (cartData: CartFormData) => {
     const response = await createCart(cartData);
     if (!response.success) {
+      if (response.error?.status === 0) {
+        console.log("Too many request, action canceled");
+        return;
+      }
       setLoading(false);
       return messageApi.error(lang.common.message.error.api);
     }
@@ -65,6 +69,10 @@ const usePurchase = () => {
     }));
     const response = await updateCart(apiQuery, { ...cartDetail, items });
     if (!response.success) {
+      if (response.error?.status === 0) {
+        console.log("Too many request, action canceled");
+        return;
+      }
       setLoading(false);
       return messageApi.error(lang.common.message.error.api);
     }

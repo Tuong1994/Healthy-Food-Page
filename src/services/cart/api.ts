@@ -15,21 +15,25 @@ export const getCart = async (query: ApiQuery) => {
 };
 
 export const createCart = async (data: CartFormData) => {
-  const response = await Fetch.Post<CartFormData, Cart>(cartApiPaths.create, data);
+  const response = await Fetch.Post<CartFormData, Cart>(cartApiPaths.create, data, "createCart");
   return response;
 };
 
 export const updateCart = async (query: ApiQuery, data: CartFormData) => {
-  const response = await Fetch.Put<CartFormData, any>(cartApiPaths.update + getApiQuery(query), data);
+  const response = await Fetch.Put<CartFormData, any>(
+    cartApiPaths.update + getApiQuery(query),
+    data,
+    "updateCart"
+  );
   return response;
 };
 
 export const removeCarts = async (query: ApiQuery) => {
-  const response = await Fetch.Delete<any>(cartApiPaths.remove + getApiQuery(query));
+  const response = await Fetch.Delete<any>(cartApiPaths.remove + getApiQuery(query), "removeCarts");
   return response;
 };
 
 export const removeCartItems = async (query: ApiQuery) => {
-  const response = await Fetch.Delete<any>(cartApiPaths.removeItem + getApiQuery(query));
+  const response = await Fetch.Delete<any>(cartApiPaths.removeItem + getApiQuery(query), "removeCartItems");
   return response;
 };

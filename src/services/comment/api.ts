@@ -20,16 +20,20 @@ export const getComment = async (query: ApiQuery) => {
 };
 
 export const createComment = async (data: CommentFormData) => {
-  const response = await Fetch.Post<CommentFormData, Comment>(commentApiPaths.create, data);
+  const response = await Fetch.Post<CommentFormData, Comment>(commentApiPaths.create, data, "createComment");
   return response;
 };
 
 export const updateComment = async (query: ApiQuery, data: CommentFormData) => {
-  const response = await Fetch.Put<CommentFormData, any>(commentApiPaths.update + getApiQuery(query), data);
+  const response = await Fetch.Put<CommentFormData, any>(
+    commentApiPaths.update + getApiQuery(query),
+    data,
+    "updateComment"
+  );
   return response;
 };
 
 export const removeComments = async (query: ApiQuery) => {
-  const response = await Fetch.Delete<any>(commentApiPaths.remove + getApiQuery(query));
+  const response = await Fetch.Delete<any>(commentApiPaths.remove + getApiQuery(query), "removeComments");
   return response;
 };

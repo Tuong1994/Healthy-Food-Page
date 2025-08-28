@@ -61,19 +61,25 @@ const Quantity: FC<QuantityProps> = ({
 
   const handleBlur = (e: FocusEvent<HTMLInputElement>) => {
     if (!auth.isAuth) return router.push(AUTH_SIGN_IN);
+    if (loading) return;
     const value = Number(e.target.value);
     if (focused && value !== prevQuantity) handlePurchase(productId, value);
     setFocused(false);
   };
 
-  const handleChangeClick = (type: "plus" | "minus") => {
+  const handleChangeClick = async (type: "plus" | "minus") => {
     if (!auth.isAuth) return router.push(AUTH_SIGN_IN);
     let newQuantity = quantity;
     if (type === "plus") newQuantity++;
     else newQuantity--;
     setQuantity(newQuantity);
     onChangeInput?.(newQuantity);
-    handlePurchase(productId, newQuantity);
+    try {
+      await handlePurchase(productId, newQuantity);
+    } catch (error) {
+      setQuantity(prevQuantity);
+      console.log("Can't update cart");
+    }
   };
 
   return (
@@ -92,7 +98,7 @@ const Quantity: FC<QuantityProps> = ({
         onFocus={handleFocus}
         onBlur={handleBlur}
       />
-      <button className="quantity-btn" onClick={() => handleChangeClick("plus")}>
+      <button disabled={loading} className="quantity-btn" onClick={() => handleChangeClick("plus")}>
         {loading ? <Spinner /> : <HiPlus size={ICON_SIZE} />}
       </button>
     </Space>

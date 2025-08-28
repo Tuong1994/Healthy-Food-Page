@@ -24,6 +24,10 @@ const useLogout = (userId: string) => {
     const apiQuery: ApiQuery = { userId };
     const response = await onLogoutApi(apiQuery);
     if (!response.success) {
+      if (response.error?.status === 0) {
+        console.log("Too many request, action canceled");
+        return;
+      }
       let message = lang.common.message.error.api;
       const status = response.error?.status;
       if (status === HttpStatus.FORBIDDEN) message = lang.common.message.error.logout;

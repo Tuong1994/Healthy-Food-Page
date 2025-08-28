@@ -20,16 +20,16 @@ export const getLike = async (query: ApiQuery) => {
 };
 
 export const createLike = async (data: LikeData) => {
-  const response = await Fetch.Post<LikeData, Like>(likeApiPaths.create, data);
+  const response = await Fetch.Post<LikeData, Like>(likeApiPaths.create, data, "createLike");
   return response;
 };
 
 export const updateLike = async (query: ApiQuery, data: LikeData) => {
-  const response = await Fetch.Put<LikeData, any>(likeApiPaths.update + getApiQuery(query), data);
+  const response = await Fetch.Put<LikeData, any>(likeApiPaths.update + getApiQuery(query), data, "updateLike");
   return response;
 };
 
 export const removeLikes = async (query: ApiQuery) => {
-  const response = await Fetch.Delete<any>(likeApiPaths.remove + getApiQuery(query));
+  const response = await Fetch.Delete<any>(likeApiPaths.remove + getApiQuery(query), "removeLikes");
   return response;
 };
