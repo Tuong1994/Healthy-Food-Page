@@ -9,6 +9,7 @@ import { mutate } from "swr";
 import useCartStore from "@/store/CartStore";
 import useMessage from "@/components/UI/ToastMessage/useMessage";
 import useAuthStore from "@/store/AuthStore";
+import helper from "@/helper";
 
 const usePurchase = () => {
   const messageApi = useMessage();
@@ -28,10 +29,7 @@ const usePurchase = () => {
   const onCreateCart = async (cartData: CartFormData) => {
     const response = await createCart(cartData);
     if (!response.success) {
-      if (response.error?.status === 0) {
-        console.log("Too many request, action canceled");
-        return;
-      }
+      if(helper.isAbort(response)) return;
       setLoading(false);
       return messageApi.error(lang.common.message.error.api);
     }
@@ -69,10 +67,7 @@ const usePurchase = () => {
     }));
     const response = await updateCart(apiQuery, { ...cartDetail, items });
     if (!response.success) {
-      if (response.error?.status === 0) {
-        console.log("Too many request, action canceled");
-        return;
-      }
+      if(helper.isAbort(response)) return;
       setLoading(false);
       return messageApi.error(lang.common.message.error.api);
     }

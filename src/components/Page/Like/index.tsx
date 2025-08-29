@@ -17,6 +17,7 @@ import useProductStore from "@/store/ProductStore";
 import useLikeStore from "@/store/LikeStore";
 import url from "@/common/constant/url";
 import utils from "@/utils";
+import helper from "@/helper";
 
 const { HOME, PRODUCT_LIST, PRODUCT_DETAIL, FAVORITE, AUTH_SIGN_IN } = url;
 
@@ -99,7 +100,10 @@ const Like: FC<LikeProps> = ({ product, like }) => {
       userId: info.id ?? "",
     };
     const response = await onCreate(likeData);
-    if (!response.success) return messageApi.error(lang.common.message.error.api);
+    if (!response.success) {
+      if (helper.isAbort(response)) return;
+      return messageApi.error(lang.common.message.error.api);
+    }
     onReFetchProduct();
     messageApi.success(lang.common.message.success.addLike);
   };
@@ -108,7 +112,10 @@ const Like: FC<LikeProps> = ({ product, like }) => {
     if (!isAuth) return routerPush(AUTH_SIGN_IN);
     const apiQuery: ApiQuery = { ids: like?.id };
     const response = await onRemove(apiQuery);
-    if (!response.success) return messageApi.error(lang.common.message.error.api);
+    if (!response.success) {
+      if (helper.isAbort(response)) return;
+      return messageApi.error(lang.common.message.error.api);
+    }
     onReFetchLikes();
     messageApi.success(lang.common.message.success.removeLike);
   };
@@ -117,13 +124,13 @@ const Like: FC<LikeProps> = ({ product, like }) => {
 
   if (pathname === FAVORITE)
     return (
-      <button className="like like-remove" onClick={handleUnlike}>
+      <button disabled={removeLoading} className="like like-remove" onClick={handleUnlike}>
         {removeLoading ? <Spinner /> : <IoHeartDislike className="like-icon" size={ICON_SIZE} />}
       </button>
     );
 
   return (
-    <button className="like like-add" onClick={handleLike}>
+    <button disabled={createLoading} className="like like-add" onClick={handleLike}>
       {createLoading ? <Spinner /> : <HiHeart className={iconClassName} size={ICON_SIZE} />}
     </button>
   );

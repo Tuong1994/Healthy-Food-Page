@@ -6,6 +6,7 @@ import { logout } from "@/services/auth/api";
 import useMessage from "@/components/UI/ToastMessage/useMessage";
 import useAuthStore from "@/store/AuthStore";
 import url from "@/common/constant/url";
+import helper from "@/helper";
 
 const { HOME } = url;
 
@@ -24,10 +25,7 @@ const useLogout = (userId: string) => {
     const apiQuery: ApiQuery = { userId };
     const response = await onLogoutApi(apiQuery);
     if (!response.success) {
-      if (response.error?.status === 0) {
-        console.log("Too many request, action canceled");
-        return;
-      }
+      if(helper.isAbort(response)) return;
       let message = lang.common.message.error.api;
       const status = response.error?.status;
       if (status === HttpStatus.FORBIDDEN) message = lang.common.message.error.logout;

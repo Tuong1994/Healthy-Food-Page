@@ -28,6 +28,7 @@ import useCartStore from "@/store/CartStore";
 import getTotalPayment from "../helper/getTotalPayment";
 import url from "@/common/constant/url";
 import utils from "@/utils";
+import helper from "@/helper";
 
 const { CART, PRODUCT_DETAIL } = url;
 
@@ -156,7 +157,10 @@ const CartPayment: FC<CartPaymentProps> = ({ cart, setPurchased, handleUnConfirm
       ? { ...order, totalPayment }
       : { ...order, shipment, shipmentFee, totalPayment };
     const response = await createOrder(orderFormData);
-    if (!response.success) return messageApi.error(lang.common.message.error.payment);
+    if (!response.success) {
+      if(helper.isAbort(response)) return;
+      return messageApi.error(lang.common.message.error.payment);
+    }
     await removeCarts({ ids: cart?.detail?.id });
     const apiQuery: ApiQuery = { langCode: locale };
     const emailData: EmailOrder = {

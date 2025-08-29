@@ -11,6 +11,7 @@ import useCommentStore from "@/store/CommentStore";
 import useProductStore from "@/store/ProductStore";
 import useMessage from "@/components/UI/ToastMessage/useMessage";
 import utils from "@/utils";
+import helper from "@/helper";
 
 const { Paragraph } = Typography;
 
@@ -83,7 +84,10 @@ const Comment: FC<CommentProps> = () => {
   const handleCreate = async (parentId?: string | null) => {
     const commentData: CommentFormData = { ...comment, parentId: parentId ?? null };
     const response = await onCreate(commentData);
-    if (!response.success) return messageAPi.error(lang.common.message.error.api);
+    if (!response.success) {
+      if (helper.isAbort(response)) return;
+      return messageAPi.error(lang.common.message.error.api);
+    }
     onReFetch();
     setActiveComment({ id: "", type: null });
     messageAPi.success(lang.common.message.success.addComment);
@@ -92,7 +96,10 @@ const Comment: FC<CommentProps> = () => {
   const handleUpdate = async () => {
     const apiQuery: ApiQuery = { commentId: comment.id };
     const response = await onUpdate(apiQuery, comment);
-    if (!response.success) return messageAPi.error(lang.common.message.error.api);
+    if (!response.success) {
+      if (helper.isAbort(response)) return;
+      return messageAPi.error(lang.common.message.error.api);
+    }
     onReFetch();
     setActiveComment({ id: "", type: null });
     messageAPi.success(lang.common.message.success.updateComment);
@@ -101,7 +108,10 @@ const Comment: FC<CommentProps> = () => {
   const handleRemove = async (commentId: string) => {
     const apiQuery: ApiQuery = { ids: commentId };
     const response = await onRemove(apiQuery);
-    if (!response.success) return messageAPi.error(lang.common.message.error.api);
+    if (!response.success) {
+      if (helper.isAbort(response)) return;
+      return messageAPi.error(lang.common.message.error.api);
+    }
     onReFetch();
     messageAPi.success(lang.common.message.success.removeComment);
   };
@@ -116,6 +126,7 @@ const Comment: FC<CommentProps> = () => {
 
     return (
       <CommentControl
+        saveDisabled={createLoading}
         saveButtonProps={{ loading: createLoading }}
         onChangeInput={handleChangeInput}
         onSave={() => handleCreate(null)}
@@ -147,7 +158,7 @@ const Comment: FC<CommentProps> = () => {
           setActiveComment={setActiveComment}
         />
         {hasSeeMore && (
-          <Button text onClick={handleGetMore}>
+          <Button disabled={listLoading} text onClick={handleGetMore}>
             {listLoading ? <Spinner /> : lang.pageComponent.comment.more}
           </Button>
         )}

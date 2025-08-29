@@ -8,6 +8,7 @@ import CommentAuthor from "./CommentAuthor";
 interface CommentControlProps {
   hasAuthor?: boolean;
   isRoot?: boolean;
+  saveDisabled?: boolean;
   defaultValue?: string;
   saveButtonProps?: ButtonProps;
   cancelButtonProps?: ButtonProps;
@@ -20,6 +21,7 @@ const CommentControl: FC<CommentControlProps> = ({
   isRoot = true,
   hasAuthor = true,
   defaultValue = "",
+  saveDisabled,
   saveButtonProps,
   cancelButtonProps,
   onChangeInput,
@@ -31,7 +33,7 @@ const CommentControl: FC<CommentControlProps> = ({
   const [content, setContent] = useState<string>(defaultValue);
 
   const saveButtonDefaultProps: ButtonProps = {
-    disabled: !content,
+    disabled: !content || saveDisabled,
     color: "green",
     onClick: onSave,
     ...saveButtonProps,

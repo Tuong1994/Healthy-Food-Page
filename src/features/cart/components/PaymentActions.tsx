@@ -30,7 +30,7 @@ const PaymentActions: FC<PaymentActionsProps> = ({ lang, order, loading, handleU
             color="green"
             rootClassName="actions-btn"
             loading={loading}
-            disabled={disabledPayment}
+            disabled={disabledPayment || loading}
           >
             {lang.cart.actions.purchase}
           </Button>

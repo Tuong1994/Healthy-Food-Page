@@ -136,6 +136,11 @@
       .auth-btn {
         width: $w-full;
       }
+      .auth-logout {
+        width: $w-full;
+        border: unset;
+        background: transparent;
+      }
     }
     .bottom-mobile {
       .mobile-open-btn {

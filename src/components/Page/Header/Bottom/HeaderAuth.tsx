@@ -53,10 +53,12 @@ const HeaderAuth: FC<HeaderAuthProps> = ({ lang }) => {
     {
       id: "logout",
       label: (
-        <Space align="middle" onClick={handleLogout}>
-          {loading ? <Spinner /> : <HiLogout />}
-          <span>{lang.pageComponent.header.profile.logout}</span>
-        </Space>
+        <button disabled={loading} className="auth-logout">
+          <Space align="middle" onClick={handleLogout}>
+            {loading ? <Spinner /> : <HiLogout />}
+            <span>{lang.pageComponent.header.profile.logout}</span>
+          </Space>
+        </button>
       ),
     },
   ];

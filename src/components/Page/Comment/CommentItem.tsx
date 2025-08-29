@@ -1,4 +1,4 @@
-import { Dispatch, FC, SetStateAction, useState } from "react";
+import { Dispatch, FC, SetStateAction } from "react";
 import { Space, Typography, Loading } from "@/components/UI";
 import type { Comment, CommentFormData } from "@/services/comment/type";
 import type { ActionType, ActiveComment } from ".";
@@ -85,6 +85,7 @@ const CommentItem: FC<CommentItemProps> = ({
             hasAuthor={false}
             isRoot={false}
             defaultValue={comment.content}
+            saveDisabled={updateLoading}
             saveButtonProps={{ loading: updateLoading }}
             onChangeInput={handleChangeInput}
             onSave={handleUpdate}
@@ -105,7 +106,11 @@ const CommentItem: FC<CommentItemProps> = ({
               </button>
             )}
             {canRemove && (
-              <button className="content-btn" onClick={() => handleRemove(comment.id ?? "")}>
+              <button
+                disabled={removeLoading}
+                className="content-btn"
+                onClick={() => handleRemove(comment.id ?? "")}
+              >
                 {removeLoading ? <Spinner /> : <HiTrash size={ICON_SIZE} />}
               </button>
             )}
@@ -116,6 +121,7 @@ const CommentItem: FC<CommentItemProps> = ({
           <CommentControl
             hasAuthor={false}
             isRoot={false}
+            saveDisabled={createLoading}
             saveButtonProps={{ loading: createLoading }}
             onSave={() => handleCreate(comment.id)}
             onCancel={handleCancel}

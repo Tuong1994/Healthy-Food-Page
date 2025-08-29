@@ -59,11 +59,15 @@ const Quantity: FC<QuantityProps> = ({
     setPrevQuantity(quantity);
   };
 
-  const handleBlur = (e: FocusEvent<HTMLInputElement>) => {
+  const handleBlur = async (e: FocusEvent<HTMLInputElement>) => {
     if (!auth.isAuth) return router.push(AUTH_SIGN_IN);
     if (loading) return;
-    const value = Number(e.target.value);
-    if (focused && value !== prevQuantity) handlePurchase(productId, value);
+    try {
+      const value = Number(e.target.value);
+      if (focused && value !== prevQuantity) handlePurchase(productId, value);
+    } catch (error) {
+      setQuantity(prevQuantity)
+    }
     setFocused(false);
   };
 
