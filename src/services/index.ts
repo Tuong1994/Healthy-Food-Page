@@ -40,13 +40,7 @@ const call = async <T = unknown, D = any>(apiConfig: ApiConfig<T>) => {
   let apiResponse: ApiResponse<D> = defaultApiResponse<D>();
   try {
     const response = (await AxiosInstance<T, D>(initConfig)) as AxiosResponse<any, D>;
-    if (response.status === HttpStatus.NOT_FOUND)
-      apiResponse = {
-        ...apiResponse,
-        success: false,
-        error: { status: response.status, message: response.statusText },
-      };
-    else apiResponse = { ...apiResponse, success: true, data: response.data };
+    apiResponse = { ...apiResponse, success: true, data: response.data };
   } catch (err: any) {
     if (err?.name === "CanceledError" || axios.isCancel(err)) {
       apiResponse = {
@@ -62,7 +56,7 @@ const call = async <T = unknown, D = any>(apiConfig: ApiConfig<T>) => {
           success: false,
           error: { status: 504, message: "Request timeout" },
         });
-      }
+      } 
       apiResponse = {
         ...apiResponse,
         success: false,

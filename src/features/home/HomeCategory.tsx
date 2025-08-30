@@ -131,7 +131,7 @@ const HomeCategory: FC<HomeCategoryProps> = ({ loading, error, products = [] }) 
               shape="round"
               color="green"
               rootClassName="products-button"
-              disabled={currentSlide === instanceRef.current.track.details.slides.length - 1}
+              disabled={currentSlide === instanceRef.current.track.details?.slides.length - 1}
               onClick={(e: any) => e.stopPropagation() || instanceRef.current?.next()}
             >
               <FaAngleRight size={18} />
