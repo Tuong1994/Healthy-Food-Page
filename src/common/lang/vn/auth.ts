@@ -2,6 +2,8 @@ const auth_vn = {
   signIn: {
     title: "Đăng nhập",
     forgot: "Quên mật khẩu",
+    dividerContent: 'Hoặc',
+    thirdParty: 'Đăng nhập với',
   },
   signUp: {
     title: "Đăng ký",

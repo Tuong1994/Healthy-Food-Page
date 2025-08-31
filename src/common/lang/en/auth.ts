@@ -2,6 +2,8 @@ const auth_en = {
   signIn: {
     title: "Sign in",
     forgot: "Forgot your password",
+    dividerContent: "Or",
+    thirdParty: "Sign in with",
   },
   signUp: {
     title: "Sign up",

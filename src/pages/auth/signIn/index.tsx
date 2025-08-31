@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import { Space, Button } from "@/components/UI";
+import { Space, Button, Image, Divider } from "@/components/UI";
 import { FormItem, Input, InputPassword } from "@/components/Control";
 import { signIn } from "@/services/auth/api";
 import { HiLockClosed } from "react-icons/hi2";
@@ -82,6 +82,17 @@ const SignIn: NextPage = () => {
             {lang.auth.signUp.title}
           </Button>
         </Link>
+      </div>
+
+      <Divider placement="center">{lang.auth.signIn.dividerContent}</Divider>
+
+      <div className="sign-in-actions">
+        <Button ghost rootClassName="actions-btn">
+          <Space align="middle">
+            <Image imgWidth={30} imgHeight={30} src="/google/google-logo.svg" />
+            <span>{lang.auth.signIn.thirdParty} Google</span>
+          </Space>
+        </Button>
       </div>
     </FormLayout>
   );
