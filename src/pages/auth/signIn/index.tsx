@@ -1,7 +1,8 @@
 import { NextPage } from "next";
+import { Fragment } from "react";
 import { Space, Button, Image, Divider } from "@/components/UI";
 import { FormItem, Input, InputPassword } from "@/components/Control";
-import { signIn } from "@/services/auth/api";
+import { getOAuthInfo, googleSignIn, signIn } from "@/services/auth/api";
 import { HiLockClosed } from "react-icons/hi2";
 import { HiMail } from "react-icons/hi";
 import { useAsync, useLang, useRule } from "@/hooks";
@@ -46,10 +47,28 @@ const SignIn: NextPage = () => {
       if (status === HttpStatus.FORBIDDEN) message = lang.common.message.error.authPassword;
       return messageApi.error(message);
     }
-    setAuth(response.data);
+    const authInfoResponse = await getOAuthInfo();
+    const auth = { ...response.data, ...authInfoResponse.data };
+    setAuth(auth);
     messageApi.success(lang.common.message.success.signIn);
     setTimeout(() => router.push(previousPath), 200);
   };
+
+  const handleGoogleSignIn = () => googleSignIn();
+
+  const extraFooter = (
+    <Fragment>
+      <Divider placement="center">{lang.auth.signIn.dividerContent}</Divider>
+      <div className="sign-in-actions">
+        <Button ghost rootClassName="actions-btn" onClick={handleGoogleSignIn}>
+          <Space align="middle">
+            <Image imgWidth={30} imgHeight={30} src="/google/google-logo.svg" />
+            <span>{lang.auth.signIn.thirdParty} Google</span>
+          </Space>
+        </Button>
+      </div>
+    </Fragment>
+  );
 
   return (
     <FormLayout<AuthSignIn>
@@ -57,6 +76,7 @@ const SignIn: NextPage = () => {
       sizes="lg"
       submitting={loading}
       initialData={initialData}
+      extraFooter={extraFooter}
       formTitle={lang.auth.signIn.title}
       onFinish={handleSubmit}
     >
@@ -82,17 +102,6 @@ const SignIn: NextPage = () => {
             {lang.auth.signUp.title}
           </Button>
         </Link>
-      </div>
-
-      <Divider placement="center">{lang.auth.signIn.dividerContent}</Divider>
-
-      <div className="sign-in-actions">
-        <Button ghost rootClassName="actions-btn">
-          <Space align="middle">
-            <Image imgWidth={30} imgHeight={30} src="/google/google-logo.svg" />
-            <span>{lang.auth.signIn.thirdParty} Google</span>
-          </Space>
-        </Button>
       </div>
     </FormLayout>
   );

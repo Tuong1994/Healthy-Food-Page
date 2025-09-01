@@ -9,13 +9,13 @@ import {
   AuthForgotPassword,
   AuthResetPassword,
 } from "./type";
+import { BASE_URL } from "../axios";
 import localStorageKey from "@/common/constant/storage";
 import authApiPaths from "./path";
 import Fetch from "..";
 
 export const signIn = async (data: AuthSignIn) => {
   const response = await Fetch.Post<AuthSignIn, Auth>(authApiPaths.signIn, data, "signIn");
-  if (response.success) localStorage.setItem(localStorageKey.AUTH, JSON.stringify(response.data));
   return response;
 };
 
@@ -24,15 +24,17 @@ export const signUp = async (data: AuthSignUp) => {
   return response;
 };
 
-export const refresh = async (query: ApiQuery) => {
-  const response = await Fetch.Post<any, any>(authApiPaths.refresh + getApiQuery(query), null);
-  if (response.success) {
-    if (localStorage.getItem(localStorageKey.AUTH)) {
-      const oldAuth = JSON.parse(localStorage.getItem(localStorageKey.AUTH) ?? "") as Auth;
-      const newAuth = { ...oldAuth, ...response.data };
-      localStorage.setItem(localStorageKey.AUTH, JSON.stringify(newAuth));
-    }
-  }
+export const googleSignIn = () => {
+  window.location.href = `${BASE_URL}${authApiPaths.google.signIn}`;
+};
+
+export const getOAuthInfo = async () => {
+  const response = await Fetch.Get<Auth>(authApiPaths.oauthInfo);
+  return response;
+};
+
+export const refresh = async () => {
+  const response = await Fetch.Post<any, any>(authApiPaths.refresh, null);
   return response;
 };
 

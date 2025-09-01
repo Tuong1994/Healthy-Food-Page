@@ -3,18 +3,19 @@ import { refresh } from "@/services/auth/api";
 import useAuthStore from "@/store/AuthStore";
 
 const useRefreshToken = () => {
-  const auth = useAuthStore((state) => state.auth);
+  const [auth, setAuth] = useAuthStore((state) => [state.auth, state.setAuth]);
 
   const [open, setOpen] = useState<boolean>(false);
 
   const [reLogin, setReLogin] = useState<boolean>(false);
 
-  const { isAuth, info, expired } = auth;
+  const { isAuth, expired } = auth;
 
   const onRefresh = useCallback(async () => {
     setOpen(false);
-    const response = await refresh({ userId: info.id });
-    if (!response.success) setOpen(true);
+    const response = await refresh();
+    if (!response.success) return setOpen(true);
+    setAuth({ ...auth, ...response.data });
   }, [isAuth]);
 
   // Refresh token when first access page

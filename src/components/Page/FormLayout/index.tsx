@@ -15,6 +15,7 @@ interface FormLayoutProps<M> extends FormProps<M> {
   rootClassName?: string;
   submitting?: boolean;
   children?: ReactNode;
+  extraFooter?: ReactNode;
 }
 
 const FormLayout = <M extends object>({
@@ -22,6 +23,7 @@ const FormLayout = <M extends object>({
   formTitle,
   submitting,
   children,
+  extraFooter,
   ...restProps
 }: FormLayoutProps<M>) => {
   const { lang } = useLang();
@@ -49,6 +51,7 @@ const FormLayout = <M extends object>({
           bodyClassName="wrap-form"
         >
           <Form<M> {...formDefaultProps}>{children}</Form>
+          {extraFooter}
         </Card>
 
         <FormLayoutNote lang={lang} />
