@@ -23,19 +23,6 @@ const Axios = axios.create({
   withCredentials: true,
 });
 
-Axios.interceptors.request.use(
-  (config) => {
-    // if (typeof window === "undefined") return config;
-    // if (localStorage.getItem(localStorageKey.AUTH)) {
-    //   const auth = JSON.parse(localStorage.getItem(localStorageKey.AUTH) ?? "") as Auth;
-    //   if (!auth) return config;
-    //   config.headers["Authorization"] = `Bearer ${auth.accessToken}`;
-    // }
-    return config;
-  },
-  (error) => Promise.reject(error)
-);
-
 Axios.interceptors.response.use(
   (response) => response,
   async (error) => {
