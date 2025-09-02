@@ -9,7 +9,7 @@ interface AuthState {
   resetAuth: () => void;
 }
 
-const defaultAuth = { accessToken: "", expired: 0, info: {} as AuthInfo, isAuth: false };
+const defaultAuth: Auth = { expired: 0, info: {} as AuthInfo, isAuth: false };
 
 const storage = () => {
   let authStorage: Auth = defaultAuth;

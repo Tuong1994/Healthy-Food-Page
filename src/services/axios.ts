@@ -47,6 +47,8 @@ Axios.interceptors.response.use(
       const raw = localStorage.getItem(localStorageKey.AUTH);
       if (!raw) return Promise.reject(error);
       const auth = JSON.parse(raw) as Auth;
+      if (!auth) return Promise.reject(error);
+      if (!auth.isAuth) return Promise.reject(error);
       if (
         (response?.status === HttpStatus.UNAUTHORIZED || response?.status === HttpStatus.FORBIDDEN) &&
         !config?._retry

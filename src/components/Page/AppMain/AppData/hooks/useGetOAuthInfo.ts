@@ -3,17 +3,17 @@ import { getOAuthInfo } from "@/services/auth/api";
 import useAuthStore from "@/store/AuthStore";
 
 const useGetOAuthInfo = () => {
-  const auth = useAuthStore((state) => state.auth);
-
-  const { isAuth } = auth;
+  const setAuth = useAuthStore((state) => state.setAuth);
 
   const getInfo = async () => {
-    await getOAuthInfo();
+    const response = await getOAuthInfo();
+    if (!response.success) return;
+    setAuth(response.data);
   };
 
   useEffect(() => {
-    if (isAuth) getInfo();
-  }, [isAuth]);
+    getInfo();
+  }, []);
 };
 
 export default useGetOAuthInfo;

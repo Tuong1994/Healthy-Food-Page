@@ -3,7 +3,6 @@ import { User } from "../user/type";
 export type AuthInfo = Omit<User, "password" | "createdAt" | "updatedAt">;
 
 export type Auth = {
-  accessToken: string;
   expired: number;
   info: AuthInfo;
   isAuth: boolean;
