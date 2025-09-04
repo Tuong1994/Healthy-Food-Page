@@ -1,16 +1,25 @@
-import { FC, KeyboardEvent, useRef, useState } from "react";
-import { Image, Typography } from "@/components/UI";
+import { FC, KeyboardEvent, useEffect, useMemo, useRef, useState } from "react";
+import { Image, Typography, Loading, Space } from "@/components/UI";
 import { Input } from "@/components/Control";
 import { FaSearch } from "react-icons/fa";
 import { useRouter } from "next/router";
-import { useClickOutside, useLang, useRender, useViewpoint } from "@/hooks";
+import { Url } from "next/dist/shared/lib/router/router";
+import { useAsync, useClickOutside, useDebounce, useLang, useRender, useViewpoint } from "@/hooks";
+import { Product } from "@/services/product/type";
+import { ApiQuery, Paging } from "@/services/type";
+import { getProductsPaging } from "@/services/product/api";
 import { LIST_LIMIT_ITEMS } from "@/services/helper";
+import NoDataError from "../../Error/NoDataError";
+import Link from "next/link";
 import url from "@/common/constant/url";
 import utils from "@/utils";
+import helper from "@/helper";
 
 const { Paragraph } = Typography;
 
-const { SEARCH } = url;
+const { Skeleton } = Loading;
+
+const { SEARCH, PRODUCT_DETAIL } = url;
 
 interface HeaderSearchProps {}
 
@@ -19,17 +28,23 @@ const HeaderSearch: FC<HeaderSearchProps> = () => {
 
   const { isPhone, isSmTablet } = useViewpoint();
 
+  const [productsSearched, setProductsSearched] = useState<Paging<Product>>(helper.defaultPagingCollection());
+
   const [keywords, setKeywords] = useState<string>("");
 
   const [dropdown, setDropdown] = useState<boolean>(false);
 
-  const searchRef = useRef<HTMLDivElement | null>(null)
+  const searchRef = useRef<HTMLDivElement | null>(null);
 
-  const router = useRouter();
+  const debounce = useDebounce(keywords);
 
-  const render = useRender(dropdown)
+  const render = useRender(dropdown);
 
-  useClickOutside(searchRef, setDropdown)
+  useClickOutside(searchRef, setDropdown);
+
+  const { query, push: routerPush } = useRouter();
+
+  const { loading, call: searchProducts } = useAsync<Paging<Product>>(getProductsPaging);
 
   const responsive = isPhone || isSmTablet;
 
@@ -41,29 +56,58 @@ const HeaderSearch: FC<HeaderSearchProps> = () => {
 
   const dropdownClassName = utils.formatClassName("search-dropdown", activeClassName);
 
+  const apiQuery = useMemo<ApiQuery>(
+    () => ({ page: 1, limit: LIST_LIMIT_ITEMS, keywords: debounce, langCode: locale }),
+    [debounce, locale]
+  );
+
+  const getProducts = async () => {
+    const response = await searchProducts({ ...apiQuery });
+    if (response.success) setProductsSearched(response.data);
+  };
+
+  useEffect(() => {
+    if (keywords) handleTriggerDropdown();
+  }, [keywords]);
+
+  useEffect(() => {
+    getProducts();
+  }, [debounce]);
+
+  const handleChangeInput = async (text: string) => setKeywords(text);
+
   const handleNavigate = () => {
-    router.push({
-      pathname: SEARCH,
-      query: { page: 1, limit: LIST_LIMIT_ITEMS, keywords, langCode: locale },
-    });
+    routerPush({ pathname: SEARCH, query: apiQuery });
     setKeywords("");
   };
 
-  const handleChangeInput = (text: string) => setKeywords(text);
+  const handleTriggerDropdown = () => {
+    if (keywords) setDropdown(true);
+  };
 
   const handleKeyPress = (e: KeyboardEvent) => {
     if (e.key === "Enter") handleNavigate();
   };
 
-  const handleOpenDropdown = () => setDropdown(true);
-
-  const renderProductItems = () => {
-    return [...Array(10)].map((_, idx) => (
-      <div key={idx} className="dropdown-item">
-        <Image imgWidth={60} imgHeight={60} />
-        <Paragraph rootClassName="item-name">Product name</Paragraph>
-      </div>
-    ));
+  const renderDropdownContent = () => {
+    if (loading) {
+      return [...Array(10)].map((_, idx) => (
+        <Space key={idx} align="middle" style={{ marginBottom: "1rem" }}>
+          <Skeleton type="image" options={{ width: 60, height: 60 }} />
+          <Skeleton type="title" options={{ width: "80%" }} />
+        </Space>
+      ));
+    }
+    if (!productsSearched.items.length) return <NoDataError message="No products were founded" />;
+    return productsSearched.items.map((product) => {
+      const link: Url = { pathname: PRODUCT_DETAIL, query: { id: product.id, langCode: query.langCode } };
+      return (
+        <Link key={product.id} href={link} className="dropdown-item">
+          <Image imgWidth={60} imgHeight={60} src={product.image?.path} alt={product.name} />
+          <Paragraph rootClassName="item-name">{product.name}</Paragraph>
+        </Link>
+      );
+    });
   };
 
   const searchIcon = (
@@ -78,7 +122,7 @@ const HeaderSearch: FC<HeaderSearchProps> = () => {
   );
 
   return (
-    <div ref={searchRef} className="bottom-search" onFocus={handleOpenDropdown}>
+    <div ref={searchRef} className="bottom-search" onClick={handleTriggerDropdown}>
       <Input
         color="green"
         sizes={inputSize}
@@ -88,7 +132,7 @@ const HeaderSearch: FC<HeaderSearchProps> = () => {
         onKeyDown={handleKeyPress}
         onChangeInput={handleChangeInput}
       />
-      {render && <div className={dropdownClassName}>{renderProductItems()}</div>}
+      {render && <div className={dropdownClassName}>{renderDropdownContent()}</div>}
     </div>
   );
 };

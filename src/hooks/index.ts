@@ -8,6 +8,7 @@ import useRule from "./features/useRule";
 import useLang from "./features/useLang";
 import useMounted from "./features/useMounted";
 import useAsync from "./features/useAsync";
+import useDebounce from "./features/useDebounce";
 import useNotDisplay from "./features/useNotDisplay";
 import useLogout from "./actions/useLogout";
 
@@ -24,4 +25,5 @@ export {
   useAsync,
   useNotDisplay,
   useLogout,
+  useDebounce,
 };

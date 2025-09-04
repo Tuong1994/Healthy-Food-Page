@@ -1,6 +1,7 @@
 import { create, StateCreator } from "zustand";
 import type { Like } from "@/services/like/type";
 import type { Paging } from "@/services/type";
+import helper from "@/helper";
 
 interface LikeState {
   likesPaging: Paging<Like>;
@@ -8,7 +9,7 @@ interface LikeState {
 }
 
 const store: StateCreator<LikeState> = (set) => ({
-  likesPaging: { totalItems: 0, page: 0, limit: 0, items: [] },
+  likesPaging: helper.defaultPagingCollection(),
   setLikesPaging: (data) => set((state) => ({ ...state, likesPaging: data })),
 });
 

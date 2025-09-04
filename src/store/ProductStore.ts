@@ -1,6 +1,7 @@
 import { create, StateCreator } from "zustand";
 import type { Product } from "@/services/product/type";
 import type { ApiResponse, Paging } from "@/services/type";
+import helper from "@/helper";
 
 interface ProductState {
   productsByCategories: ApiResponse<Paging<Product>>[];
@@ -13,7 +14,7 @@ interface ProductState {
 
 const store: StateCreator<ProductState> = (set) => ({
   productsByCategories: [],
-  productsPaging: { totalItems: 0, page: 0, limit: 0, items: [] },
+  productsPaging: helper.defaultPagingCollection(),
   product: {} as Product,
   setProductsByCategories: (data) => set((state) => ({ ...state, productsByCategories: data })),
   setProductsPaging: (data) => set((state) => ({ ...state, productsPaging: data })),
