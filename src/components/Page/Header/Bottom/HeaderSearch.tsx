@@ -1,7 +1,8 @@
-import { FC, KeyboardEvent, useEffect, useMemo, useRef, useState } from "react";
+import { FC, Fragment, KeyboardEvent, useEffect, useMemo, useRef, useState } from "react";
 import { Image, Typography, Loading, Space } from "@/components/UI";
 import { Input } from "@/components/Control";
 import { FaSearch } from "react-icons/fa";
+import { Virtuoso } from "react-virtuoso";
 import { useRouter } from "next/router";
 import { Url } from "next/dist/shared/lib/router/router";
 import { useAsync, useClickOutside, useDebounce, useLang, useRender, useViewpoint } from "@/hooks";
@@ -27,6 +28,8 @@ const HeaderSearch: FC<HeaderSearchProps> = () => {
   const { locale, lang } = useLang();
 
   const { isPhone, isSmTablet } = useViewpoint();
+
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
   const [productsSearched, setProductsSearched] = useState<Paging<Product>>(helper.defaultPagingCollection());
 
@@ -61,18 +64,14 @@ const HeaderSearch: FC<HeaderSearchProps> = () => {
     [debounce, locale]
   );
 
-  const getProducts = async () => {
-    const response = await searchProducts({ ...apiQuery });
-    if (response.success) setProductsSearched(response.data);
+  const getProducts = async (page: number) => {
+    const response = await searchProducts({ ...apiQuery, page });
+    if (response.success)
+      setProductsSearched((prev) => ({
+        ...response.data,
+        items: page === 1 ? response.data.items : [...prev.items, ...response.data.items],
+      }));
   };
-
-  useEffect(() => {
-    if (keywords) handleTriggerDropdown();
-  }, [keywords]);
-
-  useEffect(() => {
-    getProducts();
-  }, [debounce]);
 
   const handleChangeInput = async (text: string) => setKeywords(text);
 
@@ -89,25 +88,64 @@ const HeaderSearch: FC<HeaderSearchProps> = () => {
     if (e.key === "Enter") handleNavigate();
   };
 
+  const handleChangePage = () => {
+    if (loading) return;
+    if (productsSearched.items.length === productsSearched.totalItems) return;
+    setCurrentPage((prevPage) => prevPage + 1);
+  };
+
+  useEffect(() => {
+    if (keywords) handleTriggerDropdown();
+  }, [keywords]);
+
+  useEffect(() => {
+    if (!debounce) return setCurrentPage(1);
+    getProducts(1);
+  }, [debounce]);
+
+  useEffect(() => {
+    getProducts(currentPage);
+  }, [currentPage]);
+
   const renderDropdownContent = () => {
-    if (loading) {
-      return [...Array(10)].map((_, idx) => (
-        <Space key={idx} align="middle" style={{ marginBottom: "1rem" }}>
-          <Skeleton type="image" options={{ width: 60, height: 60 }} />
-          <Skeleton type="title" options={{ width: "80%" }} />
-        </Space>
-      ));
-    }
-    if (!productsSearched.items.length) return <NoDataError message="No products were founded" />;
-    return productsSearched.items.map((product) => {
-      const link: Url = { pathname: PRODUCT_DETAIL, query: { id: product.id, langCode: query.langCode } };
-      return (
-        <Link key={product.id} href={link} className="dropdown-item">
-          <Image imgWidth={60} imgHeight={60} src={product.image?.path} alt={product.name} />
-          <Paragraph rootClassName="item-name">{product.name}</Paragraph>
-        </Link>
-      );
-    });
+    const products: Product[] = [...productsSearched.items];
+    return (
+      <Fragment>
+        {products.length > 0 && (
+          <Virtuoso
+            data={products}
+            increaseViewportBy={200}
+            endReached={handleChangePage}
+            key={render ? "open" : "closed"}
+            itemContent={(idx, product) => {
+              const link: Url = {
+                pathname: PRODUCT_DETAIL,
+                query: { id: product.id, langCode: query.langCode },
+              };
+              return product ? (
+                <Link key={product.id} href={link} className="dropdown-item">
+                  <Image imgWidth={60} imgHeight={60} src={product.image?.path} alt={product.name} />
+                  <Paragraph rootClassName="item-name">{product.name}</Paragraph>
+                </Link>
+              ) : (
+                <Space key={idx} align="middle" style={{ height: "60px", marginBottom: "1rem" }}>
+                  <Skeleton type="image" options={{ width: 60, height: 60 }} />
+                  <Skeleton type="title" options={{ width: "80%" }} />
+                </Space>
+              );
+            }}
+          />
+        )}
+        {loading &&
+          [...Array(10)].map((_, idx) => (
+            <Space key={idx} align="middle" style={{ marginBottom: "1rem" }}>
+              <Skeleton type="image" options={{ width: 60, height: 60 }} />
+              <Skeleton type="title" options={{ width: "80%" }} />
+            </Space>
+          ))}
+        {!productsSearched.items.length && <NoDataError message="No products were founded" />}
+      </Fragment>
+    );
   };
 
   const searchIcon = (

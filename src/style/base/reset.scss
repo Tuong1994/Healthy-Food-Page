@@ -12,10 +12,12 @@
     height: 1rem;
   }
   &::-webkit-scrollbar-thumb {
-    background: $bg-deep-gray;
+    background: $bg-green;
+    border-radius: $rounded-lg;
   }
   &::-webkit-scrollbar-track {
     background: $bg-slate;
+    border-radius: $rounded-lg;
   }
 }
 
