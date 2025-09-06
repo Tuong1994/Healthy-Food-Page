@@ -5,6 +5,7 @@ import type { AppProps } from "next/app";
 import 'nprogress/nprogress.css';
 import "react-quill/dist/quill.snow.css";
 import 'keen-slider/keen-slider.min.css'
+import 'flag-icons/css/flag-icons.min.css';
 import "@/style/main.scss";
 
 export default function App({ Component, pageProps }: AppProps) {

@@ -3,7 +3,6 @@ import { Dropdown, Space } from "@/components/UI";
 import { useLang } from "@/hooks";
 import { ELang } from "@/common/enum";
 import type { DropdownItems } from "@/components/UI/Dropdown/type";
-import Image from "next/image";
 
 interface HeaderTranslateProps {}
 
@@ -20,12 +19,16 @@ const HeaderTranslate: FC<HeaderTranslateProps> = () => {
     else setSelectedLocale(ELang.VN);
   };
 
+  const enFlag = <span className="fi fi-gb"></span>;
+
+  const vnFlag = <span className="fi fi-vn"></span>;
+
   const items: DropdownItems = [
     {
       id: ELang.EN,
       label: (
-        <Space onClick={() => handleSelect(ELang.EN)}>
-          <Image width={20} height={20} src="/flag/en_flag.svg" alt="flag" priority />
+        <Space align="middle" onClick={() => handleSelect(ELang.EN)}>
+          {enFlag}
           <span>{lang.pageComponent.header.translate.en}</span>
         </Space>
       ),
@@ -33,8 +36,8 @@ const HeaderTranslate: FC<HeaderTranslateProps> = () => {
     {
       id: ELang.VN,
       label: (
-        <Space onClick={() => handleSelect(ELang.VN)}>
-          <Image width={20} height={20} src="/flag/vn_flag.svg" alt="flag" priority />
+        <Space align="middle" onClick={() => handleSelect(ELang.VN)}>
+          {vnFlag}
           <span>{lang.pageComponent.header.translate.vn}</span>
         </Space>
       ),
@@ -42,8 +45,8 @@ const HeaderTranslate: FC<HeaderTranslateProps> = () => {
   ];
 
   const renderLabel = () => {
-    if (locale === ELang.EN) return "/flag/en_flag.svg";
-    return "/flag/vn_flag.svg";
+    if (locale === ELang.EN) return enFlag;
+    return vnFlag;
   };
 
   return (
@@ -53,7 +56,7 @@ const HeaderTranslate: FC<HeaderTranslateProps> = () => {
       placement="right"
       rootClassName="top-translate"
     >
-      <Image width={20} height={20} src={renderLabel()} alt="flag" priority />
+      {renderLabel()}
     </Dropdown>
   );
 };
