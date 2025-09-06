@@ -64,8 +64,7 @@
         width: $w-full;
         height: $h-10 * 4;
         padding: $p-1;
-        overflow-x: hidden;
-        overflow-y: auto;
+        overflow: hidden;
         background: $bg-white;
         border-radius: $rounded;
         box-shadow: 0 0 3px $bg-slate;
@@ -88,6 +87,9 @@
           .item-name {
             margin-left: $m-2;
           }
+        }
+        @include respond(mdPhone) {
+          height: $h-10 * 3;
         }
       }
       .search-dropdown-active {

@@ -75,13 +75,18 @@ const HeaderSearch: FC<HeaderSearchProps> = () => {
 
   const handleChangeInput = async (text: string) => setKeywords(text);
 
-  const handleNavigate = () => {
-    routerPush({ pathname: SEARCH, query: apiQuery });
-    setKeywords("");
+  const handleOpenDropdown = () => {
+    if (keywords) setDropdown(true);
   };
 
-  const handleTriggerDropdown = () => {
-    if (keywords) setDropdown(true);
+  const handleCloseDropdown = () => {
+    setKeywords("");
+    setDropdown(false);
+  };
+
+  const handleNavigate = () => {
+    routerPush({ pathname: SEARCH, query: apiQuery });
+    handleCloseDropdown();
   };
 
   const handleKeyPress = (e: KeyboardEvent) => {
@@ -95,7 +100,7 @@ const HeaderSearch: FC<HeaderSearchProps> = () => {
   };
 
   useEffect(() => {
-    if (keywords) handleTriggerDropdown();
+    if (keywords) handleOpenDropdown();
   }, [keywords]);
 
   useEffect(() => {
@@ -115,15 +120,16 @@ const HeaderSearch: FC<HeaderSearchProps> = () => {
           <Virtuoso
             data={products}
             increaseViewportBy={200}
-            endReached={handleChangePage}
             key={render ? "open" : "closed"}
+            endReached={handleChangePage}
+            style={{ height: "100%" }}
             itemContent={(idx, product) => {
               const link: Url = {
                 pathname: PRODUCT_DETAIL,
                 query: { id: product.id, langCode: query.langCode },
               };
               return product ? (
-                <Link key={product.id} href={link} className="dropdown-item">
+                <Link key={product.id} href={link} className="dropdown-item" onClick={handleCloseDropdown}>
                   <Image imgWidth={60} imgHeight={60} src={product.image?.path} alt={product.name} />
                   <Paragraph rootClassName="item-name">{product.name}</Paragraph>
                 </Link>
@@ -160,7 +166,7 @@ const HeaderSearch: FC<HeaderSearchProps> = () => {
   );
 
   return (
-    <div ref={searchRef} className="bottom-search" onClick={handleTriggerDropdown}>
+    <div ref={searchRef} className="bottom-search">
       <Input
         color="green"
         sizes={inputSize}
@@ -169,6 +175,7 @@ const HeaderSearch: FC<HeaderSearchProps> = () => {
         placeholder={lang.common.form.placeholder.search}
         onKeyDown={handleKeyPress}
         onChangeInput={handleChangeInput}
+        onClick={handleOpenDropdown}
       />
       {render && <div className={dropdownClassName}>{renderDropdownContent()}</div>}
     </div>
