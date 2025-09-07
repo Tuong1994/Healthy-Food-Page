@@ -1,6 +1,6 @@
 .scroll-up-button {
-  width: $w-4;
-  height: $h-4;
+  width: $w-5;
+  height: $h-5;
   border: 1px solid $bg-green;
   border-radius: $rounded-full;
   background: $bg-green;
@@ -8,8 +8,8 @@
   align-items: center;
   justify-content: center;
   position: fixed;
-  bottom: 20px;
-  right: 10px;
+  bottom: 2rem;
+  right: 5rem;
   z-index: 15;
   opacity: 0;
   transition: all $transition-time-sm $transition-fn;
@@ -20,7 +20,10 @@
     opacity: 0.6;
   }
   @include respond(smTablet) {
-    bottom: 80px;
+    width: $w-4;
+    height: $h-4;
+    right: 2rem;
+    bottom: 8rem;
   }
 }
 

@@ -1,7 +1,7 @@
 import { FC, ButtonHTMLAttributes, useState, useEffect } from "react";
 import { HiChevronUp } from "react-icons/hi2";
-import utils from "@/utils";
 import { useMounted, useRender } from "@/hooks";
+import utils from "@/utils";
 
 interface ScrollUpButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   rootClassName?: string;
@@ -19,14 +19,20 @@ const ScrollUpButton: FC<ScrollUpButtonProps> = ({ rootClassName = "", type = "b
   const mainClassName = utils.formatClassName("scroll-up-button", showClassName, rootClassName);
 
   useEffect(() => {
-    if (!window) return;
-    const toggleVisibility = () => {
-      if (window.scrollY > 0) setIsShow(true);
-      else setIsShow(false);
-    };
-    window.addEventListener("scroll", toggleVisibility);
-    return () => window.removeEventListener("scroll", toggleVisibility);
-  }, []);
+  let ticking = false;
+  const toggleVisibility = () => {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        setIsShow(window.scrollY > 0);
+        ticking = false;
+      });
+      ticking = true;
+    }
+  };
+  window.addEventListener("scroll", toggleVisibility);
+  return () => window.removeEventListener("scroll", toggleVisibility);
+}, []);
+
 
   const handleScroll = () => {
     if (!window) return;
@@ -37,7 +43,7 @@ const ScrollUpButton: FC<ScrollUpButtonProps> = ({ rootClassName = "", type = "b
 
   return render ? (
     <button {...restProps} type={type} className={mainClassName} onClick={handleScroll}>
-      <HiChevronUp size={20} />
+      <HiChevronUp size={30} />
     </button>
   ) : null;
 };

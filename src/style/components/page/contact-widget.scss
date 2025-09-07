@@ -1,0 +1,72 @@
+.contact-widget {
+  position: fixed;
+  left: 5rem;
+  bottom: 2rem;
+  z-index: 100;
+  .widget-item {
+    width: max-content;
+    cursor: pointer;
+    position: absolute;
+    bottom: 2rem;
+    left: 0;
+    transition: transform $transition-time-md $transition-fn, opacity $transition-time-sm $transition-fn;
+    .item-icon {
+      width: $w-6;
+      height: $h-6;
+      background: $bg-white;
+      box-shadow: 0 0 10px $bg-slate;
+      border-radius: $rounded-full;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  .widget-trigger {
+    width: $w-6;
+    height: $h-6;
+    border-radius: $rounded-full;
+    background: $bg-green-rgba-md;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    transform: scale(1);
+    animation: pulse 1s ease infinite;
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+  .widget-fb {
+    z-index: 49;
+    opacity: 0;
+  }
+  .widget-hotline {
+    z-index: 48;
+    opacity: 0;
+  }
+   @include respond(smTablet) {
+    left: 2rem;
+    bottom: 6rem;
+  }
+}
+
+.contact-widget-active {
+  .widget-fb {
+    opacity: 1;
+    transform: translateY(calc(-100% - 2rem));
+  }
+  .widget-hotline {
+    opacity: 1;
+    transform: translateY(calc(-200% - 4rem));
+  }
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 $bg-green-rgba-md;
+  }
+  100% {
+    box-shadow: 0 0 0 15px $bg-green-rgba-trans;
+  }
+}

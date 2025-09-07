@@ -11,6 +11,7 @@ import Footer from "../Footer";
 import FooterMobile from "@/components/Mobile/FooterMobile";
 import GridProvider from "@/components/UI/Grid/Provider";
 import ScrollUpButton from "../ScrollUpButton";
+import ContactWidget from "../ContactWidget";
 import AppLang from "./AppLang";
 import AppData from "./AppData";
 import AppAuth from "./AppAuth";
@@ -73,6 +74,7 @@ const AppMain: FC<AppMainProps> = ({ children }) => {
             <FooterMobile />
             <ToastMessage />
             <ScrollUpButton />
+            <ContactWidget />
             <div id="portal"></div>
           </AppData>
         </AppAuth>
