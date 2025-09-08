@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Grid, Space } from "@/components/UI";
+import { Divider, Grid, Space } from "@/components/UI";
 import { FaPhone } from "react-icons/fa";
 import { useLang } from "@/hooks";
 import Link from "next/link";
@@ -23,13 +23,14 @@ const HeaderTop: FC<HeaderTopProps> = () => {
         </Link>
       </Col>
       <Col>
-        <Space size="md" align="middle">
+        <Space align="middle">
           <a href="tel:02839753186" className="top-contact">
-            <Space>
+            <Space align="middle">
               <FaPhone />
               <span>028 3975 3186</span>
             </Space>
           </a>
+          <Divider type="vertical" />
           <HeaderTranslate />
         </Space>
       </Col>

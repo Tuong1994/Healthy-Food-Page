@@ -13,19 +13,6 @@ const ContactWidget: FC = () => {
 
   const iconSize = 50;
 
-  const FBMsgIcon = (
-    <svg
-      width={iconSize}
-      height={iconSize}
-      viewBox="0 0 256 256"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-    >
-      <circle cx="128" cy="128" r="120" fill="#1877F2" />
-      <path fill="#fff" d="M72 176 L120 140 L148 164 L204 88 L148 132 L120 108 L72 148 Z" />
-    </svg>
-  );
-
   const PhoneIcon = (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -48,11 +35,13 @@ const ContactWidget: FC = () => {
   return (
     <div className={className}>
       <div className="widget-item widget-trigger" onClick={handleTrigger}>
-        <Image imgWidth={45} imgHeight={45} src="/contact.svg" />
+        <Image imgWidth={45} imgHeight={45} src="/contact.svg" alt="widget-trigger" />
       </div>
       <a href="https://m.me/61580340425091" target="_blank" className="widget-item widget-fb">
         <Space align="middle">
-          <div className="item-icon">{FBMsgIcon}</div>
+          <div className="item-icon">
+            <Image imgWidth={iconSize} imgHeight={iconSize} src="/fbmsg-logo.svg" alt="fb-msg" />
+          </div>
           <Badge color="black" shape="square">
             <Paragraph size={16}>Chat Messager</Paragraph>
           </Badge>
